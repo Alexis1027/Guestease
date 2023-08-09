@@ -45,7 +45,7 @@
 
 <template>
         <Layout>
-
+            <template #default>
             <v-container>
                 <v-row>
                     <v-col>
@@ -162,6 +162,7 @@
                 <NavigationDrawer @closeOverlay="overlay = false" v-if="true" :overlay="overlay" :images="images" />
 
             </v-container>
+        </template>
         </Layout>
         
 </template>

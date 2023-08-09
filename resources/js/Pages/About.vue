@@ -7,7 +7,9 @@
 
 <template>
         <Layout>
-            <h1>About...</h1>
+            <template #default>
+                <h1>About...</h1>
+            </template>
         </Layout>
 </template>
 

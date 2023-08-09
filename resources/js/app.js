@@ -5,11 +5,15 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import {Link} from '@inertiajs/vue3'
 
 
 const vuetify = createVuetify({
     components,
-    directives
+    directives,
+    // theme: {
+    //   defaultTheme: 'dark'
+    // }
 })
 
 createInertiaApp({
@@ -19,6 +23,7 @@ createInertiaApp({
   },
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
+      .component('Link', Link)
       .use(vuetify)
       .use(plugin)
       .mount(el)

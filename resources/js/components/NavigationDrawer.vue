@@ -25,8 +25,12 @@
 
     <v-container class="bg-white overlay-container" width="100vw">
             <v-row justify="space-between">
-                <v-col class="ms-5"><h1>All Images {{ props.images }} </h1></v-col>
-                <v-col class="justify-end d-flex me-5"><v-btn color="red" prepend-icon="mdi-close" @click="emitcloseOverlay()">Close</v-btn></v-col>
+                <v-col class="ms-5"><h1>All Images </h1></v-col>
+                <v-col class="justify-end d-flex">
+                    <v-btn rounded="xl" color="red" variant="text" size="x-large" @click="emitcloseOverlay()">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </v-col>
             </v-row>
             <v-container>
                 <v-row>
