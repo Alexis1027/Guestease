@@ -65,7 +65,7 @@
                 <v-icon color="orange-lighten-1">
                     mdi-star
                 </v-icon>
-                 {{ guesthouse.guesthouse.averageRating }} {{ guesthouse.guesthouse.id }}
+                 {{ guesthouse.guesthouse.averageRating }} 
             </v-col>
         </v-row>
         <p>{{ guesthouse.guesthouse.room_details }}</p>
