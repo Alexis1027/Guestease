@@ -24,12 +24,26 @@
             </v-list>
             <v-divider></v-divider>
             <v-list density="compact" nav >
-                <Link href="/" id="link"><v-list-item prepend-icon="mdi-home" title="Home" value="home"></v-list-item></Link>
+                <Link href="/" id="link">
+                    <v-list-item prepend-icon="mdi-home" title="Home" value="home"></v-list-item>
+                </Link>
                 <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
                 <v-list-item prepend-icon="mdi-calendar-check-outline" title="View Reservations" value="View Reservations"></v-list-item>
-                <Link href="/about" id="link"><v-list-item prepend-icon="mdi-information-variant" title="About" value="about"></v-list-item></Link>
-                <Link href="/login" id="link"><v-list-item prepend-icon="mdi-login" title="Login" value="login"></v-list-item></Link>
-                <Link href="/map" id="link"><v-list-item prepend-icon="mdi-map" title="Leaflet Map" value="map"></v-list-item></Link>
+                <Link href="/guidelines" id="link">
+                    <v-list-item prepend-icon="mdi-book-open-variant" title="Guidelines" value="guidelines"></v-list-item>
+                </Link>
+                <Link href="/rules&regulations" id="link">
+                    <v-list-item prepend-icon="mdi-playlist-check" title="Rules and regulations" value="rules"></v-list-item>
+                </Link>
+                <Link href="/about" id="link">
+                    <v-list-item prepend-icon="mdi-information-variant" title="About" value="about"></v-list-item>
+                </Link>
+                <Link href="/login" id="link">
+                    <v-list-item prepend-icon="mdi-login" title="Login" value="login"></v-list-item>
+                </Link>
+                <Link href="/map" id="link">
+                    <v-list-item prepend-icon="mdi-map" title="Leaflet Map" value="map"></v-list-item>
+                </Link>
             </v-list>
         </v-navigation-drawer>
 

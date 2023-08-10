@@ -15,22 +15,27 @@
 
     const address = [
         {
+            'id': 1,
             'houseName': 'BUAGSONG House sample 1',
             'coord': [10.250984, 123.939499]
         },
         {
+            'id': 2,
             'houseName': 'ALEGRIA House sample 2',
             'coord': [10.257239, 123.959788]
         },
         {
+            'id': 3,
             'houseName': 'BANG BANG House sample 3',
             'coord': [10.259351, 123.942876]
         },
         {
+            'id': 4,
             'houseName': 'DAPITAN House sample 4',
             'coord': [10.266107, 123.949229]
         },
         {
+            'id': 5,
             'houseName': 'GABI House sample 5',
             'coord': [10.263067, 123.962449]
         }
@@ -82,7 +87,6 @@
 <template>
 
     <Layout>
-        <h1>{{ currentGuestHouse }}</h1>
         <MapSidebar :mapSnackbar="mapSnackbar" :guesthouse="currentGuestHouse" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
         <div class="leaflet-container" ref="mapContainer"></div>
     </Layout>

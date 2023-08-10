@@ -24,7 +24,7 @@
       transition="scroll-x-reverse-transition"
         color="white"
       >
-    <v-btn rounded color="green" id="reserveBtn" width="50%">Reserve now</v-btn>
+    <Link :href="`/room/${props.guesthouse ? props.guesthouse.id : ''}`"><v-btn rounded color="green" id="reserveBtn" width="50%">Reserve now</v-btn></Link>
 
         <div class="custom-snackbar-content">
 
