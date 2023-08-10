@@ -19,4 +19,8 @@ class HomeController extends Controller
         return Inertia::render('About');
     }
 
+    public function map() {
+        return Inertia::render('Map/Index');
+    }
+
 }

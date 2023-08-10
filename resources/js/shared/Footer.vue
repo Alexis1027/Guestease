@@ -19,7 +19,6 @@
 </script>
 
 <template>
-    <v-divider></v-divider>
 
     <v-footer
       class=" text-center d-flex flex-column"
