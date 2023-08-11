@@ -18,7 +18,9 @@ use App\Http\Controllers\GuestHouseController;
 
 Route::get('/',[GuestHouseController::class, 'index']);
 Route::get('/room/{id}', [GuestHouseController::class, 'show']);
+
 Route::get('/about', [HomeController::class, 'about']);
+Route::get('/map', [HomeController::class, 'map']);
 
 Route::get('/login', [UserController::class, 'login']);
-Route::get('/map', [HomeController::class, 'map']);
+Route::post('/register', [UserController::class, 'store']);

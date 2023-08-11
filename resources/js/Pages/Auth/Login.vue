@@ -12,6 +12,7 @@
     const regConfirmPassword = ref('')
 
     const tab = ref(null)
+    const form = ref(null);
 
     const loginEmailRules = [
         value => {
@@ -28,7 +29,13 @@
             return 'Must enter a password.'
         }
     ]
-
+  
+  const regPasswordRules = [
+        value => {
+            if(value?.length >= 3) return true
+            return 'Password needs to be at least 3 characters.'
+        }
+    ]
     const regEmailRules = [
         value => {
                 if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
@@ -51,12 +58,18 @@
         }
     ]
 
-    const regPasswordRules = [
+    const regConfirmPasswordRules = [
         value => {
-            if(value?.length >= 3) return true
-            return 'Password needs to be at least 3 characters.'
+            if(regConfirmPassword.value === regPassword.value) return true
+            return 'THe password aint the same bruh'
         }
     ]
+
+const validate = async () => {
+  const { valid } = await form.value.validate();
+
+  if (valid) return true
+};
 
 </script>
 <template>
@@ -90,19 +103,23 @@
                     </v-window-item>
 
                     <v-window-item value="tab-2">
+                            
+                        <v-form ref="form" action="/register">
                             <v-card>
                                 <v-card-title class="text-center">Register with us!</v-card-title>
                                 <v-card-item>
-                                    <v-text-field label="Email" :rules="regEmailRules" v-model="regEmail" />
+                                    <v-text-field required label="Email" :rules="regEmailRules" v-model="regEmail" />
                                     <v-text-field label="First name" :rules="regFirstnameRules" v-model="regFirstname" />
                                     <v-text-field label="Last name" :rules="regLastnameRules" v-model="regLastname" />
                                     <v-text-field label="Password" :rules="regPasswordRules" v-model="regPassword" />
-                                    <v-text-field label="Confirm password" v-model="regConfirmPassword"/>
+                                    <v-text-field label="Confirm password" :rules="regConfirmPasswordRules" v-model="regConfirmPassword"/>
                                 </v-card-item>
                                 <v-card-actions class="justify-end">
-                                    <v-btn class="bg-green" width="100%">Register</v-btn>
+                                    <v-btn class="bg-green" width="100%" @click="validate()">Register</v-btn>
                                 </v-card-actions>
                             </v-card>
+                        </v-form>    
+
                     </v-window-item>
                 </v-window>
             </v-card>
