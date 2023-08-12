@@ -19,6 +19,14 @@ class HomeController extends Controller
         return Inertia::render('About');
     }
 
+    public function dashboard() {
+        return Inertia::render('Dashboard');
+    }
+
+    public function reservations() {
+        return Inertia::render('ViewReservation');
+    }
+
     public function map() {
         return Inertia::render('Map/Index');
     }

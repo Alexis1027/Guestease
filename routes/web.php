@@ -21,6 +21,8 @@ Route::get('/room/{id}', [GuestHouseController::class, 'show']);
 
 Route::get('/about', [HomeController::class, 'about']);
 Route::get('/map', [HomeController::class, 'map']);
+Route::get('/dashboard', [HomeController::class, 'dashboard']);
+Route::get('/reservations', [HomeController::class, 'reservations']);
 
 Route::get('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'store']);
