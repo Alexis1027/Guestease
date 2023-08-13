@@ -15,6 +15,22 @@ class HomeController extends Controller
         return Inertia::render('GuestHouse/Show');
     }
 
+    public function payment() {
+        return Inertia::render('ConfirmReservation');
+    }
+
+    public function guidelines() {
+        return Inertia::render('Guidelines');
+    }
+
+    public function rules() {
+        return Inertia::render('RulesAndRegulations');
+    }
+
+    public function wishlist() {
+        return Inertia::render('Wishlist');
+    }
+
     public function about() {
         return Inertia::render('About');
     }

@@ -151,7 +151,9 @@
                             </v-row>
                         </v-card-item>
                         <v-card-item>
-                            <v-btn color="green" width="100%">Reserve now</v-btn>
+                            <Link href="/payment">
+                                <v-btn color="green" width="100%">Reserve now</v-btn>
+                            </Link>
                         </v-card-item>
                     </v-card>
                     </v-hover>

@@ -13,6 +13,7 @@
                 density="compact"
                 color="orange-lighten-2"
                 class="ma-0"
+                readonly
                 >
                 </v-rating>
         </v-card-item>

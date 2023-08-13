@@ -23,6 +23,10 @@ Route::get('/about', [HomeController::class, 'about']);
 Route::get('/map', [HomeController::class, 'map']);
 Route::get('/dashboard', [HomeController::class, 'dashboard']);
 Route::get('/reservations', [HomeController::class, 'reservations']);
+Route::get('/payment', [HomeController::class, 'payment']);
+Route::get('/wishlist', [HomeController::class, 'wishlist']);
+Route::get('/guidelines', [HomeController::class, 'guidelines']);
+Route::get('/rules', [HomeController::class, 'rules']);
 
 Route::get('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'store']);

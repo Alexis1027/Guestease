@@ -44,7 +44,9 @@
     <Layout>
         <v-container>
             <h1>DASHBOARD</h1>
-            <canvas ref="myChartRef"></canvas>
+            <v-container width="400">
+                <canvas ref="myChartRef"></canvas>
+            </v-container>
         </v-container>
     </Layout>
 </template>
