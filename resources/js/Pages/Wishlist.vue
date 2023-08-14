@@ -2,20 +2,17 @@
 
     import Layout from '../shared/Layout.vue'
     import WishlistCard from '../components/WishlistCard.vue'
+    defineOptions({layout: Layout})
 
 </script>
 
 <template>
-    <Layout>
-        <v-container>
-            <p class="text-h4">Wishlists</p>
-            <template v-for="n in 5" :key="n">
-                <Link :href="`/room/${n}`">
-                    <WishlistCard/>
-                </Link>
-            </template>
-        </v-container>
-    </Layout>
+    <p class="text-h4">Wishlists</p>
+    <template v-for="n in 5" :key="n">
+        <Link :href="`/room/${n}`">
+            <WishlistCard/>
+        </Link>
+    </template>
 </template>
 
 <style scoped>

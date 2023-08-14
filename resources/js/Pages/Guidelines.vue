@@ -1,15 +1,12 @@
 <script setup>
 
     import Layout from '../shared/Layout.vue'
+    defineOptions({layout: Layout})
 
 </script>
 
 
 <template>
-        <Layout>
-                <v-container>
-                    <h1>Guidelines...</h1>
-                </v-container>
-        </Layout>
+        <h1>Guidelines...</h1>
 </template>
 

@@ -1,13 +1,13 @@
 <script setup>
 
     import Layout from '../shared/Layout.vue'
-
+    defineOptions({layout: Layout})
 </script>
 
 
+
+
 <template>
-        <Layout>
-                <h1>About...</h1>
-        </Layout>
+    <h1>About...</h1>
 </template>
 

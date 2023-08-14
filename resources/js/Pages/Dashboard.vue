@@ -1,8 +1,17 @@
+<!-- <script>
+    import Layout from '../shared/Layout.vue'
+
+ export default {
+   layout: Layout,
+ }
+</script> -->
 <script setup>
 
     import Layout from '../shared/Layout.vue'
     import Chart from 'chart.js/auto'
     import { onMounted, ref } from 'vue';
+    defineOptions({layout: Layout})
+    
 
     const myChartRef = ref(null)
 
@@ -41,13 +50,9 @@
 
 
 <template>
-    <Layout>
-        <v-container>
-            <h1>DASHBOARD</h1>
-            <v-container width="400">
-                <canvas ref="myChartRef"></canvas>
-            </v-container>
-        </v-container>
-    </Layout>
+    <h1>DASHBOARD</h1>
+    <v-container width="400">
+        <canvas ref="myChartRef"></canvas>
+    </v-container>
 </template>
 

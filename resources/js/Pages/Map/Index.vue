@@ -5,7 +5,7 @@
     import 'leaflet/dist/leaflet.css'
     import Layout from '../../shared/Layout.vue';
     import MapSidebar from '../../components/MapSidebar.vue';
-    
+    defineOptions({ layout: Layout })
     // const lat = ref('')
     // const lon = ref('')
     // const dataLoaded = ref(false)
@@ -85,19 +85,16 @@
 </script>
 
 <template>
-
-    <Layout>
-        <MapSidebar :mapSnackbar="mapSnackbar" :guesthouse="currentGuestHouse" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
-        <div class="leaflet-container" ref="mapContainer"></div>
-    </Layout>
+    <MapSidebar :mapSnackbar="mapSnackbar" :guesthouse="currentGuestHouse" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
+    <div class="leaflet-container" ref="mapContainer"></div>
 </template>
 
 <style scoped>
 
     .leaflet-container {
         margin-top: 30px;
-        height: 80vh;
-        width: 100vw;
+        height: 75vh;
+        width: 87vw;
     }
 
 </style>

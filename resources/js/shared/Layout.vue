@@ -19,7 +19,7 @@
         <v-navigation-drawer v-model="sidebar" :permanent="true" location="left" temporary>
             <v-list>
                 <v-list-item
-                prepend-avatar="/images/profile/ambatoPOU.jpg" title="John Doe" subtitle="john@doe.com"
+                prepend-avatar="/images/profile/ambatoPOU.jpg" title="John Doe" subtitle="admin"
                 ></v-list-item>
             </v-list>
             <v-divider></v-divider>
@@ -51,13 +51,23 @@
                 <Link href="/map" id="link">
                     <v-list-item prepend-icon="mdi-map" title="Leaflet Map" value="map"></v-list-item>
                 </Link>
+                <Link href="/create/admin" id="link">
+                    <v-list-item prepend-icon="mdi-account-hard-hat-outline" title="Create admin account" value="createadmin"></v-list-item>
+                </Link>
             </v-list>
         </v-navigation-drawer>
 
         <v-main>
-            <slot>
-            </slot>
+            <v-container>
+                <slot>
+                </slot>
+            </v-container>
+            <!-- <v-footer border class="justify-center">
+                <strong> 2023 — Vuetify, LLC</strong>
+            </v-footer> -->
         </v-main>
+
+        
     </v-layout>
   </template>
 

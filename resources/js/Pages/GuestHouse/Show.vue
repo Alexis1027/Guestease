@@ -6,6 +6,7 @@
     import RatingCard from '../../components/RatingCard.vue'
     import ImageCarousel from '../../components/ImageCarousel.vue'
     import RatingModal from '../../components/RatingModal.vue'
+    defineOptions({layout: Layout})
 
     const overlay = ref(false)
     const guesthouse = defineProps(['guesthouse', 'ratings', 'averageRating'])
@@ -48,135 +49,129 @@
 </script>
 
 <template>
-    <Layout>
+    <v-container>
+                <h1>{{ guesthouse.guesthouse.room_name }}</h1>
+        <v-row>
+            <v-col cols="2"> <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ guesthouse.averageRating }} reviews</v-col>
+            <v-col cols="5"> <v-icon color="red">mdi-map-marker</v-icon> Located in - {{ guesthouse.guesthouse.room_location }}</v-col>
+        </v-row>
         <v-container>
             <v-row>
-                <v-col>
-                    <h1>{{ guesthouse.guesthouse.room_name }}</h1>
-                </v-col>
-            </v-row>
-            <v-row>
-                <v-col cols="2"> <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ guesthouse.averageRating }} reviews</v-col>
-                <v-col cols="5"> <v-icon color="red">mdi-map-marker</v-icon> Located in - {{ guesthouse.guesthouse.room_location }}</v-col>
-            </v-row>
-            <v-container>
-                <v-row>
-                <v-col cols="6">
-                    <v-hover v-slot="{ isHovering, props }">
-                        <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
-                            <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarousel = true">
-                                <template v-slot:placeholder>
-                                    <div class="d-flex align-center justify-center fill-height">
-                                        <v-progress-circular
-                                        color="grey-lighten-4"
-                                        indeterminate
-                                        ></v-progress-circular>
-                                    </div>
-                                </template>
-                            </v-img>
-                        </v-card>
-                    </v-hover>
-                </v-col>
-                <v-col cols="6">
-                    <v-row>
-                        <v-col cols="6" v-for="i in 4" :key="i">
-                            <v-hover v-slot="{ isHovering, props }">
-                                <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
-                                    <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)" @click="showImageCarousel = true">
-                                        <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" flat size="small" prepend-icon="mdi-image-multiple-outline" >show all images</v-btn>
-                                        <template v-slot:placeholder>
-                                            <div class="d-flex align-center justify-center fill-height">
-                                                <v-progress-circular
-                                                color="grey-lighten-4"
-                                                indeterminate
-                                                ></v-progress-circular>
-                                            </div>
-                                        </template>
-                                    </v-img>
-                                </v-card>
-                            </v-hover>
-                        </v-col>
-                    </v-row>
-                </v-col>
-            </v-row>
-            </v-container>
-            <v-divider/>
-            <v-row>
-                <v-col cols="8">
-                    <v-container>
-                        <h2>About this place</h2>
-                        <ul>
-                            <li>{{ guesthouse.guesthouse.room_details }}</li>
-                            <li>{{ guesthouse.guesthouse.room_location }}</li>
-                        </ul>
-                    </v-container>
-                    <v-divider/>
-                    <v-container>
-                        <h2>Rate this place</h2>
-                        <p style="color: gray">Tell others what you think.</p>
-                        <div class="ms-3 mt-3">
-                            <v-rating
-                            v-model="rating"
-                            :item-labels="labels"
-                            hover
-                            half-increments
-                            color="orange-lighten-2"
-                            @click="showReviewModal = true"
-                            >
-                            <template v-slot:item-label="props">
-                                <span
-                                class="font-weight-black text-caption"
-                                :class="`text-${colors[props.index]}`"
-                                >
-                                {{ props.label }}
-                                </span>
+            <v-col cols="6">
+                <v-hover v-slot="{ isHovering, props }">
+                    <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
+                        <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarousel = true">
+                            <template v-slot:placeholder>
+                                <div class="d-flex align-center justify-center fill-height">
+                                    <v-progress-circular
+                                    color="grey-lighten-4"
+                                    indeterminate
+                                    ></v-progress-circular>
+                                </div>
                             </template>
-                            </v-rating>
-                        </div>
-                    </v-container>
-                    <v-divider/>
-                    <v-container>
-                            <h2>Ratings and reviews</h2>
-                            <v-row>
-                                <v-col cols="6" v-for="n in 4" :key="n">
-                                    <RatingCard/>
-                                </v-col>
-                            </v-row>
-                    </v-container>
-                </v-col>
-                <v-col cols="4" class="mt-3">
-                    <v-hover
-                        v-slot="{ isHovering, props }"
-                        open-delay="200"
-                    >
-                    <v-card
-                        :elevation="isHovering ? 16 : 2"
-                        :class="{ 'on-hover': isHovering }"
-                        v-bind="props"
-                    >
-                        <v-card-title>
-                            <h2>Price Details</h2>
-                        </v-card-title>
-                        <v-card-item>
-                            <v-row>
-                                <v-col>Monthly Fee </v-col>
-                                <v-col>P {{ guesthouse.guesthouse.room_price }}</v-col>
-                            </v-row>
-                        </v-card-item>
-                        <v-card-item>
-                            <Link href="/payment">
-                                <v-btn color="green" width="100%">Reserve now</v-btn>
-                            </Link>
-                        </v-card-item>
+                        </v-img>
                     </v-card>
-                    </v-hover>
-                </v-col>
-            </v-row>
-            <NavigationDrawer @closeOverlay="overlay = false" v-if="true" :overlay="overlay" :images="images" />
-            <ImageCarousel :showImageCarousel="showImageCarousel" @CloseImgCarousel="showImageCarousel = false" />
-            <RatingModal :showReviewModal="showReviewModal" :star="rating" :guesthouse="guesthouse.guesthouse" @closeReviewModal="showReviewModal = false" />
+                </v-hover>
+            </v-col>
+            <v-col cols="6">
+                <v-row>
+                    <v-col cols="6" v-for="i in 4" :key="i">
+                        <v-hover v-slot="{ isHovering, props }">
+                            <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
+                                <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)" @click="showImageCarousel = true">
+                                    <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" flat size="small" prepend-icon="mdi-image-multiple-outline" >show all images</v-btn>
+                                    <template v-slot:placeholder>
+                                        <div class="d-flex align-center justify-center fill-height">
+                                            <v-progress-circular
+                                            color="grey-lighten-4"
+                                            indeterminate
+                                            ></v-progress-circular>
+                                        </div>
+                                    </template>
+                                </v-img>
+                            </v-card>
+                        </v-hover>
+                    </v-col>
+                </v-row>
+            </v-col>
+        </v-row>
         </v-container>
-    </Layout>
+        <v-divider/>
+        <v-row>
+            <v-col cols="8">
+                <v-container>
+                    <h2>About this place</h2>
+                    <ul>
+                        <li>{{ guesthouse.guesthouse.room_details }}</li>
+                        <li>{{ guesthouse.guesthouse.room_location }}</li>
+                    </ul>
+                </v-container>
+                <v-divider/>
+                <v-container>
+                    <h2>Rate this place</h2>
+                    <p style="color: gray">Tell others what you think.</p>
+                    <div class="ms-3 mt-3">
+                        <v-rating
+                        v-model="rating"
+                        :item-labels="labels"
+                        hover
+                        half-increments
+                        color="orange-lighten-2"
+                        @click="showReviewModal = true"
+                        >
+                        <template v-slot:item-label="props">
+                            <span
+                            class="font-weight-black text-caption"
+                            :class="`text-${colors[props.index]}`"
+                            >
+                            {{ props.label }}
+                            </span>
+                        </template>
+                        </v-rating>
+                    </div>
+                </v-container>
+                <v-divider/>
+                <v-container>
+                        <h2>Ratings and reviews</h2>
+                        <v-row>
+                            <v-col cols="6" v-for="n in 4" :key="n">
+                                <RatingCard/>
+                            </v-col>
+                        </v-row>
+                </v-container>
+            </v-col>
+            <v-col cols="4" class="mt-3">
+                <v-hover
+                    v-slot="{ isHovering, props }"
+                    open-delay="200"
+                >
+                <v-card
+                    :elevation="isHovering ? 16 : 2"
+                    :class="{ 'on-hover': isHovering }"
+                    v-bind="props"
+                >
+                    <v-card-title>
+                        <h2>Price Details</h2>
+                    </v-card-title>
+                    <v-card-item>
+                        <v-row>
+                            <v-col>Monthly Fee </v-col>
+                            <v-col>P {{ guesthouse.guesthouse.room_price }}</v-col>
+                        </v-row>
+                    </v-card-item>
+                    <v-card-item>
+                        <Link href="/payment">
+                            <v-btn color="green" width="100%">Reserve</v-btn>
+                        </Link>
+                    </v-card-item>
+                </v-card>
+                </v-hover>
+            </v-col>
+        </v-row>
+        <NavigationDrawer @closeOverlay="overlay = false" v-if="true" :overlay="overlay" :images="images" />
+        <ImageCarousel :showImageCarousel="showImageCarousel" @CloseImgCarousel="showImageCarousel = false" />
+        <RatingModal :showReviewModal="showReviewModal" :star="rating" :guesthouse="guesthouse.guesthouse" @closeReviewModal="showReviewModal = false" />
+    </v-container>
 </template>
 
 <style scoped>
