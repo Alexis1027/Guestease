@@ -3,11 +3,15 @@
     import Layout from '../../shared/Layout.vue'
     import {defineProps, ref} from 'vue'
     import NavigationDrawer from '../../components/NavigationDrawer.vue'
-    import RatingCard from '../../components/RatingCard.vue';
+    import RatingCard from '../../components/RatingCard.vue'
+    import ImageCarousel from '../../components/ImageCarousel.vue'
+    import RatingModal from '../../components/RatingModal.vue'
 
     const overlay = ref(false)
     const guesthouse = defineProps(['guesthouse', 'ratings', 'averageRating'])
-    const rating = ref(4)
+    const rating = ref(0)
+    const showImageCarousel = ref(false)
+    const showReviewModal = ref(false)
     const colors = ['red', 'orange', 'grey', 'cyan', 'green']
     const labels = ['bad', 'so so', 'ok', 'good', 'great']
     const images = []
@@ -58,22 +62,9 @@
             <v-container>
                 <v-row>
                 <v-col cols="6">
-                    <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`">
-                        <template v-slot:placeholder>
-                            <div class="d-flex align-center justify-center fill-height">
-                                <v-progress-circular
-                                color="grey-lighten-4"
-                                indeterminate
-                                ></v-progress-circular>
-                            </div>
-                        </template>
-                    </v-img>
-                </v-col>
-                <v-col cols="6">
-                    <v-row>
-                        <v-col cols="6" v-for="i in 4" :key="i">
-                            <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)">
-                                <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" flat size="small" prepend-icon="mdi-image-multiple-outline" >show all images</v-btn>
+                    <v-hover v-slot="{ isHovering, props }">
+                        <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
+                            <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarousel = true">
                                 <template v-slot:placeholder>
                                     <div class="d-flex align-center justify-center fill-height">
                                         <v-progress-circular
@@ -83,6 +74,27 @@
                                     </div>
                                 </template>
                             </v-img>
+                        </v-card>
+                    </v-hover>
+                </v-col>
+                <v-col cols="6">
+                    <v-row>
+                        <v-col cols="6" v-for="i in 4" :key="i">
+                            <v-hover v-slot="{ isHovering, props }">
+                                <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
+                                    <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)" @click="showImageCarousel = true">
+                                        <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" flat size="small" prepend-icon="mdi-image-multiple-outline" >show all images</v-btn>
+                                        <template v-slot:placeholder>
+                                            <div class="d-flex align-center justify-center fill-height">
+                                                <v-progress-circular
+                                                color="grey-lighten-4"
+                                                indeterminate
+                                                ></v-progress-circular>
+                                            </div>
+                                        </template>
+                                    </v-img>
+                                </v-card>
+                            </v-hover>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -109,6 +121,7 @@
                             hover
                             half-increments
                             color="orange-lighten-2"
+                            @click="showReviewModal = true"
                             >
                             <template v-slot:item-label="props">
                                 <span
@@ -146,7 +159,7 @@
                         </v-card-title>
                         <v-card-item>
                             <v-row>
-                                <v-col>Monthly Fee</v-col>
+                                <v-col>Monthly Fee </v-col>
                                 <v-col>P {{ guesthouse.guesthouse.room_price }}</v-col>
                             </v-row>
                         </v-card-item>
@@ -159,9 +172,9 @@
                     </v-hover>
                 </v-col>
             </v-row>
-            
             <NavigationDrawer @closeOverlay="overlay = false" v-if="true" :overlay="overlay" :images="images" />
-
+            <ImageCarousel :showImageCarousel="showImageCarousel" @CloseImgCarousel="showImageCarousel = false" />
+            <RatingModal :showReviewModal="showReviewModal" :star="rating" :guesthouse="guesthouse.guesthouse" @closeReviewModal="showReviewModal = false" />
         </v-container>
     </Layout>
 </template>
@@ -175,6 +188,10 @@
         position: absolute; 
         opacity: 0.8;
     }
+
+    .v-card.on-hover {
+    opacity: 0.8;
+  }
 
 
 

@@ -12,9 +12,9 @@
             <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
             <v-toolbar-title><Link href="/" id="link">Logo</Link></v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn variant="text" icon="mdi-magnify"></v-btn>
+            <!-- <v-btn variant="text" icon="mdi-magnify"></v-btn>
             <v-btn variant="text" icon="mdi-filter"></v-btn>
-            <v-btn variant="text" icon="mdi-dots-vertical"></v-btn>
+            <v-btn variant="text" icon="mdi-dots-vertical"></v-btn> -->
         </v-app-bar>
         <v-navigation-drawer v-model="sidebar" :permanent="true" location="left" temporary>
             <v-list>

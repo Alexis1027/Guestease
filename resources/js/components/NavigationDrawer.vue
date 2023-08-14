@@ -21,7 +21,7 @@
 
 </script>
 <template>
-    <v-overlay v-model="props.overlay" width="100vw" height="100vh">
+    <v-overlay v-model="props.overlay" width="100vw" height="100vh" transition="fab-transition">
 
     <v-container class="bg-white overlay-container" width="100vw">
             <v-row justify="space-between">

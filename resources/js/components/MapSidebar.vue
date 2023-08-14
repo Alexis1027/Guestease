@@ -76,7 +76,7 @@
                 bg-color="green-lighten-3"
                 >
                     <v-tab value="overview">Overview</v-tab>
-                    <v-tab value="prices">Prices</v-tab>
+                    <v-tab value="prices">Price</v-tab>
                     <v-tab value="reviews">Reviews</v-tab>
                     <v-tab value="about">About</v-tab>
                 </v-tabs>
