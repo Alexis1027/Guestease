@@ -7,6 +7,7 @@
 </script>
 
 <template>
+    <Head title="Wishlist" />
     <p class="text-h4">Wishlists</p>
     <template v-for="n in 5" :key="n">
         <Link :href="`/room/${n}`">

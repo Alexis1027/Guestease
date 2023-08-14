@@ -85,6 +85,7 @@
 </script>
 
 <template>
+    <Head title="Map" />
     <MapSidebar :mapSnackbar="mapSnackbar" :guesthouse="currentGuestHouse" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
     <div class="leaflet-container" ref="mapContainer"></div>
 </template>

@@ -50,6 +50,9 @@
 
 
 <template>
+
+    <Head title="Dashboard" />
+
     <h1>DASHBOARD</h1>
     <v-container width="400">
         <canvas ref="myChartRef"></canvas>

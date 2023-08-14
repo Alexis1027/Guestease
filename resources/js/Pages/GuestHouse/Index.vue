@@ -12,6 +12,7 @@
 
 
 <template>
+        <Head title="Home" />
     <v-container>
         <!-- {{ guesthouses.guesthouses }} -->
         <v-row>

@@ -7,6 +7,7 @@
 
 
 <template>
+        <Head title="Rules & Regulations" />
         <h1>Rules and Regulations.... </h1>
 </template>
 

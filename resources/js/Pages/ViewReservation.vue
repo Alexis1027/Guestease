@@ -11,6 +11,7 @@
 
 </script>
 <template>
+        <Head title="Reservations" />
     <v-table hover class="border">
         <thead>
             <tr>

@@ -74,6 +74,7 @@ const validate = async () => {
 
 </script>
 <template>
+    <Head title="Login" />
     <v-container class="justify-center d-flex">
         <v-card width="50%">
             <v-tabs v-model="tab" bg-color="green-lighten-2" centered>

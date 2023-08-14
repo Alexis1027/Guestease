@@ -11,6 +11,7 @@
     const overlay = ref(false)
     const guesthouse = defineProps(['guesthouse', 'ratings', 'averageRating'])
     const rating = ref(0)
+    const index = ref(0)
     const showImageCarousel = ref(false)
     const showReviewModal = ref(false)
     const colors = ['red', 'orange', 'grey', 'cyan', 'green']
@@ -45,10 +46,16 @@
     
   }
 
+  function showImageCarouselFunc(idx) {
+    index.value = idx
+    showImageCarousel.value = true
+  }
+
 
 </script>
 
 <template>
+    <Head :title="`${guesthouse.guesthouse.room_name}`" />
     <v-container>
                 <h1>{{ guesthouse.guesthouse.room_name }}</h1>
         <v-row>
@@ -60,7 +67,7 @@
             <v-col cols="6">
                 <v-hover v-slot="{ isHovering, props }">
                     <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
-                        <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarousel = true">
+                        <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
                             <template v-slot:placeholder>
                                 <div class="d-flex align-center justify-center fill-height">
                                     <v-progress-circular
@@ -78,8 +85,8 @@
                     <v-col cols="6" v-for="i in 4" :key="i">
                         <v-hover v-slot="{ isHovering, props }">
                             <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
-                                <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)" @click="showImageCarousel = true">
-                                    <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" flat size="small" prepend-icon="mdi-image-multiple-outline" >show all images</v-btn>
+                                <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" size="small" prepend-icon="mdi-image-multiple-outline" >show all images</v-btn>
+                                <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
                                     <template v-slot:placeholder>
                                         <div class="d-flex align-center justify-center fill-height">
                                             <v-progress-circular
@@ -169,7 +176,7 @@
             </v-col>
         </v-row>
         <NavigationDrawer @closeOverlay="overlay = false" v-if="true" :overlay="overlay" :images="images" />
-        <ImageCarousel :showImageCarousel="showImageCarousel" @CloseImgCarousel="showImageCarousel = false" />
+        <ImageCarousel :showImageCarousel="showImageCarousel" :images="images" :index="index" @CloseImgCarousel="showImageCarousel = false" />
         <RatingModal :showReviewModal="showReviewModal" :star="rating" :guesthouse="guesthouse.guesthouse" @closeReviewModal="showReviewModal = false" />
     </v-container>
 </template>
@@ -182,6 +189,7 @@
         margin-right: 10px; 
         position: absolute; 
         opacity: 0.8;
+        z-index: 999;
     }
 
     .v-card.on-hover {

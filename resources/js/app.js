@@ -6,7 +6,7 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import {Link} from '@inertiajs/vue3'
-
+import {Head} from '@inertiajs/vue3'
 
 const vuetify = createVuetify({
     components,
@@ -24,6 +24,7 @@ createInertiaApp({
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .component('Link', Link)
+      .component('Head', Head)
       .use(vuetify)
       .use(plugin)
       .mount(el)

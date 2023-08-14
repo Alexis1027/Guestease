@@ -9,6 +9,7 @@
 </script>
 
 <template>
+        <Head title="Confirm Reservation" />
 
         <v-container>
             <v-row>

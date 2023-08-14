@@ -7,6 +7,7 @@
 
 
 <template>
+        <Head title="Guidelines" />
         <h1>Guidelines...</h1>
 </template>
 
