@@ -14,6 +14,7 @@
 <template>
         <Head title="Home" />
     <v-container>
+        <!-- <v-btn>Leaflet Map</v-btn> -->
         <!-- {{ guesthouses.guesthouses }} -->
         <v-row>
             <v-col cols="3" v-for="guesthouse in guesthouses.guesthouses" :key="guesthouse.id">
