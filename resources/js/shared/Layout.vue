@@ -8,10 +8,12 @@
 
 <template>
     <v-layout>
-        <v-app-bar>
+        <v-app-bar >
             <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
-            <v-toolbar-title><Link href="/" id="link">Logo</Link></v-toolbar-title>
-            <v-spacer></v-spacer>
+            <v-toolbar-title>
+                <Link href="/" id="link">Logo</Link>
+            </v-toolbar-title>
+            <v-spacer/>
             <v-menu min-width="200px" rounded persistent>
                 <template v-slot:activator="{ props }">
                     <v-btn icon v-bind="props">
@@ -35,12 +37,16 @@
                                     Wishlists 
                                 </v-btn>
                             </Link>
-                            <v-btn block variant="text">
-                                Account
-                            </v-btn>
-                            <v-btn block variant="text">
-                                Logout
-                            </v-btn>
+                            <Link href="/account">
+                                <v-btn block variant="text">
+                                    Account
+                                </v-btn>
+                            </Link>
+                            <Link href="/logout">
+                                <v-btn block variant="text">
+                                    Logout
+                                </v-btn>
+                            </Link>
                         </div>
                     </v-card-item>
                     <v-divider/>
@@ -89,11 +95,11 @@
                 <Link href="/rules" id="link">
                     <v-list-item prepend-icon="mdi-playlist-check" title="Rules and regulations" value="rules"></v-list-item>
                 </Link>
-                <Link href="/map" id="link">
-                    <v-list-item prepend-icon="mdi-map" title="Leaflet Map" value="map"></v-list-item>
-                </Link>
                 <Link href="/create/admin" id="link">
                     <v-list-item prepend-icon="mdi-account-hard-hat-outline" title="Create admin account" value="createadmin"></v-list-item>
+                </Link>
+                <Link href="/create/guesthouse" id="link">
+                    <v-list-item prepend-icon="mdi-account-hard-hat-outline" title="Create guest house" value="ssd"></v-list-item>
                 </Link>
             </v-list>
         </v-navigation-drawer>

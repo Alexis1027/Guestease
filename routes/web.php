@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GuestHouseController;
+use App\Models\GuestHouse;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ use App\Http\Controllers\GuestHouseController;
 
 Route::get('/',[GuestHouseController::class, 'index']);
 Route::get('/room/{id}', [GuestHouseController::class, 'show']);
+Route::get('/create/guesthouse', [GuestHouseController::class, 'create']);
 
 Route::get('/about', [HomeController::class, 'about']);
 Route::get('/map', [HomeController::class, 'map']);
@@ -29,4 +31,4 @@ Route::get('/guidelines', [HomeController::class, 'guidelines']);
 Route::get('/rules', [HomeController::class, 'rules']);
 
 Route::get('/login', [UserController::class, 'login']);
-Route::post('/register', [UserController::class, 'store']);
+Route::get('/register', [UserController::class, 'register']);

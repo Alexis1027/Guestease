@@ -85,7 +85,7 @@ class GuestHouseController extends Controller
 
     //create guest house
     public function create() {
-        return view('guesthouses.create');
+        return Inertia::render('GuestHouse/Create');
     }
 
     public function payment(Request $request, GuestHouse $guesthouse) {

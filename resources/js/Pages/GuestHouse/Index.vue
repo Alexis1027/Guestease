@@ -13,13 +13,28 @@
 
 <template>
         <Head title="Home" />
-    <v-container>
-        <!-- <v-btn>Leaflet Map</v-btn> -->
+        <Link href="/map">
+            <div>
+                <v-btn class="bg-blue" prepend-icon="mdi-map"> SHOW MAP</v-btn>
+            </div>
+        </Link>
         <!-- {{ guesthouses.guesthouses }} -->
         <v-row>
             <v-col cols="3" v-for="guesthouse in guesthouses.guesthouses" :key="guesthouse.id">
                 <GuestHouseCard :guesthouse="guesthouse" />
             </v-col>
         </v-row>
-    </v-container>
 </template>
+
+<style scoped>
+
+    .v-btn {
+        position: absolute;
+        z-index: 9;
+        bottom: 0;
+        right: 0;
+        margin-bottom: 40px;
+        margin-right: 50px;
+    }
+
+</style>

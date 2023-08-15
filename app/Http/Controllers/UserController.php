@@ -14,6 +14,10 @@ class UserController extends Controller
         return Inertia::render('Auth/Login');
     }
 
+    public function register() {
+        return Inertia::render('Auth/Register');
+    }
+
     public function logout(Request $request) {
         auth()->logout();
         $request->session()->invalidate();
