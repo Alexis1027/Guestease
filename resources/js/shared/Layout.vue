@@ -17,7 +17,7 @@
             <v-menu min-width="200px" rounded persistent>
                 <template v-slot:activator="{ props }">
                     <v-btn icon v-bind="props">
-                        <v-avatar color="brown-lighten-3" size="35">
+                        <v-avatar color="blue-lighten-3" size="35">
                             <v-icon>mdi-account</v-icon>
                         </v-avatar>
                     </v-btn>

@@ -19,16 +19,12 @@
                         <v-btn rounded icon="mdi-keyboard-backspace" flat></v-btn>
                         <label class="text-h5">Confirm Reservation</label>
                         <p class="text-h6 my-4">Personal Information</p>
-                        <v-text-field label="First name"></v-text-field>
-                        <v-text-field label="First name"></v-text-field>
-                        <v-text-field label="First name"></v-text-field>
-                        <v-text-field label="First name"></v-text-field>
-                        <v-select
-                        :items="items"
-                        label="Payment process"
-                        required
-                        ></v-select>
-                        <v-btn width="100%" color="green">Confirm Reservation</v-btn>
+                        <v-text-field variant="outlined" color="blue" clearable label="First name"></v-text-field>
+                        <v-text-field variant="outlined" color="blue" clearable label="Last name"></v-text-field>
+                        <v-text-field variant="outlined" color="blue" clearable label="Email" placeholder="johndoe@gmail.com"></v-text-field>
+                        <v-text-field variant="outlined" color="blue" clearable label="First name"></v-text-field>
+                        <v-select :items="items" label="Payment process" clearable required variant="outlined"></v-select>
+                        <v-btn block color="green">Confirm Reservation</v-btn>
                     </v-container>
 
                 </v-col>

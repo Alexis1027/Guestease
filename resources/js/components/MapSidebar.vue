@@ -24,7 +24,7 @@
       transition="scroll-x-reverse-transition"
         color="white"
       >
-    <Link :href="`/room/${props.guesthouse ? props.guesthouse.id : ''}`"><v-btn rounded color="green" id="reserveBtn" width="50%">Reserve now</v-btn></Link>
+    <Link :href="`/room/${props.guesthouse ? props.guesthouse.id : ''}`"><v-btn rounded color="blue" id="reserveBtn" width="50%">See more</v-btn></Link>
 
         <div class="custom-snackbar-content">
 
@@ -73,7 +73,7 @@
                 </v-card-title>
                 <v-tabs
                 v-model="tab"
-                bg-color="green-lighten-3"
+                bg-color="blue-lighten-3"
                 >
                     <v-tab value="overview">Overview</v-tab>
                     <v-tab value="prices">Price</v-tab>

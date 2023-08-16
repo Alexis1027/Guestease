@@ -1,56 +1,3 @@
-<script setup>
-
-    import {ref} from 'vue'
-    
-    const passwordVisible = ref(false)
-
-    const loginEmailRules = [
-        value => {
-            if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
-
-            return 'Must be a valid e-mail.'
-        }
-    ]
-
-</script>
-<template>
-    <Head title="Login" />
-    <v-btn icon="mdi-arrow-left" flat></v-btn>
-    <v-container class="wrapper fadeInDown">
-        <!-- <form method="POST" action="/users/authenticate"> -->
-        <v-form>
-            <div id="formContent">
-                <div class="fadeIn first">
-                    <v-row class="text-center">
-                        <v-col>
-                            <p class="text-h5" ><i class="fa fa-address-card-o" aria-hidden="true"></i> Login </p>
-                        </v-col>
-                    </v-row>
-                </div>
-                <v-card elevation="0">
-                    <v-card-item>
-                        <v-container>
-                            <v-text-field v-model="email" color="blue" clearable variant="outlined" class="fadeIn second mx-5" placeholder="johndoe@gmail.com" label="Email"></v-text-field>
-                            <v-text-field 
-                                v-model="password" 
-                                color="blue" 
-                                variant="outlined" 
-                                class="fadeIn second mx-5" 
-                                :type="passwordVisible ? 'password' : 'text'"
-                                :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                                @click:append-inner="passwordVisible = !passwordVisible" 
-                                label="Password"></v-text-field>
-                            <v-btn color="blue" class="fadeIn third" id="btn-login" block>Log in</v-btn>
-                            <br>
-                            <label class="mt-4 fadeIn third">Dont have an account? </label>
-                            <Link href="/register" class="text-blue fadeIn third"> Create Account</Link>
-                        </v-container>
-                    </v-card-item>
-                </v-card>
-            </div>
-        </v-form>
-    </v-container>
-</template>
 
 <style scoped>
 
@@ -100,7 +47,7 @@ html {
     width: 100%;
     min-height: 100%;
     padding: 20px;
-    margin-top: 5%;
+    margin-top: 10%;
   }
   
   #formContent {
@@ -327,4 +274,4 @@ html {
 
   
 
-</style>
+</style>    
