@@ -2,13 +2,30 @@
 
     import {ref} from 'vue'
     
-    const passwordVisible = ref(false)
+    const passwordVisible = ref(true)
 
-    const loginEmailRules = [
+    const email = ref('')
+    const password = ref('')
+
+    const emailRules = [
         value => {
-            if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
+            if (value) return true
+            return 'E-mail is requred.'
+        },
+        value => {
+            if (/.+@.+\..+/.test(value)) return true
+            return 'E-mail must be valid.'
+        },
+    ]
 
-            return 'Must be a valid e-mail.'
+    const passwordRules = [
+        value => {
+            if(value) return true
+            return `Password is requred.`
+        },
+        value => {
+            if(value?.length >= 5) return true
+            return `Password must be at least 5 characters`
         }
     ]
 
@@ -30,17 +47,28 @@
                 <v-card elevation="0">
                     <v-card-item>
                         <v-container>
-                            <v-text-field v-model="email" color="blue" clearable variant="outlined" class="fadeIn second mx-5" placeholder="johndoe@gmail.com" label="Email"></v-text-field>
+                            <v-text-field 
+                                v-model="email" 
+                                color="blue" 
+                                clearable
+                                :rules="emailRules"
+                                variant="outlined" 
+                                class="fadeIn second mx-5" 
+                                placeholder="johndoe@gmail.com" 
+                                label="Email">
+                            </v-text-field>
                             <v-text-field 
                                 v-model="password" 
                                 color="blue" 
-                                variant="outlined" 
+                                variant="outlined"
+                                :rules="passwordRules"
                                 class="fadeIn second mx-5" 
                                 :type="passwordVisible ? 'password' : 'text'"
                                 :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
                                 @click:append-inner="passwordVisible = !passwordVisible" 
-                                label="Password"></v-text-field>
-                            <v-btn color="blue" class="fadeIn third" id="btn-login" block>Log in</v-btn>
+                                label="Password">
+                            </v-text-field>
+                            <v-btn color="blue" class="fadeIn third" id="btn-login" type="submit" block>Log in</v-btn>
                             <br>
                             <label class="mt-4 fadeIn third">Dont have an account? </label>
                             <Link href="/register" class="text-blue fadeIn third"> Create Account</Link>

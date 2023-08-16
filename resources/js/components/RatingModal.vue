@@ -5,8 +5,6 @@
     const emitcloseReviewModal = () => {
         emit('closeReviewModal')
     }
-    const colors = ['red', 'orange', 'grey', 'cyan', 'green']
-    const labels = ['bad', 'so so', 'ok', 'good', 'great']
     const props = defineProps(['showReviewModal', 'guesthouse', 'star'])
     const images = []
     const guestHouseImg = props.guesthouse.room_image.split(",")
@@ -31,12 +29,7 @@
                 </v-row>
             </v-card-title>
             <v-card-item>
-                <v-rating v-model="props.star" :item-labels="labels" hover half-increments color="orange-lighten-2"  @click="showReviewModal = true">
-                    <template v-slot:item-label="props">
-                        <span class="font-weight-black text-caption" :class="`text-${colors[props.index]}`">
-                        {{ props.label }}
-                        </span>
-                    </template>
+                <v-rating v-model="props.star" readonly half-increments color="orange-lighten-2"  @click="showReviewModal = true">
                 </v-rating>
             </v-card-item>
             <v-card-text>

@@ -1,8 +1,55 @@
 <script setup>
 
     import {ref} from 'vue'
+
+    const firstname = ref('')
+    const lastname = ref('')
+    const email = ref('')
+    const password = ref('')
+
     const terms = ref(false)
-    const passwordVisible = ref(false)
+    const passwordVisible = ref(true)
+
+    const nameRules = [
+        value => {
+            if(value) return true
+            return 'First name is required'
+        },
+        value => {
+            if (value?.length >= 3) return true
+            return 'First name must be at least 3 characters.'
+        },
+    ]
+
+    const emailRules = [
+        value => {
+            if (value) return true
+            return 'E-mail is requred.'
+        },
+        value => {
+            if (/.+@.+\..+/.test(value)) return true
+            return 'E-mail must be valid.'
+        },
+    ]
+
+    const passwordRules = [
+        value => {
+            if(value) return true
+            return `Password is requred.`
+        },
+        value => {
+            if(value?.length >= 5) return true
+            return `Password must be at least 5 characters`
+        }
+    ]
+
+    const termsRules = [
+        value => {
+            if(value) return true
+            return `You must agree to continue!`
+        }
+    ]
+
 </script>
 
 
@@ -16,39 +63,75 @@
         <div id="formContent">
             <div class="fadeIn first">
                 <div class="row text-center">
-                    <p class="text-h5 pt-3" ><i class="fa fa-address-card-o" aria-hidden="true"></i> Create account</p>
+                    <p class="text-h5 pt-3">
+                        <i class="fa fa-address-card-o" aria-hidden="true"></i> Create account
+                    </p>
                 </div>
             </div>
             <v-form>
                 <v-card elevation="0">
                     <v-card-item>
-                        <v-container >
-                            <v-row class="mx-5">
-                                <v-text-field color="blue" clearable variant="outlined" class="fadeIn second me-2" label="First name"></v-text-field>
-                                <v-text-field color="blue" clearable variant="outlined" class="fadeIn second" label="Last name"></v-text-field>
-                            </v-row>
-                            <v-row class="mx-5">
-                                <v-text-field color="blue" clearable variant="outlined" class="fadeIn second " placeholder="johndoe@gmail.com" label="Email"></v-text-field>
+                        <v-container class="mt-2">
+                            <v-row class="mx-2">
+                                <v-col cols="6">
+                                    <v-text-field 
+                                        color="blue" 
+                                        :rules="nameRules" 
+                                        clearable 
+                                        variant="outlined" 
+                                        class="fadeIn second" 
+                                        label="First name">
+                                    </v-text-field>
+                                </v-col>
+                                <v-col cols="6">
+                                    <v-text-field 
+                                        color="blue" 
+                                        :rules="nameRules" 
+                                        clearable 
+                                        variant="outlined" 
+                                        class="fadeIn second" 
+                                        label="Last name">
+                                    </v-text-field>
+                                </v-col>
                             </v-row>
                             <v-row class="mx-5">
                                 <v-text-field 
-                                v-model="password" 
-                                color="blue" 
-                                variant="outlined" 
-                                class="fadeIn second" 
-                                :type="passwordVisible ? 'password' : 'text'"
-                                :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                                @click:append-inner="passwordVisible = !passwordVisible" 
-                                label="Password"></v-text-field>
+                                    color="blue" 
+                                    :rules="emailRules" 
+                                    v-model="email" 
+                                    clearable 
+                                    variant="outlined" 
+                                    class="fadeIn second" 
+                                    placeholder="johndoe@gmail.com" 
+                                    label="Email">
+                                </v-text-field>
                             </v-row>
-                            <v-row class="ms-5">
-                                <v-checkbox v-model="terms" color="blue" label="I agree to site terms and conditions"></v-checkbox>
+                            <v-row class="mx-5">
+                                <v-text-field 
+                                    v-model="password" 
+                                    color="blue" 
+                                    :rules="passwordRules"
+                                    variant="outlined" 
+                                    class="fadeIn second" 
+                                    :type="passwordVisible ? 'password' : 'text'"
+                                    :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                                    @click:append-inner="passwordVisible = !passwordVisible" 
+                                    label="Password">
+                                </v-text-field>
                             </v-row>
+                                <v-checkbox 
+                                    class="fadeIn third ms-4" 
+                                    v-model="terms" 
+                                    color="blue"
+                                    :rules="termsRules"
+                                    label="I agree to site terms and conditions">
+                                </v-checkbox>
                             <!-- <v-text-field color="blue" clearable variant="outlined" class="fadeIn second mx-5" label="Confirm password"></v-text-field> -->
-                            <v-btn block class="fadeIn third " id="btn-login" color="blue">Register</v-btn>
+                            <v-btn block class="fadeIn third" type="submit" id="btn-login" color="blue">Register</v-btn>
                         </v-container>
                         <label class="mt-4 fadeIn third">Already have an account? </label>
-                        <Link href="/login" class="text-blue mb-2 fadeIn third"> Log In </Link>
+                        <Link href="/login" class="text-blue mb-4 fadeIn third"> Log In </Link>
+
                     </v-card-item>
                 </v-card>
             </v-form>
@@ -66,6 +149,11 @@
     width: 100%;
     min-height: 100%;
     padding: 20px;
+  }
+
+  a {
+    text-decoration: none;
+
   }
   
   #formContent {

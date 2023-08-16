@@ -1,3 +1,10 @@
+<script setup>
+
+    import {ref} from 'vue'
+
+    const star = ref(2)
+
+</script>
 <template>
     <v-hover v-slot="{ isHovering, props }">
         <v-card :elevation="isHovering ? 5 : 1" :class="{ 'on-hover': isHovering }" v-bind="props">
@@ -12,8 +19,9 @@
                 <v-rating
                     half-increments
                     density="compact"
-                    color="orange-lighten-2"
+                    color="blue-lighten-2"
                     class="ma-0"
+                    v-model="star"
                     readonly
                     >
                     </v-rating>

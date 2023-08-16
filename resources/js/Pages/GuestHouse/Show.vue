@@ -14,8 +14,6 @@
     const index = ref(0)
     const showImageCarousel = ref(false)
     const showReviewModal = ref(false)
-    const colors = ['red', 'orange', 'grey', 'cyan', 'green']
-    const labels = ['bad', 'so so', 'ok', 'good', 'great']
     const images = []
     const guestHouseImg = guesthouse.guesthouse.room_image.split(",")
 
@@ -120,27 +118,18 @@
                     <div class="ms-3 mt-3">
                         <v-rating
                         v-model="rating"
-                        :item-labels="labels"
                         hover
                         half-increments
                         color="orange-lighten-2"
                         @click="showReviewModal = true"
                         >
-                        <template v-slot:item-label="props">
-                            <span
-                            class="font-weight-black text-caption"
-                            :class="`text-${colors[props.index]}`"
-                            >
-                            {{ props.label }}
-                            </span>
-                        </template>
                         </v-rating>
                     </div>
                 </v-container>
                 <v-divider/>
                 <v-container>
                         <h2>Ratings and reviews</h2>
-                        <v-row>
+                        <v-row class="mt-3">
                             <v-col cols="6" v-for="n in 4" :key="n">
                                 <RatingCard/>
                             </v-col>
