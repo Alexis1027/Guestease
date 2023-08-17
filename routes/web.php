@@ -31,4 +31,7 @@ Route::get('/guidelines', [HomeController::class, 'guidelines']);
 Route::get('/rules', [HomeController::class, 'rules']);
 
 Route::get('/login', [UserController::class, 'login']);
+Route::post('/login', [UserController::class, 'authenticate']);
 Route::get('/register', [UserController::class, 'register']);
+Route::post('/create/user', [UserController::class, 'store']);
+Route::post('/logout', [UserController::class, 'logout']);

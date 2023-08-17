@@ -1,14 +1,20 @@
 <script setup>
 
     import {ref} from 'vue'
+    import { useForm } from '@inertiajs/vue3';
 
-    const firstname = ref('')
-    const lastname = ref('')
-    const email = ref('')
-    const password = ref('')
-
-    const terms = ref(false)
     const passwordVisible = ref(true)
+    const form = useForm({
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        terms: false
+    })
+
+    const submit = () => {
+        form.post('/create/user')
+    }
 
     const nameRules = [
         value => {
@@ -68,7 +74,7 @@
                     </p>
                 </div>
             </div>
-            <v-form>
+            <v-form @submit.prevent>
                 <v-card elevation="0">
                     <v-card-item>
                         <v-container class="mt-2">
@@ -78,6 +84,8 @@
                                         color="blue" 
                                         :rules="nameRules" 
                                         clearable 
+                                        name="firstname"
+                                        v-model="form.firstname"
                                         variant="outlined" 
                                         class="fadeIn second" 
                                         label="First name">
@@ -88,6 +96,8 @@
                                         color="blue" 
                                         :rules="nameRules" 
                                         clearable 
+                                        name="lastname"
+                                        v-model="form.lastname"
                                         variant="outlined" 
                                         class="fadeIn second" 
                                         label="Last name">
@@ -98,8 +108,9 @@
                                 <v-text-field 
                                     color="blue" 
                                     :rules="emailRules" 
-                                    v-model="email" 
                                     clearable 
+                                    name="email"
+                                    v-model="form.email"
                                     variant="outlined" 
                                     class="fadeIn second" 
                                     placeholder="johndoe@gmail.com" 
@@ -108,10 +119,11 @@
                             </v-row>
                             <v-row class="mx-5">
                                 <v-text-field 
-                                    v-model="password" 
                                     color="blue" 
                                     :rules="passwordRules"
+                                    v-model="form.password"
                                     variant="outlined" 
+                                    name="password"
                                     class="fadeIn second" 
                                     :type="passwordVisible ? 'password' : 'text'"
                                     :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
@@ -121,13 +133,14 @@
                             </v-row>
                                 <v-checkbox 
                                     class="fadeIn third ms-4" 
-                                    v-model="terms" 
+                                    v-model="form.terms" 
                                     color="blue"
+                                    name="terms"
                                     :rules="termsRules"
                                     label="I agree to site terms and conditions">
                                 </v-checkbox>
                             <!-- <v-text-field color="blue" clearable variant="outlined" class="fadeIn second mx-5" label="Confirm password"></v-text-field> -->
-                            <v-btn block class="fadeIn third" type="submit" id="btn-login" color="blue">Register</v-btn>
+                            <v-btn block class="fadeIn third" :disabled="form.processing" @click="submit" type="submit" id="btn-login" color="blue">Register</v-btn>
                         </v-container>
                         <label class="mt-4 fadeIn third">Already have an account? </label>
                         <Link href="/login" class="text-blue mb-4 fadeIn third"> Log In </Link>

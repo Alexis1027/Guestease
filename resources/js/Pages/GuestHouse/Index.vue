@@ -6,8 +6,6 @@
     defineOptions({layout: Layout})
 
     const guesthouses = defineProps(['guesthouses'])
-    
-    console.log(guesthouses)
 </script>
 
 

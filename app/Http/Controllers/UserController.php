@@ -23,20 +23,19 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('message', 'You logged out?');
+        return redirect('/login')->with('message', 'You logged out?');
     }
 
     public function store(Request $request) {
         $form = $request->validate([
             'firstname' => ['required', 'min:3'],
             'lastname' => ['required', 'min:3'],
-            'email' => ['required', 'email', Rule::unique('users', 'email')],
-            'password' => ['required', 'confirmed', 'min:6'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'min:6'],
         ]);
         //hash password
         $form['role'] = 'user';
         $form['password'] = bcrypt($form['password']);
-        
         $user = User::create($form);
         $user->profile_pic = "default_profile.png";
         $user->save();
@@ -70,7 +69,7 @@ class UserController extends Controller
             return redirect('/')->with('message', 'You are now logged in!');
         }
         else {
-            return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+            return back();
         }
     }
 

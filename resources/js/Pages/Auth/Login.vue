@@ -1,11 +1,18 @@
 <script setup>
 
     import {ref} from 'vue'
-    
+    import {useForm} from '@inertiajs/vue3'
+
     const passwordVisible = ref(true)
 
-    const email = ref('')
-    const password = ref('')
+    const form = useForm({
+        email: '',
+        password: ''
+    })
+
+    const submit = () => {
+        form.post('/login')
+    }
 
     const emailRules = [
         value => {
@@ -22,10 +29,6 @@
         value => {
             if(value) return true
             return `Password is requred.`
-        },
-        value => {
-            if(value?.length >= 5) return true
-            return `Password must be at least 5 characters`
         }
     ]
 
@@ -35,7 +38,7 @@
     <v-btn icon="mdi-arrow-left" flat></v-btn>
     <v-container class="wrapper fadeInDown">
         <!-- <form method="POST" action="/users/authenticate"> -->
-        <v-form>
+        <v-form @submit.prevent>
             <div id="formContent">
                 <div class="fadeIn first">
                     <v-row class="text-center">
@@ -48,27 +51,32 @@
                     <v-card-item>
                         <v-container>
                             <v-text-field 
-                                v-model="email" 
+                                v-model="form.email" 
                                 color="blue" 
                                 clearable
+                                name="email"
                                 :rules="emailRules"
                                 variant="outlined" 
                                 class="fadeIn second mx-5" 
                                 placeholder="johndoe@gmail.com" 
+                                :error-messages="$page.props.errors.email"
                                 label="Email">
                             </v-text-field>
+                            {{ $page }}
                             <v-text-field 
-                                v-model="password" 
+                                v-model="form.password" 
                                 color="blue" 
                                 variant="outlined"
+                                name="password"
                                 :rules="passwordRules"
                                 class="fadeIn second mx-5" 
+                                :error-messages="$page.props.errors.password"
                                 :type="passwordVisible ? 'password' : 'text'"
                                 :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
                                 @click:append-inner="passwordVisible = !passwordVisible" 
                                 label="Password">
                             </v-text-field>
-                            <v-btn color="blue" class="fadeIn third" id="btn-login" type="submit" block>Log in</v-btn>
+                            <v-btn color="blue" class="fadeIn third" id="btn-login" @click="submit" type="submit" block>Log in</v-btn>
                             <br>
                             <label class="mt-4 fadeIn third">Dont have an account? </label>
                             <Link href="/register" class="text-blue fadeIn third"> Create Account</Link>
