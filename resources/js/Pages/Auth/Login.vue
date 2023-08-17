@@ -62,7 +62,6 @@
                                 :error-messages="$page.props.errors.email"
                                 label="Email">
                             </v-text-field>
-                            {{ $page }}
                             <v-text-field 
                                 v-model="form.password" 
                                 color="blue" 
@@ -76,7 +75,7 @@
                                 @click:append-inner="passwordVisible = !passwordVisible" 
                                 label="Password">
                             </v-text-field>
-                            <v-btn color="blue" class="fadeIn third" id="btn-login" @click="submit" type="submit" block>Log in</v-btn>
+                            <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="form.processing" :disabled="form.processing" @click="submit" type="submit" block>Log in</v-btn>
                             <br>
                             <label class="mt-4 fadeIn third">Dont have an account? </label>
                             <Link href="/register" class="text-blue fadeIn third"> Create Account</Link>

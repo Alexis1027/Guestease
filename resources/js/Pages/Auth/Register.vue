@@ -140,7 +140,7 @@
                                     label="I agree to site terms and conditions">
                                 </v-checkbox>
                             <!-- <v-text-field color="blue" clearable variant="outlined" class="fadeIn second mx-5" label="Confirm password"></v-text-field> -->
-                            <v-btn block class="fadeIn third" :disabled="form.processing" @click="submit" type="submit" id="btn-login" color="blue">Register</v-btn>
+                            <v-btn block class="fadeIn third" :loading="form.processing" :disabled="form.processing" @click="submit" type="submit" id="btn-login" color="blue">Register</v-btn>
                         </v-container>
                         <label class="mt-4 fadeIn third">Already have an account? </label>
                         <Link href="/login" class="text-blue mb-4 fadeIn third"> Log In </Link>

@@ -14,7 +14,6 @@ class GuestHouseController extends Controller
     //
     public function index() {
         //dd(request('search'));
-
         $guesthouses = GuestHouse::latest()->filter(request(['search']))->get();
 
         foreach($guesthouses as $gh) {

@@ -11,11 +11,11 @@
 
 <template>
         <Head title="Home" />
-        <Link href="/map">
-            <div>
-                <v-btn class="bg-blue" prepend-icon="mdi-map"> SHOW MAP</v-btn>
-            </div>
-        </Link>
+        <div class="sticky-btn-container">
+      <Link href="/map">
+        <v-btn class="bg-blue" prepend-icon="mdi-map">SHOW MAP</v-btn>
+      </Link>
+    </div>
         <!-- {{ guesthouses.guesthouses }} -->
         <v-row>
             <v-col cols="3" v-for="guesthouse in guesthouses.guesthouses" :key="guesthouse.id">

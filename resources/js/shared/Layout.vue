@@ -11,7 +11,7 @@
         <v-app-bar >
             <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
             <v-toolbar-title>
-                <Link href="/" id="link">Logo{{ $page.props.auth ? ' logged in' : '' }}</Link>
+                <Link href="/" id="link">Logo{{ $page.props.auth ? ' logged in' : ' not logged in' }}</Link>
 
             </v-toolbar-title>
             <v-spacer/>
@@ -103,7 +103,6 @@
                 <Link href="/create/guesthouse" id="link">
                     <v-list-item prepend-icon="mdi-account-hard-hat-outline" title="Create guest house" value="ssd"></v-list-item>
                 </Link>
-                {{ $page.props.auth ? $page.props.auth : 'not logged in' }}
             </v-list>
         </v-navigation-drawer>
 
