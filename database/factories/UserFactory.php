@@ -21,14 +21,15 @@ class UserFactory extends Factory
         $profile_pic = glob($profile_pic_path . '/*.{jpg,png,gif}', GLOB_BRACE);
 
         return [
-            'name' => fake()->name(),
+            'firstname' => fake()->firstName(),
+            'lastname' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'address' => fake()->address(),
-            'profile_pic' => $profile_pic ? str_replace($profile_pic_path . '/', '', $this->faker->randomElement($profile_pic)) : null,
             'contact_no' => fake()->phoneNumber(),
+            'profile_pic' => $profile_pic ? str_replace($profile_pic_path . '/', '', $this->faker->randomElement($profile_pic)) : null,
+            'role' => 'user',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'role' => 'user',
             'remember_token' => Str::random(10),
         ];
     }

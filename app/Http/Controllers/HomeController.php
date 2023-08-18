@@ -27,6 +27,10 @@ class HomeController extends Controller
         return Inertia::render('RulesAndRegulations');
     }
 
+    public function createAdmin() {
+        return Inertia::render('Auth/Create');
+    }
+
     public function wishlist() {
         return Inertia::render('Wishlist');
     }

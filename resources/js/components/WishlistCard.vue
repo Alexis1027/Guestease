@@ -1,3 +1,15 @@
+<script setup>
+
+    import {defineProps} from 'vue'
+    const prop = defineProps(['wishlist'])
+    const images = []
+    const guestHouseImg = prop.wishlist.guesthouse.room_image.split(",")
+    guestHouseImg.forEach(img => {
+        images.push(img)
+    });
+</script>
+
+
 <template>
     <v-hover v-slot="{ isHovering, props }">
         <v-card id="wishlist" class="my-6"
@@ -6,21 +18,31 @@
         v-bind="props">
             <v-row>
                 <v-col cols="4">
-                    <v-card width="350">
-                        <v-img src="images/room1.png"></v-img>
+                    <v-card height="275">
+                        <v-carousel hide-delimiters height="100%" show-arrows="hover">
+                            
+                                <v-carousel-item v-for="(image, i) in images" :key="i">
+                                    <Link :href="`room/${prop.wishlist.guesthouse.id}`">
+                                        <v-img :src="`images/${image}`" cover height="100%"></v-img>
+                                    </Link>
+                                </v-carousel-item>
+                            
+                        </v-carousel>
                     </v-card>
                 </v-col>
                 <v-col>
-                    <v-card-item class="text-h6">Guest House </v-card-item>
-                    <v-card-item>Lorem iasd asdasdas psum dolor sit amet consecasd asdtetur, adipas das aasd asd asdisicing elit. Asperiores, autem.</v-card-item>
-                    <v-card-item>
-                        <v-icon color="red">mdi-map-marker</v-icon>
-                        Cebu - Cordova
-                    </v-card-item>
-                    <v-card-item>
-                        <v-icon color="orange">mdi-star</v-icon>
-                        4.00 - ( 4 ratings )
-                    </v-card-item>
+                    <Link :href="`room/${prop.wishlist.guesthouse.id}`">
+                        <v-card-item class="text-h6">{{ prop.wishlist.guesthouse.room_name }}</v-card-item>
+                        <v-card-item>{{ prop.wishlist.guesthouse.room_details }}</v-card-item>
+                        <v-card-item>
+                            <v-icon color="red">mdi-map-marker</v-icon>
+                            {{ prop.wishlist.guesthouse.room_location }}
+                        </v-card-item>
+                        <v-card-item>
+                            <v-icon color="orange">mdi-star</v-icon>
+                            {{ prop.wishlist.averageRating }} - ( {{ prop.wishlist.totalRatings  }} {{ prop.wishlist.totalRatings <= 1 ? 'rating' : 'ratings'}} )
+                        </v-card-item>
+                    </Link>
                 </v-col>
             </v-row>
         </v-card>

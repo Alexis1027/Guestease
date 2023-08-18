@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use App\Models\Rating;
 use App\Models\GuestHouse;
 use Illuminate\Database\Seeder;
@@ -22,5 +23,6 @@ class DatabaseSeeder extends Seeder
         // ]);
         GuestHouse::factory(15)->create();
         Rating::factory(15)->create();
+        User::factory(10)->create();
     }
 }

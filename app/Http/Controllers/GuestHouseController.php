@@ -20,7 +20,7 @@ class GuestHouseController extends Controller
             $ratings = Rating::where('room_id', $gh->id)->get();
             $totalRatings = count($ratings);
             $sumRatings = $ratings->sum('rating');
-            $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings)+1 : 0;
+            $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings) : 0;
             $gh->averageRating = number_format($averageRating, 2);
         }
 
@@ -48,13 +48,11 @@ class GuestHouseController extends Controller
 
             $totalRatings = count($ratings);
             $sumRatings = $ratings->sum('rating');
-            $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings)+1 : 0;
+            $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings) : 0;
             $averageRating = number_format($averageRating, 2);
-
             foreach($ratings as $r) {
                 $r->user = User::find($r->user_id);
             }
-
 
             return Inertia::render('GuestHouse/Show', ['guesthouse' => $id,
                 'wishlist' => $wishlist, 
@@ -72,9 +70,8 @@ class GuestHouseController extends Controller
             ->get();
             $totalRatings = count($ratings);
             $sumRatings = $ratings->sum('rating');
-            $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings)+1 : 0;
+            $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings) : 0;
             $averageRating = number_format($averageRating, 2);
-
             foreach($ratings as $r) {
                 $r->user = User::find($r->user_id);
             }

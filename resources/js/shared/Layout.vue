@@ -8,12 +8,12 @@
 
 <template>
     <v-layout>
-        <v-app-bar >
+        <v-app-bar scroll-behavior="elevate" scroll-threshold="438">
             <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
             <v-toolbar-title>
-                <Link href="/" id="link">Logo{{ $page.props.auth ? ' logged in' : ' not logged in' }}</Link>
-
+                <Link href="/">Logo</Link>
             </v-toolbar-title>
+            {{ $page.props.auth ? ' logged in' : ' not logged in' }}
             <v-spacer/>
 
             <v-menu min-width="200px" rounded persistent>
@@ -29,18 +29,18 @@
                         <div class="mx-auto text-center">
                             <h3>John Doe</h3>
                             <v-divider class="my-3"></v-divider>
-                            <Link href="/reservations" id="link">
+                            <Link href="/reservations">
                                 <v-btn block variant="text">
                                     Reservations
                                 </v-btn>
                             </Link>
-                            <Link href="/wishlist" id="link"> 
+                            <Link href="/wishlist"> 
                                 <v-btn block variant="text" class="text-start">
                                     Wishlists 
                                 </v-btn>
                             </Link>
                             <Link href="/account">
-                                <v-btn block variant="text">
+                                <v-btn block variant="text" class="text-none">
                                     Account
                                 </v-btn>
                             </Link>
@@ -53,12 +53,12 @@
                     </v-card-item>
                     <v-divider/>
                     <v-card-item>
-                        <Link href="/login" id="link">
+                        <Link href="/login">
                             <v-btn block variant="text">
                                 Log in
                             </v-btn>
                         </Link>
-                        <Link href="/register" id="link">
+                        <Link href="/register">
                             <v-btn block variant="text">
                                 Sign up
                             </v-btn>
@@ -66,12 +66,12 @@
                     </v-card-item>
                     <v-divider/>
                     <v-card-item>
-                        <Link href="/guidelines" id="link">
+                        <Link href="/guidelines">
                             <v-btn block variant="text">
                                 Guidelines
                             </v-btn>
                         </Link>
-                        <Link href="/about" id="link">
+                        <Link href="/about">
                             <v-btn block variant="text">
                                 About
                             </v-btn>
@@ -88,20 +88,20 @@
             </v-list>
             <v-divider></v-divider>
             <v-list density="compact" nav >
-                <Link href="/" id="link">
+                <Link href="/">
                     <v-list-item prepend-icon="mdi-home" title="Home" value="home"></v-list-item>
                 </Link>
-                <Link href="/dashboard" id="link">
+                <Link href="/dashboard">
                     <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
                 </Link>
-                <Link href="/rules" id="link">
+                <Link href="/rules">
                     <v-list-item prepend-icon="mdi-playlist-check" title="Rules and regulations" value="rules"></v-list-item>
                 </Link>
-                <Link href="/create/admin" id="link">
+                <Link href="/create/admin">
                     <v-list-item prepend-icon="mdi-account-hard-hat-outline" title="Create admin account" value="createadmin"></v-list-item>
                 </Link>
-                <Link href="/create/guesthouse" id="link">
-                    <v-list-item prepend-icon="mdi-account-hard-hat-outline" title="Create guest house" value="ssd"></v-list-item>
+                <Link href="/create/guesthouse">
+                    <v-list-item prepend-icon="mdi-home-plus-outline" title="Create guest house" value="ssd"></v-list-item>
                 </Link>
             </v-list>
         </v-navigation-drawer>
@@ -111,9 +111,6 @@
                 <slot>
                 </slot>
             </v-container>
-            <!-- <v-footer border class="justify-center">
-                <strong> 2023 — Vuetify, LLC</strong>
-            </v-footer> -->
         </v-main>
 
         
@@ -125,6 +122,11 @@
   #link {
     text-decoration: none;
     color: black;
+  }
+
+  a {
+    text-decoration: none;
+    color: #000;
   }
 
 </style>

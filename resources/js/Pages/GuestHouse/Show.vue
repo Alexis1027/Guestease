@@ -2,37 +2,29 @@
 
     import Layout from '../../shared/Layout.vue'
     import {defineProps, ref} from 'vue'
-    import NavigationDrawer from '../../components/NavigationDrawer.vue'
+    import { useForm } from '@inertiajs/vue3'
+    import ImageDrawer from '../../components/ImageDrawer.vue'
     import RatingCard from '../../components/RatingCard.vue'
     import ImageCarousel from '../../components/ImageCarousel.vue'
     import RatingModal from '../../components/RatingModal.vue'
     defineOptions({layout: Layout})
 
     const overlay = ref(false)
-    const guesthouse = defineProps(['guesthouse', 'ratings', 'averageRating'])
+    const props = defineProps(['guesthouse', 'ratings', 'averageRating', 'wishlist', 'auth'])
     const rating = ref(0)
     const index = ref(0)
     const showImageCarousel = ref(false)
     const showReviewModal = ref(false)
     const images = []
-    const guestHouseImg = guesthouse.guesthouse.room_image.split(",")
+    const guestHouseImg = props.guesthouse.room_image.split(",")
+    const saveWishlistForm = useForm({
+        user_id: props.auth ? props.auth.user.id : '',
+        room_id: props.auth ? props.guesthouse.id : '',
+    })
 
     guestHouseImg.forEach(img => {
         images.push(img)
     });
-
-    const imageLayout = [
-    { cols: 4 },
-    {
-      cols: 8,
-      children: [{ cols: 12 }, { cols: 12 }],
-    },
-    { cols: 6 },
-    { cols: 3 },
-    { cols: 9 },
-    { cols: 4 },
-    { cols: 8 },
-  ]
 
   function getBorderRadius(i) {
     if(i === 2) {
@@ -49,16 +41,42 @@
     showImageCarousel.value = true
   }
 
+  const submitForm = () => {
+    if(props.wishlist) {
+        saveWishlistForm.delete('/wishlist/unsave')
+    }
+    else {
+        saveWishlistForm.post('/wishlist/save')
+    }
+  }
 
 </script>
 
 <template>
-    <Head :title="`${guesthouse.guesthouse.room_name}`" />
+    <Head :title="`${props.guesthouse.room_name}`" />
     <v-container>
-                <h1>{{ guesthouse.guesthouse.room_name }}</h1>
+                <h1>{{ props.guesthouse.room_name }}</h1>
         <v-row>
-            <v-col cols="2"> <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ guesthouse.averageRating }} reviews</v-col>
-            <v-col cols="5"> <v-icon color="red">mdi-map-marker</v-icon> Located in - {{ guesthouse.guesthouse.room_location }}</v-col>
+            <v-col cols="2"> <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ props.averageRating }} reviews</v-col>
+            <v-col cols="5"> <v-icon color="red">mdi-map-marker</v-icon> Located in - {{ props.guesthouse.room_location }}</v-col>
+            <v-spacer></v-spacer>
+            <v-col class="text-end">
+                <v-form @submit.prevent="submitForm">
+                    <v-btn 
+                        class="text-none" 
+                        :loading="saveWishlistForm.processing" 
+                        type="submit"
+                        rounded 
+                        flat 
+                        :prepend-icon="props.wishlist ? 'mdi-heart' : 'mdi-heart-outline'"
+                        >
+                            <template v-slot:prepend v-if="props.wishlist">
+                                <v-icon color="red"></v-icon>
+                            </template>
+                            {{ props.wishlist ? 'Saved' : 'Save' }}
+                    </v-btn>
+                </v-form>
+            </v-col>
         </v-row>
         <v-container>
             <v-row>
@@ -68,10 +86,8 @@
                         <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
                             <template v-slot:placeholder>
                                 <div class="d-flex align-center justify-center fill-height">
-                                    <v-progress-circular
-                                    color="grey-lighten-4"
-                                    indeterminate
-                                    ></v-progress-circular>
+                                    <v-progress-circular color="grey-lighten-4" indeterminate>
+                                    </v-progress-circular>
                                 </div>
                             </template>
                         </v-img>
@@ -87,10 +103,8 @@
                                 <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
                                     <template v-slot:placeholder>
                                         <div class="d-flex align-center justify-center fill-height">
-                                            <v-progress-circular
-                                            color="grey-lighten-4"
-                                            indeterminate
-                                            ></v-progress-circular>
+                                            <v-progress-circular color="grey-lighten-4" indeterminate>
+                                            </v-progress-circular>
                                         </div>
                                     </template>
                                 </v-img>
@@ -107,8 +121,8 @@
                 <v-container>
                     <h2>About this place</h2>
                     <ul>
-                        <li>{{ guesthouse.guesthouse.room_details }}</li>
-                        <li>{{ guesthouse.guesthouse.room_location }}</li>
+                        <li>{{ props.guesthouse.room_details }}</li>
+                        <li>{{ props.guesthouse.room_location }}</li>
                     </ul>
                 </v-container>
                 <v-divider/>
@@ -126,33 +140,17 @@
                         </v-rating>
                     </div>
                 </v-container>
-                <v-divider/>
-                <v-container>
-                        <h2>Ratings and reviews</h2>
-                        <v-row class="mt-3">
-                            <v-col cols="6" v-for="n in 4" :key="n">
-                                <RatingCard/>
-                            </v-col>
-                        </v-row>
-                </v-container>
+                
             </v-col>
             <v-col cols="4" class="mt-3">
-                <v-hover
-                    v-slot="{ isHovering, props }"
-                    open-delay="200"
-                >
-                <v-card
-                    :elevation="isHovering ? 16 : 2"
-                    :class="{ 'on-hover': isHovering }"
-                    v-bind="props"
-                >
+                <v-card>
                     <v-card-title>
                         <h2>Price Details</h2>
                     </v-card-title>
                     <v-card-item>
                         <v-row>
                             <v-col>Monthly Fee </v-col>
-                            <v-col>P {{ guesthouse.guesthouse.room_price }}</v-col>
+                            <v-col>P {{ props.guesthouse.room_price }}</v-col>
                         </v-row>
                     </v-card-item>
                     <v-card-item>
@@ -161,12 +159,23 @@
                         </Link>
                     </v-card-item>
                 </v-card>
-                </v-hover>
             </v-col>
+            <v-divider/>
+            <v-container>
+                <h2>Ratings and reviews</h2>
+                <v-row class="mt-3">
+                    <v-col cols="6" v-for="rating in props.ratings" :key="rating.id">
+                        <RatingCard :rating="rating" />
+                    </v-col>
+                    <v-col cols="12" v-if="props.ratings.length <= 0" class="text-center">
+                        <p class="text-h4"> nuh uhh.. no ratings found  </p>
+                    </v-col>
+                </v-row>
+            </v-container>
         </v-row>
-        <NavigationDrawer @closeOverlay="overlay = false" v-if="true" :overlay="overlay" :images="images" />
+        <ImageDrawer @closeOverlay="overlay = false" v-if="true" :overlay="overlay" :images="images" />
         <ImageCarousel :showImageCarousel="showImageCarousel" :images="images" :index="index" @CloseImgCarousel="showImageCarousel = false" />
-        <RatingModal :showReviewModal="showReviewModal" :star="rating" :guesthouse="guesthouse.guesthouse" @closeReviewModal="showReviewModal = false" />
+        <RatingModal :showReviewModal="showReviewModal" :star="rating" :guesthouse="props.guesthouse" @closeReviewModal="showReviewModal = false" />
     </v-container>
 </template>
 

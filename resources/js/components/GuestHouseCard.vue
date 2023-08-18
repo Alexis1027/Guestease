@@ -18,10 +18,10 @@
     <div id="carousel">
         <!-- <router-link to="/about">about...</router-link> -->
         <v-skeleton-loader class="mt-6" :loading="loading" height="100%" type="image, article">
-            <v-carousel :cycle="false" height="275" hide-delimiter-background hide-delimiters show-arrows="hover">
+            <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters show-arrows="hover">
                 <v-carousel-item v-for="(image, i) in images" :key="i">
                     <Link :href="`/room/${guesthouse.guesthouse.id}`">
-                        <v-img id="carousel" :src="`images/${images[i]}`" cover height="275" class="rounded-t-lg">
+                        <v-img id="carousel" :src="`images/${images[i]}`" cover height="275" width="100%" class="rounded-t-lg">
                             <template v-slot:placeholder>
                                 <div class="d-flex align-center justify-center fill-height">
                                     <v-progress-circular color="grey-lighten-4" indeterminate>

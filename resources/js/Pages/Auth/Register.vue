@@ -72,6 +72,7 @@
                     <p class="text-h5 pt-3">
                         <i class="fa fa-address-card-o" aria-hidden="true"></i> Create account
                     </p>
+                    <p class="text-red">fix validation</p>
                 </div>
             </div>
             <v-form @submit.prevent>
