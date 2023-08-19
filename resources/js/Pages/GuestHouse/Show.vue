@@ -154,7 +154,7 @@
                         </v-row>
                     </v-card-item>
                     <v-card-item>
-                        <Link href="/payment">
+                        <Link :href="`/payment/${props.guesthouse.id}`">
                             <v-btn color="green" width="100%">Reserve</v-btn>
                         </Link>
                     </v-card-item>

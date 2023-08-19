@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\GuestHouse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,8 +17,8 @@ class HomeController extends Controller
         return Inertia::render('GuestHouse/Show');
     }
 
-    public function payment() {
-        return Inertia::render('ConfirmReservation');
+    public function payment(GuestHouse $room) {
+        return Inertia::render('ConfirmReservation', ['guesthouse' => $room]);
     }
 
     public function guidelines() {

@@ -1,15 +1,21 @@
 <script setup>
 
-    import {ref, defineProps} from 'vue'
+    import {ref, defineProps, onMounted} from 'vue'
     import {Link} from '@inertiajs/vue3'
     import { VSkeletonLoader } from 'vuetify/lib/labs/components.mjs';
     const guesthouse = defineProps(['guesthouse'])
     const images = []
     const guestHouseImg = guesthouse.guesthouse.room_image.split(",")
-    const loading = ref(false)
+    const loading = ref(true)
     guestHouseImg.forEach(img => {
         images.push(img)
     });
+
+    onMounted(() => {
+        setTimeout(() => {
+            loading.value = false
+        },1000)
+    })
     
 
 </script>

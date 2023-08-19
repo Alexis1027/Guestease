@@ -4,7 +4,6 @@
     import Layout from '../../shared/Layout.vue';
     import {defineProps} from 'vue'
     defineOptions({layout: Layout})
-
     const guesthouses = defineProps(['guesthouses'])
 </script>
 

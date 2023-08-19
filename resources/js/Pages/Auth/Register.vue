@@ -63,8 +63,6 @@
 
 <template>
     <Head title="Register" />
-    <v-btn icon="mdi-arrow-left" flat></v-btn>
-       
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <div class="fadeIn first">

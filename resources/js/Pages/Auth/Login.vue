@@ -43,7 +43,6 @@
 
 <template>
     <Head title="Login" />
-    <v-btn icon="mdi-arrow-left" flat></v-btn>
     <v-container class="wrapper fadeInDown">
         <!-- <form method="POST" action="/users/authenticate"> -->
         <v-form @submit.prevent>
@@ -84,7 +83,7 @@
                                 label="Password">
                             </v-text-field>
                             <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="form.processing" :disabled="form.processing" @click="submit" type="submit" block>Log in</v-btn>
-              <GoogleLogin class="my-3" :callback="handleGoogleResponse"/>
+              <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/>
                             <br>
                             <label class="mt-4 fadeIn third">Dont have an account? </label>
                             <Link href="/register" class="text-blue fadeIn third"> Create Account</Link>

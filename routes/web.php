@@ -26,7 +26,7 @@ Route::get('/about', [HomeController::class, 'about']);
 Route::get('/map', [HomeController::class, 'map']);
 Route::get('/dashboard', [HomeController::class, 'dashboard']);
 Route::get('/reservations', [HomeController::class, 'reservations'])->middleware('auth');
-Route::get('/payment', [HomeController::class, 'payment']);
+Route::get('/payment/{room}', [HomeController::class, 'payment'])->middleware('auth');
 Route::get('/guidelines', [HomeController::class, 'guidelines']);
 Route::get('/rules', [HomeController::class, 'rules']);
 Route::get('/create/admin', [HomeController::class, 'createAdmin']);

@@ -1,5 +1,9 @@
 <script setup>
 
+    import {defineProps} from 'vue'
+
+    const prop = defineProps(['guesthouse'])
+
     const items = [
         'Paypal',
         'Gcash',
@@ -14,9 +18,10 @@
         <v-container>
             <v-row>
                 <v-col cols="6">
-
                     <v-container>
-                        <v-btn rounded icon="mdi-keyboard-backspace" flat></v-btn>
+                        <Link :href="`/room/${prop.guesthouse.id}`">
+                            <v-btn rounded icon="mdi-keyboard-backspace" flat></v-btn>
+                        </Link>
                         <label class="text-h5">Confirm Reservation</label>
                         <p class="text-h6 my-4">Personal Information</p>
                         <v-text-field variant="outlined" color="blue" clearable label="First name"></v-text-field>
@@ -35,18 +40,16 @@
                             <v-img src="/images/room1.png"></v-img>
                         </v-card>
                         <v-card-title>
-                            Guest House
+                            Guest House {{ prop.guesthouse.room_name }}
                         </v-card-title>
                         <v-card-text>
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo, fuga.</p>
-                        </v-card-text>
-                        <v-card-text>
-                            <v-icon color="orange">mdi-star</v-icon>
-                            4.00
+                            <p>{{ prop.guesthouse.room_details }}</p>
                         </v-card-text>
                         <v-divider/>
                         <v-card-text>
                             Price Details
+                            <p>{{ prop.guesthouse.room_price }}</p>
+
                         </v-card-text>
                     </v-card>
 
