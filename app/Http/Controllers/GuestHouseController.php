@@ -80,9 +80,7 @@ class GuestHouseController extends Controller
     }
 
     //create guest house
-    public function create() {
-        return Inertia::render('GuestHouse/Create');
-    }
+
 
     public function payment(Request $request, GuestHouse $guesthouse) {
 
@@ -93,10 +91,6 @@ class GuestHouseController extends Controller
             $averageRating = number_format($averageRating, 2);
 
         return view('guesthouses.payment', ['guesthouse' => $guesthouse, 'averageRating' => $averageRating, 'ratings' => $ratings]);
-    }
-
-    public function edit(GuestHouse $guesthouse) {
-        return view('guesthouses.edit', ['guesthouse' => $guesthouse]);
     }
 
     public function update(Request $request, GuestHouse $guesthouse) {
