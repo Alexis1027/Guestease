@@ -7,6 +7,7 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import {Link} from '@inertiajs/vue3'
 import {Head} from '@inertiajs/vue3'
+import vue3GoogleLogin from 'vue3-google-login'
 
 const vuetify = createVuetify({
     components,
@@ -25,6 +26,9 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .component('Link', Link)
       .component('Head', Head)
+      .use(vue3GoogleLogin, {
+        clientId: '778324553177-j9gqho3k6qvotg04m4hvcle26mto0vl5.apps.googleusercontent.com'
+      })
       .use(vuetify)
       .use(plugin)
       .mount(el)

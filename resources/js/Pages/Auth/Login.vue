@@ -1,7 +1,10 @@
 <script setup>
 
-    import {ref} from 'vue'
+    import {ref, defineProps} from 'vue'
     import {useForm} from '@inertiajs/vue3'
+    import {GoogleLogin} from 'vue3-google-login'
+ 
+    const props = defineProps(['callback'])
 
     const passwordVisible = ref(true)
 
@@ -32,7 +35,12 @@
         }
     ]
 
+    const handleGoogleResponse = (response) => {
+        console.log("Handle the response", response)
+    }
+
 </script>
+
 <template>
     <Head title="Login" />
     <v-btn icon="mdi-arrow-left" flat></v-btn>
@@ -76,6 +84,7 @@
                                 label="Password">
                             </v-text-field>
                             <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="form.processing" :disabled="form.processing" @click="submit" type="submit" block>Log in</v-btn>
+              <GoogleLogin class="my-3" :callback="handleGoogleResponse"/>
                             <br>
                             <label class="mt-4 fadeIn third">Dont have an account? </label>
                             <Link href="/register" class="text-blue fadeIn third"> Create Account</Link>

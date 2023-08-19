@@ -18,6 +18,7 @@
         "date-fns": "^2.30.0",
         "leaflet": "^1.9.4",
         "vue": "^3.3.4",
+        "vue3-google-login": "^2.0.18",
         "vuetify": "^3.3.11"
     }
 }
