@@ -2,6 +2,7 @@
 
     import {ref} from 'vue'
     import Footer from './Footer.vue';
+    const search = ref('')
     // import GuestHouseIndex from '../Pages/GuestHouse/index.vue'
     const sidebar = ref(false)
 </script>
@@ -14,6 +15,8 @@
                 <Link href="/">Logo</Link>
             </v-toolbar-title>
             {{ $page.props.auth ? ' logged in' : ' not logged in' }}
+            <!-- <v-text-field label="Search..." clearable flat rounded prepend-inner-icon="mdi-magnify" v-model="search" variant="outlined" color="blue">
+            </v-text-field> -->
             <v-spacer/>
 
             <v-menu min-width="200px" rounded persistent>
@@ -24,10 +27,13 @@
                         </v-avatar>
                     </v-btn>
                 </template>
-                <v-card width="250">
-                    <v-card-item>
-                        <div class="mx-auto text-center">
-                            <h3>John Doe</h3>
+                <v-card width="250" >
+                    <v-card-item v-if="$page.props.auth">
+                        <div class="mx-auto ">
+                                <v-list-item
+                                :prepend-avatar="`images/profile/${$page.props.auth.user.profile_pic}`"
+                                :title="$page.props.auth.user.firstname + ' ' + $page.props.auth.user.lastname"
+                            ></v-list-item>
                             <v-divider class="my-3"></v-divider>
                             <Link href="/reservations">
                                 <v-btn block variant="text">
@@ -51,8 +57,7 @@
                             </Link>
                         </div>
                     </v-card-item>
-                    <v-divider/>
-                    <v-card-item>
+                    <v-card-item v-else>
                         <Link href="/login">
                             <v-btn block variant="text">
                                 Log in

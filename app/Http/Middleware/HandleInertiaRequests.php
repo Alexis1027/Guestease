@@ -43,6 +43,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => [
                     'id' => Auth::user()->id,
                     'firstname' => Auth::user()->firstname,
+                    'email' => Auth::user()->email,
                     'lastname' => Auth::user()->lastname,
                     'address' => Auth::user()->address,
                     'contact_no' => Auth::user()->contact_no,

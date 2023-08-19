@@ -87,11 +87,10 @@
 
 <template>
     <Head title="Map" />
-    <v-text-field variant="underlined" class="rounded-pill" color="blue" label="Where do you want to go?" v-model="search">
+    <v-text-field variant="outlined" color="blue" label="Where do you want to go?" v-model="search">
         <template v-slot:append-inner>
             <v-scroll-x-transition>
-                <v-btn v-show="search" icon="mdi-map-search-outline" variant="text"
-                ></v-btn>
+                <v-btn v-show="search" icon="mdi-map-search-outline" variant="text"></v-btn>
             </v-scroll-x-transition>
         </template>
     </v-text-field>
