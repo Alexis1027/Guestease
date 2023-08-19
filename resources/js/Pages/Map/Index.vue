@@ -9,6 +9,7 @@
     // const lat = ref('')
     // const lon = ref('')
     // const dataLoaded = ref(false)
+    const search = ref('')
     const mapContainer = ref(null)
     const mapSnackbar = ref(false)
     const currentGuestHouse = ref(null)
@@ -86,6 +87,14 @@
 
 <template>
     <Head title="Map" />
+    <v-text-field variant="underlined" class="rounded-pill" color="blue" label="Where do you want to go?" v-model="search">
+        <template v-slot:append-inner>
+            <v-scroll-x-transition>
+                <v-btn v-show="search" icon="mdi-map-search-outline" variant="text"
+                ></v-btn>
+            </v-scroll-x-transition>
+        </template>
+    </v-text-field>
     <MapSidebar :mapSnackbar="mapSnackbar" :guesthouse="currentGuestHouse" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
     <div class="leaflet-container" ref="mapContainer"></div>
 </template>
@@ -93,9 +102,8 @@
 <style scoped>
 
     .leaflet-container {
-        margin-top: 30px;
         height: 75vh;
-        width: 87vw;
+        width: 86vw;
     }
 
 </style>
