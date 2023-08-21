@@ -176,14 +176,14 @@ class GuestHouseController extends Controller
             'room_details' => 'required',
             'room_location' => 'required',
             'room_price' => 'required',
-            'room_image' => 'required'
+            'latitude' => 'required',
+            'longitude' => 'required'
         ]);
 
         $form['room_image'] = $houseImages;
-
         GuestHouse::create($form);
 
-        return redirect('/')->with('message', ' GUEST HOUSE ADDED SUCCESSFULLY!');
+        return back();
 
     }
 }

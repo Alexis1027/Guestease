@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('room_details');
             $table->string('room_price');
             $table->string('room_location');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->text('room_image');
             $table->timestamps();
         });

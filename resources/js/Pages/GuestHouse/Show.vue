@@ -57,13 +57,17 @@
     <v-container>
                 <h1>{{ props.guesthouse.room_name }}</h1>
         <v-row>
-            <v-col cols="2"> <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ props.averageRating }} reviews</v-col>
-            <v-col cols="5"> <v-icon color="red">mdi-map-marker</v-icon> Located in - {{ props.guesthouse.room_location }}</v-col>
+            <v-col cols="2"> 
+                <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ props.averageRating }} reviews
+            </v-col>
+            <v-col cols="5"> 
+                <v-icon color="red">mdi-map-marker</v-icon> Located in - {{ props.guesthouse.room_location }}
+            </v-col>
             <v-spacer></v-spacer>
             <v-col class="text-end">
                 <v-form @submit.prevent="submitForm">
                     <v-btn 
-                        class="text-none" 
+                        class="text-none bg-grey-lighten-3" 
                         :loading="saveWishlistForm.processing" 
                         type="submit"
                         rounded 

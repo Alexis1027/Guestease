@@ -33,7 +33,9 @@ class GuestHouseFactory extends Factory
             'room_details' => $this->faker->sentence(9),
             'room_price' => number_format($this->faker->randomNumber(4, true), 0, '.', ','),
             'room_location' => $this->faker->city(),
-            'room_image' => $room_images_string
+            'room_image' => $room_images_string,
+            'latitude' => $this->faker->latitude(),
+            'longitude' => $this->faker->longitude()
         ];
     }
 }

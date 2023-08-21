@@ -13,7 +13,9 @@ class GuestHouse extends Model
         'room_details', 
         'room_location', 
         'room_price', 
-        'room_image'
+        'room_image',
+        'latitude',
+        'longitude'
     ];
 
     public function scopeFilter($query, array $filters) {

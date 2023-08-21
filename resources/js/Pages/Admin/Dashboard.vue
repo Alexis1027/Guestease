@@ -54,25 +54,25 @@
                 <DashboardSheet id="sheet1">
                     <strong class="">Total Users</strong>
                     <p class="mt-3">
-                        69
+                        10
                     </p>
                 </DashboardSheet>
                 <DashboardSheet id="sheet1">
                     <strong class="">Total Guest Houses</strong>
                     <p class="mt-3">
-                        69
+                        15
                     </p>
                 </DashboardSheet>
                 <DashboardSheet id="sheet1">
                     <strong class="">Pending Reservations</strong>
                     <p class="mt-3">
-                        69
+                        12
                     </p>
                 </DashboardSheet>
                 <DashboardSheet id="sheet1">
                     <strong class="">Total Sales</strong>
                     <p class="mt-3">
-                        69
+                        3
                     </p>
                 </DashboardSheet>
         </v-row>
