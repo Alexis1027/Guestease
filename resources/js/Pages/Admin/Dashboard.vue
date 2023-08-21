@@ -1,15 +1,10 @@
-<!-- <script>
-    import Layout from '../shared/Layout.vue'
-
- export default {
-   layout: Layout,
- }
-</script> -->
 <script setup>
 
     import Layout from '../../shared/Layout.vue'
     import Chart from 'chart.js/auto'
+    import DashboardSheet from '../../components/DashboardSheet.vue'
     import { onMounted, ref } from 'vue';
+
     defineOptions({layout: Layout})
     
 
@@ -38,7 +33,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Chart Title'
+                        text: 'Monthly Sales Analytics'
                     }
                 }
             }
@@ -53,9 +48,49 @@
 
     <Head title="Dashboard" />
 
-    <h1>DASHBOARD</h1>
+    <v-container>
+        <p class="text-h5 mb-1">GHRS Dashboard</p>
+        <v-row>
+                <DashboardSheet id="sheet1">
+                    <strong class="">Total Users</strong>
+                    <p class="mt-3">
+                        69
+                    </p>
+                </DashboardSheet>
+                <DashboardSheet id="sheet1">
+                    <strong class="">Total Guest Houses</strong>
+                    <p class="mt-3">
+                        69
+                    </p>
+                </DashboardSheet>
+                <DashboardSheet id="sheet1">
+                    <strong class="">Pending Reservations</strong>
+                    <p class="mt-3">
+                        69
+                    </p>
+                </DashboardSheet>
+                <DashboardSheet id="sheet1">
+                    <strong class="">Total Sales</strong>
+                    <p class="mt-3">
+                        69
+                    </p>
+                </DashboardSheet>
+        </v-row>
+    </v-container>
+
     <v-container width="400">
-        <canvas ref="myChartRef"></canvas>
+        <p class="text-h5 mb-1">Monthly Sales Analytics</p>
+            <div class="bg-white">
+                <canvas ref="myChartRef"></canvas>
+            </div>
     </v-container>
 </template>
 
+<style scoped>
+
+    canvas {
+        border-left: 3px solid;
+        border-color: rgb(42,154,243);
+    }    
+
+</style>

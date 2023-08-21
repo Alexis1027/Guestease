@@ -42,6 +42,6 @@ Route::get('/wishlist', [WishlistController::class, 'index'])->middleware('auth'
 
 Route::get('/create/admin', [AdminController::class, 'createAdmin']);
 Route::get('/dashboard', [AdminController::class, 'dashboard']);
-Route::get('/create/guesthouse', [AdminController::class, 'create']);
 Route::get('/edit/guesthouse', [AdminController::class, 'edit']);
-Route::get('/manage/guesthouse', [AdminController::class, 'manage_guesthouse']);
+Route::get('/manage/guesthouses', [AdminController::class, 'manage_guesthouses']);
+Route::get('/manage/users', [AdminController::class, 'manage_users']);

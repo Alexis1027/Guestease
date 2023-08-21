@@ -9,7 +9,7 @@
 </script>
 
 <template>
-    <Head title="Wishlist" />
+    <Head title="Wishlists" />
     <p class="text-h4">Wishlists</p>
     <template v-for="wishlist in props.wishlists" :key="wishlist.id">
         <!-- <Link :href="`/room/${n}`"> -->

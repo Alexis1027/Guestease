@@ -1,15 +1,85 @@
 <script setup>
 
+    import {ref} from 'vue'
     import Layout from '../../shared/Layout.vue'
+    import EditUserModal from '../../components/EditUserModal.vue'
+    import DeleteUserModal from '../../components/DeleteUserModal.vue'
+
+    const entries = [5, 10, 15, 20]
+    const editUserModal = ref(false)
+    const deleteUserModal = ref(false)
     defineOptions({layout: Layout})
 </script>
 
 
-
-
 <template>
-    <Head title="About" />
-       
-    <h1>Manage userss</h1>
+    <Head title="Manage users" />
+    
+    <v-container class="bg-white">
+        <v-row justify="space-between">
+            <v-col cols="2">
+                    <v-select flat variant="solo-filled" :items="entries" label="No. of entries"></v-select>
+            </v-col>
+            <v-col cols="4">
+            <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
+        </v-col>
+        </v-row>
+        <v-table hover class="bg-grey-lighten-5 text-center">
+        <thead>
+            <tr >
+                <th class="text-center">Id</th>
+                <th class="text-center">Profile</th>
+                <th class="text-center">Full name</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Contact No.</th>
+                <th class="text-center">Role</th>
+                <th class="text-center">Created At</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="n in 5" :key="n">
+               <td>{{ n }}</td>
+               <td>
+                    <v-avatar>
+                        <v-img src="../images/profile/21.png">
+
+                        </v-img>
+                    </v-avatar>
+               </td>
+               <td>First Last Name {{ n }}</td>
+               <td>email@email.com {{ n }}</td>
+               <td>{{ n*10000 }}</td>
+               <td>user</td>
+               <td>august 9 2023</td>
+                <td>
+                    <v-btn icon="mdi-pencil" size="small" @click="editUserModal = true" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
+                    <v-btn icon="mdi-delete-outline" @click="deleteUserModal = true" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
+                </td>
+            </tr>
+        </tbody>
+    </v-table>
+    <v-row justify="space-between" class="mt-2">
+        <v-col>
+            Showing 1 to 4 of 4 entries
+        </v-col>
+        <v-col cols="3"  class="d-flex justify-end">
+            <v-btn flat class="text-none">Previous</v-btn>
+            <p class="mt-2">1</p>
+            <v-btn flat class="text-none">Next</v-btn>
+        </v-col>
+    </v-row>
+    </v-container>
+
+    <EditUserModal :show="editUserModal" @CloseDialog="editUserModal = false" v-model="editUserModal" />
+    <DeleteUserModal :show="deleteUserModal" @CloseDialog="deleteUserModal = false" v-model="deleteUserModal" />
+
 </template>
 
+<style scoped>
+
+    .v-table, th, td {
+        border: 1px solid rgb(238,238,238);
+    }
+
+</style>

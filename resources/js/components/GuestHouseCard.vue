@@ -39,8 +39,9 @@
                     </Link>
                 </v-carousel-item>
             </v-carousel>
-            <v-row id="guestHouseDetails">
-                <v-col cols="8"><strong>{{ guesthouse.guesthouse.room_name }} </strong></v-col>
+            <v-container class="bg-grey-lighten-3">
+                <v-row id="guestHouseDetails">
+                <v-col cols="8"><strong class="truncate-text-title">{{ guesthouse.guesthouse.room_name }} </strong></v-col>
                 <v-col cols="4" >
                     <v-icon color="orange-lighten-1">
                         mdi-star
@@ -48,8 +49,9 @@
                     {{ guesthouse.guesthouse.averageRating }} 
                 </v-col>
             </v-row>
-            <p>{{ guesthouse.guesthouse.room_details }}</p>
+            <p class="truncate-text">{{ guesthouse.guesthouse.room_details }}</p>
             <p> <strong>P {{ guesthouse.guesthouse.room_price }}</strong> monthly. </p>
+            </v-container>
         </v-skeleton-loader>
     </div>
   </template>
@@ -59,6 +61,22 @@
   #carousel:hover{
     cursor: pointer;
   }
+
+  .truncate-text {
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* Adjust the number of lines to show */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .truncate-text-title {
+      display: -webkit-box;
+      -webkit-line-clamp: 1; /* Adjust the number of lines to show */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
   #guestHouseDetails{
     text-decoration: none;

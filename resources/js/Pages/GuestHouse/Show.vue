@@ -80,40 +80,40 @@
         </v-row>
         <v-container>
             <v-row>
-            <v-col cols="6">
-                <v-hover v-slot="{ isHovering, props }">
-                    <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
-                        <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
-                            <template v-slot:placeholder>
-                                <div class="d-flex align-center justify-center fill-height">
-                                    <v-progress-circular color="grey-lighten-4" indeterminate>
-                                    </v-progress-circular>
-                                </div>
-                            </template>
-                        </v-img>
-                    </v-card>
-                </v-hover>
-            </v-col>
-            <v-col cols="6">
-                <v-row>
-                    <v-col cols="6" v-for="i in 4" :key="i">
-                        <v-hover v-slot="{ isHovering, props }">
-                            <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
-                                <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" size="small" prepend-icon="mdi-image-multiple-outline" >show all images</v-btn>
-                                <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
-                                    <template v-slot:placeholder>
-                                        <div class="d-flex align-center justify-center fill-height">
-                                            <v-progress-circular color="grey-lighten-4" indeterminate>
-                                            </v-progress-circular>
-                                        </div>
-                                    </template>
-                                </v-img>
-                            </v-card>
-                        </v-hover>
-                    </v-col>
-                </v-row>
-            </v-col>
-        </v-row>
+                <v-col cols="6">
+                    <v-hover v-slot="{ isHovering, props }">
+                        <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
+                            <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
+                                <template v-slot:placeholder>
+                                    <div class="d-flex align-center justify-center fill-height">
+                                        <v-progress-circular color="grey-lighten-4" indeterminate>
+                                        </v-progress-circular>
+                                    </div>
+                                </template>
+                            </v-img>
+                        </v-card>
+                    </v-hover>
+                </v-col>
+                <v-col cols="6">
+                    <v-row>
+                        <v-col cols="6" v-for="i in 4" :key="i">
+                            <v-hover v-slot="{ isHovering, props }">
+                                <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
+                                    <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" size="small" prepend-icon="mdi-image-multiple-outline" >show all images</v-btn>
+                                    <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
+                                        <template v-slot:placeholder>
+                                            <div class="d-flex align-center justify-center fill-height">
+                                                <v-progress-circular color="grey-lighten-4" indeterminate>
+                                                </v-progress-circular>
+                                            </div>
+                                        </template>
+                                    </v-img>
+                                </v-card>
+                            </v-hover>
+                        </v-col>
+                    </v-row>
+                </v-col>
+            </v-row>
         </v-container>
         <v-divider/>
         <v-row>
@@ -130,13 +130,7 @@
                     <h2>Rate this place</h2>
                     <p style="color: gray">Tell others what you think.</p>
                     <div class="ms-3 mt-3">
-                        <v-rating
-                        v-model="rating"
-                        hover
-                        half-increments
-                        color="orange-lighten-2"
-                        @click="showReviewModal = true"
-                        >
+                        <v-rating v-model="rating" hover half-increments color="orange-lighten-2" @click="showReviewModal = true">
                         </v-rating>
                     </div>
                 </v-container>

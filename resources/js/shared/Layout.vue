@@ -8,7 +8,7 @@
 </script>
 
 <template>
-    <v-layout>
+    <v-layout class="bg-grey-lighten-3">
         <v-app-bar scroll-behavior="elevate" scroll-threshold="438">
             <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
             <v-toolbar-title>
@@ -85,10 +85,10 @@
                 </v-card>
             </v-menu>
         </v-app-bar>
-        <v-navigation-drawer v-model="sidebar" :permanent="true" location="left" temporary>
+        <v-navigation-drawer v-model="sidebar" :permanent="true" location="left" temporary >
             <v-list>
                 <v-list-item
-                prepend-avatar="/images/profile/ambatoPOU.jpg" title="John Doe" subtitle="admin"
+                prepend-avatar="/images/profile/21.png" title="John Doe" subtitle="admin"
                 ></v-list-item>
             </v-list>
             <v-divider></v-divider>
@@ -99,17 +99,14 @@
                 <Link href="/dashboard">
                     <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
                 </Link>
-                <Link href="/manage/guesthouse">
+                <Link href="/manage/guesthouses">
                     <v-list-item prepend-icon="mdi-home-edit" title="Guest house management" value="manageguesthouse"></v-list-item>
                 </Link>
-                <Link href="/manage/user">
+                <Link href="/manage/users">
                     <v-list-item prepend-icon="mdi-account-edit" title="User management" value="manageuser"></v-list-item>
                 </Link>
                 <Link href="/create/admin">
                     <v-list-item prepend-icon="mdi-account-hard-hat" title="Create admin account" value="createadmin"></v-list-item>
-                </Link>
-                <Link href="/create/guesthouse">
-                    <v-list-item prepend-icon="mdi-home-plus" title="Create guest house" value="ssd"></v-list-item>
                 </Link>
                 <Link href="/rules">
                     <v-list-item prepend-icon="mdi-playlist-check" title="Rules and regulations" value="rules"></v-list-item>
