@@ -7,7 +7,7 @@
 </script> -->
 <script setup>
 
-    import Layout from '../shared/Layout.vue'
+    import Layout from '../../shared/Layout.vue'
     import Chart from 'chart.js/auto'
     import { onMounted, ref } from 'vue';
     defineOptions({layout: Layout})

@@ -11,7 +11,7 @@ class AdminController extends Controller
     //
     
     public function dashboard() {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Admin/Dashboard');
     }
 
     public function create() {
@@ -24,6 +24,10 @@ class AdminController extends Controller
 
     public function edit(GuestHouse $guesthouse) {
         return Inertia::render('GuestHouse/Edit', ['guesthouse' => $guesthouse]);
+    }
+
+    public function manage_guesthouse() {
+        return Inertia::render('Admin/ManageGuesthouse');
     }
 
 }

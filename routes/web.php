@@ -44,3 +44,4 @@ Route::get('/create/admin', [AdminController::class, 'createAdmin']);
 Route::get('/dashboard', [AdminController::class, 'dashboard']);
 Route::get('/create/guesthouse', [AdminController::class, 'create']);
 Route::get('/edit/guesthouse', [AdminController::class, 'edit']);
+Route::get('/manage/guesthouse', [AdminController::class, 'manage_guesthouse']);

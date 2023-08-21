@@ -46,8 +46,8 @@
                                 </v-btn>
                             </Link>
                             <Link href="/account">
-                                <v-btn block variant="text" class="text-none">
-                                    Account
+                                <v-btn block variant="text">
+                                    Settings
                                 </v-btn>
                             </Link>
                             <Link href="/logout" method="post">
@@ -99,14 +99,20 @@
                 <Link href="/dashboard">
                     <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
                 </Link>
-                <Link href="/rules">
-                    <v-list-item prepend-icon="mdi-playlist-check" title="Rules and regulations" value="rules"></v-list-item>
+                <Link href="/manage/guesthouse">
+                    <v-list-item prepend-icon="mdi-home-edit" title="Guest house management" value="manageguesthouse"></v-list-item>
+                </Link>
+                <Link href="/manage/user">
+                    <v-list-item prepend-icon="mdi-account-edit" title="User management" value="manageuser"></v-list-item>
                 </Link>
                 <Link href="/create/admin">
-                    <v-list-item prepend-icon="mdi-account-hard-hat-outline" title="Create admin account" value="createadmin"></v-list-item>
+                    <v-list-item prepend-icon="mdi-account-hard-hat" title="Create admin account" value="createadmin"></v-list-item>
                 </Link>
                 <Link href="/create/guesthouse">
-                    <v-list-item prepend-icon="mdi-home-plus-outline" title="Create guest house" value="ssd"></v-list-item>
+                    <v-list-item prepend-icon="mdi-home-plus" title="Create guest house" value="ssd"></v-list-item>
+                </Link>
+                <Link href="/rules">
+                    <v-list-item prepend-icon="mdi-playlist-check" title="Rules and regulations" value="rules"></v-list-item>
                 </Link>
             </v-list>
         </v-navigation-drawer>
