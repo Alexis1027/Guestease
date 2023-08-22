@@ -1,9 +1,12 @@
 <script setup>
 
-    import {ref} from 'vue'
+    import {ref, defineProps} from 'vue'
     import Layout from '../../shared/Layout.vue'
     import EditUserModal from '../../components/EditUserModal.vue'
     import DeleteUserModal from '../../components/DeleteUserModal.vue'
+    import {format} from 'date-fns'
+
+    const prop = defineProps(['users'])
 
     const entries = [5, 10, 15, 20]
     const editUserModal = ref(false)
@@ -38,20 +41,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="n in 5" :key="n">
-               <td>{{ n }}</td>
+            <tr v-for="user in prop.users" :key="user.id">
+               <td>{{ user.id }}</td>
                <td>
                     <v-avatar>
-                        <v-img src="../images/profile/21.png">
+                        <v-img :src="`../images/profile/${user.profile_pic}`">
 
                         </v-img>
                     </v-avatar>
                </td>
-               <td>First Last Name {{ n }}</td>
-               <td>email@email.com {{ n }}</td>
-               <td>{{ n*10000 }}</td>
-               <td>user</td>
-               <td>august 9 2023</td>
+               <td>{{ user.firstname + ' ' + user.lastname }}</td>
+               <td>{{ user.email }}</td>
+               <td>{{ user.contact_no ? user.contact_no : 'Not available' }}</td>
+               <td> {{ user.role }} </td>
+               <td> {{ format(new Date(user.created_at), 'M/dd/yyyy') }} </td>
                 <td>
                     <v-btn icon="mdi-pencil" size="small" @click="editUserModal = true" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
                     <v-btn icon="mdi-delete-outline" @click="deleteUserModal = true" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>

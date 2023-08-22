@@ -1,6 +1,6 @@
 <script setup>
 
-    import {ref} from 'vue'
+    import {ref, defineProps} from 'vue'
     import Layout from '../../shared/Layout.vue'
     import CreateGuestHouseModal from '../../components/CreateGuestHouseModal.vue';
     import DeleteGuestHouseModal from '../../components/DeleteGuestHouseModal.vue'
@@ -8,9 +8,10 @@
     const createGuestHouseDialog = ref(false)
     const deleteGuestHouseModal = ref(false)
     const editGuestHouseModal = ref(false)
-
+    
+    const prop = defineProps(['guesthouses'])
     const entries = [5, 10, 15, 20]
-
+    const page = ref(1)
     defineOptions({layout: Layout})
 </script>
 
@@ -31,10 +32,12 @@
             <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
         </v-col>
         </v-row>
+        
         <v-table hover class="bg-grey-lighten-5 text-center">
         <thead>
             <tr >
                 <th class="text-center">Id</th>
+                <th class="text-center">Images</th>
                 <th class="text-center">Guest house name</th>
                 <th class="text-center">Location</th>
                 <th class="text-center">Price</th>
@@ -42,11 +45,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="n in 5" :key="n">
-               <td>{{ n }}</td>
-               <td>guest house {{ n }}</td>
-               <td>some random place {{ n }}</td>
-               <td>{{ n*1000 }}</td>
+            <tr v-for="guesthouse in prop.guesthouses.data" :key="guesthouse.id">
+               <td>{{ guesthouse.id }}</td>
+               <td class="text-red">e fix unya</td>
+               <td>{{ guesthouse.room_name }}</td>
+               <td>{{ guesthouse.room_location }}</td>
+               <td> {{ guesthouse.room_price }} </td>
                 <td>
                     <v-btn icon="mdi-pencil" size="small" @click="editGuestHouseModal = true" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
                     <v-btn icon="mdi-delete-outline" @click="deleteGuestHouseModal = true" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
@@ -54,16 +58,19 @@
             </tr>
         </tbody>
     </v-table>
-    <v-row justify="space-between" class="mt-2">
-        <v-col>
-            Showing 1 to 4 of 4 entries
-        </v-col>
-        <v-col cols="3"  class="d-flex justify-end">
-            <v-btn flat class="text-none">Previous</v-btn>
-            <p class="mt-2">1</p>
-            <v-btn flat class="text-none">Next</v-btn>
+    <v-row  class="mt-2">
+        <v-col class="d-flex justify-end">
+            <v-pagination
+            v-model="page"
+            :length="prop.guesthouses.links.length"
+            :total-visible="6"
+            rounded="circle"
+            ></v-pagination>
+            <Link v-for="link in prop.guesthouses.links" class="mx-1" :key="link" :href="link.url">
+            yo</Link>
         </v-col>
     </v-row>
+
     </v-container>
 
     <CreateGuestHouseModal :dialog="createGuestHouseDialog" @CloseDialog="createGuestHouseDialog = false" v-model="createGuestHouseDialog" />
