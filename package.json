@@ -11,6 +11,7 @@
         "vite": "^4.4.9"
     },
     "dependencies": {
+        "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/vue3": "^1.0.9",
         "@mdi/font": "^7.2.96",
         "@vitejs/plugin-vue": "^4.2.3",
