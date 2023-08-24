@@ -173,14 +173,18 @@ class GuestHouseController extends Controller
     public function store(Request $request) {
         $houseImages = '';
         $uploadedFiles = $request->file('room_image');
-        for($i = 0; $i < count($uploadedFiles); $i++) {
-            if($i != count($uploadedFiles)-1) {
-                $houseImages .= $uploadedFiles[$i]->getClientOriginalName().",";
-            }
-            else {
-                $houseImages .= $uploadedFiles[$i]->getClientOriginalName();
+        
+        if($request->file('room_image') != null) {
+            for($i = 0; $i < count($uploadedFiles); $i++) {
+                if($i != count($uploadedFiles)-1) {
+                    $houseImages .= $uploadedFiles[$i]->getClientOriginalName().",";
+                }
+                else {
+                    $houseImages .= $uploadedFiles[$i]->getClientOriginalName();
+                }
             }
         }
+
         $form = $request->validate([
             'room_name' => 'required',
             'room_details' => 'required',

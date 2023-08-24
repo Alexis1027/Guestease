@@ -19,11 +19,19 @@
     })
 
     const submit = () => {
-        form.post('/create/guesthouse')
-        emit('CloseDialog')
+        form.post('/create/guesthouse', {
+            onSuccess: () => {
+                emit('CloseDialog')
+            }
+        })
     }
 
-    const progress = ref(20)
+    const imageRules = [
+        value => {
+            if(value.length >= 5) return true
+            return `Images should have at least 5 images` 
+        }
+    ]
 
 </script>
 
@@ -33,18 +41,21 @@
             
             <v-form @submit.prevent enctype="multipart/form-data">
                 <v-row justify="center">
-
                     <v-card title="Create guest house" elevation="0" class="text-center" width="80%">
+                    {{ form }}
+
                         <div id="container">
-                            <v-text-field variant="outlined" label="Name" name="room_name" v-model="form.room_name" clearable color="blue"></v-text-field>
+                            <v-text-field variant="outlined" :error-messages="form.errors.room_name" label="Name" name="room_name" v-model="form.room_name" clearable color="blue"></v-text-field>
                             <v-file-input
                                 chips
                                 variant="outlined"
                                 prepend-inner-icon="mdi-image-outline"
                                 v-model="form.room_image"
                                 multiple
+                                :rules="imageRules"
+                                accept="image/png, image/jpeg"
                                 name="room_image"
-                                label="Images"
+                                label="Images (minimum of 5 images)"
                                 color="blue">
                                 <template v-slot:selection="{ fileNames }">
                                     <template v-for="fileName in fileNames" :key="fileName">
@@ -54,21 +65,21 @@
                                     </template>
                                 </template>
                             </v-file-input>
-                            <v-textarea color="blue" v-model="form.room_details" name="room_details" variant="outlined" label="Desciption" clearable></v-textarea>
+                            <v-textarea color="blue" v-model="form.room_details" :error-messages="form.errors.room_details" name="room_details" variant="outlined" label="Desciption" clearable></v-textarea>
                             <v-row>
                                 <v-col cols="6">
-                                    <v-text-field color="blue" v-model="form.room_price" name="room_price" variant="outlined" label="Price" clearable></v-text-field>
+                                    <v-text-field color="blue" v-model="form.room_price" :error-messages="form.errors.room_price" name="room_price" variant="outlined" label="Price" clearable></v-text-field>
                                 </v-col>
                                 <v-col cols="6">
-                                    <v-text-field color="blue" v-model="form.room_location" name="room_location" variant="outlined" label="Location" clearable></v-text-field>
+                                    <v-text-field color="blue" v-model="form.room_location" name="room_location" :error-messages="form.errors.room_location" variant="outlined" label="Location" clearable></v-text-field>
                                 </v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="6">
-                                    <v-text-field color="blue" v-model="form.latitude" name="latitude" variant="outlined" label="Latitude" clearable></v-text-field>
+                                    <v-text-field color="blue" v-model="form.latitude" name="latitude" :error-messages="form.errors.latitude" variant="outlined" label="Latitude" clearable></v-text-field>
                                 </v-col>
                                 <v-col cols="6">
-                                    <v-text-field color="blue" v-model="form.longitude" name="longitude" variant="outlined" label="Longitude" clearable></v-text-field>
+                                    <v-text-field color="blue" v-model="form.longitude" name="longitude" :error-messages="form.errors.longitude" variant="outlined" label="Longitude" clearable></v-text-field>
                                 </v-col>
                             </v-row>
                             <v-card-actions class="d-flex justify-end">

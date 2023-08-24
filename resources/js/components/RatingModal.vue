@@ -44,14 +44,12 @@
                         <v-col cols="4">
                             <v-img :src="`../images/${images[0]}`" width="150"></v-img>
                         </v-col>
-                        <v-col class="mt-4">{{ props.guesthouse.room_name }}
-                            <p>Rate this place  </p>
+                        <v-col class="mt-4">
+                            {{ props.guesthouse.room_name }}
                         </v-col>
                     </v-row>
                 </v-card-title>
                 <v-card-item>
-                    {{ props.star }}
-                    {{ form }}
                     <v-rating v-model="form.rating" :model-value="props.star" readonly half-increments color="orange-lighten-2"  @click="showReviewModal = true">
                     </v-rating>
                 </v-card-item>

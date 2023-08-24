@@ -8,8 +8,8 @@
 
     const prop = defineProps(['users'])
 
-    const entries = [10, 15, 20, 25]
-    const entry = ref(10)
+    const entries = [5, 10, 15, 20, 25]
+    const entry = ref(5)
     const editUserModal = ref(false)
     const deleteUserModal = ref(false)
     defineOptions({layout: Layout})

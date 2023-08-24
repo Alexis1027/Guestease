@@ -11,8 +11,10 @@
     const deleteGuestHouseModal = ref(false)
     const editGuestHouseModal = ref(false)
     const prop = defineProps(['guesthouses'])
-    const entries = [10, 15, 20, 25]
-    const entry = ref(10)
+    const entries = [5, 10, 15, 20, 25]
+    const entry = ref(5)
+    const snackbar = ref(false)
+    const text = 'Created successfully'
 
     watch(prop.guesthouses.current_page, () => {
         // Inertia.get(`/manage/guesthouses/${entry}`)
@@ -81,12 +83,28 @@
             </Link>
         </v-col>
     </v-row>
-
+    <v-btn @click="snackbar = true">snackbar</v-btn>
     </v-container>
 
     <CreateGuestHouseModal :dialog="createGuestHouseDialog" @CloseDialog="createGuestHouseDialog = false" v-model="createGuestHouseDialog" />
     <DeleteGuestHouseModal :show="deleteGuestHouseModal" @CloseDialog="deleteGuestHouseModal = false" v-model="deleteGuestHouseModal" />
     <EditGuestHouseModal :show="editGuestHouseModal" @CloseDialog="editGuestHouseModal = false" v-model="editGuestHouseModal" />
+
+    <!-- <v-snackbar
+      v-model="snackbar"
+    >
+      {{ text }}
+
+      <template v-slot:actions>
+        <v-btn
+          color="pink"
+          variant="text"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar> -->
 
 </template>
 
