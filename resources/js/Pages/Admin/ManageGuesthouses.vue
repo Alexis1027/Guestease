@@ -14,9 +14,15 @@
     const entries = [10, 15, 20, 25]
     const entry = ref(10)
 
-    watch(entry, () => {
-        Inertia.visit(`/manage/guesthouses/${entry.value}`)
+    watch(prop.guesthouses.current_page, () => {
+        // Inertia.get(`/manage/guesthouses/${entry}`)
     })
+
+    function deleteGuestHouse(id) {
+        deleteGuestHouseModal.value = true
+        Inertia.delete(`delete/guesthouse/${id}`)
+    }
+    
 
     defineOptions({layout: Layout})
 </script>
@@ -27,7 +33,7 @@
 <template>
     <Head title="Manage guest house" />
        
-    <v-btn color="blue" prepend-icon="mdi-home-plus-outline" @click="createGuestHouseDialog = true" class="mb-4 text-none mt-2">New Guest House</v-btn>
+    <v-btn color="blue" prepend-icon="mdi-plus-thick" @click="createGuestHouseDialog = true" class="mb-4 text-none mt-2">New Guest House</v-btn>
     
     <v-container class="bg-white">
         <v-row justify="space-between">
@@ -38,7 +44,6 @@
             <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
         </v-col>
         </v-row>
-            {{ prop.guesthouses.data.length }}
         <v-table hover class="bg-grey-lighten-5 text-center">
         <thead>
             <tr >
@@ -66,7 +71,6 @@
     </v-table>
     <v-row  class="mt-2">
         <v-col class="d-flex justify-end">
-            
             <Link 
                 v-for="link in prop.guesthouses.links" 
                 :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 

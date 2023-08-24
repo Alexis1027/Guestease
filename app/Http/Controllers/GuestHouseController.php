@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User;
 class GuestHouseController extends Controller
 {
     //
+
     public function index() {
         //dd(request('search'));
         $guesthouses = GuestHouse::latest()->filter(request(['search']))->get();
@@ -33,12 +34,16 @@ class GuestHouseController extends Controller
     public function show(GuestHouse $id) {
         if(auth()->user()) {
             $wishlist = Wishlist::where('user_id', auth()->user()->id)
-                            ->where('room_id', $id->id)
-                            ->first();
-            
+                ->where('room_id', $id->id)
+                ->first();
+
             $rating = Rating::where('user_id', auth()->user()->id)
             ->where('room_id', $id->id)
             ->first();
+            
+            if($rating) {
+                $rating->user = User::find(auth()->user()->id);
+            }
 
             $ratings = Rating::where('room_id', $id->id)
             ->whereIn('user_id', function($query) {
@@ -54,9 +59,10 @@ class GuestHouseController extends Controller
                 $r->user = User::find($r->user_id);
             }
 
-            return Inertia::render('GuestHouse/Show', ['guesthouse' => $id,
+            return Inertia::render('GuestHouse/Show', [
+                'guesthouse' => $id,
                 'wishlist' => $wishlist, 
-                'rating' => $rating,
+                'rated' => $rating,
                 'ratings' => $ratings,
                 'averageRating' => $averageRating
             ]);
@@ -75,7 +81,10 @@ class GuestHouseController extends Controller
             foreach($ratings as $r) {
                 $r->user = User::find($r->user_id);
             }
-            return Inertia::render('GuestHouse/Show', ['guesthouse' => $id, 'ratings' => $ratings, 'averageRating' => $averageRating]);
+            return Inertia::render('GuestHouse/Show', [
+                'guesthouse' => $id, 
+                'ratings' => $ratings, 
+                'averageRating' => $averageRating]);
         }
     }
 
@@ -152,6 +161,7 @@ class GuestHouseController extends Controller
     }
 
     public function destroy(GuestHouse $guesthouse) {
+        dd($guesthouse);
         $wishlist = Wishlist::where('room_id', $guesthouse->id)->get();
         $wishlist->each->delete();
         $guesthouse->delete();

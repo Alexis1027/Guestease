@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Models\GuestHouse;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\GuestHouseController;
 
@@ -44,5 +45,11 @@ Route::get('/wishlist', [WishlistController::class, 'index'])->middleware('auth'
 Route::get('/create/admin', [AdminController::class, 'createAdmin']);
 Route::get('/dashboard', [AdminController::class, 'dashboard']);
 Route::get('/edit/guesthouse', [AdminController::class, 'edit']);
-Route::get('/manage/guesthouses/{entry?}', [AdminController::class, 'manage_guesthouses']);
+Route::get('/manage/guesthouses', [AdminController::class, 'manage_guesthouses']);
+Route::get('/manage/guesthouses/{entry}', [AdminController::class, 'manage_guesthouses_entry']);
+
+Route::delete('/delete/guesthouse/{id}', [GuestHouseController::class, 'destroy']);
+
+Route::post('/rooms/rate/{guesthouse_id}', [RatingController::class, 'store'])->middleware('auth');
+
 Route::get('/manage/users', [AdminController::class, 'manage_users']);

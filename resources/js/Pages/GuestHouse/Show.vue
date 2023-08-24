@@ -10,12 +10,13 @@
     defineOptions({layout: Layout})
 
     const overlay = ref(false)
-    const props = defineProps(['guesthouse', 'ratings', 'averageRating', 'wishlist', 'auth'])
+    const props = defineProps(['guesthouse', 'ratings', 'averageRating', 'wishlist', 'auth', 'rated'])
     const rating = ref(0)
     const index = ref(0)
     const showImageCarousel = ref(false)
     const showReviewModal = ref(false)
     const images = []
+    console.log(props)
     const guestHouseImg = props.guesthouse.room_image.split(",")
     const saveWishlistForm = useForm({
         user_id: props.auth ? props.auth.user.id : '',
@@ -131,9 +132,10 @@
                 </v-container>
                 <v-divider/>
                 <v-container>
-                    <h2>Rate this place</h2>
+                    <h2>Rate this place </h2>
                     <p style="color: gray">Tell others what you think.</p>
-                    <div class="ms-3 mt-3">
+                    <RatingCard :rating="props.rated" v-if="props.rated" />
+                    <div class="ms-3 mt-3" v-else>
                         <v-rating v-model="rating" hover half-increments color="orange-lighten-2" @click="showReviewModal = true">
                         </v-rating>
                     </div>
@@ -166,14 +168,14 @@
                         <RatingCard :rating="rating" />
                     </v-col>
                     <v-col cols="12" v-if="props.ratings.length <= 0" class="text-center">
-                        <p class="text-h4"> nuh uhh.. no ratings found  </p>
+                        <p class="text-h4"> nuh uhh.. no ratings found</p>
                     </v-col>
                 </v-row>
             </v-container>
         </v-row>
         <ImageDrawer @closeOverlay="overlay = false" v-if="true" :overlay="overlay" :images="images" />
         <ImageCarousel :showImageCarousel="showImageCarousel" :images="images" :index="index" @CloseImgCarousel="showImageCarousel = false" />
-        <RatingModal :showReviewModal="showReviewModal" :star="rating" :guesthouse="props.guesthouse" @closeReviewModal="showReviewModal = false" />
+        <RatingModal :showReviewModal="showReviewModal" :auth="props.auth" :star="rating" :guesthouse="props.guesthouse" @closeReviewModal="showReviewModal = false" />
     </v-container>
 </template>
 

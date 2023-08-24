@@ -12,7 +12,7 @@
 <template>
     <v-dialog v-model="dialog" width="50vw" transition="fab-transition">
         <v-container class="justify-center">
-            <v-form>
+            <v-form @submit.prevent>
                 <v-card title="DELETE GUEST HOUSE?">
                     <v-card-actions class="d-flex justify-end">
                         <v-btn color="green"  @click="emitCLoseDialog">Cancel</v-btn>

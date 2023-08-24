@@ -41,7 +41,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="user in prop.users" :key="user.id">
+            <tr v-for="user in prop.users.data" :key="user.id">
                <td>{{ user.id }}</td>
                <td>
                     <v-avatar>
@@ -62,14 +62,16 @@
             </tr>
         </tbody>
     </v-table>
-    <v-row justify="space-between" class="mt-2">
-        <v-col>
-            Showing 1 to 4 of 4 entries
-        </v-col>
-        <v-col cols="3"  class="d-flex justify-end">
-            <v-btn flat class="text-none">Previous</v-btn>
-            <p class="mt-2">1</p>
-            <v-btn flat class="text-none">Next</v-btn>
+    <v-row  class="mt-2">
+        <v-col class="d-flex justify-end">
+            <Link 
+                v-for="link in prop.users.links" 
+                :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 
+                :key="link" 
+                :href="link.url"
+                v-html="link.label"
+                >
+            </Link>
         </v-col>
     </v-row>
     </v-container>
