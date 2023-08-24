@@ -21,6 +21,10 @@ class HomeController extends Controller
         return Inertia::render('ConfirmReservation', ['guesthouse' => $room]);
     }
 
+    public function settings() {
+        return Inertia::render('Auth/Settings');
+    }
+
     public function guidelines() {
         return Inertia::render('Guidelines');
     }
@@ -39,7 +43,7 @@ class HomeController extends Controller
 
 
     public function reservations() {
-        return Inertia::render('ViewReservation');
+        return Inertia::render('Reservations');
     }
 
     public function map() {

@@ -11,32 +11,32 @@
 <template>
     <Head title="Home" />
     <div class="page-container">
-      <v-row>
-        <v-col cols="3" v-for="guesthouse in guesthouses.guesthouses" :key="guesthouse.id">
-          <GuestHouseCard :guesthouse="guesthouse" />
-        </v-col>
-      </v-row>
-      <div class="sticky-btn-container">
-        <Link href="/map">
-          <v-btn class="rounded-pill" color="blue" elevation="24" size="large" prepend-icon="mdi-map-search-outline">Show Map</v-btn>
-        </Link>
-      </div>
+        <v-row>
+            <v-col cols="3" v-for="guesthouse in guesthouses.guesthouses" :key="guesthouse.id">
+            <GuestHouseCard :guesthouse="guesthouse" />
+            </v-col>
+        </v-row>
+        <div class="sticky-btn-container">
+            <Link href="/map">
+            <v-btn class="rounded-pill" color="blue" elevation="24" size="large" prepend-icon="mdi-map-search-outline">Show Map</v-btn>
+            </Link>
+        </div>
     </div>
   </template>
   
   <style scoped>
   .page-container {
-    position: relative; /* Create a context for positioning */
-    min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+    position: relative;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
   
   .sticky-btn-container {
     position: sticky;
-    bottom: 0; /* Adjust this value to control the vertical position */
-    right: 0; /* Adjust this value to control the horizontal position */
-    z-index: 1000; /* Ensure the button appears above other content */
+    bottom: 0;  
+    right: 0; 
+    z-index: 1000; 
     justify-content: center;
     display: flex;
   }

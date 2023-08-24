@@ -45,7 +45,7 @@
                                     Wishlists 
                                 </v-btn>
                             </Link>
-                            <Link href="/account">
+                            <Link href="/settings">
                                 <v-btn block variant="text">
                                     Settings
                                 </v-btn>
@@ -104,6 +104,9 @@
                 </Link>
                 <Link href="/manage/users">
                     <v-list-item prepend-icon="mdi-account-edit" title="User management" value="manageuser"></v-list-item>
+                </Link>
+                <Link href="/manage/reservations">
+                    <v-list-item prepend-icon="mdi-calendar-edit" title="Reservation management" value="managereservation"></v-list-item>
                 </Link>
                 <Link href="/create/admin">
                     <v-list-item prepend-icon="mdi-account-hard-hat" title="Create admin account" value="createadmin"></v-list-item>

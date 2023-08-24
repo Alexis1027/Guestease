@@ -55,9 +55,11 @@
 
 <template>
     <Head :title="`${props.guesthouse.room_name}`" />
+    
     <v-container>
-                <h1>{{ props.guesthouse.room_name }}</h1>
+        <h1>{{ props.guesthouse.room_name }}</h1>
         <v-row>
+            <!-- ratings and location  -->
             <v-col cols="2"> 
                 <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ props.averageRating }} reviews
             </v-col>
@@ -66,6 +68,7 @@
             </v-col>
             <v-spacer></v-spacer>
             <v-col class="text-end">
+                <!-- Save guest house button -->
                 <v-form @submit.prevent="submitForm">
                     <v-btn 
                         class="text-none bg-grey-lighten-3" 
@@ -86,6 +89,7 @@
         <v-container>
             <v-row>
                 <v-col cols="6">
+                    <!-- First image -->
                     <v-hover v-slot="{ isHovering, props }">
                         <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
                             <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
@@ -101,10 +105,13 @@
                 </v-col>
                 <v-col cols="6">
                     <v-row>
+                        <!--  4 images -->
                         <v-col cols="6" v-for="i in 4" :key="i">
                             <v-hover v-slot="{ isHovering, props }">
                                 <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering }" v-bind="props">
+                                    <!-- show the show all images button if i is equal to two -->
                                     <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" size="small" prepend-icon="mdi-image-multiple-outline" >show all images</v-btn>
+
                                     <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
                                         <template v-slot:placeholder>
                                             <div class="d-flex align-center justify-center fill-height">
@@ -123,6 +130,7 @@
         <v-divider/>
         <v-row>
             <v-col cols="8">
+                <!-- About this place section -->
                 <v-container>
                     <h2>About this place</h2>
                     <ul>
@@ -131,6 +139,7 @@
                     </ul>
                 </v-container>
                 <v-divider/>
+                <!-- Rate this place section -->
                 <v-container>
                     <h2>Rate this place </h2>
                     <p style="color: gray">Tell others what you think.</p>
@@ -143,9 +152,12 @@
                 
             </v-col>
             <v-col cols="4" class="mt-3">
+
+                <!-- Reserve button section -->
+
                 <v-card>
                     <v-card-title>
-                        <h2>Price Details</h2>
+                        <!-- <h2>Price Details</h2> -->
                     </v-card-title>
                     <v-card-item>
                         <v-row>
@@ -161,6 +173,7 @@
                 </v-card>
             </v-col>
             <v-divider/>
+            <!-- Ratings and reviews section -->
             <v-container>
                 <h2>Ratings and reviews</h2>
                 <v-row class="mt-3">
@@ -173,6 +186,9 @@
                 </v-row>
             </v-container>
         </v-row>
+
+        <!-- Components -->
+
         <ImageDrawer @closeOverlay="overlay = false" v-if="true" :overlay="overlay" :images="images" />
         <ImageCarousel :showImageCarousel="showImageCarousel" :images="images" :index="index" @CloseImgCarousel="showImageCarousel = false" />
         <RatingModal :showReviewModal="showReviewModal" :auth="props.auth" :star="rating" :guesthouse="props.guesthouse" @closeReviewModal="showReviewModal = false" />

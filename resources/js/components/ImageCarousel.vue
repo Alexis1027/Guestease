@@ -21,7 +21,6 @@
 <template>
     <v-dialog v-model="p.showImageCarousel" width="70vw" transition="fab-transition">
         <v-btn icon="mdi-close" @click="emitCloseImgCarousel"></v-btn>
-        {{ p.index }}
         <v-carousel height="90vh" hide-delimiters progress="white">
             <v-carousel-item v-for="image in images" :key="image">
                 <v-sheet height="100%" width="100%">

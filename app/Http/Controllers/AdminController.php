@@ -39,4 +39,8 @@ class AdminController extends Controller
         return Inertia::render('Admin/ManageUsers', ['users' => User::paginate(10)]);
     }
 
+    public function manage_reservations() {
+        return Inertia::render('Admin/ManageReservation');
+    }
+
 }

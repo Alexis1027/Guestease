@@ -30,6 +30,7 @@ Route::get('/reservations', [HomeController::class, 'reservations'])->middleware
 Route::get('/payment/{room}', [HomeController::class, 'payment'])->middleware('auth');
 Route::get('/guidelines', [HomeController::class, 'guidelines']);
 Route::get('/rules', [HomeController::class, 'rules']);
+Route::get('/settings', [HomeController::class, 'settings']);
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login', [UserController::class, 'authenticate']);
@@ -47,6 +48,7 @@ Route::get('/dashboard', [AdminController::class, 'dashboard']);
 Route::get('/edit/guesthouse', [AdminController::class, 'edit']);
 Route::get('/manage/guesthouses', [AdminController::class, 'manage_guesthouses']);
 Route::get('/manage/guesthouses/{entry}', [AdminController::class, 'manage_guesthouses_entry']);
+Route::get('/manage/reservations', [AdminController::class, 'manage_reservations']);
 
 Route::delete('/delete/guesthouse/{id}', [GuestHouseController::class, 'destroy']);
 

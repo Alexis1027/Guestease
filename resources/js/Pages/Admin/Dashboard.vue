@@ -17,14 +17,15 @@
         new Chart(ctx,{
             type: 'line',
             data: {
+                labels: ['January', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept'],
                 datasets: [
                     {
-                        label: 'Acquisitions by year',
-                        data: [65, 59, 80, 81, 56, 76, 40],
+                        label: 'Total Users',
+                        data: [2,5,7,34,34,45,67,34,64]
                     },
                     {
-                        label: 'Acquisitions by year',
-                        data: [45, 34, 25, 68, 76, 55, 32],
+                        label: 'Dataset 2',
+                        data: [3,20,29,10,11,32,45,23,55]
                     }
                 ]
             },
@@ -36,7 +37,7 @@
                         text: 'Monthly Sales Analytics'
                     }
                 }
-            }
+            },
         }
     );
     })

@@ -20,6 +20,7 @@
 
     const submit = () => {
         form.post('/create/guesthouse')
+        emit('CloseDialog')
     }
 
     const progress = ref(20)

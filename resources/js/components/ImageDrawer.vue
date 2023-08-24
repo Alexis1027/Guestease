@@ -40,7 +40,7 @@
                             :src="`../images/${images[imgIdx]}`"
                             cover
                             height="100%"
-                            ><h1>{{ imgIdx }}</h1></v-img>
+                            ></v-img>
                         </v-col>
 
                         <v-col v-if="image.children" cols="6" class="d-flex flex-column">

@@ -89,15 +89,15 @@
                             <v-img src="/images/room1.png"></v-img>
                         </v-card>
                         <v-card-title>
-                            Guest House {{ prop.guesthouse.room_name }}
+                            {{ prop.guesthouse.room_name }}
                         </v-card-title>
                         <v-card-text>
                             <p>{{ prop.guesthouse.room_details }}</p>
                         </v-card-text>
                         <v-divider/>
                         <v-card-text>
-                            Price Details
-                            <p>{{ prop.guesthouse.room_price }}</p>
+                            <!-- Price Details
+                            <p>{{ prop.guesthouse.room_price }}</p> -->
 
                         </v-card-text>
                     </v-card>
