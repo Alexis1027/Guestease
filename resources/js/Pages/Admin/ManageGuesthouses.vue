@@ -13,8 +13,7 @@
     const prop = defineProps(['guesthouses'])
     const entries = [5, 10, 15, 20, 25]
     const entry = ref(5)
-    const snackbar = ref(false)
-    const text = 'Created successfully'
+    const guesthouse = ref({})
 
     watch(prop.guesthouses.current_page, () => {
         // Inertia.get(`/manage/guesthouses/${entry}`)
@@ -23,6 +22,11 @@
     function deleteGuestHouse(id) {
         deleteGuestHouseModal.value = true
         Inertia.delete(`delete/guesthouse/${id}`)
+    }
+
+    function showDeleteGuesthouseModal(gh) {
+        guesthouse.value = gh
+        deleteGuestHouseModal.value = true
     }
     
 
@@ -66,7 +70,7 @@
                <td> {{ guesthouse.room_price }} </td>
                 <td>
                     <v-btn icon="mdi-pencil" size="small" @click="editGuestHouseModal = true" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
-                    <v-btn icon="mdi-delete-outline" @click="deleteGuestHouseModal = true" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
+                    <v-btn icon="mdi-delete-outline" @click="showDeleteGuesthouseModal(guesthouse)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
                 </td>
             </tr>
         </tbody>
@@ -83,11 +87,11 @@
             </Link>
         </v-col>
     </v-row>
-    <v-btn @click="snackbar = true">snackbar</v-btn>
+    
     </v-container>
 
     <CreateGuestHouseModal :dialog="createGuestHouseDialog" @CloseDialog="createGuestHouseDialog = false" v-model="createGuestHouseDialog" />
-    <DeleteGuestHouseModal :show="deleteGuestHouseModal" @CloseDialog="deleteGuestHouseModal = false" v-model="deleteGuestHouseModal" />
+    <DeleteGuestHouseModal :guesthouse="guesthouse" :show="deleteGuestHouseModal" @CloseDialog="deleteGuestHouseModal = false" v-model="deleteGuestHouseModal" />
     <EditGuestHouseModal :show="editGuestHouseModal" @CloseDialog="editGuestHouseModal = false" v-model="editGuestHouseModal" />
 
     <!-- <v-snackbar

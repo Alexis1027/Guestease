@@ -24,7 +24,7 @@
                         data: [2,5,7,34,34,45,67,34,64]
                     },
                     {
-                        label: 'Dataset 2',
+                        label: 'Total Reservations',
                         data: [3,20,29,10,11,32,45,23,55]
                     }
                 ]

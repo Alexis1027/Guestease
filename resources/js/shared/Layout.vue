@@ -3,7 +3,6 @@
     import {ref} from 'vue'
     import Footer from './Footer.vue';
     const search = ref('')
-    // import GuestHouseIndex from '../Pages/GuestHouse/index.vue'
     const sidebar = ref(false)
 </script>
 
@@ -118,7 +117,7 @@
         </v-navigation-drawer>
 
         <v-main>
-            <v-container>
+            <v-container>   
                 <slot>
                 </slot>
             </v-container>

@@ -4,16 +4,16 @@
     import Layout from '../../shared/Layout.vue';
     import {defineProps} from 'vue'
     defineOptions({layout: Layout})
-    const guesthouses = defineProps(['guesthouses'])
+    const props = defineProps(['guesthouses'])
 </script>
 
 
 <template>
     <Head title="Home" />
-    <div class="page-container">
+    <!-- <div class="page-container"> -->
         <v-row>
-            <v-col cols="3" v-for="guesthouse in guesthouses.guesthouses" :key="guesthouse.id">
-            <GuestHouseCard :guesthouse="guesthouse" />
+            <v-col cols="3" v-for="guesthouse in props.guesthouses" :key="guesthouse.id">
+                <GuestHouseCard :guesthouse="guesthouse" />
             </v-col>
         </v-row>
         <div class="sticky-btn-container">
@@ -21,16 +21,16 @@
             <v-btn class="rounded-pill" color="blue" elevation="24" size="large" prepend-icon="mdi-map-search-outline">Show Map</v-btn>
             </Link>
         </div>
-    </div>
+    <!-- </div> -->
   </template>
   
   <style scoped>
-  .page-container {
+  /* .page-container {
     position: relative;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-  }
+  } */
   
   .sticky-btn-container {
     position: sticky;

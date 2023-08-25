@@ -14,7 +14,7 @@
         <v-container class="justify-center">
             <v-form>
                 <v-row justify="center">
-                    <v-card title="Update guest house" elevation="0" class="text-center" width="80%">
+                    <v-card title="Edit guest house" elevation="0" class="text-center" width="80%">
                         <div id="container">
                             <v-text-field variant="outlined" label="Name" clearable color="blue"></v-text-field>
                         <v-file-input

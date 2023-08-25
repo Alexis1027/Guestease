@@ -180,12 +180,11 @@
                     <v-col cols="6" v-for="rating in props.ratings" :key="rating.id">
                         <RatingCard :rating="rating" />
                     </v-col>
-                    <v-col cols="12" v-if="props.ratings.length <= 0" class="text-center">
-                        <p class="text-h4"> nuh uhh.. no ratings found</p>
-                    </v-col>
+                        <p class="ms-6" v-if="props.ratings.length <= 0">No reviews found.</p>
                 </v-row>
             </v-container>
         </v-row>
+        
 
         <!-- Components -->
 

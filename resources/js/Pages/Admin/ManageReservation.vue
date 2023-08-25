@@ -44,8 +44,8 @@
                     <td>Pending</td>
                     <td>
                         <v-btn icon="mdi-delete" size="small" class="text-red" flat></v-btn>
-                        <v-btn icon="mdi-delete" size="small" class="text-green" flat></v-btn>
-                        <v-btn icon="mdi-delete" size="small" class="text-blue" flat></v-btn>
+                        <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn>
+                        <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn>
                     </td>
                 </tr>
             </tbody>
