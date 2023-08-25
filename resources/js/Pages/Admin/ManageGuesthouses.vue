@@ -1,34 +1,24 @@
 <script setup>
 
-    import {ref, defineProps, watch} from 'vue'
-    import {Inertia} from '@inertiajs/inertia'
+    import {ref, defineProps} from 'vue'
     import Layout from '../../shared/Layout.vue'
-    import CreateGuestHouseModal from '../../components/CreateGuestHouseModal.vue';
+    import CreateGuestHouseModal from '../../components/CreateGuestHouseModal.vue'
     import DeleteGuestHouseModal from '../../components/DeleteGuestHouseModal.vue'
-    import EditGuestHouseModal from '../../components/EditGuestHouseModal.vue';
-    
+    import EditGuestHouseModal from '../../components/EditGuestHouseModal.vue'
+
+    const prop = defineProps(['guesthouses'])
     const createGuestHouseDialog = ref(false)
     const deleteGuestHouseModal = ref(false)
     const editGuestHouseModal = ref(false)
-    const prop = defineProps(['guesthouses'])
+    const deleteSnackbar = ref(false)
     const entries = [5, 10, 15, 20, 25]
     const entry = ref(5)
     const guesthouse = ref({})
-
-    watch(prop.guesthouses.current_page, () => {
-        // Inertia.get(`/manage/guesthouses/${entry}`)
-    })
-
-    function deleteGuestHouse(id) {
-        deleteGuestHouseModal.value = true
-        Inertia.delete(`delete/guesthouse/${id}`)
-    }
 
     function showDeleteGuesthouseModal(gh) {
         guesthouse.value = gh
         deleteGuestHouseModal.value = true
     }
-    
 
     defineOptions({layout: Layout})
 </script>
@@ -64,7 +54,7 @@
         <tbody>
             <tr v-for="guesthouse in prop.guesthouses.data" :key="guesthouse.id">
                <td>{{ guesthouse.id }}</td>
-               <td class="text-red">e fix unya</td>
+               <td class="text-red"> <v-img cover class="my-1" :src="`../images/room1.png`"></v-img> </td>
                <td>{{ guesthouse.room_name }}</td>
                <td>{{ guesthouse.room_location }}</td>
                <td> {{ guesthouse.room_price }} </td>
@@ -91,24 +81,25 @@
     </v-container>
 
     <CreateGuestHouseModal :dialog="createGuestHouseDialog" @CloseDialog="createGuestHouseDialog = false" v-model="createGuestHouseDialog" />
-    <DeleteGuestHouseModal :guesthouse="guesthouse" :show="deleteGuestHouseModal" @CloseDialog="deleteGuestHouseModal = false" v-model="deleteGuestHouseModal" />
+    <DeleteGuestHouseModal :guesthouse="guesthouse" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteGuestHouseModal" @CloseDialog="deleteGuestHouseModal = false" v-model="deleteGuestHouseModal" />
     <EditGuestHouseModal :show="editGuestHouseModal" @CloseDialog="editGuestHouseModal = false" v-model="editGuestHouseModal" />
 
-    <!-- <v-snackbar
-      v-model="snackbar"
+    <v-snackbar
+      v-model="deleteSnackbar"
+      color="blue-lighten-3"
+      timeout="1500"
     >
-      {{ text }}
+      Deleted successfully
 
       <template v-slot:actions>
         <v-btn
-          color="pink"
           variant="text"
-          @click="snackbar = false"
+          @click="deleteSnackbar = false"
+          icon="mdi-close"
         >
-          Close
         </v-btn>
       </template>
-    </v-snackbar> -->
+    </v-snackbar>
 
 </template>
 

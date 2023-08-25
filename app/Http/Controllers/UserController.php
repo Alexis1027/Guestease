@@ -32,6 +32,7 @@ class UserController extends Controller
             'lastname' => ['required', 'min:3'],
             'email' => ['required', 'email'],
             'password' => ['required', 'min:6'],
+            'terms' => ['required', 'accepted']
         ]);
         //hash password
         $form['role'] = 'user';

@@ -42,8 +42,6 @@
             <v-form @submit.prevent enctype="multipart/form-data">
                 <v-row justify="center">
                     <v-card title="Create guest house" elevation="0" class="text-center" width="80%">
-                    {{ form }}
-
                         <div id="container">
                             <v-text-field variant="outlined" :error-messages="form.errors.room_name" label="Name" name="room_name" v-model="form.room_name" clearable color="blue"></v-text-field>
                             <v-file-input

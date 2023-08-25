@@ -72,6 +72,7 @@
                     </p>
                 </div>
             </div>
+            {{ form }}
             <v-form @submit.prevent>
                 <v-card elevation="0">
                     <v-card-item>
@@ -84,7 +85,8 @@
                                         clearable 
                                         name="firstname"
                                         v-model="form.firstname"
-                                        variant="outlined" 
+                                        variant="outlined"
+                                        :error-messages="form.errors.firstname" 
                                         class="fadeIn second" 
                                         label="First name">
                                     </v-text-field>
@@ -96,6 +98,7 @@
                                         clearable 
                                         name="lastname"
                                         v-model="form.lastname"
+                                        :error-messages="form.errors.lastname" 
                                         variant="outlined" 
                                         class="fadeIn second" 
                                         label="Last name">
@@ -110,6 +113,7 @@
                                     name="email"
                                     v-model="form.email"
                                     variant="outlined" 
+                                    :error-messages="form.errors.email" 
                                     class="fadeIn second" 
                                     placeholder="johndoe@gmail.com" 
                                     label="Email">
@@ -120,6 +124,7 @@
                                     color="blue" 
                                     :rules="passwordRules"
                                     v-model="form.password"
+                                    :error-messages="form.errors.password" 
                                     variant="outlined" 
                                     name="password"
                                     class="fadeIn second" 
@@ -134,6 +139,7 @@
                                     v-model="form.terms" 
                                     color="blue"
                                     name="terms"
+                                    :error-messages="form.errors.terms" 
                                     :rules="termsRules"
                                     label="I agree to site terms and conditions">
                                 </v-checkbox>

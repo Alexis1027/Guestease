@@ -13,7 +13,6 @@
             <v-toolbar-title>
                 <Link href="/">Logo</Link>
             </v-toolbar-title>
-            {{ $page.props.auth ? ' logged in' : ' not logged in' }}
             <!-- <v-text-field label="Search..." clearable flat rounded prepend-inner-icon="mdi-magnify" v-model="search" variant="outlined" color="blue">
             </v-text-field> -->
             <v-spacer/>

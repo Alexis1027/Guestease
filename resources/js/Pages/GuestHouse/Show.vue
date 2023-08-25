@@ -7,6 +7,8 @@
     import RatingCard from '../../components/RatingCard.vue'
     import ImageCarousel from '../../components/ImageCarousel.vue'
     import RatingModal from '../../components/RatingModal.vue'
+    import Map from '../../components/ShowMap.vue'
+
     defineOptions({layout: Layout})
 
     const overlay = ref(false)
@@ -174,7 +176,7 @@
             </v-col>
             <v-divider/>
             <!-- Ratings and reviews section -->
-            <v-container>
+            <v-container class="mb-5">
                 <h2>Ratings and reviews</h2>
                 <v-row class="mt-3">
                     <v-col cols="6" v-for="rating in props.ratings" :key="rating.id">
@@ -184,7 +186,12 @@
                 </v-row>
             </v-container>
         </v-row>
-        
+        <v-divider></v-divider>
+
+        <v-container>
+            <h2 class="mb-6">Where you'll be.</h2>
+            <Map :latitude="props.guesthouse.latitude" :longitude="props.guesthouse.longitude" />
+        </v-container>
 
         <!-- Components -->
 

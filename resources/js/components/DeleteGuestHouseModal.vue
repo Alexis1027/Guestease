@@ -2,7 +2,7 @@
 
     import {ref, defineProps, defineEmits} from 'vue'
     import {Inertia} from '@inertiajs/inertia'
-    const emit = defineEmits('CloseDialog')
+    const emit = defineEmits('CloseDialog', 'showDeleteSuccessfulSnackbar')
     const prop = defineProps(['show', 'guesthouse'])
     const emitCLoseDialog = () => {
         emit('CloseDialog')
@@ -12,6 +12,7 @@
         Inertia.delete(`/delete/guesthouse/${prop.guesthouse.id}`, {
             onFinish: () => {
                 emit('CloseDialog')
+                emit('showDeleteSuccessfulSnackbar')
             }
         })
     }
