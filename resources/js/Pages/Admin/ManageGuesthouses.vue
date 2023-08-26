@@ -2,9 +2,9 @@
 
     import {ref, defineProps} from 'vue'
     import Layout from '../../shared/Layout.vue'
-    import CreateGuestHouseModal from '../../components/CreateGuestHouseModal.vue'
-    import DeleteGuestHouseModal from '../../components/DeleteGuestHouseModal.vue'
-    import EditGuestHouseModal from '../../components/EditGuestHouseModal.vue'
+    import CreateGuestHouseModal from './partials/CreateGuestHouseModal.vue'
+    import DeleteGuestHouseModal from './partials/DeleteGuestHouseModal.vue'
+    import EditGuestHouseModal from './partials/EditGuestHouseModal.vue'
 
     const prop = defineProps(['guesthouses'])
     const createGuestHouseDialog = ref(false)

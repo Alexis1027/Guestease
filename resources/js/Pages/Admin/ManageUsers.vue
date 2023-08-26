@@ -2,8 +2,8 @@
 
     import {ref, defineProps} from 'vue'
     import Layout from '../../shared/Layout.vue'
-    import EditUserModal from '../../components/EditUserModal.vue'
-    import DeleteUserModal from '../../components/DeleteUserModal.vue'
+    import EditUserModal from './partials/EditUserModal.vue'
+    import DeleteUserModal from './partials/DeleteUserModal.vue'
     import {format} from 'date-fns'
 
     const prop = defineProps(['users'])

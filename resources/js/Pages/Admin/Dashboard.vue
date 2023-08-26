@@ -2,7 +2,7 @@
 
     import Layout from '../../shared/Layout.vue'
     import Chart from 'chart.js/auto'
-    import DashboardSheet from '../../components/DashboardSheet.vue'
+    import DashboardSheet from './partials/DashboardSheet.vue'
     import { onMounted, ref } from 'vue';
 
     defineOptions({layout: Layout})

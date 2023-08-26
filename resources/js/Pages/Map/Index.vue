@@ -4,7 +4,7 @@
     import L from 'leaflet'
     import 'leaflet/dist/leaflet.css'
     import Layout from '../../shared/Layout.vue';
-    import MapSidebar from '../../components/MapSidebar.vue';
+    import MapSidebar from './partials/MapSidebar.vue';
     defineOptions({ layout: Layout })
     // const lat = ref('')
     // const lon = ref('')

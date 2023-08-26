@@ -3,11 +3,11 @@
     import Layout from '../../shared/Layout.vue'
     import {defineProps, ref} from 'vue'
     import { useForm } from '@inertiajs/vue3'
-    import ImageDrawer from '../../components/ImageDrawer.vue'
-    import RatingCard from '../../components/RatingCard.vue'
-    import ImageCarousel from '../../components/ImageCarousel.vue'
-    import RatingModal from '../../components/RatingModal.vue'
-    import Map from '../../components/ShowMap.vue'
+    import ImageDrawer from './Partials/ImageDrawer.vue'
+    import RatingCard from './Partials/RatingCard.vue'
+    import ImageCarousel from './Partials/ImageCarousel.vue'
+    import RatingModal from './Partials/RatingModal.vue'
+    import Map from './Partials/ShowMap.vue'
 
     defineOptions({layout: Layout})
 

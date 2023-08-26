@@ -1,10 +1,10 @@
 <script setup>
 
     import {ref, defineProps, defineEmits} from 'vue'
-    import Reviews from '../components/MapSidebarReviews.vue'
-    import Overview from '../components/MapSidebarOverview.vue'
-    import Prices from '../components/MapSidebarPrices.vue'
-    import About from '../components/MapSidebarAbout.vue'
+    import Reviews from './MapSidebarReviews.vue'
+    import Overview from './MapSidebarOverview.vue'
+    import Prices from './MapSidebarPrices.vue'
+    import About from './MapSidebarAbout.vue'
 
 
     const props = defineProps(['mapSnackbar', 'guesthouse'])

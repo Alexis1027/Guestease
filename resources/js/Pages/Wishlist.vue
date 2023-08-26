@@ -2,7 +2,7 @@
 
     import {defineProps} from 'vue'
     import Layout from '../shared/Layout.vue'
-    import WishlistCard from '../components/WishlistCard.vue'
+    import WishlistCard from './GuestHouse/Partials/WishlistCard.vue'
     defineOptions({layout: Layout})
     const props = defineProps(['wishlists'])
 

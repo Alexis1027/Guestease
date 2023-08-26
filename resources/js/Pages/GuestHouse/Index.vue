@@ -1,12 +1,11 @@
 <script setup>
 
-    import GuestHouseCard from '../../components/GuestHouseCard.vue';
+    import GuestHouseCard from './Partials/GuestHouseCard.vue';
     import Layout from '../../shared/Layout.vue';
     import {defineProps} from 'vue'
     defineOptions({layout: Layout})
     const props = defineProps(['guesthouses'])
 </script>
-
 
 <template>
     <Head title="Home" />
