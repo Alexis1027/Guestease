@@ -63,7 +63,7 @@
         <v-row>
             <!-- ratings and location  -->
             <v-col cols="2"> 
-                <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ props.averageRating }} reviews
+                <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ props.averageRating }} - ({{ props.ratings.length }} reviews) 
             </v-col>
             <v-col cols="5"> 
                 <v-icon color="red">mdi-map-marker</v-icon> Located in - {{ props.guesthouse.room_location }}

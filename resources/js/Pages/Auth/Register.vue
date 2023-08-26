@@ -16,50 +16,7 @@
         form.post('/create/user')
     }
 
-    const nameRules = [
-        value => {
-            if(value) return true
-            return 'First name is required'
-        },
-        value => {
-            if (value?.length >= 3) return true
-            return 'First name must be at least 3 characters.'
-        },
-    ]
-
-    const emailRules = [
-        value => {
-            if (value) return true
-            return 'E-mail is requred.'
-        },
-        value => {
-            if (/.+@.+\..+/.test(value)) return true
-            return 'E-mail must be valid.'
-        },
-    ]
-
-    const passwordRules = [
-        value => {
-            if(value) return true
-            return `Password is requred.`
-        },
-        value => {
-            if(value?.length >= 5) return true
-            return `Password must be at least 5 characters`
-        }
-    ]
-
-    const termsRules = [
-        value => {
-            if(value) return true
-            return `You must agree to continue!`
-        }
-    ]
-
 </script>
-
-
-
 
 <template>
     <Head title="Register" />
@@ -72,7 +29,6 @@
                     </p>
                 </div>
             </div>
-            {{ form }}
             <v-form @submit.prevent>
                 <v-card elevation="0">
                     <v-card-item>
@@ -81,7 +37,6 @@
                                 <v-col cols="6">
                                     <v-text-field 
                                         color="blue" 
-                                        :rules="nameRules" 
                                         clearable 
                                         name="firstname"
                                         v-model="form.firstname"
@@ -94,7 +49,6 @@
                                 <v-col cols="6">
                                     <v-text-field 
                                         color="blue" 
-                                        :rules="nameRules" 
                                         clearable 
                                         name="lastname"
                                         v-model="form.lastname"
@@ -108,7 +62,6 @@
                             <v-row class="mx-5">
                                 <v-text-field 
                                     color="blue" 
-                                    :rules="emailRules" 
                                     clearable 
                                     name="email"
                                     v-model="form.email"
@@ -122,7 +75,6 @@
                             <v-row class="mx-5">
                                 <v-text-field 
                                     color="blue" 
-                                    :rules="passwordRules"
                                     v-model="form.password"
                                     :error-messages="form.errors.password" 
                                     variant="outlined" 
@@ -140,7 +92,6 @@
                                     color="blue"
                                     name="terms"
                                     :error-messages="form.errors.terms" 
-                                    :rules="termsRules"
                                     label="I agree to site terms and conditions">
                                 </v-checkbox>
                             <!-- <v-text-field color="blue" clearable variant="outlined" class="fadeIn second mx-5" label="Confirm password"></v-text-field> -->

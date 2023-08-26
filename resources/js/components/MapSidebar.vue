@@ -64,11 +64,10 @@
                 </v-btn>
             </v-carousel>
             </div>
-
             <v-card>
                 <v-card-title>
                     <h3>
-                        {{ props.guesthouse ? props.guesthouse.houseName : '' }}
+                        {{ props.guesthouse ? props.guesthouse.room_name : '' }}
                     </h3>
                 </v-card-title>
                 <v-tabs
@@ -76,7 +75,7 @@
                 bg-color="blue-lighten-3"
                 >
                     <v-tab value="overview">Overview</v-tab>
-                    <v-tab value="prices">Price</v-tab>
+                    <!-- <v-tab value="prices">Price</v-tab> -->
                     <v-tab value="reviews">Reviews</v-tab>
                     <v-tab value="about">About</v-tab>
                 </v-tabs>
@@ -86,9 +85,9 @@
                         <v-window-item value="overview">
                             <Overview/>
                         </v-window-item>
-                        <v-window-item value="prices">
+                        <!-- <v-window-item value="prices">
                             <Prices/>
-                        </v-window-item>
+                        </v-window-item> -->
                         <v-window-item value="reviews">
                             <Reviews/>
                         </v-window-item>

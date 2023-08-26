@@ -22,6 +22,7 @@
         form.post('/create/guesthouse', {
             onSuccess: () => {
                 emit('CloseDialog')
+                emit('showCreateSuccessfulSnackbar')
             }
         })
     }
@@ -82,7 +83,7 @@
                             </v-row>
                             <v-card-actions class="d-flex justify-end">
                                 <v-btn color="red"  @click="emitCLoseDialog">Cancel</v-btn>
-                                <v-btn color="green" @click="submit" type="submit">Create</v-btn>
+                                <v-btn color="green" @click="submit" :loading="form.processing" type="submit">Create</v-btn>
                             </v-card-actions>
                         </div>
                     </v-card>

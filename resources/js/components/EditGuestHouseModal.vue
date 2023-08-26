@@ -1,22 +1,32 @@
 <script setup>
 
     import {ref, defineProps, defineEmits} from 'vue'
+    import {useForm} from '@inertiajs/vue3'
     const emit = defineEmits('CloseDialog')
-    const dialog = defineProps(['show'])
+    const prop = defineProps(['show', 'guesthouse'])
     const emitCLoseDialog = () => {
         emit('CloseDialog')
     }
+    const form = useForm({
+        room_name: '',
+        room_image: null,
+        room_details: '',
+        room_price: '',
+        room_location: '',
+        latitude: '',
+        longitude: ''
+    })
 
 </script>
 
 <template>
-    <v-dialog v-model="dialog" width="85vw" transition="fab-transition">
+    <v-dialog v-model="prop.show" width="85vw" transition="fab-transition">
         <v-container class="justify-center">
             <v-form>
                 <v-row justify="center">
                     <v-card title="Edit guest house" elevation="0" class="text-center" width="80%">
                         <div id="container">
-                            <v-text-field variant="outlined" label="Name" clearable color="blue"></v-text-field>
+                            <v-text-field variant="outlined" v-model="form.room_name" label="Name" clearable color="blue"></v-text-field>
                         <v-file-input
                             chips
                             variant="outlined"

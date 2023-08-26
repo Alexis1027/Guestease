@@ -98,7 +98,6 @@
                         <v-card-text>
                             <!-- Price Details
                             <p>{{ prop.guesthouse.room_price }}</p> -->
-
                         </v-card-text>
                     </v-card>
 

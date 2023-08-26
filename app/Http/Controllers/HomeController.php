@@ -47,7 +47,7 @@ class HomeController extends Controller
     }
 
     public function map() {
-        return Inertia::render('Map/Index');
+        return Inertia::render('Map/Index', ['guesthouses' => GuestHouse::all()]);
     }
 
 }

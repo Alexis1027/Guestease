@@ -166,6 +166,7 @@ class GuestHouseController extends Controller
         $guesthouse = GuestHouse::find($id);
         $guesthouse->delete();
         return back();
+        // return Inertia::location(back());
     }
 
     //store guest hoseu data 

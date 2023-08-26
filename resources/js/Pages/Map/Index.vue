@@ -1,6 +1,6 @@
 <script setup>
 
-    import {ref, onMounted, watch} from 'vue'
+    import {ref, onMounted, defineProps} from 'vue'
     import L from 'leaflet'
     import 'leaflet/dist/leaflet.css'
     import Layout from '../../shared/Layout.vue';
@@ -9,10 +9,18 @@
     // const lat = ref('')
     // const lon = ref('')
     // const dataLoaded = ref(false)
+    const prop = defineProps(['guesthouses'])
     const search = ref('')
     const mapContainer = ref(null)
     const mapSnackbar = ref(false)
     const currentGuestHouse = ref(null)
+    const guesthousesLocation = []
+
+    prop.guesthouses.forEach((gh) => {
+        guesthousesLocation.push({
+            'guesthouse': gh
+        })
+    })
 
     const address = [
         {
@@ -42,7 +50,6 @@
         }
         
     ]
-
     onMounted(async() => {
 
         // navigator.geolocation.getCurrentPosition(pos => {
@@ -55,11 +62,9 @@
         // watch(dataLoaded, () => {
         //     generateMap()
         // })
-
         generateMap()
-
     })
-
+    
     function generateMap() {
         const map = L.map(mapContainer.value).setView([10.252763, 123.949394], 13)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
@@ -67,12 +72,12 @@
         // marker.bindPopup("<b> Hello Giatay! </b> <br> I'm a popup!")
         // map.on('click', onMapClick)
 
-        address.forEach(place => {
-            const marker = L.marker([place.coord[0], place.coord[1]], {icon: markerIcon}).addTo(map)
-            marker.bindPopup(`<b> Hello from ${place.houseName}! </b> <br> I'm a popup!`)
+        guesthousesLocation.forEach(place => {
+            const marker = L.marker([place.guesthouse.latitude, place.guesthouse.longitude], {icon: markerIcon}).addTo(map)
+            marker.bindPopup(`<b> Hello from ${place.guesthouse.room_name}! </b> <br> I'm a popup!`)
             marker.on('click', () => {
                 mapSnackbar.value = true
-                currentGuestHouse.value = place
+                currentGuestHouse.value = place.guesthouse
             })
         });
 
@@ -94,6 +99,7 @@
             </v-scroll-x-transition>
         </template>
     </v-text-field>
+    
     <MapSidebar :mapSnackbar="mapSnackbar" :guesthouse="currentGuestHouse" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
     <div class="leaflet-container" ref="mapContainer"></div>
 </template>

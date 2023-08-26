@@ -11,13 +11,21 @@
     const deleteGuestHouseModal = ref(false)
     const editGuestHouseModal = ref(false)
     const deleteSnackbar = ref(false)
+    const createSnackbar = ref(false)
     const entries = [5, 10, 15, 20, 25]
     const entry = ref(5)
     const guesthouse = ref({})
 
-    function showDeleteGuesthouseModal(gh) {
+    function deleteGuesthouse(gh) {
         guesthouse.value = gh
         deleteGuestHouseModal.value = true
+        // prop.guesthouses.data = prop.guesthouses.data.filter(guesthouse => guesthouse.id !== gh.id)
+        // console.log(prop.guesthouses.data)
+    }
+
+    function editGuesthouse(gh) {
+        guesthouse.value = gh
+        editGuestHouseModal.value = true
     }
 
     defineOptions({layout: Layout})
@@ -59,8 +67,8 @@
                <td>{{ guesthouse.room_location }}</td>
                <td> {{ guesthouse.room_price }} </td>
                 <td>
-                    <v-btn icon="mdi-pencil" size="small" @click="editGuestHouseModal = true" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
-                    <v-btn icon="mdi-delete-outline" @click="showDeleteGuesthouseModal(guesthouse)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
+                    <v-btn icon="mdi-pencil" size="small" @click="editGuesthouse(guesthouse)" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
+                    <v-btn icon="mdi-delete-outline" @click="deleteGuesthouse(guesthouse)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
                 </td>
             </tr>
         </tbody>
@@ -80,9 +88,9 @@
     
     </v-container>
 
-    <CreateGuestHouseModal :dialog="createGuestHouseDialog" @CloseDialog="createGuestHouseDialog = false" v-model="createGuestHouseDialog" />
+    <CreateGuestHouseModal :dialog="createGuestHouseDialog" @showCreateSuccessfulSnackbar="createSnackbar = true" @CloseDialog="createGuestHouseDialog = false" v-model="createGuestHouseDialog" />
     <DeleteGuestHouseModal :guesthouse="guesthouse" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteGuestHouseModal" @CloseDialog="deleteGuestHouseModal = false" v-model="deleteGuestHouseModal" />
-    <EditGuestHouseModal :show="editGuestHouseModal" @CloseDialog="editGuestHouseModal = false" v-model="editGuestHouseModal" />
+    <EditGuestHouseModal :guesthouse="guesthouse" :show="editGuestHouseModal" @CloseDialog="editGuestHouseModal = false" v-model="editGuestHouseModal" />
 
     <v-snackbar
       v-model="deleteSnackbar"
@@ -95,6 +103,23 @@
         <v-btn
           variant="text"
           @click="deleteSnackbar = false"
+          icon="mdi-close"
+        >
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+    <v-snackbar
+      v-model="createSnackbar"
+      color="green-lighten-3"
+      timeout="1500"
+    >
+      Created successfully
+
+      <template v-slot:actions>
+        <v-btn
+          variant="text"
+          @click="createSnackbar = false"
           icon="mdi-close"
         >
         </v-btn>

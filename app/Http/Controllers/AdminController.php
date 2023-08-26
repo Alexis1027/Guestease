@@ -15,16 +15,8 @@ class AdminController extends Controller
         return Inertia::render('Admin/Dashboard');
     }
 
-    public function create() {
-        return Inertia::render('GuestHouse/Create');
-    }
-
     public function createAdmin() {
-        return Inertia::render('Auth/CreateAdmin');
-    }
-
-    public function edit(GuestHouse $guesthouse) {
-        return Inertia::render('GuestHouse/Edit', ['guesthouse' => $guesthouse]);
+        return Inertia::render('Admin/CreateAdmin');
     }
 
     public function manage_guesthouses() {
