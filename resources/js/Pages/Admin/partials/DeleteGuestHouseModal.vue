@@ -34,10 +34,10 @@
                     </p>
                     <v-divider class="mb-4"></v-divider>
                     <div class="text-end">
-                        <v-btn class="text-none me-4" @click="emitCLoseDialog" color="grey" rounded variant="flat" width="90">
+                        <v-btn class="text-none me-4"  rounded variant="flat" width="90" @click="emitCLoseDialog" color="grey">
                             Cancel
                         </v-btn>
-                        <v-btn class="text-none" color="red" @click="submit" type="submit" rounded variant="flat" width="90">
+                        <v-btn class="text-none" rounded variant="flat" width="90" color="red" @click="submit" type="submit" >
                             Delete
                         </v-btn>
                     </div>

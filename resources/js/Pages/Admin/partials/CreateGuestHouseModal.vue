@@ -44,7 +44,7 @@
                 <v-row justify="center">
                     <v-card title="Create guest house" elevation="0" class="text-center" width="80%">
                         <div id="container">
-                            <v-text-field variant="outlined" :error-messages="form.errors.room_name" label="Name" name="room_name" v-model="form.room_name" clearable color="blue"></v-text-field>
+                            <v-text-field variant="outlined" :error-messages="form.errors.room_name" label="Guest house name" name="room_name" v-model="form.room_name" clearable color="blue"></v-text-field>
                             <v-file-input
                                 chips
                                 variant="outlined"
@@ -81,9 +81,10 @@
                                     <v-text-field color="blue" v-model="form.longitude" name="longitude" :error-messages="form.errors.longitude" variant="outlined" label="Longitude" clearable></v-text-field>
                                 </v-col>
                             </v-row>
-                            <v-card-actions class="d-flex justify-end">
-                                <v-btn color="red"  @click="emitCLoseDialog">Cancel</v-btn>
-                                <v-btn color="green" @click="submit" :loading="form.processing" type="submit">Create</v-btn>
+                            <v-divider/>
+                            <v-card-actions class="d-flex justify-end ">
+                                <v-btn color="grey" class="text-none" rounded width="90" variant="flat" @click="emitCLoseDialog">Cancel</v-btn>
+                                <v-btn color="green" class="text-none" rounded width="90" variant="flat" @click="submit" :loading="form.processing" type="submit">Create</v-btn>
                             </v-card-actions>
                         </div>
                     </v-card>

@@ -37,7 +37,7 @@
 <template>
     <Head title="Manage guest house" />
        
-    <v-btn color="blue" prepend-icon="mdi-plus-thick" @click="createGuestHouseDialog = true" class="mb-4 text-none mt-2">New Guest House</v-btn>
+    <v-btn color="green" prepend-icon="mdi-plus-thick" @click="createGuestHouseDialog = true" class="mb-4 text-none mt-2">New Guest House</v-btn>
     
     <v-container class="bg-white">
         <v-row justify="space-between">

@@ -40,6 +40,7 @@ Route::post('/create/user', [UserController::class, 'store']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/account', [UserController::class, 'account']);
 
+//wishlist
 Route::post('/wishlist/save', [WishlistController::class, 'store'])->middleware('auth');
 Route::delete('/wishlist/unsave',[WishlistController::class, 'destroy'])->middleware('auth');
 Route::get('/wishlist', [WishlistController::class, 'index'])->middleware('auth');
@@ -47,12 +48,10 @@ Route::get('/wishlist', [WishlistController::class, 'index'])->middleware('auth'
 Route::get('/create/admin', [AdminController::class, 'createAdmin']);
 Route::get('/dashboard', [AdminController::class, 'dashboard']);
 Route::get('/edit/guesthouse', [AdminController::class, 'edit']);
+Route::get('/manage/users', [AdminController::class, 'manage_users']);
 Route::get('/manage/guesthouses', [AdminController::class, 'manage_guesthouses']);
 Route::get('/manage/guesthouses/{entry}', [AdminController::class, 'manage_guesthouses_entry']);
 Route::get('/manage/reservations', [AdminController::class, 'manage_reservations']);
 
-Route::delete('/delete/guesthouse/{id}', [GuestHouseController::class, 'destroy']);
 
 Route::post('/rooms/rate/{guesthouse_id}', [RatingController::class, 'store'])->middleware('auth');
-
-Route::get('/manage/users', [AdminController::class, 'manage_users']);

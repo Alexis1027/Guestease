@@ -60,8 +60,8 @@
                             </v-col>
                         </v-row>
                         <v-card-actions class="d-flex justify-end">
-                            <v-btn color="red" @click="emitCLoseDialog">Cancel</v-btn>
-                            <v-btn color="green" >Update</v-btn>
+                            <v-btn color="grey" class="text-none" rounded variant="flat" width="90" @click="emitCLoseDialog">Cancel</v-btn>
+                            <v-btn color="blue" class="text-none" rounded variant="flat" width="90">Update</v-btn>
                         </v-card-actions>
                         </div>
                     </v-card>

@@ -23,7 +23,7 @@
 <template>
     <div id="carousel">
         <!-- <router-link to="/about">about...</router-link> -->
-        <v-skeleton-loader class="mt-6" :loading="loading" height="100%" type="image, article">
+        <v-skeleton-loader class="mt-6 bg-grey-lighten-3" :loading="loading"  height="100%">
             <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters show-arrows="hover">
                 <v-carousel-item v-for="(image, i) in images" :key="i">
                     <Link :href="`/room/${guesthouse.guesthouse.id}`">
@@ -39,6 +39,8 @@
                     </Link>
                 </v-carousel-item>
             </v-carousel>
+        </v-skeleton-loader>
+        <v-skeleton-loader :loading="loading" class="bg-grey-lighten-3"  height="80%" type="image, article">
             <v-container class="bg-grey-lighten-3">
                 <v-row id="guestHouseDetails">
                 <v-col cols="8"><strong class="truncate-text-title">{{ guesthouse.guesthouse.room_name }} </strong></v-col>
@@ -53,6 +55,7 @@
             <p> <strong>P {{ guesthouse.guesthouse.room_price }}</strong> monthly. </p>
             </v-container>
         </v-skeleton-loader>
+        
     </div>
   </template>
 

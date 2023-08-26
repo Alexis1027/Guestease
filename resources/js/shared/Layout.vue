@@ -27,29 +27,29 @@
                 </template>
                 <v-card width="250" >
                     <v-card-item v-if="$page.props.auth">
-                        <div class="mx-auto ">
+                        <div class="mx-auto">
                                 <v-list-item
                                 :prepend-avatar="`images/profile/${$page.props.auth.user.profile_pic}`"
                                 :title="$page.props.auth.user.firstname + ' ' + $page.props.auth.user.lastname"
                             ></v-list-item>
                             <v-divider class="my-3"></v-divider>
                             <Link href="/reservations">
-                                <v-btn block variant="text">
+                                <v-btn block variant="text"  class="text-none">
                                     Reservations
                                 </v-btn>
                             </Link>
                             <Link href="/wishlist"> 
-                                <v-btn block variant="text" class="text-start">
+                                <v-btn block variant="text" class="text-none">
                                     Wishlists 
                                 </v-btn>
                             </Link>
                             <Link href="/settings">
-                                <v-btn block variant="text">
+                                <v-btn block variant="text"  class="text-none">
                                     Settings
                                 </v-btn>
                             </Link>
                             <Link href="/logout" method="post">
-                                <v-btn block variant="text">
+                                <v-btn block variant="text" class="text-none">
                                     Logout
                                 </v-btn>
                             </Link>
@@ -57,12 +57,12 @@
                     </v-card-item>
                     <v-card-item v-else>
                         <Link href="/login">
-                            <v-btn block variant="text">
+                            <v-btn block variant="text" class="text-none">
                                 Log in
                             </v-btn>
                         </Link>
                         <Link href="/register">
-                            <v-btn block variant="text">
+                            <v-btn block variant="text" class="text-none">
                                 Sign up
                             </v-btn>
                         </Link>
@@ -70,12 +70,12 @@
                     <v-divider/>
                     <v-card-item>
                         <Link href="/guidelines">
-                            <v-btn block variant="text">
+                            <v-btn block variant="text" class="text-none">
                                 Guidelines
                             </v-btn>
                         </Link>
                         <Link href="/about">
-                            <v-btn block variant="text">
+                            <v-btn block variant="text" class="text-none">
                                 About
                             </v-btn>
                         </Link>
