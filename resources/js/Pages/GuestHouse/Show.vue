@@ -46,7 +46,9 @@
 
   const submitForm = () => {
     if(props.wishlist) {
-        saveWishlistForm.delete('/wishlist/unsave')
+        saveWishlistForm.delete('/wishlist/unsave', {
+            preserveScroll: true
+        })
     }
     else {
         saveWishlistForm.post('/wishlist/save')
@@ -145,7 +147,9 @@
                 <v-container>
                     <h2>Rate this place </h2>
                     <p style="color: gray">Tell others what you think.</p>
-                    <RatingCard :rating="props.rated" v-if="props.rated" />
+                    <div v-if="props.rated" class="mt-3">
+                        <RatingCard :rating="props.rated" />
+                    </div>
                     <div class="ms-3 mt-3" v-else>
                         <v-rating v-model="rating" hover half-increments color="orange-lighten-2" @click="showReviewModal = true">
                         </v-rating>
@@ -163,7 +167,7 @@
                     </v-card-title>
                     <v-card-item>
                         <v-row>
-                            <v-col>Monthly Fee </v-col>
+                            <!-- <v-col>Monthly Fee </v-col> -->
                             <v-col>P {{ props.guesthouse.room_price }}</v-col>
                         </v-row>
                     </v-card-item>

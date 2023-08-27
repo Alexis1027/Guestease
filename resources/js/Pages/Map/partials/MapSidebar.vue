@@ -92,7 +92,7 @@
                             <Reviews/>
                         </v-window-item>
                         <v-window-item value="about">
-                            <About/>
+                            <About :about="props.guesthouse.room_details" />
                         </v-window-item>
                     </v-window>
                 </v-card-text>

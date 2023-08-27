@@ -67,13 +67,13 @@
                 <DashboardSheet id="sheet1">
                     <strong class="">Pending Reservations</strong>
                     <p class="mt-3">
-                        12
+                        0
                     </p>
                 </DashboardSheet>
                 <DashboardSheet id="sheet1">
                     <strong class="">Total Sales</strong>
                     <p class="mt-3">
-                        3
+                        0
                     </p>
                 </DashboardSheet>
         </v-row>

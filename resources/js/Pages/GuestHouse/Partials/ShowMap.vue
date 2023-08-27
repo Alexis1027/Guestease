@@ -74,8 +74,8 @@
     }
 
     var markerIcon = L.icon({
-        iconUrl: 'https://img.icons8.com/isometric/50/experimental-home-isometric.png',
-        iconSize:     [30, 30], // size of the icon
+        iconUrl: 'https://img.icons8.com/glyph-neue/64/FA5252/order-delivered.png',
+        iconSize:     [50, 50], // size of the icon
     });
 
 </script>

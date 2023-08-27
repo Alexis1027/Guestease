@@ -35,7 +35,7 @@ class GuestHouseFactory extends Factory
             'room_location' => $this->faker->city(),
             'room_image' => $room_images_string,
             'latitude' => $this->faker->latitude(10.000000, 10.300000),
-            'longitude' => $this->faker->longitude(123.800000,124.000000)
+            'longitude' => $this->faker->longitude(123.000000, 124.000000)
             //10.252763, 123.949394 Cordova setview
         ];
     }
