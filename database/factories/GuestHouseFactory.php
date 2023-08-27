@@ -34,8 +34,8 @@ class GuestHouseFactory extends Factory
             'room_price' => number_format($this->faker->randomNumber(4, true), 0, '.', ','),
             'room_location' => $this->faker->city(),
             'room_image' => $room_images_string,
-            'latitude' => $this->faker->latitude(10.000000, 10.300000),
-            'longitude' => $this->faker->longitude(123.000000, 124.000000)
+            'latitude' => $this->faker->latitude(10.250000, 10.268000),
+            'longitude' => $this->faker->longitude(123.930000, 123.970000)
             //10.252763, 123.949394 Cordova setview
         ];
     }

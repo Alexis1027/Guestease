@@ -11,7 +11,9 @@
         <v-app-bar scroll-behavior="elevate" scroll-threshold="438">
             <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
             <v-toolbar-title>
-                <Link href="/">Logo</Link>
+                <Link href="/">
+                    Logo or title
+                </Link>
             </v-toolbar-title>
             <!-- <v-text-field label="Search..." clearable flat rounded prepend-inner-icon="mdi-magnify" v-model="search" variant="outlined" color="blue">
             </v-text-field> -->

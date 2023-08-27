@@ -1,6 +1,7 @@
 <script setup>
 
     import {ref, defineProps, defineEmits} from 'vue'
+    import {router} from '@inertiajs/vue3'
     import {Inertia} from '@inertiajs/inertia'
     const emit = defineEmits(['CloseDialog', 'showDeleteSuccessfulSnackbar'])
     const prop = defineProps(['show', 'guesthouse'])
@@ -9,7 +10,7 @@
     }
 
     const submit = () => {
-        Inertia.delete(`/delete/guesthouse/${prop.guesthouse.id}`, {
+        router.delete(`/delete/guesthouse/${prop.guesthouse.id}`, {
             onFinish: () => {
                 emit('CloseDialog')
                 emit('showDeleteSuccessfulSnackbar')

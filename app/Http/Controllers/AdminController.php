@@ -12,7 +12,7 @@ class AdminController extends Controller
     //
     
     public function dashboard() {
-        return Inertia::render('Admin/Dashboard');
+        return Inertia::render('Admin/Dashboard', ['totalUsers' => User::count(), 'totalGuesthouses' => GuestHouse::count()]);
     }
 
     public function createAdmin() {

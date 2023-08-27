@@ -12,6 +12,13 @@
     const entry = ref(5)
     const editUserModal = ref(false)
     const deleteUserModal = ref(false)
+    const user = ref({})
+
+    function deleteUser(usr) {
+        user.value = usr
+        deleteUserModal.value = true
+    }
+
     defineOptions({layout: Layout})
 </script>
 
@@ -42,25 +49,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="user in prop.users.data" :key="user.id">
-                <td>{{ user.id }}</td>
-                <td>
-                        <v-avatar>
-                            <v-img :src="`../images/profile/${user.profile_pic}`">
-
-                            </v-img>
-                        </v-avatar>
-                </td>
-                <td>{{ user.firstname + ' ' + user.lastname }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.contact_no ? user.contact_no : 'Not available' }}</td>
-                <td> {{ user.role }} </td>
-                <td> {{ format(new Date(user.created_at), 'M/dd/yyyy') }} </td>
-                    <td>
-                        <v-btn icon="mdi-pencil" size="small" @click="editUserModal = true" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
-                        <v-btn icon="mdi-delete-outline" @click="deleteUserModal = true" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
-                    </td>
-                </tr>
+                <v-slide-x-transition class="py-0" group>
+                    <tr v-for="user in prop.users.data" :key="user.id">
+                        <td>{{ user.id }}</td>
+                        <td>
+                            <v-avatar>
+                                <v-img :src="`../images/profile/${user.profile_pic}`"></v-img>
+                            </v-avatar>
+                        </td>
+                        <td>{{ user.firstname + ' ' + user.lastname }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.contact_no ? user.contact_no : 'Not available' }}</td>
+                        <td> {{ user.role }} </td>
+                        <td> {{ format(new Date(user.created_at), 'M/dd/yyyy') }} </td>
+                        <td>
+                            <v-btn icon="mdi-pencil" size="small" @click="editUserModal = true" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
+                            <v-btn icon="mdi-delete-outline" @click="deleteUser(user)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
+                        </td>
+                    </tr>
+                </v-slide-x-transition>
             </tbody>
         </v-table>
     <v-row  class="mt-2">
@@ -78,7 +85,7 @@
     </v-container>
 
     <EditUserModal :show="editUserModal" @CloseDialog="editUserModal = false" v-model="editUserModal" />
-    <DeleteUserModal :show="deleteUserModal" @CloseDialog="deleteUserModal = false" v-model="deleteUserModal" />
+    <DeleteUserModal :user="user" :show="deleteUserModal" @CloseDialog="deleteUserModal = false" v-model="deleteUserModal" />
 
 </template>
 

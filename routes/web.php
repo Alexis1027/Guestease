@@ -23,7 +23,7 @@ use App\Http\Controllers\GuestHouseController;
 Route::get('/',[GuestHouseController::class, 'index']);
 Route::get('/room/{id}', [GuestHouseController::class, 'show']);
 Route::post('/create/guesthouse', [GuestHouseController::class, 'store']);
-Route::delete('/delete/guesthouse/{id}', [GuestHouseController::class, 'destroy']);
+Route::delete('/delete/guesthouse/{guesthouse}', [GuestHouseController::class, 'destroy']);
 
 Route::get('/about', [HomeController::class, 'about']);
 Route::get('/map', [HomeController::class, 'map']);
@@ -39,6 +39,7 @@ Route::get('/register', [UserController::class, 'register']);
 Route::post('/create/user', [UserController::class, 'store']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/account', [UserController::class, 'account']);
+Route::delete('/user/delete/{user}', [UserController::class, 'destroy'])->middleware('auth');
 
 //wishlist
 Route::post('/wishlist/save', [WishlistController::class, 'store'])->middleware('auth');
@@ -48,8 +49,8 @@ Route::get('/wishlist', [WishlistController::class, 'index'])->middleware('auth'
 Route::get('/create/admin', [AdminController::class, 'createAdmin']);
 Route::get('/dashboard', [AdminController::class, 'dashboard']);
 Route::get('/edit/guesthouse', [AdminController::class, 'edit']);
-Route::get('/manage/users', [AdminController::class, 'manage_users']);
-Route::get('/manage/guesthouses', [AdminController::class, 'manage_guesthouses']);
+Route::get('/manage/users', [AdminController::class, 'manage_users'])->name('manage_users');
+Route::get('/manage/guesthouses', [AdminController::class, 'manage_guesthouses'])->name('manage_guesthouse');
 Route::get('/manage/guesthouses/{entry}', [AdminController::class, 'manage_guesthouses_entry']);
 Route::get('/manage/reservations', [AdminController::class, 'manage_reservations']);
 

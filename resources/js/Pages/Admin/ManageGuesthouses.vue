@@ -6,7 +6,7 @@
     import DeleteGuestHouseModal from './partials/DeleteGuestHouseModal.vue'
     import EditGuestHouseModal from './partials/EditGuestHouseModal.vue'
 
-    const prop = defineProps(['guesthouses'])
+    defineProps({guesthouses: Object})
     const createGuestHouseDialog = ref(false)
     const deleteGuestHouseModal = ref(false)
     const editGuestHouseModal = ref(false)
@@ -38,7 +38,6 @@
     <Head title="Manage guest house" />
        
     <v-btn color="green" prepend-icon="mdi-plus-thick" @click="createGuestHouseDialog = true" class="mb-4 text-none mt-2">New Guest House</v-btn>
-    
     <v-container class="bg-white">
         <v-row justify="space-between">
             <v-col cols="2">
@@ -60,23 +59,28 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="guesthouse in prop.guesthouses.data" :key="guesthouse.id">
-               <td>{{ guesthouse.id }}</td>
-               <td class="text-red"> <v-img cover class="my-1" :src="`../images/room1.png`"></v-img> </td>
-               <td>{{ guesthouse.room_name }}</td>
-               <td>{{ guesthouse.room_location }}</td>
-               <td> {{ guesthouse.room_price }} </td>
-                <td>
-                    <v-btn icon="mdi-pencil" size="small" @click="editGuesthouse(guesthouse)" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
-                    <v-btn icon="mdi-delete-outline" @click="deleteGuesthouse(guesthouse)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
-                </td>
+            <v-slide-x-transition class="py-0" group>
+                <tr v-for="guesthouse in guesthouses.data" :key="guesthouse.id">
+                    <td>{{ guesthouse.id }}</td>
+                    <td class="text-red"> <v-img cover class="my-1" :src="`../images/room1.png`"></v-img> </td>
+                    <td>{{ guesthouse.room_name }}</td>
+                    <td>{{ guesthouse.room_location }}</td>
+                    <td> {{ guesthouse.room_price }} </td>
+                    <td>
+                        <v-btn icon="mdi-pencil" size="small" @click="editGuesthouse(guesthouse)" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
+                        <v-btn icon="mdi-delete-outline" @click="deleteGuesthouse(guesthouse)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
+                    </td>
+                </tr>
+            </v-slide-x-transition>
+            <tr v-if="guesthouses.data.length <= 0">
+                <td class="text-h6" colspan="6">No Guest houses found.</td>
             </tr>
         </tbody>
     </v-table>
     <v-row  class="mt-2">
         <v-col class="d-flex justify-end">
             <Link 
-                v-for="link in prop.guesthouses.links" 
+                v-for="link in guesthouses.links" 
                 :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 
                 :key="link" 
                 :href="link.url"
@@ -94,7 +98,7 @@
 
     <v-snackbar
       v-model="deleteSnackbar"
-      color="blue-lighten-3"
+      color="red-lighten-3"
       timeout="1500"
     >
       Deleted successfully

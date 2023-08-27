@@ -3,11 +3,11 @@
     import Layout from '../../shared/Layout.vue'
     import Chart from 'chart.js/auto'
     import DashboardSheet from './partials/DashboardSheet.vue'
-    import { onMounted, ref } from 'vue';
+    import { onMounted, ref, defineProps } from 'vue';
 
     defineOptions({layout: Layout})
     
-
+    const prop = defineProps(['totalUsers', 'totalGuesthouses'])
     const myChartRef = ref(null)
 
     onMounted(() => {
@@ -55,13 +55,13 @@
                 <DashboardSheet id="sheet1">
                     <strong class="">Total Users</strong>
                     <p class="mt-3">
-                        10
+                        {{prop.totalUsers}}
                     </p>
                 </DashboardSheet>
                 <DashboardSheet id="sheet1">
                     <strong class="">Total Guest Houses</strong>
                     <p class="mt-3">
-                        15
+                        {{prop.totalGuesthouses}}
                     </p>
                 </DashboardSheet>
                 <DashboardSheet id="sheet1">

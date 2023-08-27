@@ -160,13 +160,11 @@ class GuestHouseController extends Controller
         // return redirect('guesthouses.show', ['room' => $guesthouse])->with('message', 'Guest House Updated Successfully!');
     }
 
-    public function destroy($id) {
-        $wishlist = Wishlist::where('room_id', $id)->get();
+    public function destroy(GuestHouse $guesthouse) {
+        $wishlist = Wishlist::where('room_id', $guesthouse->id)->get();
         $wishlist->each->delete();
-        $guesthouse = GuestHouse::find($id);
         $guesthouse->delete();
-        return back();
-        // return Inertia::location(back());
+        return redirect()->route('manage_guesthouse');
     }
 
     //store guest hoseu data 

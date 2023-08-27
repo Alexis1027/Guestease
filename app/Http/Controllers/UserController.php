@@ -53,10 +53,9 @@ class UserController extends Controller
         return Inertia::render('Auth/Index', ['users' => $users]);
     }
 
-    public function delete(Request $request) {
-        $user = User::find($request->id);
+    public function destroy(User $user) {
         $user->delete();
-        return response()->json(['response' => 'HELLO GIATAY!', 'id' => $request->all()]);
+        return redirect()->route('manage_users');
     }
 
     public function authenticate(Request $request) {
@@ -74,50 +73,5 @@ class UserController extends Controller
         }
     }
 
-    public function update_name(Request $request) {
-        
-        $user = User::find(auth()->user()->id);
-        $user->name = $request->name;
-        $user->save();
-        return back()->with('message', 'Successfully changed name!');
-    }
-
-    public function update_email(Request $request) {
-        $user = User::find(auth()->user()->id);
-
-        $request->validate([
-            'email' => ['required', 'email', Rule::unique('users', 'email')]
-        ]);
-
-        $user->email = $request->email;
-        $user->save();
-        return back()->with('message', 'Successfully changed email!');
-    }
-
-    public function add_profile_pic(Request $request) {
-
-        $user = User::find(auth()->user()->id);
-        $user->profile_pic = $request->profile_pic;
-        $user->save();
-        return back()->with('message', 'Succesfully changed profile pic!');
-    }
-
-    public function add_phone(Request $request) {
-        $user = User::find(auth()->user()->id);
-        $user->contact_no = $request->contact_no;
-        $user->save();
-        return back()->with('message', 'Successfully added contact number!');
-    }
-
-    // public function update_phone(Request $request) {
-    //     $user = User::find(auth()->user()->id);
-    //     $user->contact_no = $request->
-    // }
-
-    public function add_address(Request $request) {
-        $user = User::find(auth()->user()->id);
-        $user->address = $request->address;
-        $user->save();
-        return back()->with('message', 'Successfully added Address');
-    }
+    
 }
