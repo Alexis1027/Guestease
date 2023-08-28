@@ -53,6 +53,7 @@ Route::get('/create/admin', [AdminController::class, 'createAdmin']);
 Route::get('/dashboard', [AdminController::class, 'dashboard']);
 Route::get('/edit/guesthouse', [AdminController::class, 'edit']);
 Route::get('/manage/users', [AdminController::class, 'manage_users'])->name('manage_users');
+Route::get('/manage/users/{entry}', [AdminController::class, 'manage_users_entry'])->name('manage_users_entry');
 Route::get('/manage/guesthouses', [AdminController::class, 'manage_guesthouses'])->name('manage_guesthouse');
 Route::get('/manage/guesthouses/{entry}', [AdminController::class, 'manage_guesthouses_entry']);
 Route::get('/manage/reservations', [AdminController::class, 'manage_reservations']);

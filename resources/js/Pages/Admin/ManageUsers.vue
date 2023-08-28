@@ -1,6 +1,7 @@
 <script setup>
 
-    import {ref, defineProps} from 'vue'
+    import {ref, defineProps, watch} from 'vue'
+    import { router } from '@inertiajs/vue3'
     import Layout from '../../shared/Layout.vue'
     import EditUserModal from './partials/EditUserModal.vue'
     import DeleteUserModal from './partials/DeleteUserModal.vue'
@@ -9,7 +10,7 @@
     const prop = defineProps(['users'])
 
     const entries = [5, 10, 15, 20, 25]
-    const entry = ref(5)
+    const entry = ref()
     const editUserModal = ref(false)
     const deleteUserModal = ref(false)
     const user = ref({})
@@ -18,6 +19,10 @@
         user.value = usr
         deleteUserModal.value = true
     }
+
+    watch(entry, () => {
+        router.get(`/manage/users/${entry.value}`)
+    })
 
     defineOptions({layout: Layout})
 </script>

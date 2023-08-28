@@ -3,9 +3,26 @@
     import {ref, defineProps, onMounted} from 'vue'
     import {Link} from '@inertiajs/vue3'
     import { VSkeletonLoader } from 'vuetify/lib/labs/components.mjs';
-    const guesthouse = defineProps(['guesthouse'])
+    import getDistance from 'geolib/es/getDistance'
+
+    const prop = defineProps({
+        guesthouse: Object,
+        latitude: Number,
+        longitude: Number
+    })
+   
+
+    // const distance = ref()
+    // const myLocation = { latitude:  prop.latitude , longitude:  prop.longitude}
+    // const guesthouseLocation = { latitude: prop.guesthouse.latitude, longitude: prop.guesthouse.longitude }
+    // distance.value = getDistance(myLocation, guesthouseLocation)
+    // console.log(myLocation)
+    // console.log(guesthouseLocation)
+    // console.log(getDistance(myLocation, guesthouseLocation))
+    
+
     const images = []
-    const guestHouseImg = guesthouse.guesthouse.room_image.split(",")
+    const guestHouseImg = prop.guesthouse.room_image.split(",")
     const loading = ref(true)
     guestHouseImg.forEach(img => {
         images.push(img)
@@ -17,16 +34,14 @@
         },1000)
     })
     
-
 </script>
 
 <template>
     <div id="carousel">
-        <!-- <router-link to="/about">about...</router-link> -->
         <v-skeleton-loader class="mt-6 bg-grey-lighten-3" :loading="loading"  height="100%">
             <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters show-arrows="hover">
                 <v-carousel-item v-for="(image, i) in images" :key="i">
-                    <Link :href="`/room/${guesthouse.guesthouse.id}`">
+                    <Link :href="`/room/${prop.guesthouse.id}`">
                         <v-img id="carousel" :src="`images/${images[i]}`" cover height="275" width="100%" class="rounded-t-lg">
                             <template v-slot:placeholder>
                                 <div class="d-flex align-center justify-center fill-height">
@@ -43,16 +58,16 @@
         <v-skeleton-loader :loading="loading" class="bg-grey-lighten-3"  height="80%" type="image, article">
             <v-container class="bg-grey-lighten-3">
                 <v-row id="guestHouseDetails">
-                <v-col cols="8"><strong class="truncate-text-title">{{ guesthouse.guesthouse.room_name }} </strong></v-col>
+                <v-col cols="8"><strong class="truncate-text-title">{{ prop.guesthouse.room_name }} </strong></v-col>
                 <v-col cols="4" >
                     <v-icon color="orange-lighten-1">
                         mdi-star
                     </v-icon>
-                    {{ guesthouse.guesthouse.averageRating }} 
+                    {{ prop.guesthouse.averageRating }} 
                 </v-col>
             </v-row>
-            <p class="truncate-text">{{ guesthouse.guesthouse.room_details }}</p>
-            <p> <strong>P {{ guesthouse.guesthouse.room_price }}</strong> monthly. </p>
+            <p class="truncate-text">{{ prop.guesthouse.room_details }}</p>
+            <p> <strong>P {{ prop.guesthouse.room_price }}</strong> monthly. </p>
             </v-container>
         </v-skeleton-loader>
         

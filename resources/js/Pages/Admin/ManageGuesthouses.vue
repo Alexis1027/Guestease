@@ -1,27 +1,30 @@
 <script setup>
 
-    import {ref, defineProps} from 'vue'
+    import {ref, defineProps, watch, onMounted} from 'vue'
+    import {router} from '@inertiajs/vue3'
     import Layout from '../../shared/Layout.vue'
     import CreateGuestHouseModal from './partials/CreateGuestHouseModal.vue'
     import DeleteGuestHouseModal from './partials/DeleteGuestHouseModal.vue'
     import EditGuestHouseModal from './partials/EditGuestHouseModal.vue'
 
-    defineProps({guesthouses: Object})
+    defineProps({guesthouses: Object, newEntry: Object})
     const createGuestHouseDialog = ref(false)
     const deleteGuestHouseModal = ref(false)
     const editGuestHouseModal = ref(false)
     const deleteSnackbar = ref(false)
     const createSnackbar = ref(false)
     const entries = [5, 10, 15, 20, 25]
-    const entry = ref(5)
+    const entry = ref()
     const guesthouse = ref({})
 
     function deleteGuesthouse(gh) {
         guesthouse.value = gh
         deleteGuestHouseModal.value = true
-        // prop.guesthouses.data = prop.guesthouses.data.filter(guesthouse => guesthouse.id !== gh.id)
-        // console.log(prop.guesthouses.data)
     }
+
+    watch(entry, () => {
+        router.get(`/manage/guesthouses/${entry.value}`)
+    })
 
     function editGuesthouse(gh) {
         guesthouse.value = gh
@@ -36,7 +39,6 @@
 
 <template>
     <Head title="Manage guest house" />
-       
     <v-btn color="green" prepend-icon="mdi-plus-thick" @click="createGuestHouseDialog = true" class="mb-4 text-none mt-2">New Guest House</v-btn>
     <v-container class="bg-white">
         <v-row justify="space-between">

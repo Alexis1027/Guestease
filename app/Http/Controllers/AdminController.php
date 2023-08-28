@@ -24,7 +24,11 @@ class AdminController extends Controller
     }
 
     public function manage_guesthouses_entry($entry) {
-        return Inertia::render('Admin/ManageGuesthouses', ['guesthouses' => GuestHouse::paginate($entry)]);
+        return Inertia::render('Admin/ManageGuesthouses', ['guesthouses' => GuestHouse::paginate($entry), 'newEntry' => $entry]);
+    }
+
+    public function manage_users_entry($entry) {
+        return Inertia::render('Admin/ManageUsers', ['users' => User::paginate($entry)]);
     }
 
     public function manage_users() {
