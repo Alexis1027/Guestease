@@ -95,7 +95,7 @@
                 <v-col cols="6">
                     <!-- First image -->
                     <v-hover v-slot="{ isHovering, props }">
-                        <v-card height="100%" max-height="370" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
+                        <v-card height="100%" max-height="400" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
                             <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
                                 <template v-slot:placeholder>
                                     <div class="d-flex align-center justify-center fill-height">
@@ -112,9 +112,9 @@
                         <!--  4 images -->
                         <v-col cols="6" v-for="i in 4" :key="i">
                             <v-hover v-slot="{ isHovering, props }">
-                                <v-card height="100%" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
+                                <v-card height="100%" max-height="180" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
                                     <!-- show the show all images button if i is equal to two -->
-                                    <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" size="small" prepend-icon="mdi-image-multiple-outline" >show all images</v-btn>
+                                    <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" size="small" prepend-icon="mdi-image-multiple-outline" class="text-none">Show all images</v-btn>
 
                                     <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
                                         <template v-slot:placeholder>

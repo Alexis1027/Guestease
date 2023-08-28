@@ -44,13 +44,12 @@ class UserController extends Controller
         return redirect('/')->with('message', 'Created and logged in successfully');
     }
 
-    public function show() {
+    public function edit() {
         return Inertia::render('Auth/Edit');
     }
 
     public function index() {
-        $users = User::get();
-        return Inertia::render('Auth/Index', ['users' => $users]);
+        return Inertia::render('Auth/Index', ['users' => User::all()]);
     }
 
     public function destroy(User $user) {
@@ -66,7 +65,7 @@ class UserController extends Controller
 
         if(auth()->attempt($form)) {
             $request->session()->regenerate();
-            return redirect('/')->with('message', 'You are now logged in!');
+            return redirect('/');
         }
         else {
             return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');

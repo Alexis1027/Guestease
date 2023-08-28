@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GuestHouse;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -43,7 +44,8 @@ class HomeController extends Controller
 
 
     public function reservations() {
-        return Inertia::render('Reservations');
+        $reservations = Reservation::where('user_id', auth()->user()->id)->get();
+        return Inertia::render('Reservations', ['reservations' => $reservations]);
     }
 
     public function map() {

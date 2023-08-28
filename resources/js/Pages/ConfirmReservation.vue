@@ -3,7 +3,7 @@
     import {defineProps} from 'vue'
     import { useForm } from '@inertiajs/vue3';
 
-    const prop = defineProps(['guesthouse'])
+    const prop = defineProps(['guesthouse', 'auth'])
 
     const items = [
         'Paypal',
@@ -12,50 +12,56 @@
       ]
 
     const form = useForm({
-        firstname: '',
-        lastname: '',
-        email: '',
-        contact_no: '',
+        // firstname: prop.auth.user.firstname,
+        // lastname: prop.auth.user.lastname,
+        // email: prop.auth.user.email,
+        // contact_no: prop.auth.user.contact_no,
+        room_id: prop.guesthouse.id,
+        user_id: prop.auth.user.id,
+        payment_process:'',
+        status: 'pending'
     })
         
-    
+    const submit = () => {
+        form.post('/reserve')
+    }
 
-      paypal.Buttons({
-        style: {
-            color:'blue',
-            shape:'pill',
-            layout: 'horizontal',
-            tagline: 'false',
-            height: 40
-        },
-        createOrder: function(data, actions) {
-            if(checkForm2()){
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                        value: '0.01'
-                        }
-                    }]
-                });
-            }
-            else {
-                alert("Fill in missing fields")
-            }
-        },
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-                $('#status').val('approved')
-                $('#confirm_payment_form').submit()
-                alert('Transaction completed by ' + details.payer.name.given_name + '!');
-                // window.location.href = 'reservation.php'
-            });
-        },
-        onCancel: function(data) {
-            $('#status').val('pending')
-            $('#confirm_payment_form').submit()
-            // window.location.href = 'reservation.php'
-        }
-        }).render('#paypal-button-container');
+    //   paypal.Buttons({
+    //     style: {
+    //         color:'blue',
+    //         shape:'pill',
+    //         layout: 'horizontal',
+    //         tagline: 'false',
+    //         height: 40
+    //     },
+    //     createOrder: function(data, actions) {
+    //         if(checkForm2()){
+    //             return actions.order.create({
+    //                 purchase_units: [{
+    //                     amount: {
+    //                     value: '0.01'
+    //                     }
+    //                 }]
+    //             });
+    //         }
+    //         else {
+    //             alert("Fill in missing fields")
+    //         }
+    //     },
+    //     onApprove: function(data, actions) {
+    //         return actions.order.capture().then(function(details) {
+    //             $('#status').val('approved')
+    //             $('#confirm_payment_form').submit()
+    //             alert('Transaction completed by ' + details.payer.name.given_name + '!');
+    //             // window.location.href = 'reservation.php'
+    //         });
+    //     },
+    //     onCancel: function(data) {
+    //         $('#status').val('pending')
+    //         $('#confirm_payment_form').submit()
+    //         // window.location.href = 'reservation.php'
+    //     }
+    //     }).render('#paypal-button-container');
 
 </script>
 
@@ -66,17 +72,19 @@
             <v-row>
                 <v-col cols="6">
                     <v-container>
-                        <Link :href="`/room/${prop.guesthouse.id}`">
-                            <v-btn rounded icon="mdi-keyboard-backspace" flat></v-btn>
-                        </Link>
-                        <label class="text-h5">Confirm Reservation</label>
-                        <p class="text-h6 my-4">Personal Information</p>
-                        <v-text-field variant="outlined" color="blue" clearable label="First name" v-model="form.firstname"></v-text-field>
-                        <v-text-field variant="outlined" color="blue" clearable label="Last name" v-model="form.lastname"></v-text-field>
-                        <v-text-field variant="outlined" color="blue" clearable label="Email" placeholder="johndoe@gmail.com" v-model="form.email"></v-text-field>
-                        <v-text-field variant="outlined" color="blue" clearable label="Contact Number" v-model="form.contact_no"></v-text-field>
-                        <v-select :items="items" label="Payment process" clearable required variant="outlined"></v-select>
-                        <v-btn block color="green">Confirm Reservation</v-btn>
+                        <v-form @submit.prevent>
+                            <Link :href="`/room/${prop.guesthouse.id}`">
+                                <v-btn rounded icon="mdi-keyboard-backspace" flat></v-btn>
+                            </Link>
+                            <label class="text-h5">Confirm Reservation</label>
+                            <p class="text-h6 my-4">Personal Information</p>
+                            <!-- <v-text-field  variant="outlined" color="blue" clearable label="First name" v-model="form.firstname"></v-text-field>
+                            <v-text-field variant="outlined" color="blue" clearable label="Last name" v-model="form.lastname"></v-text-field>
+                            <v-text-field variant="outlined" color="blue" clearable label="Email" placeholder="johndoe@gmail.com" v-model="form.email"></v-text-field>
+                            <v-text-field variant="outlined" color="blue" clearable label="Contact Number" v-model="form.contact_no"></v-text-field> -->
+                            <v-select :items="items" :error-messages="form.errors.payment_process" label="Payment process" v-model="form.payment_process" clearable required variant="outlined"></v-select>
+                            <v-btn block color="green" class="text-none" :loading="form.processing" @click="submit" type="submit">Confirm Reservation</v-btn>
+                        </v-form>
                         <div id="paypal-button-container"></div>
                     </v-container>
 

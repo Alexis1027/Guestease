@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\GuestHouseController;
+use App\Http\Controllers\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::delete('/delete/guesthouse/{guesthouse}', [GuestHouseController::class, '
 
 Route::get('/about', [HomeController::class, 'about']);
 Route::get('/map', [HomeController::class, 'map']);
-Route::get('/reservations', [HomeController::class, 'reservations'])->middleware('auth');
+Route::get('/reservations', [HomeController::class, 'reservations'])->middleware('auth')->name('reservations');
 Route::get('/payment/{room}', [HomeController::class, 'payment'])->middleware('auth');
 Route::get('/guidelines', [HomeController::class, 'guidelines']);
 Route::get('/rules', [HomeController::class, 'rules']);
@@ -40,6 +41,8 @@ Route::post('/create/user', [UserController::class, 'store']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/account', [UserController::class, 'account']);
 Route::delete('/user/delete/{user}', [UserController::class, 'destroy'])->middleware('auth');
+
+Route::post('/reserve', [ReservationController::class, 'store']);
 
 //wishlist
 Route::post('/wishlist/save', [WishlistController::class, 'store'])->middleware('auth');
