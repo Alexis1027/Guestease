@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Inertia\Inertia;
 use App\Models\GuestHouse;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class HomeController extends Controller
 {
@@ -45,6 +46,9 @@ class HomeController extends Controller
 
     public function reservations() {
         $reservations = Reservation::where('user_id', auth()->user()->id)->get();
+        foreach($reservations as $r) {
+            $r->guesthouse = GuestHouse::find($r->room_id);
+        }
         return Inertia::render('Reservations', ['reservations' => $reservations]);
     }
 

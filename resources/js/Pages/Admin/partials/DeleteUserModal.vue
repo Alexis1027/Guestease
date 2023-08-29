@@ -14,7 +14,6 @@
             onFinish: () => {
                 emit('CloseDialog')
                 emit('showDeleteSuccessfulSnackbar')
-
             }
         })
     }
@@ -28,7 +27,6 @@
                 <v-sheet elevation="12" max-width="600" rounded="lg" width="100%" class="pa-4 text-center mx-auto">
                     <v-icon class="mb-5" color="red" icon="mdi-close-circle" size="112"></v-icon>
                     <h2 class="text-h5 mb-6">Are you sure?</h2>
-
                     <p class="mb-4 text-medium-emphasis text-body-2">
                         This will delete user <strong>{{ prop.user.firstname + ' ' + prop.user.lastname }}</strong>
                         <br> This process cannot be undone.

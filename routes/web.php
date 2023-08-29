@@ -40,7 +40,7 @@ Route::get('/register', [UserController::class, 'register']);
 Route::post('/create/user', [UserController::class, 'store']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/account', [UserController::class, 'account']);
-Route::delete('/user/delete/{user}', [UserController::class, 'destroy'])->middleware('auth');
+Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
 
 Route::post('/reserve', [ReservationController::class, 'store']);
 

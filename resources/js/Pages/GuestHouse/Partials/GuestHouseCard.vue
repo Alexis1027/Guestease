@@ -11,16 +11,13 @@
         longitude: Number
     })
    
-
-    // const distance = ref()
-    // const myLocation = { latitude:  prop.latitude , longitude:  prop.longitude}
-    // const guesthouseLocation = { latitude: prop.guesthouse.latitude, longitude: prop.guesthouse.longitude }
-    // distance.value = getDistance(myLocation, guesthouseLocation)
+    let myLocation = { latitude:  prop.latitude , longitude:  prop.longitude}
+    let guesthouseLocation = { latitude: prop.guesthouse.latitude, longitude: prop.guesthouse.longitude }
+    // const distance = getDistance(myLocation, guesthouseLocation)
     // console.log(myLocation)
     // console.log(guesthouseLocation)
     // console.log(getDistance(myLocation, guesthouseLocation))
     
-
     const images = []
     const guestHouseImg = prop.guesthouse.room_image.split(",")
     const loading = ref(true)
@@ -67,6 +64,10 @@
                 </v-col>
             </v-row>
             <p class="truncate-text">{{ prop.guesthouse.room_details }}</p>
+            <p>
+        {{ prop.latitude && prop.longitude ? Math.floor(getDistance({latitude: 10.250778, longitude: 123.939834}, guesthouseLocation)/1000) + ' km/s away' : 'bruh' }}
+
+            </p>
             <p> <strong>P {{ prop.guesthouse.room_price }}</strong> monthly. </p>
             </v-container>
         </v-skeleton-loader>

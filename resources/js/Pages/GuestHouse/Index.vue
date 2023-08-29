@@ -11,7 +11,6 @@
     navigator.geolocation.getCurrentPosition((pos) => {
         latitude.value = pos.coords.latitude
         longitude.value = pos.coords.longitude
-        console.log(pos)
     }, error => {
         console.log(error)
     })
@@ -21,8 +20,6 @@
 <template>
     <Head title="Home" />
     <!-- <div class="page-container"> -->
-        <h2>{{ latitude }}</h2>
-        <h2>{{ longitude }}</h2>
         <v-row>
             <v-col cols="3" v-for="guesthouse in props.guesthouses" :key="guesthouse.id">
                 <GuestHouseCard :guesthouse="guesthouse" :latitude="latitude" :longitude="longitude" />
@@ -37,13 +34,6 @@
   </template>
   
   <style scoped>
-  /* .page-container {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  } */
-  
   .sticky-btn-container {
     position: sticky;
     bottom: 0;  
