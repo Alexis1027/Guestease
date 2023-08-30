@@ -43,6 +43,7 @@ Route::post('/create/owner', [UserController::class, 'storeOwner']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/account', [UserController::class, 'account']);
 Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
+Route::get('/profile', [UserController::class, 'profile']);
 
 Route::post('/reserve', [ReservationController::class, 'store']);
 

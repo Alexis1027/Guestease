@@ -19,7 +19,27 @@
             </v-text-field> -->
             <v-spacer/>
 
-            <v-menu min-width="200px" rounded persistent>
+            <v-menu min-width="200px" rounded >
+                <template v-slot:activator="{ props }">
+                    <v-btn class="text-none" icon v-bind="props" >
+                        <v-badge content="2" color="error">
+                            <v-icon>mdi-bell-outline</v-icon>
+                        </v-badge>
+                    </v-btn>
+                </template>
+                <v-card width="450" >
+                    <v-list>
+                        <v-list-item value="1">
+                            John Doe requested to create a room.
+                        </v-list-item>
+                        <v-list-item value="2">
+                            Firstname Lastname requested to create a room.
+                        </v-list-item>
+                    </v-list>
+                </v-card>
+            </v-menu>
+
+            <v-menu min-width="200px" rounded >
                 <template v-slot:activator="{ props }">
                     <v-btn icon v-bind="props">
                         <v-avatar color="blue-lighten-3" size="35">
@@ -38,6 +58,11 @@
                             <Link href="/profile">
                                 <v-btn block variant="text"  class="text-none">
                                     Profile
+                                </v-btn>
+                            </Link>
+                            <Link href="/request">
+                                <v-btn block variant="text"  class="text-none">
+                                    Request
                                 </v-btn>
                             </Link>
                             <Link href="/reservations">

@@ -13,5 +13,6 @@
         <div v-for="reservation in reservations" :key="reservation.id">
             <ReservationCard :reservation="reservation" />
         </div>
+        <p class="ms-6" v-if="reservations.length == 0">No reservations found.</p>
 </template>
 

@@ -13,6 +13,10 @@
         <v-card class="bg-white">
             <v-card-item>
                 <v-row>
+                    <v-col cols="4">
+                        <p class="text-h5">Profile information</p>
+                        <p>Update your profile's account information.</p>
+                    </v-col>
                     <v-col cols="2">
                         <v-avatar size="106px">
                             <v-img alt="Avatar" :src="`../images/Profile/${auth.user.profile_pic}`"></v-img>
@@ -20,10 +24,10 @@
                     </v-col>
                     <v-col>
                         <v-row>
-                            <v-btn class="mt-5 text-none" color="blue">Change picture</v-btn>
+                            <v-btn class="mt-5 text-none" rounded="pill" color="blue">Change picture</v-btn>
                         </v-row>
                         <v-row>
-                            <v-btn class="mt-5 text-none" color="red">Delete picture</v-btn>
+                            <v-btn class="mt-5 text-none" rounded="pill" color="red">Delete picture</v-btn>
                         </v-row>
                     </v-col>
                 </v-row>
@@ -36,10 +40,20 @@
                     </v-col>
                 </v-row>
                 <v-row>
+                    <v-col cols="5">
+                        <v-text-field variant="outlined" label="Contact number" color="blue" v-model="auth.user.contact_no"></v-text-field>
+                    </v-col>
+                    <v-col cols="5">
+                        <v-text-field variant="outlined" label="Address" color="blue" v-model="auth.user.address"></v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row>
                     <v-col cols="10">
                         <v-text-field variant="outlined" label="Email" color="blue" v-model="auth.user.email"></v-text-field>
                     </v-col>
                 </v-row>
+                <v-btn rounded="pill" class="text-none" color="blue">Save</v-btn>
+
             </v-card-item>
         </v-card>
         <v-card class="bg-white mt-6">
@@ -64,7 +78,7 @@
                         <v-text-field variant="outlined" label="Confirm new password" color="blue"></v-text-field>
                     </v-col>
                 </v-row>
-                <v-btn rounded="pill" color="green">Save changes</v-btn>
+                <v-btn rounded="pill" class="text-none" color="blue">Save</v-btn>
             </v-card-item>
         </v-card>
 </template>

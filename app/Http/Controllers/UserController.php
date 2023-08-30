@@ -70,6 +70,10 @@ class UserController extends Controller
         return Inertia::render('Auth/Edit');
     }
 
+    public function profile() {
+        return Inertia::render('Auth/Profile');
+    }
+
     public function index() {
         return Inertia::render('Auth/Index', ['users' => User::all()]);
     }
