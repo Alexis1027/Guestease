@@ -35,6 +35,11 @@
                                 :title="$page.props.auth.user.firstname + ' ' + $page.props.auth.user.lastname"
                             ></v-list-item>
                             <v-divider class="my-3"></v-divider>
+                            <Link href="/profile">
+                                <v-btn block variant="text"  class="text-none">
+                                    Profile
+                                </v-btn>
+                            </Link>
                             <Link href="/reservations">
                                 <v-btn block variant="text"  class="text-none">
                                     Reservations
@@ -63,7 +68,7 @@
                                 Log in
                             </v-btn>
                         </Link>
-                        <Link href="/register">
+                        <Link href="/createUser">
                             <v-btn block variant="text" class="text-none">
                                 Sign up
                             </v-btn>

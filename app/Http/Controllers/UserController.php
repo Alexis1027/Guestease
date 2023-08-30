@@ -14,8 +14,12 @@ class UserController extends Controller
         return Inertia::render('Auth/Login');
     }
 
-    public function register() {
-        return Inertia::render('Auth/Register');
+    public function createUser() {
+        return Inertia::render('Auth/CreateUser');
+    }
+
+    public function createOwner() {
+        return Inertia::render('Auth/CreateOwner');
     }
 
     public function logout(Request $request) {
@@ -26,7 +30,7 @@ class UserController extends Controller
         return redirect('/login')->with('message', 'You logged out?');
     }
 
-    public function store(Request $request) {
+    public function storeUser(Request $request) {
         $form = $request->validate([
             'firstname' => ['required', 'min:3'],
             'lastname' => ['required', 'min:3'],
@@ -36,6 +40,24 @@ class UserController extends Controller
         ]);
         //hash password
         $form['role'] = 'user';
+        $form['password'] = bcrypt($form['password']);
+        $user = User::create($form);
+        $user->profile_pic = "default_profile.png";
+        $user->save();
+        auth()->login($user);
+        return redirect('/')->with('message', 'Created and logged in successfully');
+    }
+
+    public function storeOwner(Request $request) {
+        $form = $request->validate([
+            'firstname' => ['required', 'min:3'],
+            'lastname' => ['required', 'min:3'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'min:6'],
+            'terms' => ['required', 'accepted']
+        ]);
+        //hash password
+        $form['role'] = 'owner';
         $form['password'] = bcrypt($form['password']);
         $user = User::create($form);
         $user->profile_pic = "default_profile.png";

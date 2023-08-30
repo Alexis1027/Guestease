@@ -32,12 +32,14 @@ Route::get('/reservations', [HomeController::class, 'reservations'])->middleware
 Route::get('/payment/{room}', [HomeController::class, 'payment'])->middleware('auth');
 Route::get('/guidelines', [HomeController::class, 'guidelines']);
 Route::get('/rules', [HomeController::class, 'rules']);
-Route::get('/settings', [HomeController::class, 'settings']);
+Route::get('/settings', [HomeController::class, 'settings'])->middleware('auth');
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login', [UserController::class, 'authenticate']);
-Route::get('/register', [UserController::class, 'register']);
-Route::post('/create/user', [UserController::class, 'store']);
+Route::get('/createUser', [UserController::class, 'createUser']);
+Route::get('/createOwner', [UserController::class, 'createOwner']);
+Route::post('/create/user', [UserController::class, 'storeUser']);
+Route::post('/create/owner', [UserController::class, 'storeOwner']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/account', [UserController::class, 'account']);
 Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);

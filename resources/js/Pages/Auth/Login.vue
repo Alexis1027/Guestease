@@ -84,10 +84,13 @@
                             </v-text-field>
                             <!-- <v-checkbox-btn color="blue" class="ms-3 fadeIn second" label="Remember me"></v-checkbox-btn> -->
                             <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="form.processing" :disabled="form.processing" @click="submit" type="submit" block>Log in</v-btn>
-              <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/>
+                            <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/>
                             <br>
                             <label class="mt-4 fadeIn third">Dont have an account? </label>
-                            <Link href="/register" class="text-blue fadeIn third"> Create Account</Link>
+                            <Link href="/createUser" class="text-blue fadeIn third"> Create account</Link>
+                            <br>
+                            <label class="mt-4 fadeIn third">Dont have an account? </label>
+                            <Link href="/createOwner" class="text-blue fadeIn third"> Create owner</Link>
                         </v-container>
                     </v-card-item>
                 </v-card>

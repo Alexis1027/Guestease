@@ -1,12 +1,15 @@
 <script setup>
 
     import {ref, defineProps, defineEmits} from 'vue'
+    import L from 'leaflet'
+    import 'leaflet/dist/leaflet.css'
     import {useForm} from '@inertiajs/vue3'
     const emit = defineEmits('CloseDialog')
     const dialog = defineProps(['dialog'])
     const emitCLoseDialog = () => {
         emit('CloseDialog')
     }
+    const mapContainer = ref(null)
 
     const form = useForm({
         room_name: null,
@@ -81,6 +84,7 @@
                                     <v-text-field color="blue" v-model="form.longitude" name="longitude" :error-messages="form.errors.longitude" variant="outlined" label="Longitude" clearable></v-text-field>
                                 </v-col>
                             </v-row>
+                            <div class="leaflet-container" ref="mapContainer"></div>
                             <v-divider/>
                             <v-card-actions class="d-flex justify-end ">
                                 <v-btn color="grey" class="text-none" rounded width="90" variant="flat" @click="emitCLoseDialog">Cancel</v-btn>
@@ -100,4 +104,5 @@
         margin-right: 40px;
         margin-bottom: 10px;
     }
+    
 </style>
