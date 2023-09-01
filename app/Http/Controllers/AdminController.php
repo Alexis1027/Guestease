@@ -19,6 +19,10 @@ class AdminController extends Controller
         return Inertia::render('Admin/CreateAdmin');
     }
 
+    public function requests() {
+        return Inertia::render('Admin/Requests');
+    }
+
     public function manage_guesthouses() {
         return Inertia::render('Admin/ManageGuesthouses', ['guesthouses' => GuestHouse::paginate(5)]);
     }

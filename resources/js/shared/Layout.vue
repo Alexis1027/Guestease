@@ -4,6 +4,9 @@
     import Footer from './Footer.vue';
     const search = ref('')
     const sidebar = ref(false)
+    defineProps({
+        auth: Object
+    })
 </script>
 
 <template>
@@ -12,7 +15,7 @@
             <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
             <v-toolbar-title>
                 <Link href="/">
-                    Logo
+                    Logo 
                 </Link>
             </v-toolbar-title>
             <!-- <v-text-field label="Search..." clearable flat rounded prepend-inner-icon="mdi-magnify" v-model="search" variant="outlined" color="blue">
@@ -32,9 +35,15 @@
                         <v-list-item value="1">
                             John Doe requested to create a room.
                         </v-list-item>
-                        <v-list-item value="2">
+                        <v-list-item :value="n" v-for="n in 6" :key="n">
                             Firstname Lastname requested to create a room.
                         </v-list-item>
+                        <v-divider/>
+                        <Link href="/requests">
+                            <v-list-item value="see all" class="text-center">
+                                See all
+                            </v-list-item>
+                        </Link>
                     </v-list>
                 </v-card>
             </v-menu>
@@ -48,18 +57,15 @@
                     </v-btn>
                 </template>
                 <v-card width="250" >
-                    <v-card-item v-if="$page.props.auth">
+                    <v-card-item v-if="auth">
                         <div class="mx-auto">
+                            <Link :href="`/profile/${auth.user.id}`">
                                 <v-list-item
-                                :prepend-avatar="`images/profile/${$page.props.auth.user.profile_pic}`"
-                                :title="$page.props.auth.user.firstname + ' ' + $page.props.auth.user.lastname"
-                            ></v-list-item>
-                            <v-divider class="my-3"></v-divider>
-                            <Link href="/profile">
-                                <v-btn block variant="text"  class="text-none">
-                                    Profile
-                                </v-btn>
+                                    :prepend-avatar="`images/profile/${auth.user.profile_pic}`"
+                                    :title="auth.user.firstname + ' ' + auth.user.lastname"
+                                ></v-list-item>
                             </Link>
+                            <v-divider class="my-3"></v-divider>
                             <Link href="/request">
                                 <v-btn block variant="text"  class="text-none">
                                     Request
@@ -137,6 +143,9 @@
                 </Link>
                 <Link href="/manage/reservations">
                     <v-list-item prepend-icon="mdi-calendar-edit" title="Reservation management" value="managereservation"></v-list-item>
+                </Link>
+                <Link href="/requests">
+                    <v-list-item prepend-icon="mdi-help-box-multiple" title="Guest house requests" value="requests"></v-list-item>
                 </Link>
                 <Link href="/create/admin">
                     <v-list-item prepend-icon="mdi-account-hard-hat" title="Create admin account" value="createadmin"></v-list-item>

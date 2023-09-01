@@ -9,11 +9,13 @@
         <v-card elevation="0">
             <v-card-item>
                 <v-list>
-                    <v-list-item
-                        :prepend-avatar="`../images/profile/${prop.rating.user.profile_pic}`"
-                        :title="prop.rating.user.firstname + ' ' + prop.rating.user.lastname"
-                        :subtitle="format(new Date(prop.rating.created_at), 'MMMM dd, yyyy, hh:mm a')">
-                    </v-list-item>
+                    <Link :href="`/profile/${prop.rating.user.id}`">
+                        <v-list-item
+                            :prepend-avatar="`../images/profile/${prop.rating.user.profile_pic}`"
+                            :title="prop.rating.user.firstname + ' ' + prop.rating.user.lastname"
+                            :subtitle="format(new Date(prop.rating.created_at), 'MMMM dd, yyyy, hh:mm a')">
+                        </v-list-item>
+                    </Link>
                     <v-list-item>
                         <v-rating
                             half-increments

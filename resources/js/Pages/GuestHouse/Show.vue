@@ -136,7 +136,7 @@
             <v-col cols="8">
                 <!-- About this place section -->
                 <v-container>
-                    <h2>About this place</h2>
+                    <p class="text-h5 font-weight-medium">About this place</p>
                     <ul>
                         <li>{{ props.guesthouse.room_details }}</li>
                         <li>{{ props.guesthouse.room_location }}</li>
@@ -145,7 +145,7 @@
                 <v-divider/>
                 <!-- Rate this place section -->
                 <v-container>
-                    <h2>Rate this place </h2>
+                    <p class="text-h5 font-weight-medium">Rate this place </p>
                     <p style="color: gray">Tell others what you think.</p>
                     <div v-if="props.rated" class="mt-3">
                         <RatingCard :rating="props.rated" />
@@ -181,7 +181,7 @@
             <v-divider/>
             <!-- Ratings and reviews section -->
             <v-container class="mb-5">
-                <h2>Ratings and reviews</h2>
+                <p class="text-h5 font-weight-medium">Ratings and reviews</p>
                 <v-row class="mt-3">
                     <v-col cols="6" v-for="rating in props.ratings" :key="rating.id">
                         <RatingCard :rating="rating" />
@@ -193,7 +193,7 @@
         <v-divider></v-divider>
 
         <v-container>
-            <h2 class="mb-6">Where you'll be.</h2>
+            <p class="text-h5 font-weight-medium mb-6">Where you'll be.</p>
             <Map :latitude="props.guesthouse.latitude" :longitude="props.guesthouse.longitude" />
         </v-container>
 

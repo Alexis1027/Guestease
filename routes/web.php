@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use App\Models\GuestHouse;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\GuestHouseController;
 use App\Http\Controllers\ReservationController;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +45,7 @@ Route::post('/create/owner', [UserController::class, 'storeOwner']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/account', [UserController::class, 'account']);
 Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
-Route::get('/profile', [UserController::class, 'profile']);
+Route::get('/profile/{user}', [HomeController::class, 'profile']);
 
 Route::post('/reserve', [ReservationController::class, 'store']);
 
@@ -60,6 +62,6 @@ Route::get('/manage/users/{entry}', [AdminController::class, 'manage_users_entry
 Route::get('/manage/guesthouses', [AdminController::class, 'manage_guesthouses'])->name('manage_guesthouse');
 Route::get('/manage/guesthouses/{entry}', [AdminController::class, 'manage_guesthouses_entry']);
 Route::get('/manage/reservations', [AdminController::class, 'manage_reservations']);
-
+Route::get('/requests', [AdminController::class, 'requests']);
 
 Route::post('/rooms/rate/{guesthouse_id}', [RatingController::class, 'store'])->middleware('auth');

@@ -43,6 +43,9 @@ class HomeController extends Controller
         return Inertia::render('About');
     }
 
+    public function profile(User $user) {
+        return Inertia::render('Auth/Profile', ['user' => $user]);
+    }
 
     public function reservations() {
         $reservations = Reservation::where('user_id', auth()->user()->id)->get();
