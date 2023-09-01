@@ -1,16 +1,19 @@
 <?php
 
 use App\Models\User;
+use Inertia\Inertia;
 use App\Models\GuestHouse;
+use App\Models\RoomRequest;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\GuestHouseController;
 use App\Http\Controllers\ReservationController;
-use Inertia\Inertia;
+use App\Http\Controllers\RoomRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +25,12 @@ use Inertia\Inertia;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/joren', function() {
+    return Inertia::render('joren', ['users' => User::all()]);
+});
+
+Route::post('/request', [RoomRequestController::class, 'store']);
 
 Route::get('/',[GuestHouseController::class, 'index']);
 Route::get('/room/{id}', [GuestHouseController::class, 'show']);

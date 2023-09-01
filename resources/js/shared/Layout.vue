@@ -1,12 +1,17 @@
 <script setup>
 
-    import {ref} from 'vue'
-    import Footer from './Footer.vue';
+    import {ref, defineProps} from 'vue'
+    import {useForm} from '@inertiajs/vue3'
+
     const search = ref('')
     const sidebar = ref(false)
-    defineProps({
-        auth: Object
+    const {auth} = defineProps(['auth'])
+    const form = useForm({
+        user_id: auth.user.id
     })
+    function request() {
+        form.post('/request')
+    }
 </script>
 
 <template>
@@ -15,7 +20,7 @@
             <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
             <v-toolbar-title>
                 <Link href="/">
-                    Logo 
+                    Logo {{ form }}
                 </Link>
             </v-toolbar-title>
             <!-- <v-text-field label="Search..." clearable flat rounded prepend-inner-icon="mdi-magnify" v-model="search" variant="outlined" color="blue">
@@ -66,11 +71,11 @@
                                 ></v-list-item>
                             </Link>
                             <v-divider class="my-3"></v-divider>
-                            <Link href="/request">
-                                <v-btn block variant="text"  class="text-none">
+                            <v-form @submit.prevent="request">
+                                <v-btn block type="submit" :loading="form.processing" variant="text"  class="text-none">
                                     Request
                                 </v-btn>
-                            </Link>
+                            </v-form>
                             <Link href="/reservations">
                                 <v-btn block variant="text"  class="text-none">
                                     Reservations
