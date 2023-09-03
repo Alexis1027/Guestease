@@ -55,6 +55,7 @@ Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/account', [UserController::class, 'account']);
 Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
 Route::get('/profile/{user}', [HomeController::class, 'profile']);
+Route::put('/profile/update', [UserController::class, 'update']);
 
 Route::post('/reserve', [ReservationController::class, 'store']);
 

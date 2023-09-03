@@ -11,8 +11,9 @@
     <v-row justify="center">
         <v-col cols="10">
             <v-container class="bg-white">
-                <div class="justify-center d-flex">
-                    <v-card width="390" height="250" elevation="0">
+                <v-row>
+                    <v-col cols="5">
+                        <v-card width="390" height="250" elevation="0">
                         <v-card-item class="text-center">
                             <v-avatar size="150">
                             <v-img :src="`../images/Profile/${user.profile_pic}`"></v-img>
@@ -20,17 +21,22 @@
                         <p class="text-h4">{{ user.firstname + ' ' + user.lastname }}</p>
                         </v-card-item>
                     </v-card>
-                </div>
-                <v-divider class="my-5"/>
-                <!-- About section -->
-                <p class="text-h5">About {{ user.firstname }}</p>
-                <v-list-item prepend-icon="mdi-home" :title="`Lives in ${user.address}`">
-                </v-list-item>
-                <v-list-item prepend-icon="mdi-facebook-messenger">
-                    {{ user.firstname + ' ' + user.lastname }}
-                </v-list-item>
-                <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="user.contact_no">
-                </v-list-item>
+                
+                    </v-col>
+                    <v-divider vertical/>
+                    <v-col cols="7">
+                        <!-- About section -->
+                        <v-list height="100%">
+                            <v-list-item prepend-icon="mdi-home" :title="`Lives in ${user.address}`">
+                        </v-list-item>
+                        <v-list-item prepend-icon="mdi-facebook-messenger">
+                            {{ user.firstname + ' ' + user.lastname }}
+                        </v-list-item>
+                        <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="user.contact_no">
+                        </v-list-item>
+                        </v-list>
+                    </v-col>
+                </v-row>
 
                 <v-divider class="my-5"/>
                 <!-- Owner's Guest houses section -->

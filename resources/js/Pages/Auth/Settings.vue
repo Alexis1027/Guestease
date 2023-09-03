@@ -1,10 +1,29 @@
 <script setup>
 
+    import {ref} from 'vue'
+    import {useForm} from '@inertiajs/vue3'
     import Layout from '../../shared/Layout.vue'
+    const {auth} = defineProps(['auth'])
     defineOptions({layout: Layout})
-    defineProps({
-        auth: Object
+
+    const form = useForm({
+        firstname: auth.user.firstname,
+        lastname: auth.user.lastname,
+        contact_no: auth.user.contact_no,
+        address: auth.user.address,
+        email: auth.user.email,
     })
+
+    const submit = () => {
+        form.put('/profile/update', {
+            onSuccess: () => {
+                snackbar.value = true
+            }
+        })
+    }
+
+    const snackbar = ref(false)
+
 </script>
 
 
@@ -31,28 +50,30 @@
                         </v-row>
                     </v-col>
                 </v-row>
-                <v-row>
-                    <v-col cols="5">
-                        <v-text-field variant="outlined" label="First name" color="blue" v-model="auth.user.firstname"></v-text-field>
-                    </v-col>
-                    <v-col cols="5">
-                        <v-text-field variant="outlined" label="Last name" color="blue" v-model="auth.user.lastname"></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col cols="5">
-                        <v-text-field variant="outlined" label="Contact number" color="blue" v-model="auth.user.contact_no"></v-text-field>
-                    </v-col>
-                    <v-col cols="5">
-                        <v-text-field variant="outlined" label="Address" color="blue" v-model="auth.user.address"></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col cols="10">
-                        <v-text-field variant="outlined" label="Email" color="blue" v-model="auth.user.email"></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-btn rounded="pill" class="text-none" color="blue">Save</v-btn>
+                <v-form>
+                    <v-row>
+                        <v-col cols="5">
+                            <v-text-field variant="outlined" :error-messages="form.errors.firstname" label="First name" color="blue" v-model="form.firstname"></v-text-field>
+                        </v-col>
+                        <v-col cols="5">
+                            <v-text-field variant="outlined" :error-messages="form.errors.lastname" label="Last name" color="blue" v-model="form.lastname"></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="5">
+                            <v-text-field variant="outlined" :error-messages="form.errors.contact_no" label="Contact number" color="blue" v-model="form.contact_no"></v-text-field>
+                        </v-col>
+                        <v-col cols="5">
+                            <v-text-field variant="outlined" :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="10">
+                            <v-text-field variant="outlined" :error-messages="form.errors.email" label="Email" color="blue" v-model="form.email"></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-btn rounded="pill" class="text-none" type="submit" @click="submit" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
+                </v-form>
 
             </v-card-item>
         </v-card>
@@ -81,5 +102,27 @@
                 <v-btn rounded="pill" class="text-none" color="blue">Save</v-btn>
             </v-card-item>
         </v-card>
+
+        <v-snackbar
+      v-model="snackbar"
+      multi-line
+      color="blue"
+      class="text-end"
+      location="bottom right"
+      timeout="1200"
+    >
+      Update Sucessful.
+
+      <template v-slot:actions>
+        <v-btn
+          color="white"
+          variant="text"
+          @click="snackbar = false"
+          icon="mdi-close"
+        >
+        </v-btn>
+      </template>
+    </v-snackbar>
+
 </template>
 

@@ -1,12 +1,15 @@
 <script setup>
 
     import {ref} from 'vue'
+    import {format} from 'date-fns'
     import Layout from '../../shared/Layout.vue'
 
     const entries = [5, 10, 15, 20, 25]
     const entry = ref(5)
     const page = ref(1)
-
+    defineProps({
+        requests: Object
+    })
     defineOptions({
         layout: Layout
     })
@@ -34,11 +37,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="n in 5" :key="n">
-                    <td>{{ n }}</td>
-                    <td>John Doe #{{ n }}</td>
-                    <td>Profile</td>
-                    <td>5/{{ n }}/2023</td>
+                <tr v-for="request in requests" :key="request.id">
+                    <td>{{ request.id }}</td>
+                    <td>{{ request.user.firstname + ' ' + request.user.lastname }}</td>
+                    <td><Link :href="`/profile/${request.user.id}`">Profile</Link></td>
+                    <td>{{ format(new Date(request.created_at), 'MMMM dd, yyyy, hh:mm a') }}  </td>
                     <td>
                         <v-btn icon="mdi-check" size="small" class="text-green bg-grey-lighten-5" flat></v-btn>
                         <v-btn icon="mdi-delete-outline" size="small" class="text-red bg-grey-lighten-5" flat></v-btn>

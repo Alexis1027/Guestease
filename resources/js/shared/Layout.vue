@@ -3,11 +3,10 @@
     import {ref, defineProps} from 'vue'
     import {useForm} from '@inertiajs/vue3'
 
-    const search = ref('')
     const sidebar = ref(false)
     const {auth} = defineProps(['auth'])
     const form = useForm({
-        user_id: auth.user.id
+        user_id: auth ? auth.user.id : null
     })
     function request() {
         form.post('/request')
@@ -20,13 +19,12 @@
             <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
             <v-toolbar-title>
                 <Link href="/">
-                    Logo {{ form }}
+                    Logo 
                 </Link>
             </v-toolbar-title>
             <!-- <v-text-field label="Search..." clearable flat rounded prepend-inner-icon="mdi-magnify" v-model="search" variant="outlined" color="blue">
             </v-text-field> -->
             <v-spacer/>
-
             <v-menu min-width="200px" rounded >
                 <template v-slot:activator="{ props }">
                     <v-btn class="text-none" icon v-bind="props" >
@@ -52,7 +50,6 @@
                     </v-list>
                 </v-card>
             </v-menu>
-
             <v-menu min-width="200px" rounded >
                 <template v-slot:activator="{ props }">
                     <v-btn icon v-bind="props">
@@ -72,8 +69,8 @@
                             </Link>
                             <v-divider class="my-3"></v-divider>
                             <v-form @submit.prevent="request">
-                                <v-btn block type="submit" :loading="form.processing" variant="text"  class="text-none">
-                                    Request
+                                <v-btn block type="submit" :loading="form.processing" :disabled="auth.user.room_requested" variant="text"  class="text-none">
+                                     {{ auth.user.room_requested ? 'Requested' : 'Request' }}
                                 </v-btn>
                             </v-form>
                             <Link href="/reservations">

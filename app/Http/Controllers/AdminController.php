@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\GuestHouse;
+use App\Models\RoomRequest;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -20,7 +21,14 @@ class AdminController extends Controller
     }
 
     public function requests() {
-        return Inertia::render('Admin/Requests');
+
+        $requests = RoomRequest::all();
+
+        foreach($requests as $r) {
+            $r->user = User::find($r->user_id);
+        }
+
+        return Inertia::render('Admin/Requests', ['requests' => $requests]);
     }
 
     public function manage_guesthouses() {

@@ -48,6 +48,7 @@ class HandleInertiaRequests extends Middleware
                     'address' => Auth::user()->address,
                     'contact_no' => Auth::user()->contact_no,
                     'profile_pic' => Auth::user()->profile_pic,
+                    'room_requested' => Auth::user()->room_requested,
                     'role' => Auth::user()->role
                 ]
             ] : null
