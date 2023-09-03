@@ -53,23 +53,23 @@
                 <v-form>
                     <v-row>
                         <v-col cols="5">
-                            <v-text-field variant="outlined" :error-messages="form.errors.firstname" label="First name" color="blue" v-model="form.firstname"></v-text-field>
+                            <v-text-field variant="outlined" clearable :error-messages="form.errors.firstname" label="First name" color="blue" v-model="form.firstname"></v-text-field>
                         </v-col>
                         <v-col cols="5">
-                            <v-text-field variant="outlined" :error-messages="form.errors.lastname" label="Last name" color="blue" v-model="form.lastname"></v-text-field>
+                            <v-text-field variant="outlined" clearable :error-messages="form.errors.lastname" label="Last name" color="blue" v-model="form.lastname"></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="5">
-                            <v-text-field variant="outlined" :error-messages="form.errors.contact_no" label="Contact number" color="blue" v-model="form.contact_no"></v-text-field>
+                            <v-text-field variant="outlined" clearable :error-messages="form.errors.contact_no" label="Contact number" color="blue" v-model="form.contact_no"></v-text-field>
                         </v-col>
                         <v-col cols="5">
-                            <v-text-field variant="outlined" :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
+                            <v-text-field variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field variant="outlined" :error-messages="form.errors.email" label="Email" color="blue" v-model="form.email"></v-text-field>
+                            <v-text-field variant="outlined" clearable :error-messages="form.errors.email" label="Email" color="blue" v-model="form.email"></v-text-field>
                         </v-col>
                     </v-row>
                     <v-btn rounded="pill" class="text-none" type="submit" @click="submit" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>

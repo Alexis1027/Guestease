@@ -1,15 +1,14 @@
 <script setup>
 
-    import {ref, defineProps, defineEmits} from 'vue'
-    import L from 'leaflet'
-    import 'leaflet/dist/leaflet.css'
+    import {defineProps, defineEmits} from 'vue'
     import {useForm} from '@inertiajs/vue3'
+    import Map from './Map.vue'
+
     const emit = defineEmits('CloseDialog')
     const dialog = defineProps(['dialog'])
     const emitCLoseDialog = () => {
         emit('CloseDialog')
     }
-    const mapContainer = ref(null)
 
     const form = useForm({
         room_name: null,
@@ -30,6 +29,11 @@
         })
     }
 
+    const setPosition = (pos) => {
+        form.latitude = pos.latlng.lat
+        form.longitude = pos.latlng.lng
+    }
+
     const imageRules = [
         value => {
             if(value.length >= 5) return true
@@ -41,13 +45,12 @@
 
 <template>
     <v-dialog v-model="dialog" width="100vw" transition="fab-transition">
-        <v-container class="justify-center">
-            
-            <v-form @submit.prevent enctype="multipart/form-data">
+        <v-container class="justify-center" style="overflow-y: auto;">
+            <v-form @submit.prevent enctype="multipart/form-data" >
                 <v-row justify="center">
-                    <v-card title="Create guest house" elevation="0" class="text-center" width="80%">
+                    <v-card title="Create guest house" elevation="0" class="text-center" width="100%">
                         <div id="container">
-                            <v-text-field variant="outlined" :error-messages="form.errors.room_name" label="Guest house name" name="room_name" v-model="form.room_name" clearable color="blue"></v-text-field>
+                            <v-text-field variant="outlined" :error-messages="form.errors.room_name" label="Guest house name" name="room_name" v-model="form.room_name"  color="blue"></v-text-field>
                             <v-file-input
                                 chips
                                 variant="outlined"
@@ -84,7 +87,8 @@
                                     <v-text-field color="blue" v-model="form.longitude" name="longitude" :error-messages="form.errors.longitude" variant="outlined" label="Longitude" clearable></v-text-field>
                                 </v-col>
                             </v-row>
-                            <div class="leaflet-container" ref="mapContainer"></div>
+                            <p class="text-h5">Click on the map to assign the latitude and longitude.</p>
+                            <Map @setPos="setPosition" />
                             <v-divider/>
                             <v-card-actions class="d-flex justify-end ">
                                 <v-btn color="grey" class="text-none" rounded width="90" variant="flat" @click="emitCLoseDialog">Cancel</v-btn>
@@ -103,6 +107,11 @@
         margin-left: 40px;
         margin-right: 40px;
         margin-bottom: 10px;
+        
     }
-    
+
+    .v-container {
+        overflow-y: auto;
+    }
+
 </style>

@@ -164,7 +164,7 @@ class GuestHouseController extends Controller
         $wishlist = Wishlist::where('room_id', $guesthouse->id)->get();
         $wishlist->each->delete();
         $guesthouse->delete();
-        return redirect()->route('manage_guesthouse');
+        return back();
     }
 
     //store guest hoseu data 
