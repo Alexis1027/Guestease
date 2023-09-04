@@ -1,6 +1,6 @@
 <script setup>
 
-    import {defineProps} from 'vue'
+    import {defineProps, onMounted} from 'vue'
     import { useForm } from '@inertiajs/vue3';
 
     const prop = defineProps(['guesthouse', 'auth'])
@@ -26,42 +26,47 @@
         form.post('/reserve')
     }
 
-    //   paypal.Buttons({
-    //     style: {
-    //         color:'blue',
-    //         shape:'pill',
-    //         layout: 'horizontal',
-    //         tagline: 'false',
-    //         height: 40
-    //     },
-    //     createOrder: function(data, actions) {
-    //         if(checkForm2()){
-    //             return actions.order.create({
-    //                 purchase_units: [{
-    //                     amount: {
-    //                     value: '0.01'
-    //                     }
-    //                 }]
-    //             });
-    //         }
-    //         else {
-    //             alert("Fill in missing fields")
-    //         }
-    //     },
-    //     onApprove: function(data, actions) {
-    //         return actions.order.capture().then(function(details) {
-    //             $('#status').val('approved')
-    //             $('#confirm_payment_form').submit()
-    //             alert('Transaction completed by ' + details.payer.name.given_name + '!');
-    //             // window.location.href = 'reservation.php'
-    //         });
-    //     },
-    //     onCancel: function(data) {
-    //         $('#status').val('pending')
-    //         $('#confirm_payment_form').submit()
-    //         // window.location.href = 'reservation.php'
-    //     }
-    //     }).render('#paypal-button-container');
+    onMounted(() => {
+        paypal.Buttons({
+        style: {
+            color:'blue',
+            shape:'pill',
+            layout: 'horizontal',
+            tagline: 'false',
+            height: 40
+        },
+        createOrder: function(data, actions) {
+            // if(checkForm2()){
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                        value: '0.01'
+                        }
+                    }]
+                });
+            // }
+            // else {
+            //     alert("Fill in missing fields")
+            // }
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                form.status = 'approved'
+                form.post('/reserve')
+                // $('#status').val('approved')
+                // $('#confirm_payment_form').submit()
+                // alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                // window.location.href = 'reservation.php'
+            });
+        },
+        onCancel: function(data) {
+            alert('cancelled')
+            // $('#status').val('pending')
+            // $('#confirm_payment_form').submit()
+            // window.location.href = 'reservation.php'
+        }
+        }).render('#paypal-button-container');
+    })
 
 </script>
 

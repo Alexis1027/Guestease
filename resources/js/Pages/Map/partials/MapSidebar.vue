@@ -3,9 +3,7 @@
     import {ref, defineProps, defineEmits} from 'vue'
     import Reviews from './MapSidebarReviews.vue'
     import Overview from './MapSidebarOverview.vue'
-    import Prices from './MapSidebarPrices.vue'
     import About from './MapSidebarAbout.vue'
-
 
     const props = defineProps(['mapSnackbar', 'guesthouse'])
     const tab = ref(null)
@@ -14,6 +12,8 @@
     const emitCloseMapSnackbar = () => {
         emit('closeMapSnackbar')
     }
+
+
 
 </script>
 
@@ -81,6 +81,7 @@
                 </v-tabs>
 
                 <v-card-text>
+                    {{guesthouse.room_image}} 
                     <v-window v-model="tab">
                         <v-window-item value="overview">
                             <Overview/>
