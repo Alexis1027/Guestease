@@ -134,7 +134,6 @@
         <v-divider/>
         <v-row>
             <v-col cols="8">
-                <!-- About this place section -->
                 <v-container>
                     <p class="text-h5 font-weight-medium">About this place</p>
                     <ul>
@@ -142,6 +141,29 @@
                         <li>{{ props.guesthouse.room_location }}</li>
                     </ul>
                 </v-container>
+                <v-divider/>
+
+                <v-container>
+                    <p class="text-h5">
+                        Guest House owned by the (John Doe)
+                    </p>
+                    <v-avatar size="90" id="avatar">
+                        <v-img src="../images/profile/21.png"></v-img>
+                    </v-avatar>
+                    <v-list height="100%" class="bg-grey-lighten-3">
+                        <v-list-item prepend-icon="mdi-home" :title="`Lives in ${props.auth.user.address}`">
+                        </v-list-item>
+                        
+                        <v-list-item prepend-icon="mdi-facebook-messenger">
+                            {{ props.auth.user.firstname + ' ' + props.auth.user.lastname }}
+                        </v-list-item>
+                        <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="props.auth.user.contact_no">
+                        </v-list-item>
+                    </v-list>
+
+                </v-container>
+                <!-- About this place section -->
+                
                 <v-divider/>
                 <!-- Rate this place section -->
                 <v-container>
@@ -217,9 +239,7 @@
     }
 
     .v-card.on-hover {
-    opacity: 0.8;
-  }
-
-
+        opacity: 0.8;
+    }
 
 </style>
