@@ -13,6 +13,7 @@
     const entry = ref()
     const editUserModal = ref(false)
     const deleteUserModal = ref(false)
+    const deleteSnackbar = ref(false)
     const user = ref({})
 
     function deleteUser(usr) {
@@ -89,8 +90,25 @@
     </v-row>
     </v-container>
 
+    <v-snackbar
+      v-model="deleteSnackbar"
+      color="red-lighten-3"
+      timeout="1500"
+    >
+      Deleted successfully
+
+      <template v-slot:actions>
+        <v-btn
+          variant="text"
+          @click="deleteSnackbar = false"
+          icon="mdi-close"
+        >
+        </v-btn>
+      </template>
+    </v-snackbar>
+
     <EditUserModal :show="editUserModal" @CloseDialog="editUserModal = false" v-model="editUserModal" />
-    <DeleteUserModal :user="user" :show="deleteUserModal" @CloseDialog="deleteUserModal = false" v-model="deleteUserModal" />
+    <DeleteUserModal :user="user" :show="deleteUserModal" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" @CloseDialog="deleteUserModal = false" v-model="deleteUserModal" />
 
 </template>
 

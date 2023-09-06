@@ -144,23 +144,31 @@
                 <v-divider/>
 
                 <v-container>
-                    <p class="text-h5">
-                        Guest House owned by the (John Doe)
-                    </p>
-                    <v-avatar size="90" id="avatar">
+                    <v-list-item>
+                        <template v-slot:prepend>
+                            <v-avatar size="90" id="avatar">
                         <v-img src="../images/profile/21.png"></v-img>
                     </v-avatar>
+                        </template>
+                        <p class="text-h5">Guest house owned by 21 Savage</p>
+                        <p class="text-grey-darken-2">Joined in September 2023</p>
+                    </v-list-item>
+                   
                     <v-list height="100%" class="bg-grey-lighten-3">
-                        <v-list-item prepend-icon="mdi-home" :title="`Lives in ${props.auth.user.address}`">
+                        <v-list-item prepend-icon="mdi-home" :title="`Lives in Cordova, Cebu`">
                         </v-list-item>
                         
                         <v-list-item prepend-icon="mdi-facebook-messenger">
-                            {{ props.auth.user.firstname + ' ' + props.auth.user.lastname }}
+                            First Lastname
                         </v-list-item>
-                        <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="props.auth.user.contact_no">
+                        <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" title="09123456789">
+                        </v-list-item>
+                        <v-list-item>
+                            <Link href="/profile/1">
+                                <v-btn class="text-none" color="blue">Contact owner</v-btn>
+                            </Link>
                         </v-list-item>
                     </v-list>
-
                 </v-container>
                 <!-- About this place section -->
                 
@@ -217,6 +225,11 @@
         <v-container>
             <p class="text-h5 font-weight-medium mb-6">Where you'll be.</p>
             <Map :latitude="props.guesthouse.latitude" :longitude="props.guesthouse.longitude" />
+        </v-container>
+        <v-divider />
+        <v-container>
+            <p class="text-h5 font-weight-medium mb-6">Rules and regulations.</p>
+
         </v-container>
 
         <!-- Components -->

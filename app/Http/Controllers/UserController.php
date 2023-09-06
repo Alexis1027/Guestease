@@ -76,7 +76,7 @@ class UserController extends Controller
 
     public function destroy(User $user) {
         $user->delete();
-        return redirect()->route('manage_users');
+        return back();
     }
 
     public function authenticate(Request $request) {

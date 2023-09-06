@@ -60,7 +60,7 @@
                 </v-card-text>
                 <v-card-actions class="justify-end">
                     <v-btn color="red"  @click="emitcloseReviewModal">Close</v-btn>
-                    <v-btn color="green" type="submit" @click="submit">Submit</v-btn>
+                    <v-btn color="green" type="submit" @click="submit" :disabled="form.processing" :loading="form.loading">Submit</v-btn>
                 </v-card-actions>
             </v-card>
         </v-form>

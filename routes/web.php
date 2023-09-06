@@ -26,10 +26,6 @@ use App\Http\Controllers\RoomRequestController;
 |
 */
 
-Route::get('/joren', function() {
-    return Inertia::render('joren', ['users' => User::all()]);
-});
-
 Route::post('/request', [RoomRequestController::class, 'store']);
 
 Route::get('/',[GuestHouseController::class, 'index']);
