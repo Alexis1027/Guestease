@@ -25,7 +25,7 @@
             <div class="fadeIn first">
                 <div class="row text-center">
                     <p class="text-h5 pt-3">
-                        <i class="fa fa-address-card-o" aria-hidden="true"></i> Create owner
+                        <i class="fa fa-address-card-o" aria-hidden="true"></i> Create owner account
                     </p>
                 </div>
             </div>

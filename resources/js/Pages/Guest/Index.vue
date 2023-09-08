@@ -1,6 +1,6 @@
 <script setup>
 
-    import GuestHouseCard from './Partials/GuestHouseCard.vue';
+    import GuestHouseCard from '../Guest/Partials/GuestHouseCard.vue';
     import Layout from '../../shared/Layout.vue';
     import {defineProps, ref} from 'vue'
     defineOptions({layout: Layout})

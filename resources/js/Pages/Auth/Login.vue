@@ -87,10 +87,10 @@
                             <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/>
                             <br>
                             <label class="mt-4 fadeIn third">Dont have an account? </label>
-                            <Link href="/createUser" class="text-blue fadeIn third"> Create account</Link>
+                            <Link href="/createGuest" class="text-blue fadeIn third"> Create guest account</Link>
                             <br>
                             <label class="mt-4 fadeIn third">Dont have an account? </label>
-                            <Link href="/createOwner" class="text-blue fadeIn third"> Create owner</Link>
+                            <Link href="/createOwner" class="text-blue fadeIn third"> Create owner account</Link>
                         </v-container>
                     </v-card-item>
                 </v-card>

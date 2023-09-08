@@ -16,7 +16,7 @@
 <template>
     <v-layout class="bg-grey-lighten-3">
         <v-app-bar scroll-behavior="elevate" scroll-threshold="438">
-            <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click="sidebar = !sidebar" v-if="auth && auth.user.role == 'admin'"></v-app-bar-nav-icon>
             <v-toolbar-title>
                 <Link href="/">
                     Logo 
@@ -25,7 +25,7 @@
             <!-- <v-text-field label="Search..." clearable flat rounded prepend-inner-icon="mdi-magnify" v-model="search" variant="outlined" color="blue">
             </v-text-field> -->
             <v-spacer/>
-            <v-menu min-width="200px" rounded >
+            <v-menu min-width="200px" rounded v-if="auth && auth.user.role == 'admin'">
                 <template v-slot:activator="{ props }">
                     <v-btn class="text-none" icon v-bind="props" >
                         <v-badge content="2" color="error">

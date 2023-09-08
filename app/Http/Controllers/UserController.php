@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\GuestHouse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -11,11 +12,14 @@ class UserController extends Controller
 {
     //
     public function login() {
-        return Inertia::render('Auth/Login');
+        if(!auth()->user()) {
+            return Inertia::render('Auth/Login');
+        }
+        return back();
     }
 
-    public function createUser() {
-        return Inertia::render('Auth/CreateUser');
+    public function CreateGuest() {
+        return Inertia::render('Auth/CreateGuest');
     }
 
     public function createOwner() {
@@ -27,7 +31,7 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login')->with('message', 'You logged out?');
+        return redirect('/login');
     }
 
     public function storeUser(Request $request) {
@@ -87,6 +91,19 @@ class UserController extends Controller
 
         if(auth()->attempt($form)) {
             $request->session()->regenerate();
+            // dd(auth()->user()->role);
+            // joren@email.com
+            // switch(auth()->user()->role) {
+            //     case 'admin':
+            //         return Inertia::render('Admin/Dashboard', ['totalUsers' => User::count(), 'totalGuesthouses' => GuestHouse::count()]);
+            //         break;
+            //     case 'owner':
+            //         return Inertia::render('Owner/Dashboard');
+            //         break;
+            //     case 'guest':
+            //         return Inertia::render('Guest/Index');
+            //         break;
+            // }
             return redirect('/');
         }
         else {

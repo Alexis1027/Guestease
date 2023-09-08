@@ -28,7 +28,7 @@
     }
 
     var markerIcon = L.icon({
-        iconUrl: 'https://img.icons8.com/glyph-neue/64/FA5252/order-delivered.png',
+        iconUrl: '../images/icons/marker2.png',
         iconSize:     [50, 50], // size of the icon
     });
 

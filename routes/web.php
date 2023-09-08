@@ -43,7 +43,7 @@ Route::get('/settings', [HomeController::class, 'settings'])->middleware('auth')
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/login', [UserController::class, 'authenticate']);
-Route::get('/createUser', [UserController::class, 'createUser']);
+Route::get('/createGuest', [UserController::class, 'createGuest']);
 Route::get('/createOwner', [UserController::class, 'createOwner']);
 Route::post('/create/user', [UserController::class, 'storeUser']);
 Route::post('/create/owner', [UserController::class, 'storeOwner']);

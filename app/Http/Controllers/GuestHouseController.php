@@ -25,7 +25,7 @@ class GuestHouseController extends Controller
             $gh->averageRating = number_format($averageRating, 2);
         }
 
-        return Inertia::render('GuestHouse/Index', [
+        return Inertia::render('Guest/Index', [
             'guesthouses' => $guesthouses
         ]);
     }
@@ -59,7 +59,7 @@ class GuestHouseController extends Controller
                 $r->user = User::find($r->user_id);
             }
 
-            return Inertia::render('GuestHouse/Show', [
+            return Inertia::render('Guest/Show', [
                 'guesthouse' => $id,
                 'wishlist' => $wishlist, 
                 'rated' => $rating,
@@ -81,7 +81,7 @@ class GuestHouseController extends Controller
             foreach($ratings as $r) {
                 $r->user = User::find($r->user_id);
             }
-            return Inertia::render('GuestHouse/Show', [
+            return Inertia::render('Guest/Show', [
                 'guesthouse' => $id, 
                 'ratings' => $ratings, 
                 'averageRating' => $averageRating]);

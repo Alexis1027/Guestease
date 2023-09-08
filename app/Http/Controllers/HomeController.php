@@ -12,11 +12,11 @@ class HomeController extends Controller
 {
     //
     public function index() {
-        return Inertia::render('GuestHouse/Index');
+        return Inertia::render('Guest/Index');
     }
 
     public function show() {
-        return Inertia::render('GuestHouse/Show');
+        return Inertia::render('Guest/Show');
     }
 
     public function payment(GuestHouse $room) {

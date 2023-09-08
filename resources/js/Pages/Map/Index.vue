@@ -42,7 +42,7 @@
     }
 
     var markerIcon = L.icon({
-        iconUrl: 'https://img.icons8.com/ios-filled/100/FA5252/marker.png',
+        iconUrl: '../images/icons/marker.png',
         iconSize:     [30, 30], // size of the icon
     });
 
