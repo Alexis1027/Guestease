@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\ReservationRequestController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\GuestHouseRequestController;
+use App\Http\Controllers\Owner\ListingController;
 use App\Http\Controllers\Owner\OwnerDashboardController;
 
 /*
@@ -29,7 +30,7 @@ use App\Http\Controllers\Owner\OwnerDashboardController;
 
 //OWNER
 Route::get('/owner/dashboard', [OwnerDashboardController::class, 'dashboard']);
-
+Route::get('/owner/create-listing', [ListingController::class, 'create']);
 //GUEST
 Route::post('/request', [RoomRequestController::class, 'store']);
 

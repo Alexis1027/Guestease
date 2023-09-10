@@ -22,7 +22,9 @@
             <p class="text-h4">Owner dashboard or Guest house listings</p>
         </v-col>
         <v-col>
-            <v-btn class="mt-2 text-none" color="blue">Create new </v-btn>
+            <Link href="/owner/create-listing">
+                <v-btn class="mt-2 text-none" color="blue">Create new </v-btn>
+            </Link>
         </v-col>
     </v-row>
 
