@@ -29,6 +29,7 @@ class GuestHouseFactory extends Factory
 
         return [
             //
+            'owner_id' => $this->faker->numberBetween(1, 10),
             'room_name' => $this->faker->company(),
             'room_details' => $this->faker->sentence(9),
             'room_price' => number_format($this->faker->randomNumber(4, true), 0, '.', ','),

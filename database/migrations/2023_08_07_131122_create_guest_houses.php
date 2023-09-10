@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('guest_houses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('owner_id');
             $table->string('room_name');
             $table->string('room_details');
             $table->string('room_price');

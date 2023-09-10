@@ -1,19 +1,19 @@
 <?php
 
-use App\Models\User;
-use Inertia\Inertia;
-use App\Models\GuestHouse;
-use App\Models\RoomRequest;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\RatingController;
-use App\Http\Controllers\RequestController;
 use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\GuestHouseController;
-use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\RoomRequestController;
+use App\Http\Controllers\Admin\GuestHouseController;
+use App\Http\Controllers\Admin\ReservationController;
+use App\Http\Controllers\ReservationRequestController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\GuestHouseRequestController;
+use App\Http\Controllers\Owner\OwnerDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,48 +26,54 @@ use App\Http\Controllers\RoomRequestController;
 |
 */
 
-Route::post('/request', [RoomRequestController::class, 'store']);
 
-Route::get('/',[GuestHouseController::class, 'index']);
-Route::get('/room/{id}', [GuestHouseController::class, 'show']);
-Route::post('/create/guesthouse', [GuestHouseController::class, 'store']);
-Route::delete('/delete/guesthouse/{guesthouse}', [GuestHouseController::class, 'destroy']);
+//OWNER
+Route::get('/owner/dashboard', [OwnerDashboardController::class, 'dashboard']);
+
+//GUEST
+Route::post('/request', [RoomRequestController::class, 'store']);
 
 Route::get('/about', [HomeController::class, 'about']);
 Route::get('/map', [HomeController::class, 'map']);
 Route::get('/reservations', [HomeController::class, 'reservations'])->middleware('auth')->name('reservations');
-Route::get('/payment/{room}', [HomeController::class, 'payment'])->middleware('auth');
+Route::get('/payment/{room}', [HomeController::class, 'confirmReservation'])->middleware('auth');
 Route::get('/guidelines', [HomeController::class, 'guidelines']);
 Route::get('/rules', [HomeController::class, 'rules']);
 Route::get('/settings', [HomeController::class, 'settings'])->middleware('auth');
-
-Route::get('/login', [UserController::class, 'login'])->name('login');
-Route::post('/login', [UserController::class, 'authenticate']);
-Route::get('/createGuest', [UserController::class, 'createGuest']);
-Route::get('/createOwner', [UserController::class, 'createOwner']);
-Route::post('/create/user', [UserController::class, 'storeUser']);
-Route::post('/create/owner', [UserController::class, 'storeOwner']);
-Route::post('/logout', [UserController::class, 'logout']);
-Route::post('/account', [UserController::class, 'account']);
-Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
 Route::get('/profile/{user}', [HomeController::class, 'profile']);
-Route::put('/profile/update', [UserController::class, 'update']);
+Route::get('/',[HomeController::class, 'index']);
+Route::get('/room/{id}', [HomeController::class, 'show']);
 
-Route::post('/reserve', [ReservationController::class, 'store']);
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'authenticate']);
+Route::get('/createGuest', [AuthController::class, 'createGuest']);
+Route::get('/createOwner', [AuthController::class, 'createOwner']);
+Route::post('/create/user', [AuthController::class, 'storeUser']);
+Route::post('/create/owner', [AuthController::class, 'storeOwner']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
-//wishlist
+Route::post('/reserve', [ReservationRequestController::class, 'store']);
+
 Route::post('/wishlist/save', [WishlistController::class, 'store'])->middleware('auth');
 Route::delete('/wishlist/unsave',[WishlistController::class, 'destroy'])->middleware('auth');
 Route::get('/wishlist', [WishlistController::class, 'index'])->middleware('auth');
 
-Route::get('/create/admin', [AdminController::class, 'createAdmin']);
-Route::get('/dashboard', [AdminController::class, 'dashboard']);
-Route::get('/edit/guesthouse', [AdminController::class, 'edit']);
-Route::get('/manage/users', [AdminController::class, 'manage_users'])->name('manage_users');
-Route::get('/manage/users/{entry}', [AdminController::class, 'manage_users_entry'])->name('manage_users_entry');
-Route::get('/manage/guesthouses', [AdminController::class, 'manage_guesthouses'])->name('manage_guesthouse');
-Route::get('/manage/guesthouses/{entry}', [AdminController::class, 'manage_guesthouses_entry']);
-Route::get('/manage/reservations', [AdminController::class, 'manage_reservations']);
-Route::get('/requests', [AdminController::class, 'requests']);
+//ADMIN
+Route::post('/create/guesthouse', [GuestHouseController::class, 'store']);
+Route::delete('/delete/guesthouse/{guesthouse}', [GuestHouseController::class, 'destroy']);
+
+Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->middleware('auth')->name('admin-dashboard');
+
+Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
+Route::put('/profile/update', [UserController::class, 'update']);
+
+Route::get('/admin/create-admin', [AdminController::class, 'create']);
+Route::get('/admin/edit-guesthouse', [AdminController::class, 'edit']);
+Route::get('/admin/manage-users', [UserController::class, 'index'])->name('manage_users');
+Route::get('/admin/manage-users/{entry}', [UserController::class, 'manage_users_entry'])->name('manage_users_entry');
+Route::get('/admin/manage-guesthouses', [GuestHouseController::class, 'index'])->name('manage_guesthouse');
+Route::get('/admin/manage-guesthouses/{entry}', [GuestHouseController::class, 'manage_guesthouses_entry']);
+Route::get('/admin/manage-reservations', [ReservationController::class, 'index']);
+Route::get('/admin/guesthouse-requests', [GuestHouseRequestController::class, 'requests']);
 
 Route::post('/rooms/rate/{guesthouse_id}', [RatingController::class, 'store'])->middleware('auth');

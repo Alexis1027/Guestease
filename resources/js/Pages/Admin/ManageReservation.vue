@@ -1,8 +1,13 @@
 <script setup>
 
     import {ref} from 'vue'
+    import {format} from 'date-fns'
     import Layout from '../../shared/Layout.vue'
     defineOptions({layout: Layout})
+    const {reservations} = defineProps({
+        reservations: Object
+    })
+
     const page = ref(1)
     const entries = [5, 10, 15, 20, 25]
     const entry = ref(5)
@@ -24,24 +29,22 @@
             <thead >
                 <tr >
                     <th class="text-center">Id</th>
-                    <th class="text-center">Guest House</th>
-                    <th class="text-center">Ambot</th>
-                    <th class="text-center">Basta</th>
-                    <th class="text-center">Location</th>
-                    <th class="text-center">Date</th>
+                    <th class="text-center">Guest house id</th>
+                    <th class="text-center">Guest id</th>
+                    <th class="text-center">Payment Process</th>
+                    <th class="text-center">Reserved at</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="n in 5" :key="n">
-                    <td>{{ n }}</td>
-                    <td>Guest House #{{ n }}</td>
-                    <td>ambot {{ n }}</td>
-                    <td>basta {{ n }}</td>
-                    <td>Location {{ n }}</td>
-                    <td>5/{{ n }}/2023</td>
-                    <td>Pending</td>
+                <tr v-for="reservation in reservations" :key="reservation.id">
+                    <td>{{ reservation.id }}</td>
+                    <td>{{ reservation.room_id }}</td>
+                    <td>{{ reservation.user_id }}</td>
+                    <td>{{ reservation.payment_process }}</td>
+                    <td>{{ format(new Date(reservation.created_at), 'M/dd/yyyy') }}</td>
+                    <td>{{ reservation.status }}</td>
                     <td>
                         <v-btn icon="mdi-delete-outline" size="small" class="text-red" flat></v-btn>
                         <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 
-class ReservationController extends Controller
+class ReservationRequestController extends Controller
 {
     //
     public function store(Request $request) {
@@ -18,4 +18,7 @@ class ReservationController extends Controller
         Reservation::create($form);
         return redirect()->route('reservations');
     }
+
+    
+
 }

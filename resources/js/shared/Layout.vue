@@ -134,22 +134,22 @@
                 <Link href="/">
                     <v-list-item prepend-icon="mdi-home" title="Home" value="home"></v-list-item>
                 </Link>
-                <Link href="/dashboard">
+                <Link href="/admin/dashboard">
                     <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
                 </Link>
-                <Link href="/manage/guesthouses">
+                <Link href="/admin/manage-guesthouses">
                     <v-list-item prepend-icon="mdi-home-edit" title="Guest house management" value="manageguesthouse"></v-list-item>
                 </Link>
-                <Link href="/manage/users">
+                <Link href="/admin/manage-users">
                     <v-list-item prepend-icon="mdi-account-edit" title="User management" value="manageuser"></v-list-item>
                 </Link>
-                <Link href="/manage/reservations">
+                <Link href="/admin/manage-reservations">
                     <v-list-item prepend-icon="mdi-calendar-edit" title="Reservation management" value="managereservation"></v-list-item>
                 </Link>
-                <Link href="/requests">
+                <Link href="/admin/guesthouse-requests">
                     <v-list-item prepend-icon="mdi-help-box-multiple" title="Guest house requests" value="requests"></v-list-item>
                 </Link>
-                <Link href="/create/admin">
+                <Link href="/admin/create-admin">
                     <v-list-item prepend-icon="mdi-account-hard-hat" title="Create admin account" value="createadmin"></v-list-item>
                 </Link>
                 <Link href="/rules">

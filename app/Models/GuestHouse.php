@@ -9,6 +9,7 @@ class GuestHouse extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'owner_id',
         'room_name', 
         'room_details', 
         'room_location', 
