@@ -51,6 +51,9 @@
                         <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
                     </td>
                 </tr>
+                <tr v-if="reservations.length <= 0">
+                    <td colspan="8"> No reservations.</td>
+                </tr>
             </tbody>
         </v-table>
         <v-row  class="mt-2">

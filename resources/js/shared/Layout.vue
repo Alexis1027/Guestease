@@ -68,11 +68,16 @@
                                 ></v-list-item>
                             </Link>
                             <v-divider class="my-3"></v-divider>
-                            <v-form @submit.prevent="request">
+                            <!-- <v-form @submit.prevent="request">
                                 <v-btn block type="submit" :loading="form.processing" :disabled="auth.user.room_requested" variant="text"  class="text-none">
                                      {{ auth.user.room_requested ? 'Requested' : 'Request' }}
                                 </v-btn>
-                            </v-form>
+                            </v-form> -->
+                            <Link href="/owner/dashboard" v-if="auth.user.role == 'owner'">
+                                <v-btn block variant="text"  class="text-none">
+                                    Dashboard
+                                </v-btn>
+                            </Link>
                             <Link href="/reservations">
                                 <v-btn block variant="text"  class="text-none">
                                     Reservations
@@ -101,7 +106,7 @@
                                 Log in
                             </v-btn>
                         </Link>
-                        <Link href="/createUser">
+                        <Link href="/createGuest">
                             <v-btn block variant="text" class="text-none">
                                 Sign up
                             </v-btn>
