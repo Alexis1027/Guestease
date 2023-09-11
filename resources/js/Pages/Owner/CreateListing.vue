@@ -1,6 +1,6 @@
 <script setup>
 
-    import {ref} from 'vue'
+    import {ref, watch} from 'vue'
     import Map from './Partials/Map.vue'
     import {useForm} from '@inertiajs/vue3'
     import axios from 'axios'
@@ -15,7 +15,60 @@
         guests: 1,
         rooms: 1,
         bathrooms: 0,
-        beds: 1
+        beds: 1,
+        amenities: [],
+        title: '',
+        description: '',
+        price: 2500
+    })
+
+    const placeOffers = [
+        {
+            icon: 'mdi-wifi',
+            title: 'Wifi'            
+        },
+        {
+            icon: 'mdi-television',
+            title: 'Television'            
+        },
+        {
+            icon: 'mdi-countertop-outline',
+            title: 'Kitchen'            
+        },
+        {
+            icon: 'mdi-fridge-outline',
+            title: 'Fridge'            
+        },
+        {
+            icon: 'mdi-dishwasher',
+            title: 'Dishwasher'            
+        },
+        {
+            icon: 'mdi-air-conditioner',
+            title: 'Air conditioner'            
+        },
+        {
+            icon: 'mdi-pool',
+            title: 'Pool'            
+        },
+        {
+            icon: 'mdi-hot-tub',
+            title: 'Hot tub'            
+        },
+        {
+            icon: 'mdi-grill-outline',
+            title: 'BBQ grill'            
+        },
+        
+        
+    ]
+
+
+
+    watch(step, () => {
+        if(step.value >= 11) {
+            //GO to some page
+        }
     })
 
     function getCoord() {
@@ -157,25 +210,32 @@
   
             <v-window-item :value="6">
                 <v-container class="placeoffers">
-                    <p class="text-h4 my-6">What your place offers</p>
-                    <v-row>
-                        <v-col cols="4" v-for="n in 7" :key="n">
-                            <v-card elevation="0" variant="outlined" class="rounded-xl" color="grey-lighten-1">
-                                <v-card-item>
-                                    <v-icon size="50" color="black">mdi-wifi</v-icon>
-                                </v-card-item>
-                                <v-card-text class="text-black text-h6">Wifi</v-card-text>
-                            </v-card>
-                        </v-col>
-                    </v-row>
+                    <p class="text-h4 mt-6">What your place offers</p>
+                    <p class="text-h6 mb-6 text-grey-darken">You can add more amenities after you publish your listing.</p>
+                    <v-item-group multiple>
+                        <v-container>
+                            <v-row>
+                                <v-col v-for="item in placeOffers" :key="item" cols="12" md="4" @click="form.amenities.push(item)">
+                                    <v-item v-slot="{ isSelected, toggle }" >
+                                        <v-card :color="isSelected ? 'blue-lighten-4' : ''" class="d-flex align-center" dark height="100" @click="toggle">
+                                            <div class="text-h6 flex-grow-1 text-center">
+                                                <v-icon size="50">{{ item.icon }}</v-icon>
+                                                {{ item.title }}
+                                            </div>
+                                        </v-card>
+                                    </v-item>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-item-group>
                 </v-container>
             </v-window-item>
 
             <v-window-item :value="7">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 mt-6 text-start">Now, let's give your guesthouse a title</p>
-                    <p class="text-h6 mb-6 text-grey-darken-2">Short titles work best. Have fun with it—you can always change it later.</p>
-                    <v-textarea variant="outlined" counter="30">
+                    <p class="text-h6 mb-6 text-grey-darken">Short titles work best. Have fun with it—you can always change it later.</p>
+                    <v-textarea v-model="form.title" variant="outlined" counter="30">
 
                     </v-textarea>
                 </v-container>
@@ -184,27 +244,14 @@
             <v-window-item :value="8">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 text-start">Next, let's describe your guesthouse</p>
-                    <p class="text-start mb-5 text-grey-darken-1 text-h6">Choose up to 2 highlights. We'll use these to get your description started.</p>
-                    <v-chip class="ma-2" size="x-large" prepend-icon="mdi-home-outline">
-                        Stylish
-                    </v-chip>
-                    <v-chip class="ma-2" size="x-large" prepend-icon="mdi-leaf">
-                        Peaceful
-                    </v-chip>
-                </v-container>
-            </v-window-item>
-
-            <v-window-item :value="9">
-                <v-container id="step1" class="placeoffers">
-                    <p class="text-h4 text-start">Create your description</p>
-                    <p class="text-h6 mb-6 text-grey-darken-2 text-start">Share what makes your place special.</p>
-                    <v-textarea variant="outlined" counter="255" placeholder="You'll have a great time at this comfortable place to stay.">
+                    <p class="text-h6 mb-6 text-grey-darken text-start">Share what makes your place special.</p>
+                    <v-textarea variant="outlined" v-model="form.description" counter="255" placeholder="You'll have a great time at this comfortable place to stay.">
 
                     </v-textarea>
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="10">
+            <v-window-item :value="9">
                 <v-container id="step1">
                     <v-row>
                         <v-col cols="6" class="mt-6">
@@ -221,16 +268,16 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="11">
+            <v-window-item :value="10">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 text-start">Now, set your price</p>
                     <p class="text-h6 mb-6 text-grey-darken-2 text-start">You can change it anytime.</p>
                     
-                    <input type="text" style="width: 300px;" v-model="price" class="text-h1 ms-6">
+                    <input type="text" v-model="form.price" style="width: 300px;" class="text-h1 ms-6">
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="12">
+            <v-window-item :value="11">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h3 text-start">Review your listing</p>
                     <p class="text-h6 mb-6 text-grey-darken-2 text-start">Here's what we'll show to guests. Make sure everything looks good.</p>
@@ -278,18 +325,16 @@
   
       <div id="action">
         <v-divider></v-divider>
-      <v-progress-linear :model-value="(step/12)*100" color="blue-darken-3"></v-progress-linear>
+      <v-progress-linear :model-value="(step/11)*100" color="blue-darken-3"></v-progress-linear>
   
         <v-card-actions>
             <v-btn v-if="step > 1" variant="text" @click="step--">
                 Back
             </v-btn>
             <v-spacer></v-spacer>
-            <Link href="/owner/dashboard" :disabled="step != 12">
-                <v-btn v-if="step <= 12" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
-                    {{ step < 12 ? 'Next' : 'Finish'}}
+                <v-btn v-if="step <= 11" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
+                    {{ step < 11 ? 'Next' : 'Finish'}}
                 </v-btn>
-            </Link>
         </v-card-actions>
       </div>
     </v-card>

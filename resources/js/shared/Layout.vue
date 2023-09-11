@@ -17,8 +17,8 @@
     <v-layout class="bg-grey-lighten-3">
         <v-app-bar scroll-behavior="elevate" scroll-threshold="438">
             <v-app-bar-nav-icon @click="sidebar = !sidebar" v-if="auth && auth.user.role == 'admin'"></v-app-bar-nav-icon>
-            <v-toolbar-title>
-                <Link href="/">
+            <v-toolbar-title style="margin-left: 6%;">
+                <Link href="/" class="font-weight-bold">
                     Logo 
                 </Link>
             </v-toolbar-title>
@@ -52,7 +52,7 @@
             </v-menu>
             <v-menu min-width="200px" rounded >
                 <template v-slot:activator="{ props }">
-                    <v-btn icon v-bind="props">
+                    <v-btn icon v-bind="props" style="margin-right: 6%;">
                         <v-avatar color="blue-lighten-3" size="35">
                             <v-icon>mdi-account</v-icon>
                         </v-avatar>

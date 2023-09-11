@@ -136,45 +136,53 @@
         <v-row>
             <v-col cols="8">
                 <v-container>
-                    <p class="text-h5 font-weight-medium">About this place</p>
-                    <ul>
-                        <li>{{ guesthouse.room_details }}</li>
-                        <li>{{ guesthouse.room_location }}</li>
-                    </ul>
-                </v-container>
-                <v-divider/>
-                <v-container>
-                    <v-list-item>
-                        <template v-slot:prepend>
+                    <v-list class="rounded-xl">
+                        <v-list-item>
+                        <template v-slot:append>
                             <v-avatar size="90" id="avatar">
                         <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
                     </v-avatar>
                         </template>
                         <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
-                        <p class="text-grey-darken-2">Joined on {{ format(new Date(owner.created_at), 'MMMM dd, yyyy') }}</p>
+                        <p class="text-grey-darken-1"> 3 guests - 1 room - 1 bedroom - 1 bathroom </p>
                     </v-list-item>
-                   
-                    <v-list height="100%" class="bg-grey-lighten-3">
-                        <v-list-item prepend-icon="mdi-home" :title="`Lives in ${owner.address}`">
+                    <v-divider class="my-2" />
+
+                        <v-list-item prepend-icon="mdi-information-variant">
+                            {{ guesthouse.room_details }}
                         </v-list-item>
-                        
-                        <v-list-item prepend-icon="mdi-facebook-messenger">
-                            {{ owner.firstname + ' ' + owner.lastname }}
-                        </v-list-item>
-                        <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="`${owner.contact_no}`">
-                        </v-list-item>
-                        <v-list-item>
-                            <Link :href="`/profile/${owner.id}`">
-                                <v-btn class="text-none" color="blue">Contact owner</v-btn>
-                            </Link>
+                        <v-list-item prepend-icon="mdi-map-marker">
+                            {{ guesthouse.room_location }}
                         </v-list-item>
                     </v-list>
                 </v-container>
-                <!-- About this place section -->
-                
+
                 <v-divider/>
-                <!-- Rate this place section -->
+
                 <v-container>
+                        
+                        <v-container class="bg-white rounded-xl">
+                            <v-list-item>
+                            <p class="text-h5">What this place offers</p>
+                        </v-list-item>
+
+                        <v-divider class="my-2" />
+
+                        <v-row>
+                            <v-col cols="6" v-for="n in 7" :key="n">
+                                <v-list-item prepend-icon="mdi-wifi">
+                                    Wifi
+                                </v-list-item>
+                            </v-col>
+                        </v-row>  
+                        </v-container>
+
+                </v-container>
+
+                <v-divider/>
+                
+                <!-- Rate this place section -->
+                <v-container class="bg-white">
                     <p class="text-h5 font-weight-medium">Rate this place </p>
                     <p style="color: gray">Tell others what you think.</p>
                     <div v-if="rated" class="mt-3">
@@ -231,6 +239,37 @@
             <p class="text-h5 font-weight-medium mb-6">Rules and regulations.</p>
 
         </v-container>
+        <v-divider/>
+
+        <v-container>
+                    <v-list-item>
+                        <template v-slot:prepend>
+                            <v-avatar size="90" id="avatar">
+                        <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
+                    </v-avatar>
+                        </template>
+                        <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
+                        <p class="text-grey-darken-2">Joined on {{ format(new Date(owner.created_at), 'MMMM dd, yyyy') }}</p>
+                    </v-list-item>
+                    <v-list height="100%" class="bg-grey-lighten-3">
+                        <v-list-item prepend-icon="mdi-home" :title="`Lives in ${owner.address}`">
+                        </v-list-item>
+                        
+                        <v-list-item prepend-icon="mdi-facebook-messenger">
+                            {{ owner.firstname + ' ' + owner.lastname }}
+                        </v-list-item>
+                        <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="`${owner.contact_no}`">
+                        </v-list-item>
+                        <v-list-item>
+                            <Link :href="`/profile/${owner.id}`">
+                                <v-btn class="text-none" color="blue">Contact owner</v-btn>
+                            </Link>
+                        </v-list-item>
+                    </v-list>
+                </v-container>
+                <!-- About this place section -->
+                
+        
 
         <!-- Components -->
 
