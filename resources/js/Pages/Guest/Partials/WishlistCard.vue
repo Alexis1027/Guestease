@@ -3,7 +3,7 @@
     import {defineProps} from 'vue'
     const prop = defineProps(['wishlist'])
     const images = []
-    const guestHouseImg = prop.wishlist.guesthouse.room_image.split(",")
+    const guestHouseImg = prop.wishlist.guesthouse.images.split(",")
     guestHouseImg.forEach(img => {
         images.push(img)
     });
@@ -32,11 +32,11 @@
                 </v-col>
                 <v-col>
                     <Link :href="`room/${prop.wishlist.guesthouse.id}`">
-                        <v-card-item class="text-h6">{{ prop.wishlist.guesthouse.room_name }}</v-card-item>
-                        <v-card-item>{{ prop.wishlist.guesthouse.room_details }}</v-card-item>
+                        <v-card-item class="text-h6">{{ prop.wishlist.guesthouse.title }}</v-card-item>
+                        <v-card-item>{{ prop.wishlist.guesthouse.description }}</v-card-item>
                         <v-card-item>
                             <v-icon color="red">mdi-map-marker</v-icon>
-                            {{ prop.wishlist.guesthouse.room_location }}
+                            {{ prop.wishlist.guesthouse.location }}
                         </v-card-item>
                         <v-card-item>
                             <v-icon color="orange">mdi-star</v-icon>

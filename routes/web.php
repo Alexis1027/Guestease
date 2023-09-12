@@ -31,6 +31,9 @@ use App\Http\Controllers\Owner\OwnerDashboardController;
 //OWNER
 Route::get('/owner/dashboard', [OwnerDashboardController::class, 'dashboard']);
 Route::get('/owner/create-listing', [ListingController::class, 'create']);
+
+Route::post('/owner/createListing', [ListingController::class, 'store']);
+
 //GUEST
 Route::post('/request', [RoomRequestController::class, 'store']);
 

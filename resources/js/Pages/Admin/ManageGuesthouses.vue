@@ -65,9 +65,9 @@
                 <tr v-for="guesthouse in guesthouses.data" :key="guesthouse.id">
                     <td>{{ guesthouse.id }}</td>
                     <td class="text-red"> <v-img cover class="my-1" :src="`../images/room1.png`"></v-img> </td>
-                    <td>{{ guesthouse.room_name }}</td>
-                    <td>{{ guesthouse.room_location }}</td>
-                    <td> {{ guesthouse.room_price }} </td>
+                    <td>{{ guesthouse.title }}</td>
+                    <td>{{ guesthouse.location }}</td>
+                    <td> {{ guesthouse.price }} </td>
                     <td>
                         <v-btn icon="mdi-pencil" size="small" @click="editGuesthouse(guesthouse)" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
                         <v-btn icon="mdi-delete-outline" @click="deleteGuesthouse(guesthouse)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>

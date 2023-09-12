@@ -102,10 +102,10 @@
                             <v-img src="/images/room1.png"></v-img>
                         </v-card>
                         <v-card-title>
-                            {{ prop.guesthouse.room_name }}
+                            {{ prop.guesthouse.title }}
                         </v-card-title>
                         <v-card-text>
-                            <p>{{ prop.guesthouse.room_details }}</p>
+                            <p>{{ prop.guesthouse.description }}</p>
                         </v-card-text>
                         <v-divider/>
                         <v-card-text>

@@ -6,7 +6,7 @@
     const emit = defineEmits('closeReviewModal')
     const props = defineProps(['showReviewModal', 'guesthouse', 'star', 'auth'])
     const images = []
-    const guestHouseImg = props.guesthouse.room_image.split(",")
+    const guestHouseImg = props.guesthouse.images.split(",")
 
     guestHouseImg.forEach(img => {
         images.push(img)
@@ -47,7 +47,7 @@
                             <v-img :src="`../images/${images[0]}`" width="150"></v-img>
                         </v-col>
                         <v-col class="mt-4">
-                            {{ props.guesthouse.room_name }}
+                            {{ props.guesthouse.title }}
                         </v-col>
                     </v-row>
                 </v-card-title>

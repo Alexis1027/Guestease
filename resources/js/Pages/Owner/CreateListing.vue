@@ -5,10 +5,11 @@
     import {useForm} from '@inertiajs/vue3'
     import axios from 'axios'
 
+    const {auth} = defineProps(['auth'])
     const step = ref(1)
-    const price = ref(`P`+2500)
 
     const form = useForm({
+        owner_id: auth.user.id,
         location: '',
         latitude: null,
         longitude: null,
@@ -19,8 +20,16 @@
         amenities: [],
         title: '',
         description: '',
-        price: 2500
+        price: 2500,
+        images: null
     })
+
+    const imageRules = [
+        value => {
+            if(value.length >= 5) return true
+            return `Images should have at least 5 images` 
+        }
+    ]
 
     const placeOffers = [
         {
@@ -59,17 +68,7 @@
             icon: 'mdi-grill-outline',
             title: 'BBQ grill'            
         },
-        
-        
     ]
-
-
-
-    watch(step, () => {
-        if(step.value >= 11) {
-            //GO to some page
-        }
-    })
 
     function getCoord() {
         axios.get(`https://nominatim.openstreetmap.org/search?q=${form.location}&format=json&limit=1`)
@@ -104,6 +103,10 @@
         form.longitude = latlng.lon
     }
 
+    const submit = () => {
+        form.post('/owner/createListing')
+    }
+
 </script>
 
 <template>
@@ -133,7 +136,7 @@
                     <v-row justify="center">
                         <v-col cols="6" class="mt-5">
                             <v-text-field variant="solo" v-model="form.location" color="blue" label="Location" @keydown.enter="getCoord()" rounded="pill"></v-text-field>
-                            <p class="text-end text-h6" id="location" @click="getLocation()">Use my current location</p>
+                            <p class="text-end text-blue-darken-4" id="location" @click="getLocation()">Use my current location</p>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -233,7 +236,7 @@
 
             <v-window-item :value="7">
                 <v-container id="step1" class="placeoffers">
-                    <p class="text-h4 mt-6 text-start">Now, let's give your guesthouse a title</p>
+                    <p class="text-h4 mt-6 text-start">Now, let's give your guest house a title</p>
                     <p class="text-h6 mb-6 text-grey-darken">Short titles work best. Have fun with it—you can always change it later.</p>
                     <v-textarea v-model="form.title" variant="outlined" counter="30">
 
@@ -243,7 +246,35 @@
 
             <v-window-item :value="8">
                 <v-container id="step1" class="placeoffers">
-                    <p class="text-h4 text-start">Next, let's describe your guesthouse</p>
+                    <p class="text-h4 mt-6 text-start">Add some photos of your guest house</p>
+                    <p class="text-h6 mb-6 text-grey-darken">You'll need 5 photos to get started. You can add more or make changes later.</p>
+                    <v-container>
+                        <v-file-input
+                                chips
+                                variant="outlined"
+                                prepend-inner-icon="mdi-image-outline"
+                                v-model="form.images"
+                                multiple
+                                :rules="imageRules"
+                                accept="image/png, image/jpeg"
+                                name="room_image"
+                                label="Images (minimum of 5 images)"
+                                color="blue">
+                                <template v-slot:selection="{ fileNames }">
+                                    <template v-for="fileName in fileNames" :key="fileName">
+                                        <v-chip size="small" label  color="blue" class="me-2">
+                                        {{ fileName }}
+                                        </v-chip>
+                                    </template>
+                                </template>
+                            </v-file-input>
+                    </v-container>
+                </v-container>
+            </v-window-item>
+
+            <v-window-item :value="9">
+                <v-container id="step1" class="placeoffers">
+                    <p class="text-h4 text-start">Next, let's describe your guest house</p>
                     <p class="text-h6 mb-6 text-grey-darken text-start">Share what makes your place special.</p>
                     <v-textarea variant="outlined" v-model="form.description" counter="255" placeholder="You'll have a great time at this comfortable place to stay.">
 
@@ -251,7 +282,7 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="9">
+            <v-window-item :value="10">
                 <v-container id="step1">
                     <v-row>
                         <v-col cols="6" class="mt-6">
@@ -268,7 +299,7 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="10">
+            <v-window-item :value="11">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 text-start">Now, set your price</p>
                     <p class="text-h6 mb-6 text-grey-darken-2 text-start">You can change it anytime.</p>
@@ -277,13 +308,13 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="11">
+            <v-window-item :value="12">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h3 text-start">Review your listing</p>
                     <p class="text-h6 mb-6 text-grey-darken-2 text-start">Here's what we'll show to guests. Make sure everything looks good.</p>
                     <v-row>
                         <v-col cols="5">
-                            card or some shit
+                            {{ form }}
                         </v-col>
                         <v-col cols="7">
                             <p class="text-h5">What's next?</p>
@@ -325,7 +356,7 @@
   
       <div id="action">
         <v-divider></v-divider>
-      <v-progress-linear :model-value="(step/11)*100" color="blue-darken-3"></v-progress-linear>
+      <v-progress-linear :model-value="(step/12)*100" color="blue-darken-3"></v-progress-linear>
   
         <v-card-actions>
             <v-btn v-if="step > 1" variant="text" @click="step--">
@@ -333,7 +364,10 @@
             </v-btn>
             <v-spacer></v-spacer>
                 <v-btn v-if="step <= 11" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
-                    {{ step < 11 ? 'Next' : 'Finish'}}
+                    Next
+                </v-btn>
+                <v-btn v-else type="submit" @click="submit" color="blue-lighten-3" class="text-none" size="large" variant="flat">
+                    Finish
                 </v-btn>
         </v-card-actions>
       </div>

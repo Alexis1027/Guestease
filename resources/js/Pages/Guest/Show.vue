@@ -20,7 +20,7 @@
     const showReviewModal = ref(false)
     const images = []
     console.log(props)
-    const guestHouseImg = props.guesthouse.room_image.split(",")
+    const guestHouseImg = props.guesthouse.images.split(",")
     const saveWishlistForm = useForm({
         user_id: props.auth ? props.auth.user.id : '',
         room_id: props.auth ? props.guesthouse.id : '',
@@ -56,20 +56,59 @@
     }
   }
 
+  const placeOffers = [
+        {
+            icon: 'mdi-wifi',
+            title: 'Wifi'            
+        },
+        {
+            icon: 'mdi-television',
+            title: 'Television'            
+        },
+        {
+            icon: 'mdi-countertop-outline',
+            title: 'Kitchen'            
+        },
+        {
+            icon: 'mdi-fridge-outline',
+            title: 'Fridge'            
+        },
+        {
+            icon: 'mdi-dishwasher',
+            title: 'Dishwasher'            
+        },
+        {
+            icon: 'mdi-air-conditioner',
+            title: 'Air conditioner'            
+        },
+        {
+            icon: 'mdi-pool',
+            title: 'Pool'            
+        },
+        {
+            icon: 'mdi-hot-tub',
+            title: 'Hot tub'            
+        },
+        {
+            icon: 'mdi-grill-outline',
+            title: 'BBQ grill'            
+        },
+    ]
+
 </script>
 
 <template>
-    <Head :title="`${guesthouse.room_name}`" />
+    <Head :title="`${guesthouse.title}`" />
     
     <v-container>
-        <h1>{{ guesthouse.room_name }}</h1>
+        <h1>{{ guesthouse.title }}</h1>
         <v-row>
             <!-- ratings and location  -->
             <v-col cols="2"> 
                 <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ averageRating }} - ({{ ratings.length }} reviews) 
             </v-col>
             <v-col cols="5"> 
-                <v-icon color="red">mdi-map-marker</v-icon> Located in - {{ guesthouse.room_location }}
+                <v-icon color="red">mdi-map-marker</v-icon> Located in - {{ guesthouse.location }}
             </v-col>
             <v-spacer></v-spacer>
             <v-col class="text-end">
@@ -149,10 +188,10 @@
                     <v-divider class="my-2" />
 
                         <v-list-item prepend-icon="mdi-information-variant">
-                            {{ guesthouse.room_details }}
+                            {{ guesthouse.description }}
                         </v-list-item>
                         <v-list-item prepend-icon="mdi-map-marker">
-                            {{ guesthouse.room_location }}
+                            {{ guesthouse.location }}
                         </v-list-item>
                     </v-list>
                 </v-container>
@@ -169,9 +208,9 @@
                         <v-divider class="my-2" />
 
                         <v-row>
-                            <v-col cols="6" v-for="n in 7" :key="n">
-                                <v-list-item prepend-icon="mdi-wifi">
-                                    Wifi
+                            <v-col cols="6" v-for="item in placeOffers" :key="item">
+                                <v-list-item :prepend-icon="`${item.icon}`">
+                                    {{ item.title }}
                                 </v-list-item>
                             </v-col>
                         </v-row>  
@@ -182,16 +221,21 @@
                 <v-divider/>
                 
                 <!-- Rate this place section -->
-                <v-container class="bg-white">
-                    <p class="text-h5 font-weight-medium">Rate this place </p>
-                    <p style="color: gray">Tell others what you think.</p>
-                    <div v-if="rated" class="mt-3">
-                        <RatingCard :rating="rated" />
-                    </div>
-                    <div class="ms-3 mt-3" v-else>
-                        <v-rating v-model="rating" hover half-increments color="orange-lighten-2" @click="showReviewModal = true">
-                        </v-rating>
-                    </div>
+                <v-container>
+                    
+                    <v-container class="bg-white rounded-xl">
+                        <p class="text-h5 font-weight-medium">Rate this place </p>
+                        <p style="color: gray">Tell others what you think.</p>
+                        <div v-if="rated" class="mt-3">
+                            <v-divider/>
+                            <RatingCard :rating="rated" />
+                        </div>
+                        <div class="ms-3 mt-3" v-else>
+                            <v-rating v-model="rating" hover half-increments color="orange-lighten-2" @click="showReviewModal = true">
+                            </v-rating>
+                        </div>
+                    </v-container>
+
                 </v-container>
                 
             </v-col>
@@ -199,19 +243,19 @@
 
                 <!-- Reserve button section -->
 
-                <v-card>
+                <v-card id="reserveBtn" class="rounded-xl">
                     <v-card-title>
                         <!-- <h2>Price Details</h2> -->
                     </v-card-title>
                     <v-card-item>
                         <v-row>
                             <!-- <v-col>Monthly Fee </v-col> -->
-                            <v-col>P {{ guesthouse.room_price }}</v-col>
+                            <v-col>P {{ guesthouse.price }}</v-col>
                         </v-row>
                     </v-card-item>
                     <v-card-item>
                         <Link :href="`/payment/${guesthouse.id}`">
-                            <v-btn color="green" width="100%">Reserve</v-btn>
+                            <v-btn color="green" class="text-none" width="100%">Reserve</v-btn>
                         </Link>
                     </v-card-item>
                 </v-card>
@@ -292,6 +336,11 @@
 
     .v-card.on-hover {
         opacity: 0.8;
+    }
+
+    #reserveBtn {
+        position: sticky;
+        top: 130px;
     }
 
 </style>

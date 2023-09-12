@@ -20,7 +20,6 @@
 
     function onMapClick(pos) {
         if(marker) {
-            console.log('MARKER EXISTS REMOVE IT BITCH ASS HO')
             marker.remove()
         }
         marker = L.marker([pos.latlng.lat, pos.latlng.lng], {icon: markerIcon}).addTo(map)

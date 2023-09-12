@@ -12,4 +12,9 @@ class ListingController extends Controller
     public function create() {
         return Inertia::render('Owner/CreateListing');
     }
+
+    public function store(Request $request) {
+        dd($request);
+    }
+    
 }

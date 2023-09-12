@@ -30,7 +30,7 @@
                     <v-icon class="mb-5" color="red" icon="mdi-close-circle" size="112"></v-icon>
                     <h2 class="text-h5 mb-6">Are you sure?</h2>
                     <p class="mb-4 text-medium-emphasis text-body-2">
-                        Do you really want to delete guest house <strong>{{ prop.guesthouse.room_name }}</strong>
+                        Do you really want to delete guest house <strong>{{ prop.guesthouse.title }}</strong>
                         <br> This process cannot be undone.
                     </p>
                     <v-divider class="mb-4"></v-divider>

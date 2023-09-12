@@ -67,7 +67,7 @@
             <v-card>
                 <v-card-title>
                     <h3>
-                        {{ props.guesthouse ? props.guesthouse.room_name : '' }}
+                        {{ props.guesthouse ? props.guesthouse.title : '' }}
                     </h3>
                 </v-card-title>
                 <v-tabs
@@ -81,7 +81,6 @@
                 </v-tabs>
 
                 <v-card-text>
-                    {{guesthouse.room_image}} 
                     <v-window v-model="tab">
                         <v-window-item value="overview">
                             <Overview/>
@@ -93,7 +92,7 @@
                             <Reviews/>
                         </v-window-item>
                         <v-window-item value="about">
-                            <About :about="props.guesthouse.room_details" />
+                            <About :about="props.guesthouse.description" />
                         </v-window-item>
                     </v-window>
                 </v-card-text>
