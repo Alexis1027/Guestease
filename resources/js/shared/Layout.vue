@@ -128,10 +128,10 @@
                 </v-card>
             </v-menu>
         </v-app-bar>
-        <v-navigation-drawer v-model="sidebar" :permanent="true" location="left" temporary >
+        <v-navigation-drawer v-model="sidebar" :permanent="true" location="left" temporary v-if="auth && auth.user.role == 'admin'">
             <v-list>
                 <v-list-item
-                prepend-avatar="/images/profile/21.png" title="John Doe" subtitle="admin"
+                :prepend-avatar="`/images/profile/${auth.user.profile_pic}`" :title="`${auth.user.firstname} ${auth.user.lastname}`" subtitle="admin"
                 ></v-list-item>
             </v-list>
             <v-divider></v-divider>

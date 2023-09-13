@@ -43,7 +43,7 @@
                     <p class="text-grey">Guest ashouse ahouse name</p>
                     </v-list-item>
                 <v-card-actions>
-                    <Link href="confirm" class="ms-2 text-decoration-underline">
+                    <Link href="/owner/verify-listing/18" class="ms-2 text-decoration-underline">
                         Start
                     </Link>
                 </v-card-actions>

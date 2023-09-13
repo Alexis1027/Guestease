@@ -15,6 +15,7 @@
     const {latitude, longitude} = defineProps(['latitude', 'longitude'])
 
     function generateMap() {
+        console.log(latitude)
         map = L.map(mapContainer.value).setView([latitude, longitude], 13)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
         map.on('click', onMapClick)
@@ -22,7 +23,6 @@
 
     function onMapClick(pos) {
         if(marker) {
-            console.log('MARKER EXISTS REMOVE IT BITCH ASS HO')
             marker.remove()
         }
         marker = L.marker([pos.latlng.lat, pos.latlng.lng], {icon: markerIcon}).addTo(map)

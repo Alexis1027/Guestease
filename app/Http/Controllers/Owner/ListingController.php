@@ -14,6 +14,10 @@ class ListingController extends Controller
         return Inertia::render('Owner/CreateListing');
     }
 
+    public function verify_listing(GuestHouse $guesthouse) {
+        return Inertia::render('Owner/VerifyListing', ['guesthouse' => $guesthouse]);
+    }
+
     public function store(Request $request) {
         $houseImages = '';
         $uploadedFiles = $request->file('images');

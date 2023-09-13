@@ -33,7 +33,7 @@ Route::get('/owner/dashboard', [OwnerDashboardController::class, 'dashboard']);
 Route::get('/owner/create-listing', [ListingController::class, 'create']);
 
 Route::post('/owner/createListing', [ListingController::class, 'store']);
-
+Route::get('/owner/verify-listing/{guesthouse}', [ListingController::class, 'verify_listing']);
 //GUEST
 Route::post('/request', [RoomRequestController::class, 'store']);
 

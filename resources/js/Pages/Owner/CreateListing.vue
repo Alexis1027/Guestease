@@ -99,8 +99,9 @@
     }
 
     function setPos(e) {
-        form.latitude = latlng.lat
-        form.longitude = latlng.lon
+        console.log(e)
+        form.latitude = e.latlng.lat
+        form.longitude = e.latlng.lng
     }
 
     const submit = () => {
@@ -111,8 +112,6 @@
 
 <template>
     <v-card max-width="100vw" max-height="100vh" elevation="0">
-        {{ form }}
-  
         <v-window v-model="step">
             <v-window-item :value="1">
                 <v-container id="step1">
@@ -144,7 +143,7 @@
             </v-window-item>
             
             <v-window-item :value="3">
-                <v-container>
+                <v-container>{{ form}}
                     <p class="text-h4">Is the pin in the right spot?</p>
                     <p class="text-h6 text-grey-darken">Click at the map to move the pin.</p>
                     <Map :latitude="form.latitude" :longitude="form.longitude" @setPos="setPos" />
