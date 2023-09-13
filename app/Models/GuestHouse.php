@@ -10,22 +10,27 @@ class GuestHouse extends Model
     use HasFactory;
     protected $fillable = [
         'owner_id',
-        'room_name', 
-        'room_details', 
-        'room_location', 
-        'room_price', 
-        'room_image',
+        'title', 
+        'description', 
+        'location', 
+        'price', 
+        'images',
         'latitude',
-        'longitude'
+        'longitude',
+        'guests',
+        'amenities',
+        'beds',
+        'bathrooms',
+        'rooms'
     ];
 
     public function scopeFilter($query, array $filters) {
 
         if($filters['search'] ?? false) {
-            $query->where('room_name', 'LIKE', '%'. request('search') .'%')
-            ->orWhere('room_details', 'LIKE', '%'. request('search') .'%')
-            ->orWhere('room_location', 'LIKE', '%'. request('search') .'%')
-            ->orWhere('room_price', 'LIKE', '%'. request('search') .'%');
+            $query->where('name', 'LIKE', '%'. request('search') .'%')
+            ->orWhere('description', 'LIKE', '%'. request('search') .'%')
+            ->orWhere('location', 'LIKE', '%'. request('search') .'%')
+            ->orWhere('price', 'LIKE', '%'. request('search') .'%');
         }
 
     }

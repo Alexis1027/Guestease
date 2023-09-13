@@ -111,6 +111,7 @@
 
 <template>
     <v-card max-width="100vw" max-height="100vh" elevation="0">
+        {{ form }}
   
         <v-window v-model="step">
             <v-window-item :value="1">
@@ -314,7 +315,6 @@
                     <p class="text-h6 mb-6 text-grey-darken-2 text-start">Here's what we'll show to guests. Make sure everything looks good.</p>
                     <v-row>
                         <v-col cols="5">
-                            {{ form }}
                         </v-col>
                         <v-col cols="7">
                             <p class="text-h5">What's next?</p>
@@ -366,7 +366,7 @@
                 <v-btn v-if="step <= 11" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
                     Next
                 </v-btn>
-                <v-btn v-else type="submit" @click="submit" color="blue-lighten-3" class="text-none" size="large" variant="flat">
+                <v-btn v-else type="submit" @click="submit" :disabled="form.processing" :loading="form.processing" color="blue-lighten-3" class="text-none" size="large" variant="flat">
                     Finish
                 </v-btn>
         </v-card-actions>

@@ -15,7 +15,7 @@
     let guesthouseLocation = { latitude: prop.guesthouse.latitude, longitude: prop.guesthouse.longitude }
     
     const images = []
-    const guestHouseImg = prop.guesthouse.room_image.split(",")
+    const guestHouseImg = prop.guesthouse.images.split(",")
     const loading = ref(true)
     guestHouseImg.forEach(img => {
         images.push(img)
@@ -51,7 +51,7 @@
         <v-skeleton-loader :loading="loading" class="bg-grey-lighten-3"  height="80%" type="image, article">
             <v-container class="bg-grey-lighten-3">
                 <v-row id="guestHouseDetails">
-                <v-col cols="8"><strong class="truncate-text-title">{{ prop.guesthouse.room_name }} </strong></v-col>
+                <v-col cols="8"><strong class="truncate-text-title">{{ prop.guesthouse.title }} </strong></v-col>
                 <v-col cols="4" >
                     <v-icon color="orange-lighten-1">
                         mdi-star
@@ -59,12 +59,12 @@
                     {{ prop.guesthouse.averageRating }} 
                 </v-col>
             </v-row>
-            <p class="truncate-text">{{ prop.guesthouse.room_details }}</p>
+            <p class="truncate-text">{{ prop.guesthouse.description }}</p>
             <p>
         {{ prop.latitude && prop.longitude ? Math.floor(getDistance({latitude: 10.250778, longitude: 123.939834}, guesthouseLocation)/1000) + ' km/s away' : 'bruh' }}
 
             </p>
-            <p> <strong>P {{ prop.guesthouse.room_price }}</strong> monthly. </p>
+            <p> <strong>P {{ prop.guesthouse.price }}</strong> monthly. </p>
             </v-container>
         </v-skeleton-loader>
         

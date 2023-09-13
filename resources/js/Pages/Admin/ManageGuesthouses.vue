@@ -23,7 +23,7 @@
     }
 
     watch(entry, () => {
-        router.get(`/manage/guesthouses/${entry.value}`)
+        router.get(`/admin/manage-guesthouses/${entry.value}`)
     })
 
     function editGuesthouse(gh) {

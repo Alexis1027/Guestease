@@ -56,6 +56,8 @@
     }
   }
 
+  const amenities = JSON.parse(props.guesthouse.amenities)
+
   const placeOffers = [
         {
             icon: 'mdi-wifi',
@@ -107,7 +109,7 @@
             <v-col cols="2"> 
                 <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ averageRating }} - ({{ ratings.length }} reviews) 
             </v-col>
-            <v-col cols="5"> 
+            <v-col cols="8"> 
                 <v-icon color="red">mdi-map-marker</v-icon> Located in - {{ guesthouse.location }}
             </v-col>
             <v-spacer></v-spacer>
@@ -183,8 +185,9 @@
                     </v-avatar>
                         </template>
                         <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
-                        <p class="text-grey-darken-1"> 3 guests - 1 room - 1 bedroom - 1 bathroom </p>
+                        <p class="text-grey-darken-1"> {{ guesthouse.guests }} guests - {{ guesthouse.rooms }} room - {{ guesthouse.beds }} bedroom - {{ guesthouse.bathrooms }} bathroom </p>
                     </v-list-item>
+                    
                     <v-divider class="my-2" />
 
                         <v-list-item prepend-icon="mdi-information-variant">
@@ -206,9 +209,8 @@
                         </v-list-item>
 
                         <v-divider class="my-2" />
-
                         <v-row>
-                            <v-col cols="6" v-for="item in placeOffers" :key="item">
+                            <v-col cols="6" v-for="item in amenities" :key="item">
                                 <v-list-item :prepend-icon="`${item.icon}`">
                                     {{ item.title }}
                                 </v-list-item>
