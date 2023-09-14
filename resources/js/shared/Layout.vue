@@ -19,7 +19,7 @@
             <v-app-bar-nav-icon @click="sidebar = !sidebar" v-if="auth && auth.user.role == 'admin'"></v-app-bar-nav-icon>
             <v-toolbar-title style="margin-left: 6%;">
                 <Link href="/" class="font-weight-bold">
-                    Logo 
+                    <v-img width="150" height="100" src="https://logohistory.net/wp-content/uploads/2022/10/Facebook-Logo.png"></v-img>
                 </Link>
             </v-toolbar-title>
             <!-- <v-text-field label="Search..." clearable flat rounded prepend-inner-icon="mdi-magnify" v-model="search" variant="outlined" color="blue">
@@ -152,7 +152,7 @@
                     <v-list-item prepend-icon="mdi-calendar-edit" title="Reservation management" value="managereservation"></v-list-item>
                 </Link>
                 <Link href="/admin/guesthouse-requests">
-                    <v-list-item prepend-icon="mdi-help-box-multiple" title="Guest house requests" value="requests"></v-list-item>
+                    <v-list-item prepend-icon="mdi-help-box-multiple" title="Listing requests" value="requests"></v-list-item>
                 </Link>
                 <Link href="/admin/create-admin">
                     <v-list-item prepend-icon="mdi-account-hard-hat" title="Create admin account" value="createadmin"></v-list-item>

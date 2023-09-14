@@ -64,7 +64,7 @@
         {{ prop.latitude && prop.longitude ? Math.floor(getDistance({latitude: 10.250778, longitude: 123.939834}, guesthouseLocation)/1000) + ' km/s away' : 'bruh' }}
 
             </p>
-            <p> <strong>P {{ prop.guesthouse.price }}</strong> monthly. </p>
+            <p> <strong>₱{{ prop.guesthouse.price }}</strong> daily </p>
             </v-container>
         </v-skeleton-loader>
         

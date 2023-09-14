@@ -9,6 +9,7 @@
 
 <template>
     <v-row justify="center">
+        
         <v-col cols="10">
             <v-container class="bg-white">
                 <v-row>

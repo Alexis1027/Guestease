@@ -110,7 +110,7 @@
                 <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ averageRating }} - ({{ ratings.length }} reviews) 
             </v-col>
             <v-col cols="8"> 
-                <v-icon color="red">mdi-map-marker</v-icon> Located in - {{ guesthouse.location }}
+                <v-icon color="red">mdi-map-marker</v-icon> {{ guesthouse.location }}
             </v-col>
             <v-spacer></v-spacer>
             <v-col class="text-end">
@@ -252,7 +252,25 @@
                     <v-card-item>
                         <v-row>
                             <!-- <v-col>Monthly Fee </v-col> -->
-                            <v-col>P {{ guesthouse.price }}</v-col>
+                            <v-col>
+                                <span class="text-h6">₱{{ guesthouse.price }}</span> daily
+                                <!-- <v-date-picker></v-date-picker> -->
+                                <v-menu min-width="200px" rounded v-if="auth && auth.user.role == 'admin'"  :close-on-content-click="false">
+                                    <template v-slot:activator="{ props }">
+                                        <v-row>
+                                            <v-col cols="6">
+                                                <v-list-item title="Check-in" subtitle="Add date" v-bind="props"></v-list-item>
+                                            </v-col>
+                                            <v-col cols="6">
+                                                <v-list-item title="Check-out" subtitle="Add date" v-bind="props"></v-list-item>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                    <v-card width="750" >
+                                        <v-date-picker hide-actions multiple></v-date-picker>
+                                    </v-card>
+                                </v-menu>
+                            </v-col>
                         </v-row>
                     </v-card-item>
                     <v-card-item>

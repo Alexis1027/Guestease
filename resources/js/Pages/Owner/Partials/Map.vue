@@ -1,6 +1,6 @@
 <script setup>
 
-    import {ref, onMounted, defineEmits} from 'vue'
+    import {ref, onMounted, defineEmits, watch} from 'vue'
     import L from 'leaflet'
     import 'leaflet/dist/leaflet.css'
 
@@ -37,6 +37,8 @@
 </script>
 
 <template>
+    {{ latitude }}
+    {{ longitude }}
     <div class="leaflet-container" ref="mapContainer"></div>
 </template>
 

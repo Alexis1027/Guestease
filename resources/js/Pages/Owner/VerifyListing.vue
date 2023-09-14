@@ -30,12 +30,18 @@
                     </p>
                 </v-list-item>
                 <v-divider />
-                <v-list-item class="my-6" append-icon="mdi-arrow-right" title="Verify your identity">
+                <v-list-item class="my-6" title="Verify your identity">
+                    <template v-slot:append>
+                        <v-btn flat icon="mdi-chevron-right"></v-btn>
+                    </template>
                     <p class="text-grey-darken-2">This is a simple way to help guests feel confident booking your place.</p>
                     <p class="font-weight-bold">Required</p>
                 </v-list-item>
                 <v-divider />
-                <v-list-item append-icon="mdi-arrow-right" class="mt-6" title="Confirm your email address">
+                <v-list-item class="mt-6" title="Confirm your email address">
+                    <template v-slot:append>
+                        <v-btn flat icon="mdi-chevron-right"></v-btn>
+                    </template>
                     <p class="text-grey-darken-2">We'll email you to confirm your email address.</p>
                     <p class="font-weight-bold">Required</p>
                 </v-list-item>
@@ -55,6 +61,9 @@
 
         </v-row>
 
+        <v-row justify="end">
+            <v-btn class="text-none me-6" size="large" color="blue">Publish listing</v-btn>
+        </v-row>
     </v-container>
 
 </template>
@@ -62,7 +71,7 @@
 <style scoped>
 
     .v-row{
-        margin-top: 5%;
+        margin-top: 3%;
     }
 .v-container {
         height: 80vh;
