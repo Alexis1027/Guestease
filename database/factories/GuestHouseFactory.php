@@ -30,13 +30,9 @@ class GuestHouseFactory extends Factory
         return [
             //
             'owner_id' => $this->faker->numberBetween(1, 10),
-            // 'room_name' => $this->faker->company(),
             'title' => $this->faker->company(),
-            // 'room_details' => $this->faker->sentence(9),
-            'description' => $this->faker->sentence(9),
-            // 'room_price' => number_format($this->faker->randomNumber(4, true), 0, '.', ','),
-            'price' => number_format($this->faker->randomNumber(4, true), 0, '.', ','),
-            // 'room_location' => $this->faker->city(),
+            'description' => $this->faker->sentence(20),
+            'price' => $this->faker->numberBetween(1500, 10000),
             'location' => $this->faker->city(),
             'images' => $room_images_string,
             'latitude' => $this->faker->latitude(10.250000, 10.268000),
@@ -47,15 +43,59 @@ class GuestHouseFactory extends Factory
             'bathrooms' => $this->faker->numberBetween(1, 5),
             'amenities' => json_encode([
                     [
-                        'icon' => $this->faker->randomElement(['mdi-wifi', 'mdi-television']),
+                        'icon' => $this->faker->randomElement(
+                            [
+                                'mdi-wifi',
+                                'mdi-television', 
+                                'mdi-grill-outline', 
+                                'mdi-countertop-outline', 
+                                'mdi-fridge-outline',
+                                'mdi-dishwasher',
+                                'mdi-pool'
+                            ]
+                        ),
                         'title' => $this->faker->word
                     ],
                     [
-                        'icon' => $this->faker->randomElement(['mdi-wifi', 'mdi-television']),
+                        'icon' => $this->faker->randomElement(
+                            [
+                                'mdi-wifi',
+                                'mdi-television', 
+                                'mdi-grill-outline', 
+                                'mdi-countertop-outline', 
+                                'mdi-fridge-outline',
+                                'mdi-dishwasher',
+                                'mdi-pool'
+                            ]
+                        ),
                         'title' => $this->faker->word
                     ],
                     [
-                        'icon' => $this->faker->randomElement(['mdi-wifi', 'mdi-television']),
+                        'icon' => $this->faker->randomElement(
+                            [
+                                'mdi-wifi',
+                                'mdi-television', 
+                                'mdi-grill-outline', 
+                                'mdi-countertop-outline', 
+                                'mdi-fridge-outline',
+                                'mdi-dishwasher',
+                                'mdi-pool'
+                            ]
+                        ),
+                        'title' => $this->faker->word
+                    ],
+                    [
+                        'icon' => $this->faker->randomElement(
+                            [
+                                'mdi-wifi',
+                                'mdi-television', 
+                                'mdi-grill-outline', 
+                                'mdi-countertop-outline', 
+                                'mdi-fridge-outline',
+                                'mdi-dishwasher',
+                                'mdi-pool'
+                            ]
+                        ),
                         'title' => $this->faker->word
                     ],
             ])

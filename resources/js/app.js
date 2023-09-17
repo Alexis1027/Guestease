@@ -6,6 +6,7 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { VDatePicker } from 'vuetify/labs/VDatePicker'
+import { VuetifyDateAdapter } from 'vuetify/labs/date/adapters/vuetify'
 import {Link} from '@inertiajs/vue3'
 import {Head} from '@inertiajs/vue3'
 import vue3GoogleLogin from 'vue3-google-login'
@@ -16,6 +17,9 @@ const vuetify = createVuetify({
     // theme: {
     //   defaultTheme: 'dark'
     // }
+    date: {
+      adapter: VuetifyDateAdapter,
+    }
 })
 
 createInertiaApp({

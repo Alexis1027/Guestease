@@ -1,8 +1,9 @@
 <script setup>
 
     import Layout from '../../shared/Layout.vue'
-    import {defineProps, ref} from 'vue'
+    import {defineProps, ref, watch} from 'vue'
     import { useForm } from '@inertiajs/vue3'
+    import { useDate } from 'vuetify/labs/date'
     import ImageDrawer from '../Guest/Partials/ImageDrawer.vue'
     import RatingCard from '../Guest/Partials/RatingCard.vue'
     import ImageCarousel from '../Guest/Partials/ImageCarousel.vue'
@@ -58,44 +59,14 @@
 
   const amenities = JSON.parse(props.guesthouse.amenities)
 
-  const placeOffers = [
-        {
-            icon: 'mdi-wifi',
-            title: 'Wifi'            
-        },
-        {
-            icon: 'mdi-television',
-            title: 'Television'            
-        },
-        {
-            icon: 'mdi-countertop-outline',
-            title: 'Kitchen'            
-        },
-        {
-            icon: 'mdi-fridge-outline',
-            title: 'Fridge'            
-        },
-        {
-            icon: 'mdi-dishwasher',
-            title: 'Dishwasher'            
-        },
-        {
-            icon: 'mdi-air-conditioner',
-            title: 'Air conditioner'            
-        },
-        {
-            icon: 'mdi-pool',
-            title: 'Pool'            
-        },
-        {
-            icon: 'mdi-hot-tub',
-            title: 'Hot tub'            
-        },
-        {
-            icon: 'mdi-grill-outline',
-            title: 'BBQ grill'            
-        },
-    ]
+    const dayCount = ref(null)
+    const reservationDate = ref(null)
+    const date = useDate()
+    const formatted = date.format(new Date(), 'keyboardDate')
+
+    watch(reservationDate, () => {
+        dayCount.value = reservationDate.value ? Math.abs((new Date(reservationDate.value[0]) - new Date(reservationDate.value[1])) / (1000 * 3600 * 24)) : null
+    })
 
 </script>
 
@@ -251,33 +222,38 @@
                     </v-card-title>
                     <v-card-item>
                         <v-row>
-                            <!-- <v-col>Monthly Fee </v-col> -->
                             <v-col>
                                 <span class="text-h6">₱{{ guesthouse.price }}</span> daily
-                                <!-- <v-date-picker></v-date-picker> -->
-                                <v-menu min-width="200px" rounded v-if="auth && auth.user.role == 'admin'"  :close-on-content-click="false">
+                                <v-menu min-width="200px" rounded  :close-on-content-click="false">
                                     <template v-slot:activator="{ props }">
                                         <v-row>
                                             <v-col cols="6">
-                                                <v-list-item title="Check-in" subtitle="Add date" v-bind="props"></v-list-item>
+                                                <v-list-item title="Check-in" id="date" :subtitle="reservationDate ? date.format(reservationDate[0], 'keyboardDate') : 'Add date'" v-bind="props"></v-list-item>
                                             </v-col>
                                             <v-col cols="6">
-                                                <v-list-item title="Check-out" subtitle="Add date" v-bind="props"></v-list-item>
+                                                <v-list-item title="Check-out" id="date" :subtitle="reservationDate ? date.format(reservationDate[1], 'keyboardDate') : 'Add date'" v-bind="props"></v-list-item>
                                             </v-col>
                                         </v-row>
                                     </template>
-                                    <v-card width="750" >
-                                        <v-date-picker hide-actions multiple></v-date-picker>
+                                    <v-card width="360">
+                                        <v-date-picker color="blue" :landscape="true" width="500" show-adjacent-months multiple v-model="reservationDate"></v-date-picker>
                                     </v-card>
                                 </v-menu>
                             </v-col>
                         </v-row>
                     </v-card-item>
+                        <v-list-item>
+                        {{ `₱ ${guesthouse.price} x ${dayCount} daily` }}
+                            <template v-slot:append>
+                                {{ `₱${guesthouse.price * dayCount}`  }}
+                            </template>
+                        </v-list-item>
                     <v-card-item>
                         <Link :href="`/payment/${guesthouse.id}`">
-                            <v-btn color="green" class="text-none" width="100%">Reserve</v-btn>
+                            <v-btn color="green" class="text-none" width="100%" size="large">Reserve</v-btn>
                         </Link>
                     </v-card-item>
+                   
                 </v-card>
             </v-col>
             <v-divider/>
@@ -305,32 +281,34 @@
         </v-container>
         <v-divider/>
 
-        <v-container>
-                    <v-list-item>
-                        <template v-slot:prepend>
-                            <v-avatar size="90" id="avatar">
-                        <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
-                    </v-avatar>
-                        </template>
-                        <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
-                        <p class="text-grey-darken-2">Joined on {{ format(new Date(owner.created_at), 'MMMM dd, yyyy') }}</p>
-                    </v-list-item>
-                    <v-list height="100%" class="bg-grey-lighten-3">
-                        <v-list-item prepend-icon="mdi-home" :title="`Lives in ${owner.address}`">
-                        </v-list-item>
-                        
-                        <v-list-item prepend-icon="mdi-facebook-messenger">
-                            {{ owner.firstname + ' ' + owner.lastname }}
-                        </v-list-item>
-                        <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="`${owner.contact_no}`">
-                        </v-list-item>
-                        <v-list-item>
-                            <Link :href="`/profile/${owner.id}`">
-                                <v-btn class="text-none" color="blue">Contact owner</v-btn>
-                            </Link>
-                        </v-list-item>
-                    </v-list>
-                </v-container>
+        <v-container >
+            <v-container class="bg-white rounded-xl">
+                <v-list-item>
+                <template v-slot:prepend>
+                    <v-avatar size="90" id="avatar">
+                <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
+            </v-avatar>
+                </template>
+                <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
+                <p class="text-grey-darken-2">Joined on {{ format(new Date(owner.created_at), 'MMMM dd, yyyy') }}</p>
+            </v-list-item>
+            <v-list height="100%">
+                <v-list-item prepend-icon="mdi-home" :title="`Lives in ${owner.address}`">
+                </v-list-item>
+                
+                <v-list-item prepend-icon="mdi-facebook-messenger">
+                    {{ owner.firstname + ' ' + owner.lastname }}
+                </v-list-item>
+                <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="`${owner.contact_no}`">
+                </v-list-item>
+                <v-list-item>
+                    <Link :href="`/profile/${owner.id}`">
+                        <v-btn class="text-none" color="blue">Contact owner</v-btn>
+                    </Link>
+                </v-list-item>
+            </v-list>
+            </v-container>
+        </v-container>
                 <!-- About this place section -->
                 
         
@@ -354,6 +332,11 @@
         z-index: 999;
     }
 
+    #date {
+        border: 1px solid black; 
+        border-radius: 10px; 
+        border-color: grey;
+    }
     .v-card.on-hover {
         opacity: 0.8;
     }

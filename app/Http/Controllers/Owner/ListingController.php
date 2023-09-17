@@ -49,7 +49,7 @@ class ListingController extends Controller
         $form['images'] = $houseImages;
         $form['amenities'] = json_encode($form['amenities']);
         GuestHouse::create($form);
-        return back();
+        return Inertia::render('Owner/Dashboard');
 
     }
     

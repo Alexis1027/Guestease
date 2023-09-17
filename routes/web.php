@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\GuestHouseRequestController;
 use App\Http\Controllers\Owner\ListingController;
 use App\Http\Controllers\Owner\OwnerDashboardController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ use App\Http\Controllers\Owner\OwnerDashboardController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 
 //OWNER

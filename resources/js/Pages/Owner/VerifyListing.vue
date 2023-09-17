@@ -17,6 +17,8 @@
 </script>
 <template>
 
+    <Head title="Verify Listing" />
+
     <v-container class="bg-white">
         <v-row justify="center" align="center">
             <v-col cols="7">
@@ -49,8 +51,8 @@
             <v-divider vertical/>
             <v-col cols="4" class="d-flex ms-6">
 
-                <v-card variant="outlined" color="grey" class="rounded-xl">
-                    <v-img :src="`../../images/${images[0]}`"></v-img>
+                <v-card variant="outlined" color="grey" class="rounded-xl" width="100%" height="100%">
+                    <v-img :src="`../../images/${images[0]}`" height="75%" cover width="100%"></v-img>
                     <v-card-text class="text-black">
                         <p class="font-weight-bold">{{ guesthouse.title }}</p>
                     <p>{{ guesthouse.location }}</p>
