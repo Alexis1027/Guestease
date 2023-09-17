@@ -49,23 +49,17 @@
             </v-carousel>
         </v-skeleton-loader>
         <v-skeleton-loader :loading="loading" class="bg-grey-lighten-3"  height="80%" type="image, article">
-            <v-container class="bg-grey-lighten-3">
-                <v-row id="guestHouseDetails">
-                <v-col cols="8"><strong class="truncate-text-title">{{ prop.guesthouse.title }} </strong></v-col>
-                <v-col cols="4" >
-                    <v-icon color="orange-lighten-1">
-                        mdi-star
-                    </v-icon>
-                    {{ prop.guesthouse.averageRating }} 
-                </v-col>
-            </v-row>
-            <p class="truncate-text">{{ prop.guesthouse.description }}</p>
-            <p>
-        {{ prop.latitude && prop.longitude ? Math.floor(getDistance({latitude: 10.250778, longitude: 123.939834}, guesthouseLocation)/1000) + ' km/s away' : 'bruh' }}
+                <v-list-item width="100%">
+                    <template v-slot:append>
+                        <v-icon color="orange-lighten-1">
+                            mdi-star
+                        </v-icon>
+                        {{ prop.guesthouse.averageRating }} 
+                    </template>
+                    <strong class="truncate-text-title">{{ prop.guesthouse.title }} </strong>
+                </v-list-item>
 
-            </p>
-            <p> <strong>P {{ prop.guesthouse.price }}</strong> monthly. </p>
-            </v-container>
+                <v-list-item class="truncate-text" width="100%">{{ prop.guesthouse.description }}</v-list-item>
         </v-skeleton-loader>
         
     </div>
@@ -87,7 +81,7 @@
 
     .truncate-text-title {
       display: -webkit-box;
-      -webkit-line-clamp: 1; /* Adjust the number of lines to show */
+      -webkit-line-clamp: 2; /* Adjust the number of lines to show */
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
