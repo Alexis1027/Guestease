@@ -1,7 +1,7 @@
 <script setup>
 
     import Layout from '../../shared/Layout.vue'
-    import {defineProps, ref, watch} from 'vue'
+    import {defineProps, ref, watch, onMounted} from 'vue'
     import { useForm } from '@inertiajs/vue3'
     import { useDate } from 'vuetify/labs/date'
     import ImageDrawer from '../Guest/Partials/ImageDrawer.vue'
@@ -10,6 +10,7 @@
     import RatingModal from '../Guest/Partials/RatingModal.vue'
     import Map from '../Guest/Partials/ShowMap.vue'
     import {format} from 'date-fns'
+    import { VSkeletonLoader } from 'vuetify/lib/labs/components.mjs';
 
     defineOptions({layout: Layout})
 
@@ -68,6 +69,13 @@
         dayCount.value = reservationDate.value ? Math.abs((new Date(reservationDate.value[0]) - new Date(reservationDate.value[1])) / (1000 * 3600 * 24)) : null
     })
 
+    const loading = ref(true)
+    onMounted(() => {
+        setTimeout(() => {
+            loading.value = false
+        },1000)
+    })
+
 </script>
 
 <template>
@@ -105,11 +113,11 @@
         </v-row>
         <v-container>
             <v-row>
+                <!-- First image -->
                 <v-col cols="6">
-                    <!-- First image -->
                     <v-hover v-slot="{ isHovering, props }">
-                        <v-card height="100%" max-height="400" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
-                            <v-img cover height="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
+                        <v-card height="100%" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
+                            <v-img cover height="100%" width="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
                                 <template v-slot:placeholder>
                                     <div class="d-flex align-center justify-center fill-height">
                                         <v-progress-circular color="grey-lighten-4" indeterminate>
@@ -120,24 +128,26 @@
                         </v-card>
                     </v-hover>
                 </v-col>
+                <!-- 4 images -->
                 <v-col cols="6">
                     <v-row>
                         <!--  4 images -->
                         <v-col cols="6" v-for="i in 4" :key="i">
                             <v-hover v-slot="{ isHovering, props }">
-                                <v-card height="100%" max-height="180" :elevation="isHovering ? 8 : 0" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
-                                    <!-- show the show all images button if i is equal to two -->
-                                    <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" size="small" prepend-icon="mdi-image-multiple-outline" class="text-none">Show all images</v-btn>
-
-                                    <v-img cover :src="`../images/${images[i]}`" height="100%" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
-                                        <template v-slot:placeholder>
-                                            <div class="d-flex align-center justify-center fill-height">
-                                                <v-progress-circular color="grey-lighten-4" indeterminate>
-                                                </v-progress-circular>
-                                            </div>
-                                        </template>
-                                    </v-img>
-                                </v-card>
+                                    <v-card height="100%"  :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
+                                        <!-- show the show all images button if i is equal to two -->
+                                        <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" size="small" prepend-icon="mdi-image-multiple-outline" class="text-none">Show all images</v-btn>
+                                        <v-skeleton-loader :loading="loading">
+                                            <v-img cover :src="`../images/${images[i]}`" height="100%" max-height="180" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
+                                                <!-- <template v-slot:placeholder>
+                                                    <div class="d-flex align-center justify-center fill-height">
+                                                        <v-progress-circular color="grey-lighten-4" indeterminate>
+                                                        </v-progress-circular>
+                                                    </div>
+                                                </template> -->
+                                            </v-img>
+                                        </v-skeleton-loader>
+                                    </v-card>
                             </v-hover>
                         </v-col>
                     </v-row>
@@ -147,20 +157,19 @@
         <v-divider/>
         <v-row>
             <v-col cols="8">
+                <!-- Guest house details -->
                 <v-container>
                     <v-list class="rounded-xl">
                         <v-list-item>
-                        <template v-slot:append>
-                            <v-avatar size="90" id="avatar">
-                        <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
-                    </v-avatar>
-                        </template>
-                        <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
-                        <p class="text-grey-darken-1"> {{ guesthouse.guests }} guests - {{ guesthouse.rooms }} room - {{ guesthouse.beds }} bedroom - {{ guesthouse.bathrooms }} bathroom </p>
-                    </v-list-item>
-                    
-                    <v-divider class="my-2" />
-
+                            <template v-slot:append>
+                                <v-avatar size="90" id="avatar">
+                                    <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
+                                </v-avatar>
+                            </template>
+                            <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
+                            <p class="text-grey-darken-1"> {{ guesthouse.guests }} guests - {{ guesthouse.rooms }} room - {{ guesthouse.beds }} bedroom - {{ guesthouse.bathrooms }} bathroom </p>
+                        </v-list-item>
+                        <v-divider class="my-2" />
                         <v-list-item prepend-icon="mdi-information-variant">
                             {{ guesthouse.description }}
                         </v-list-item>
@@ -172,13 +181,12 @@
 
                 <v-divider/>
 
+                <!-- Place offers -->
                 <v-container>
-                        
-                        <v-container class="bg-white rounded-xl">
-                            <v-list-item>
+                    <v-container class="bg-white rounded-xl">
+                        <v-list-item>
                             <p class="text-h5">What this place offers</p>
                         </v-list-item>
-
                         <v-divider class="my-2" />
                         <v-row>
                             <v-col cols="6" v-for="item in amenities" :key="item">
@@ -187,8 +195,7 @@
                                 </v-list-item>
                             </v-col>
                         </v-row>  
-                        </v-container>
-
+                    </v-container>
                 </v-container>
 
                 <v-divider/>
@@ -213,13 +220,8 @@
                 
             </v-col>
             <v-col cols="4" class="mt-3">
-
-                <!-- Reserve button section -->
-
+                <!-- Check in checkout and Reserve button section -->
                 <v-card id="reserveBtn" class="rounded-xl">
-                    <v-card-title>
-                        <!-- <h2>Price Details</h2> -->
-                    </v-card-title>
                     <v-card-item>
                         <v-row>
                             <v-col>
@@ -242,7 +244,7 @@
                             </v-col>
                         </v-row>
                     </v-card-item>
-                        <v-list-item>
+                        <v-list-item v-if="reservationDate">
                         {{ `₱ ${guesthouse.price} x ${dayCount} daily` }}
                             <template v-slot:append>
                                 {{ `₱${guesthouse.price * dayCount}`  }}
@@ -270,17 +272,20 @@
         </v-row>
         <v-divider></v-divider>
 
+         <!-- MAP SECTION -->
         <v-container>
             <p class="text-h5 font-weight-medium mb-6">Where you'll be.</p>
             <Map :latitude="guesthouse.latitude" :longitude="guesthouse.longitude" />
         </v-container>
         <v-divider />
+
         <v-container>
             <p class="text-h5 font-weight-medium mb-6">Rules and regulations.</p>
 
         </v-container>
         <v-divider/>
 
+        <!-- CONTACT OWNER SECTION -->
         <v-container >
             <v-container class="bg-white rounded-xl">
                 <v-list-item>
@@ -310,11 +315,7 @@
             </v-container>
         </v-container>
                 <!-- About this place section -->
-                
-        
-
         <!-- Components -->
-
         <ImageDrawer @closeOverlay="overlay = false" v-if="true" :overlay="overlay" :images="images" />
         <ImageCarousel :showImageCarousel="showImageCarousel" :images="images" :index="index" @CloseImgCarousel="showImageCarousel = false" />
         <RatingModal :showReviewModal="showReviewModal" :auth="auth" :star="rating" :guesthouse="guesthouse" @closeReviewModal="showReviewModal = false" />

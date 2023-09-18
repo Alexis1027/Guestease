@@ -33,7 +33,7 @@
 
         guesthousesLocation.forEach(place => {
             const marker = L.marker([place.guesthouse.latitude, place.guesthouse.longitude], {icon: markerIcon}).addTo(map)
-            marker.bindPopup(`<b> Hello from ${place.guesthouse.room_name}! </b> <br> I'm a popup!`)
+            marker.bindPopup(`<b> Hello from ${place.guesthouse.title}! </b> <br> I'm a popup!`)
             marker.on('click', () => {
                 mapSnackbar.value = true
                 currentGuestHouse.value = place.guesthouse

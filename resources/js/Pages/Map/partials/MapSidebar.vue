@@ -1,68 +1,35 @@
 <script setup>
 
-    import {ref, defineProps, defineEmits} from 'vue'
+    import {ref, defineProps, defineEmits, watch} from 'vue'
     import Reviews from './MapSidebarReviews.vue'
     import Overview from './MapSidebarOverview.vue'
     import About from './MapSidebarAbout.vue'
-
+    import {processImages} from '@/utils/imageUtils'
     const props = defineProps(['mapSnackbar', 'guesthouse'])
     const tab = ref(null)
     const emit = defineEmits('closeMapSnackbar')
+    var images
+    watch(props, () => {
+        console.log(props.guesthouse)
+        images = processImages(props.guesthouse.images)
+    })  
 
     const emitCloseMapSnackbar = () => {
         emit('closeMapSnackbar')
     }
 
-
-
 </script>
 
 <template>
-    <v-snackbar
-      v-model="props.mapSnackbar"
-      location="right"
-      transition="scroll-x-reverse-transition"
-        color="white"
-      >
+    <v-snackbar v-model="props.mapSnackbar" location="right" transition="scroll-x-reverse-transition" color="white">
     <Link :href="`/room/${props.guesthouse ? props.guesthouse.id : ''}`"><v-btn rounded color="blue" id="reserveBtn" width="50%">See more</v-btn></Link>
-
         <div class="custom-snackbar-content">
-
-            <!-- <v-img cover src="/images/sheesh.png" width="100%">
-                <v-btn
-                @click="emitCloseMapSnackbar()"
-                icon="mdi-close"
-                id="closeBtn"
-                size="small"
-                >
-                </v-btn>
-            </v-img> -->
-
             <div style="height: 300px;">
-                <v-carousel show-arrows="hover" height="100%">
-                <v-carousel-item
-                    src="/images/sheesh.png"
-                    cover
-                ></v-carousel-item>
-
-                <v-carousel-item
-                    src="/images/room1.png"
-                    cover
-                ></v-carousel-item>
-
-                <v-carousel-item
-                    src="/images/room2.png"
-                    cover
-                ></v-carousel-item>
-
-                <v-btn
-                @click="emitCloseMapSnackbar()"
-                icon="mdi-close"
-                id="closeBtn"
-                size="small"
-                >
-                </v-btn>
-            </v-carousel>
+                <v-carousel show-arrows="hover" color="blue-lighten-4" height="100%">
+                    <v-carousel-item height="100%" v-for="image in images" :src="`/images/${image}`" :key="image" cover>
+                    </v-carousel-item>
+                    <v-btn @click="emitCloseMapSnackbar()" icon="mdi-close" id="closeBtn" size="small"></v-btn>
+                </v-carousel>
             </div>
             <v-card>
                 <v-card-title>
@@ -70,10 +37,7 @@
                         {{ props.guesthouse ? props.guesthouse.title : '' }}
                     </h3>
                 </v-card-title>
-                <v-tabs
-                v-model="tab"
-                bg-color="blue-lighten-3"
-                >
+                <v-tabs v-model="tab" bg-color="blue-lighten-3">
                     <v-tab value="overview">Overview</v-tab>
                     <!-- <v-tab value="prices">Price</v-tab> -->
                     <v-tab value="reviews">Reviews</v-tab>
@@ -96,11 +60,8 @@
                         </v-window-item>
                     </v-window>
                 </v-card-text>
-
             </v-card>
-
         </div>
-
     </v-snackbar>
 </template>
 
