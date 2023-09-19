@@ -34,10 +34,10 @@
 
   function getBorderRadius(i) {
     if(i === 2) {
-        return 'rounded-te-xl'
+        return 'rounded-te-lg'
     }
     if(i === 4) {
-        return 'rounded-be-xl'
+        return 'rounded-be-lg'
     }
     
   }
@@ -75,6 +75,8 @@
             loading.value = false
         },1000)
     })
+
+    const discount =ref(200)
 
 </script>
 
@@ -128,23 +130,20 @@
                         </v-card>
                     </v-hover>
                 </v-col>
-                <!-- 4 images -->
                 <v-col cols="6">
                     <v-row>
-                        <!--  4 images -->
                         <v-col cols="6" v-for="i in 4" :key="i">
                             <v-hover v-slot="{ isHovering, props }">
-                                    <v-card height="100%"  :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
-                                        <!-- show the show all images button if i is equal to two -->
+                                    <v-card height="100%" max-height="180" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
                                         <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" size="small" prepend-icon="mdi-image-multiple-outline" class="text-none">Show all images</v-btn>
                                         <v-skeleton-loader :loading="loading">
-                                            <v-img cover :src="`../images/${images[i]}`" height="100%" max-height="180" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
-                                                <!-- <template v-slot:placeholder>
+                                            <v-img cover :src="`../images/${images[i]}`" height="100%" max-height="200" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
+                                                <template v-slot:placeholder>
                                                     <div class="d-flex align-center justify-center fill-height">
                                                         <v-progress-circular color="grey-lighten-4" indeterminate>
                                                         </v-progress-circular>
                                                     </div>
-                                                </template> -->
+                                                </template>
                                             </v-img>
                                         </v-skeleton-loader>
                                     </v-card>
@@ -152,14 +151,29 @@
                         </v-col>
                     </v-row>
                 </v-col>
+                <!-- <v-col cols="6">
+                    <v-skeleton-loader :loading="loading" type="image, image">
+                        <v-img :src="`../images/${images[0]}`" class="rounded-s-lg" max-height="370" height="100%" cover></v-img>
+                    </v-skeleton-loader>
+                </v-col>
+                <v-col cols="6">
+                    <v-row>
+                        <v-col cols="6" v-for="n in 4" :key="n" @click="showImageCarouselFunc(n)">
+                            <v-skeleton-loader :loading="loading">
+                                <v-btn id="showAllBtn" @click="overlay = true" v-if="n === 2" size="small" prepend-icon="mdi-image-multiple-outline" class="text-none">Show all images</v-btn>
+                                <v-img :src="`../images/${images[0]}`" max-height="172" cover height="100%" :class="getBorderRadius(n)" @click="showImageCarouselFunc(n)"></v-img>
+                            </v-skeleton-loader>
+                        </v-col>
+                    </v-row>
+                </v-col> -->
             </v-row>
         </v-container>
-        <v-divider/>
+        <v-divider class="mb-5" />
         <v-row>
             <v-col cols="8">
                 <!-- Guest house details -->
-                <v-container>
-                    <v-list class="rounded-xl">
+                <v-container class=" bg-white">
+                    <v-list>
                         <v-list-item>
                             <template v-slot:append>
                                 <v-avatar size="90" id="avatar">
@@ -179,43 +193,37 @@
                     </v-list>
                 </v-container>
 
-                <v-divider/>
+                <v-divider class="my-5" />
 
                 <!-- Place offers -->
-                <v-container>
-                    <v-container class="bg-white rounded-xl">
-                        <v-list-item>
-                            <p class="text-h5">What this place offers</p>
-                        </v-list-item>
-                        <v-divider class="my-2" />
-                        <v-row>
-                            <v-col cols="6" v-for="item in amenities" :key="item">
-                                <v-list-item :prepend-icon="`${item.icon}`">
-                                    {{ item.title }}
-                                </v-list-item>
-                            </v-col>
-                        </v-row>  
-                    </v-container>
+                <v-container  class="bg-white ">
+                    <v-list-item>
+                        <p class="text-h5">What this place offers</p>
+                    </v-list-item>
+                    <v-divider class="my-2" />
+                    <v-row>
+                        <v-col cols="6" v-for="item in amenities" :key="item">
+                            <v-list-item :prepend-icon="`${item.icon}`">
+                                {{ item.title }}
+                            </v-list-item>
+                        </v-col>
+                    </v-row>  
                 </v-container>
 
-                <v-divider/>
+                <v-divider class="my-5" />
                 
                 <!-- Rate this place section -->
-                <v-container>
-                    
-                    <v-container class="bg-white rounded-xl">
-                        <p class="text-h5 font-weight-medium">Rate this place </p>
-                        <p style="color: gray">Tell others what you think.</p>
-                        <div v-if="rated" class="mt-3">
-                            <v-divider/>
-                            <RatingCard :rating="rated" />
-                        </div>
-                        <div class="ms-3 mt-3" v-else>
-                            <v-rating v-model="rating" hover half-increments color="orange-lighten-2" @click="showReviewModal = true">
-                            </v-rating>
-                        </div>
-                    </v-container>
-
+                <v-container class="bg-white ">
+                    <p class="text-h5 font-weight-medium">Rate this place </p>
+                    <p style="color: gray">Tell others what you think.</p>
+                    <v-divider class="my-3" />
+                    <div v-if="rated">
+                        <RatingCard :rating="rated" />
+                    </div>
+                    <div class="ms-3 mt-3" v-else>
+                        <v-rating v-model="rating" hover half-increments color="orange-lighten-2" @click="showReviewModal = true">
+                        </v-rating>
+                    </div>
                 </v-container>
                 
             </v-col>
@@ -241,58 +249,84 @@
                                         <v-date-picker color="blue" :landscape="true" width="500" show-adjacent-months multiple v-model="reservationDate"></v-date-picker>
                                     </v-card>
                                 </v-menu>
+                                <!-- <v-select variant="outlined" class="mt-3"></v-select> -->
                             </v-col>
                         </v-row>
                     </v-card-item>
-                        <v-list-item v-if="reservationDate">
+                        <v-list  v-if="reservationDate">
+                            <v-list-item>
                         {{ `₱ ${guesthouse.price} x ${dayCount} daily` }}
                             <template v-slot:append>
                                 {{ `₱${guesthouse.price * dayCount}`  }}
                             </template>
                         </v-list-item>
+                        <v-list-item>
+                        some discount?
+                            <template v-slot:append>
+                                {{`₱${discount}`}}
+                            </template>
+                        </v-list-item>
+                        <v-divider/>
+                        <v-list-item>
+                            Total
+                            <template v-slot:append>
+                                {{ `₱${(guesthouse.price * dayCount) - discount}`  }}
+                            </template>
+                        </v-list-item>
+                        </v-list>
                     <v-card-item>
                         <Link :href="`/payment/${guesthouse.id}`">
-                            <v-btn color="green" class="text-none" width="100%" size="large">Reserve</v-btn>
+                            <v-btn color="green" class="text-none mb-4" width="100%" size="large">Reserve</v-btn>
                         </Link>
                     </v-card-item>
                    
                 </v-card>
             </v-col>
-            <v-divider/>
+            <v-divider class="mb-5" />
             <!-- Ratings and reviews section -->
-            <v-container class="mb-5">
+            <v-container class="mb-5 bg-white ">
                 <p class="text-h5 font-weight-medium">Ratings and reviews</p>
-                <v-row class="mt-3">
-                    <v-col cols="6" v-for="rating in ratings" :key="rating.id">
+                <v-divider class="mt-3" />
+                <v-row>
+                    <v-col cols="6" class="mt-3" v-for="rating in ratings" :key="rating.id">
                         <RatingCard :rating="rating" />
                     </v-col>
-                        <p class="ms-6" v-if="ratings.length <= 0">No reviews found.</p>
+                        <p class="ms-6 my-5" v-if="ratings.length <= 0">No reviews found.</p>
                 </v-row>
             </v-container>
         </v-row>
-        <v-divider></v-divider>
+        <v-divider class="mt-5" />
 
          <!-- MAP SECTION -->
         <v-container>
             <p class="text-h5 font-weight-medium mb-6">Where you'll be.</p>
             <Map :latitude="guesthouse.latitude" :longitude="guesthouse.longitude" />
         </v-container>
-        <v-divider />
-
-        <v-container>
-            <p class="text-h5 font-weight-medium mb-6">Rules and regulations.</p>
-
+        <v-divider class="mb-5" />
+        <!-- HOUSE RULES -->
+        <v-container class="bg-white">
+            <p class="text-h5 font-weight-medium mb-6">House rules</p>
+            <v-divider />
+            <v-list>
+                <v-list-item prepend-icon="mdi-circle-medium"> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit ipsum repellat eaque. </v-list-item>
+                <v-list-item prepend-icon="mdi-circle-medium">No smoking.</v-list-item>
+                <v-list-item prepend-icon="mdi-circle-medium">No parties/events.</v-list-item>
+                <v-list-item prepend-icon="mdi-circle-medium">No pets allowed.</v-list-item>
+                <v-list-item prepend-icon="mdi-circle-medium"> 
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil aperiam quam,
+                    assumenda optio sed autem dicta quisquam! Repellat illum vitae sint asperiores corporis modi 
+                    eveniet debitis exercitationem magnam dignissimos eius, repellendus, quis officiis nam iure! </v-list-item>
+            </v-list>
         </v-container>
-        <v-divider/>
+        <v-divider class="my-5" />
 
         <!-- CONTACT OWNER SECTION -->
-        <v-container >
-            <v-container class="bg-white rounded-xl">
-                <v-list-item>
+        <v-container class="bg-white">
+            <v-list-item>
                 <template v-slot:prepend>
                     <v-avatar size="90" id="avatar">
-                <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
-            </v-avatar>
+                        <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
+                    </v-avatar>
                 </template>
                 <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
                 <p class="text-grey-darken-2">Joined on {{ format(new Date(owner.created_at), 'MMMM dd, yyyy') }}</p>
@@ -312,7 +346,6 @@
                     </Link>
                 </v-list-item>
             </v-list>
-            </v-container>
         </v-container>
                 <!-- About this place section -->
         <!-- Components -->
@@ -325,9 +358,10 @@
 <style scoped>
 
     #showAllBtn {
-        right: 0; 
-        margin-top: 5px; 
-        margin-right: 10px; 
+        right: 0;
+        top: 0;
+        margin-top: 10px;
+        margin-right: 5%; 
         position: absolute; 
         opacity: 0.8;
         z-index: 999;

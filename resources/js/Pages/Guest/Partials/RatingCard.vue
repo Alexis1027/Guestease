@@ -6,9 +6,9 @@
     const star = ref(prop.rating.rating)
 </script>
 <template>
-        <v-card elevation="0">
+        <v-card elevation="0" class="bg-grey-lighten-4 rounded-xl">
             <v-card-item>
-                <v-list>
+                <v-list class="bg-grey-lighten-4">
                     <Link :href="`/profile/${prop.rating.user.id}`">
                         <v-list-item
                             :prepend-avatar="`../images/profile/${prop.rating.user.profile_pic}`"

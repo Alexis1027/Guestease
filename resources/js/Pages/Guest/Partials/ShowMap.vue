@@ -88,7 +88,7 @@
 
     .leaflet-container {
         height: 75vh;
-        width: 86vw;
+        width: 82vw;
     }
 
 </style>

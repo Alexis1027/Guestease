@@ -81,7 +81,7 @@
             <v-card-item>
                 <v-row>
                     <v-col>
-                        <p>Change password</p>
+                        <p>Change password <span class="text-red">doestn work</span> </p>
                     </v-col>
                 </v-row>
                 <v-row>
