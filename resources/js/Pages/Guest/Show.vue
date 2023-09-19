@@ -118,8 +118,8 @@
                 <!-- First image -->
                 <v-col cols="6">
                     <v-hover v-slot="{ isHovering, props }">
-                        <v-card height="100%" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
-                            <v-img cover height="100%" width="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
+                        <v-card max-height="370" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
+                            <v-img cover height="100%" max-height="370" width="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
                                 <template v-slot:placeholder>
                                     <div class="d-flex align-center justify-center fill-height">
                                         <v-progress-circular color="grey-lighten-4" indeterminate>
