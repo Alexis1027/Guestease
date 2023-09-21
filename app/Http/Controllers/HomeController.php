@@ -93,7 +93,7 @@ class HomeController extends Controller
         }
     }
 
-    public function confirmReservation(GuestHouse $room) {
+    public function confirm_reservation(GuestHouse $room) {
         return Inertia::render('ConfirmReservation', ['guesthouse' => $room]);
     }
 

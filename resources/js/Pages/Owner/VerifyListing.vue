@@ -1,6 +1,7 @@
 <script setup>
 
     import Layout from '../../shared/Layout.vue';
+    import {processImages} from '@/utils/imageUtils'
 
     defineOptions({
         layout: Layout
@@ -8,11 +9,7 @@
 
     const {guesthouse} = defineProps(['guesthouse'])
 
-    const images = []
-    const guestHouseImg = guesthouse.images.split(",")
-    guestHouseImg.forEach(img => {
-        images.push(img)
-    });
+    const images = processImages(guesthouse.images)
 
 </script>
 <template>

@@ -11,6 +11,7 @@
     import Map from '../Guest/Partials/ShowMap.vue'
     import {format} from 'date-fns'
     import { VSkeletonLoader } from 'vuetify/lib/labs/components.mjs';
+    import {processImages} from '@/utils/imageUtils'
 
     defineOptions({layout: Layout})
 
@@ -20,50 +21,79 @@
     const index = ref(0)
     const showImageCarousel = ref(false)
     const showReviewModal = ref(false)
-    const images = []
     console.log(props)
-    const guestHouseImg = props.guesthouse.images.split(",")
     const saveWishlistForm = useForm({
         user_id: props.auth ? props.auth.user.id : '',
         room_id: props.auth ? props.guesthouse.id : '',
     })
 
-    guestHouseImg.forEach(img => {
-        images.push(img)
-    });
+    const images = processImages(props.guesthouse.images)
 
-  function getBorderRadius(i) {
-    if(i === 2) {
-        return 'rounded-te-lg'
+    function getBorderRadius(i) {
+        if(i === 2) {
+            return 'rounded-te-lg'
+        }
+        if(i === 4) {
+            return 'rounded-be-lg'
+        }
     }
-    if(i === 4) {
-        return 'rounded-be-lg'
-    }
-    
-  }
 
-  function showImageCarouselFunc(idx) {
-    index.value = idx
-    showImageCarousel.value = true
-  }
-
-  const submitForm = () => {
-    if(props.wishlist) {
-        saveWishlistForm.delete('/wishlist/unsave', {
-            preserveScroll: true
-        })
+    function showImageCarouselFunc(idx) {
+        index.value = idx
+        showImageCarousel.value = true
     }
-    else {
-        saveWishlistForm.post('/wishlist/save')
-    }
-  }
 
-  const amenities = JSON.parse(props.guesthouse.amenities)
+    const submitForm = () => {
+        if(props.wishlist) {
+            saveWishlistForm.delete('/wishlist/unsave', {
+                preserveScroll: true
+            })
+        }
+        else {
+            saveWishlistForm.post('/wishlist/save')
+        }
+    }
+
+    const amenities = JSON.parse(props.guesthouse.amenities)
 
     const dayCount = ref(null)
     const reservationDate = ref(null)
     const date = useDate()
-    const formatted = date.format(new Date(), 'keyboardDate')
+    const reserveForm = useForm({
+        checkin: null,
+        checkout: null,
+        guests: 1,
+    })
+
+    const selectGuests = [
+        {
+            title: 'Adults',
+            subtitle: 'Age 13+'
+        },
+        {
+            title: 'Children',
+            subtitle: 'Age 2-12'
+        },
+        {
+            title: 'Infants',
+            subtitle: 'Age under 2'
+        },
+        {
+            title: 'Pets',
+        },
+    ]
+
+    function selectGuestsProps(item) {
+        return {
+            title: item.title,
+            subtitle: item.subtitle
+        }
+    }
+
+    const isDropdownOpen = ref(false)
+    function toggleDropdown() {
+        isDropdownOpen.value = !isDropdownOpen .value
+    }
 
     watch(reservationDate, () => {
         dayCount.value = reservationDate.value ? Math.abs((new Date(reservationDate.value[0]) - new Date(reservationDate.value[1])) / (1000 * 3600 * 24)) : null
@@ -118,7 +148,7 @@
                 <!-- First image -->
                 <v-col cols="6">
                     <v-hover v-slot="{ isHovering, props }">
-                        <v-card max-height="370" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
+                        <v-card max-height="370" height="100%" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
                             <v-img cover height="100%" max-height="370" width="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
                                 <template v-slot:placeholder>
                                     <div class="d-flex align-center justify-center fill-height">
@@ -137,7 +167,7 @@
                                     <v-card height="100%" max-height="180" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
                                         <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" size="small" prepend-icon="mdi-image-multiple-outline" class="text-none">Show all images</v-btn>
                                         <v-skeleton-loader :loading="loading">
-                                            <v-img cover :src="`../images/${images[i]}`" height="100%" max-height="200" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
+                                            <v-img cover :src="`../images/${images[i]}`"  max-height="190" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
                                                 <template v-slot:placeholder>
                                                     <div class="d-flex align-center justify-center fill-height">
                                                         <v-progress-circular color="grey-lighten-4" indeterminate>
@@ -244,6 +274,20 @@
                                                 <v-list-item title="Check-out" id="date" :subtitle="reservationDate ? date.format(reservationDate[1], 'keyboardDate') : 'Add date'" v-bind="props"></v-list-item>
                                             </v-col>
                                         </v-row>
+                                        <v-select class="mt-2" :items="selectGuests" variant="outlined" label="Guests"> <!-- :item-props="selectGuestsProps" -->
+                                            <template v-slot:item="{ props, item }">
+                                                <v-list-item v-bind="props" :subtitle="item.raw.subtitle">
+                                                    <template v-slot:append>
+                                                        <v-btn icon="mdi-plus" flat size="small" @click="reserveForm.guests++" ></v-btn>
+                                                        <span class="mx-1">0</span> 
+                                                        <v-btn icon="mdi-minus" flat size="small" @click="reserveForm.guests--"> </v-btn>
+                                                    </template>
+                                                </v-list-item>
+                                            </template>
+                                            <template v-slot:selection>
+                                                <p v-if="reserveForm.guests">Guests {{ reserveForm.guests }} </p>
+                                            </template>
+                                        </v-select>
                                     </template>
                                     <v-card width="360">
                                         <v-date-picker color="blue" :landscape="true" width="500" show-adjacent-months multiple v-model="reservationDate"></v-date-picker>
@@ -261,7 +305,7 @@
                             </template>
                         </v-list-item>
                         <v-list-item>
-                        some discount?
+                            some discount?
                             <template v-slot:append>
                                 {{`₱${discount}`}}
                             </template>

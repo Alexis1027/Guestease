@@ -1,12 +1,11 @@
 <script setup>
 
     import {defineProps} from 'vue'
+    import {processImages} from '@/utils/imageUtils'
+
     const prop = defineProps(['wishlist'])
-    const images = []
-    const guestHouseImg = prop.wishlist.guesthouse.images.split(",")
-    guestHouseImg.forEach(img => {
-        images.push(img)
-    });
+    const images = processImages(prop.wishlist.guesthouse.images)
+   
 </script>
 
 

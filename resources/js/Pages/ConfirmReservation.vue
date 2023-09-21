@@ -2,9 +2,10 @@
 
     import {defineProps, onMounted} from 'vue'
     import { useForm } from '@inertiajs/vue3';
+    import {processImages} from '@/utils/imageUtils'
 
     const prop = defineProps(['guesthouse', 'auth'])
-
+    const images = processImages(prop.guesthouse.images)
     const items = [
         'Paypal',
         'Gcash',
@@ -82,6 +83,32 @@
                                 <v-btn rounded icon="mdi-keyboard-backspace" flat></v-btn>
                             </Link>
                             <label class="text-h5 font-weight-bold">Confirm Reservation</label>
+                            <v-alert
+                                variant="outlined"
+                                type="warning"
+                                prominent
+                                >
+                                <p class="font-weight-bold">Let's try that again</p>
+                                <p>Please check your payment details.</p>
+                                </v-alert>
+                            <p class="text-h6 my-4 font-weight-bold">Your reservation</p>
+                                <v-list>
+                                    <v-list-item>
+                                        <template v-slot:append>
+                                            <v-btn icon="mdi-pencil" flat></v-btn>
+                                        </template>
+                                        <p class="font-weight-bold">Dates</p>
+                                        <p>Sept 20 - 26</p>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <template v-slot:append>
+                                            <v-btn icon="mdi-pencil" flat></v-btn>
+                                        </template>
+                                        <p class="font-weight-bold">Guests</p>
+                                        <p>1 guest</p>
+                                    </v-list-item>
+                                </v-list>
+                            <v-divider />
                             <p class="text-h6 my-4 font-weight-bold">Choose how to pay</p>
                             <v-list>
                                 <v-list-item>
@@ -102,10 +129,10 @@
                             <v-divider/>
                             <p class="text-h6 my-4 font-weight-bold">Pay with</p>
                             <v-select :items="items" :error-messages="form.errors.payment_process" label="Payment process" v-model="form.payment_process" clearable required variant="outlined"></v-select>
-                            <v-btn block color="green" class="text-none" :loading="form.processing" @click="submit" type="submit">Confirm Reservation</v-btn>
+                            <v-btn block color="green" class="text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn>
                         </v-form>
                         <div id="paypal-button-container"></div>
-                        <v-divider/>
+                        <v-divider class="mt-4"/>
                         <p class="text-h6 my-4 font-weight-bold">Required for your trip</p>
                             <v-list>
                                 <v-list-item>
@@ -132,11 +159,11 @@
                 <v-divider vertical></v-divider>
                 <v-col cols="5">
 
-                    <v-card class="justify-center text-center" id="card">
+                    <v-card class="justify-center" id="card">
                         <v-card width="400" class="mt-4" style="margin-left: 8%;">
-                            <v-img src="/images/room1.png"></v-img>
+                            <v-img :src="`/images/${images[0]}`" cover></v-img>
                         </v-card>
-                        <v-card-title>
+                        <v-card-title class="text-center font-weight-bold">
                             {{ prop.guesthouse.title }}
                         </v-card-title>
                         <v-card-text>
@@ -144,15 +171,26 @@
                         </v-card-text>
                         <v-divider/>
                         <v-card-text>
-                            <!-- Price Details
-                            <p>{{ prop.guesthouse.room_price }}</p> -->
+                            <p class="font-weight-bold text-center">Price Details</p>
+                            <v-list-item>
+                                <template v-slot:append>
+                                    {{ `₱${prop.guesthouse.price * 5}` }}
+                                </template>
+                                {{ '₱'+ prop.guesthouse.price  }} x 5 days
+                            </v-list-item>
+                            <v-divider/>
+                            <v-list-item class="font-weight-bold">
+                                <template v-slot:append>
+                                    {{ `₱${prop.guesthouse.price * 5}` }}
+                                </template>
+                                <p>Total</p>
+                            </v-list-item>
                         </v-card-text>
                     </v-card>
 
                 </v-col>
             </v-row>
         </v-container>
-
 </template>
 
 <style scoped>

@@ -4,6 +4,7 @@
     import {Link} from '@inertiajs/vue3'
     import { VSkeletonLoader } from 'vuetify/lib/labs/components.mjs';
     import getDistance from 'geolib/es/getDistance'
+    import {processImages} from '@/utils/imageUtils'
 
     const prop = defineProps({
         guesthouse: Object,
@@ -14,13 +15,7 @@
     let myLocation = { latitude:  prop.latitude , longitude:  prop.longitude}
     let guesthouseLocation = { latitude: prop.guesthouse.latitude, longitude: prop.guesthouse.longitude }
     
-    const images = []
-    const guestHouseImg = prop.guesthouse.images.split(",")
-    const loading = ref(true)
-    guestHouseImg.forEach(img => {
-        images.push(img)
-    });
-
+    const images = processImages(prop.guesthouse.images)
     onMounted(() => {
         setTimeout(() => {
             loading.value = false

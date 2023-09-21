@@ -26,11 +26,11 @@ class AuthController extends Controller
         return back();
     }
 
-    public function CreateGuest() {
+    public function create_guest() {
         return Inertia::render('Auth/CreateGuest');
     }
 
-    public function createOwner() {
+    public function create_owner() {
         return Inertia::render('Auth/CreateOwner');
     }
 

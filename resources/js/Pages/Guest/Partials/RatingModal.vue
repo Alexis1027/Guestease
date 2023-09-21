@@ -2,15 +2,11 @@
 
     import {useForm} from '@inertiajs/vue3'
     import {defineProps, defineEmits, onUpdated, ref} from 'vue'
+    import {processImages} from '@/utils/imageUtils'
 
     const emit = defineEmits('closeReviewModal')
     const props = defineProps(['showReviewModal', 'guesthouse', 'star', 'auth'])
-    const images = []
-    const guestHouseImg = props.guesthouse.images.split(",")
-
-    guestHouseImg.forEach(img => {
-        images.push(img)
-    });
+    const images = processImages(props.guesthouse.images)
 
     const emitcloseReviewModal = () => {
         emit('closeReviewModal')
