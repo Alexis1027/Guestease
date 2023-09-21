@@ -19,9 +19,9 @@
     const props = defineProps(['guesthouse', 'ratings', 'averageRating', 'wishlist', 'auth', 'rated', 'owner'])
     const rating = ref(0)
     const index = ref(0)
+    const discount = ref(200)
     const showImageCarousel = ref(false)
     const showReviewModal = ref(false)
-    console.log(props)
     const saveWishlistForm = useForm({
         user_id: props.auth ? props.auth.user.id : '',
         room_id: props.auth ? props.guesthouse.id : '',
@@ -55,14 +55,14 @@
     }
 
     const amenities = JSON.parse(props.guesthouse.amenities)
-
-    const dayCount = ref(null)
     const reservationDate = ref(null)
     const date = useDate()
+
     const reserveForm = useForm({
         checkin: null,
         checkout: null,
         guests: 1,
+        days: null,
     })
 
     const selectGuests = [
@@ -83,20 +83,10 @@
         },
     ]
 
-    function selectGuestsProps(item) {
-        return {
-            title: item.title,
-            subtitle: item.subtitle
-        }
-    }
-
-    const isDropdownOpen = ref(false)
-    function toggleDropdown() {
-        isDropdownOpen.value = !isDropdownOpen .value
-    }
-
     watch(reservationDate, () => {
-        dayCount.value = reservationDate.value ? Math.abs((new Date(reservationDate.value[0]) - new Date(reservationDate.value[1])) / (1000 * 3600 * 24)) : null
+        reserveForm.checkin = date.format(reservationDate.value[0], 'keyboardDate')
+        reserveForm.checkout = date.format(reservationDate.value[1], 'keyboardDate')
+        reserveForm.days = reservationDate ? Math.abs((new Date(reserveForm.checkin) - new Date(reserveForm.checkout)) / (1000 * 3600 * 24)) : null
     })
 
     const loading = ref(true)
@@ -106,7 +96,10 @@
         },1000)
     })
 
-    const discount =ref(200)
+    const submitReservation = () => {
+        reserveForm.get(`/payment/${props.guesthouse.id}`)
+    }
+
 
 </script>
 
@@ -268,26 +261,49 @@
                                     <template v-slot:activator="{ props }">
                                         <v-row>
                                             <v-col cols="6">
-                                                <v-list-item title="Check-in" id="date" :subtitle="reservationDate ? date.format(reservationDate[0], 'keyboardDate') : 'Add date'" v-bind="props"></v-list-item>
+                                                <v-list-item title="Check-in" id="date" :subtitle="reservationDate ? reserveForm.checkin : 'Add date'" v-bind="props"></v-list-item>
                                             </v-col>
                                             <v-col cols="6">
-                                                <v-list-item title="Check-out" id="date" :subtitle="reservationDate ? date.format(reservationDate[1], 'keyboardDate') : 'Add date'" v-bind="props"></v-list-item>
+                                                <v-list-item title="Check-out" id="date" :subtitle="reservationDate ? reserveForm.checkout : 'Add date'" v-bind="props"></v-list-item>
                                             </v-col>
                                         </v-row>
-                                        <v-select class="mt-2" :items="selectGuests" variant="outlined" label="Guests"> <!-- :item-props="selectGuestsProps" -->
-                                            <template v-slot:item="{ props, item }">
-                                                <v-list-item v-bind="props" :subtitle="item.raw.subtitle">
+                                        <v-btn id="menu-activator" variant="outlined" width="100%" class="mt-2 text-none" append-icon="mdi-chevron-down">
+                                            {{ reserveForm.guests }} Guests
+                                        </v-btn>
+
+                                        <v-menu activator="#menu-activator" :close-on-content-click="false">
+                                            <v-list>
+                                                <v-list-item title="Adults" subtitle="Age 13+">
                                                     <template v-slot:append>
                                                         <v-btn icon="mdi-plus" flat size="small" @click="reserveForm.guests++" ></v-btn>
                                                         <span class="mx-1">0</span> 
                                                         <v-btn icon="mdi-minus" flat size="small" @click="reserveForm.guests--"> </v-btn>
                                                     </template>
                                                 </v-list-item>
-                                            </template>
-                                            <template v-slot:selection>
-                                                <p v-if="reserveForm.guests">Guests {{ reserveForm.guests }} </p>
-                                            </template>
-                                        </v-select>
+                                                <v-list-item title="Children" subtitle="Age 2 - 12">
+                                                    <template v-slot:append>
+                                                        <v-btn icon="mdi-plus" flat size="small" @click="reserveForm.guests++" ></v-btn>
+                                                        <span class="mx-1">0</span> 
+                                                        <v-btn icon="mdi-minus" flat size="small" @click="reserveForm.guests--"> </v-btn>
+                                                    </template>
+                                                    
+                                                </v-list-item>
+                                                <v-list-item title="Inftans" subtitle="Age under 2">
+                                                    <template v-slot:append>
+                                                        <v-btn icon="mdi-plus" flat size="small" @click="reserveForm.guests++" ></v-btn>
+                                                        <span class="mx-1">0</span> 
+                                                        <v-btn icon="mdi-minus" flat size="small" @click="reserveForm.guests--"> </v-btn>
+                                                    </template>
+                                                </v-list-item>
+                                                <v-list-item title="Pets" subtitle="bruh">
+                                                    <template v-slot:append>
+                                                        <v-btn icon="mdi-plus" flat size="small" @click="reserveForm.guests++" ></v-btn>
+                                                        <span class="mx-1">0</span> 
+                                                        <v-btn icon="mdi-minus" flat size="small" @click="reserveForm.guests--"> </v-btn>
+                                                    </template>
+                                                </v-list-item>
+                                            </v-list>
+                                        </v-menu>
                                     </template>
                                     <v-card width="360">
                                         <v-date-picker color="blue" :landscape="true" width="500" show-adjacent-months multiple v-model="reservationDate"></v-date-picker>
@@ -297,11 +313,11 @@
                             </v-col>
                         </v-row>
                     </v-card-item>
-                        <v-list  v-if="reservationDate">
+                        <v-list v-if="reservationDate">
                             <v-list-item>
-                        {{ `₱ ${guesthouse.price} x ${dayCount} daily` }}
+                        {{ `₱ ${guesthouse.price} x ${reserveForm.days} daily` }}
                             <template v-slot:append>
-                                {{ `₱${guesthouse.price * dayCount}`  }}
+                                {{ `₱${guesthouse.price * reserveForm.days}`  }}
                             </template>
                         </v-list-item>
                         <v-list-item>
@@ -311,17 +327,17 @@
                             </template>
                         </v-list-item>
                         <v-divider/>
-                        <v-list-item>
-                            Total
+                        <v-list-item class="font-weight-bold">
+                            <p>Total</p>
                             <template v-slot:append>
-                                {{ `₱${(guesthouse.price * dayCount) - discount}`  }}
+                                {{ `₱${(guesthouse.price * reserveForm.days) - discount}`  }}
                             </template>
                         </v-list-item>
                         </v-list>
                     <v-card-item>
-                        <Link :href="`/payment/${guesthouse.id}`">
-                            <v-btn color="green" class="text-none mb-4" width="100%" size="large">Reserve</v-btn>
-                        </Link>
+                        <!-- <Link  :href=" reserveForm.date ? `/payment/${guesthouse.id}?guests=${reserveForm.guests}&checkin=${reserveForm.date[0]}&checkout=${reserveForm.date[1]}` : ''"> -->
+                            <v-btn color="green" @click="submitReservation" class="text-none mb-4" width="100%" size="large">Reserve</v-btn>
+                        <!-- </Link> -->
                     </v-card-item>
                    
                 </v-card>

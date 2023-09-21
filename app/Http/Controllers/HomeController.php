@@ -93,8 +93,14 @@ class HomeController extends Controller
         }
     }
 
-    public function confirm_reservation(GuestHouse $room) {
-        return Inertia::render('ConfirmReservation', ['guesthouse' => $room]);
+    public function confirm_reservation(GuestHouse $room, Request $request) {
+        return Inertia::render('ConfirmReservation', [
+            'guesthouse' => $room, 
+            'guests' => $request->query('guests'),
+            'checkin' => $request->query('checkin'),
+            'checkout' => $request->query('checkout'),
+            'days' => $request->query('days')
+        ]);
     }
 
     public function settings() {
@@ -127,17 +133,6 @@ class HomeController extends Controller
             $r->guesthouse = GuestHouse::find($r->room_id);
         }
         return Inertia::render('Reservations', ['reservations' => $reservations]);
-    }
-
-    public function payment(GuestHouse $guesthouse) {
-
-        $ratings = Rating::where('room_id', $guesthouse->id)->get();
-            $totalRatings = count($ratings);
-            $sumRatings = $ratings->sum('rating');
-            $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings)+1 : 0;
-            $averageRating = number_format($averageRating, 2);
-
-        return view('guesthouses.payment', ['guesthouse' => $guesthouse, 'averageRating' => $averageRating, 'ratings' => $ratings]);
     }
 
     public function map() {

@@ -17,7 +17,7 @@
     <v-layout class="bg-grey-lighten-3">
         <v-app-bar scroll-behavior="elevate" scroll-threshold="438">
             <v-app-bar-nav-icon @click="sidebar = !sidebar" v-if="auth && auth.user.role == 'admin'"></v-app-bar-nav-icon>
-            <v-toolbar-title style="margin-left: 6%;">
+            <v-toolbar-title>
                 <Link href="/" class="font-weight-bold">
                     <v-img width="150" height="100" src="https://logohistory.net/wp-content/uploads/2022/10/Facebook-Logo.png"></v-img>
                 </Link>

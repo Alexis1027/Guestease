@@ -3,14 +3,19 @@
     import {defineProps, onMounted} from 'vue'
     import { useForm } from '@inertiajs/vue3';
     import {processImages} from '@/utils/imageUtils'
+    import {format} from 'date-fns'
 
-    const prop = defineProps(['guesthouse', 'auth'])
+
+    const prop = defineProps(['guesthouse', 'auth', 'guests', 'checkin', 'checkout', 'days'])
     const images = processImages(prop.guesthouse.images)
     const items = [
         'Paypal',
         'Gcash',
         'Asdssdef',
       ]
+
+    const checkinDate = format(new Date(prop.checkin), 'MMM d')
+    const checkoutDate = format(new Date(prop.checkout), 'd')
 
     const form = useForm({
         // firstname: prop.auth.user.firstname,
@@ -98,14 +103,14 @@
                                             <v-btn icon="mdi-pencil" flat></v-btn>
                                         </template>
                                         <p class="font-weight-bold">Dates</p>
-                                        <p>Sept 20 - 26</p>
+                                        <p>{{ `${checkinDate} - ${checkoutDate}` }} </p>
                                     </v-list-item>
                                     <v-list-item>
                                         <template v-slot:append>
                                             <v-btn icon="mdi-pencil" flat></v-btn>
                                         </template>
                                         <p class="font-weight-bold">Guests</p>
-                                        <p>1 guest</p>
+                                        <p>{{ prop.guests }} guests</p>
                                     </v-list-item>
                                 </v-list>
                             <v-divider />
