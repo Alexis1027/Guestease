@@ -88,15 +88,11 @@
                                 <v-btn rounded icon="mdi-keyboard-backspace" flat></v-btn>
                             </Link>
                             <label class="text-h5 font-weight-bold">Confirm Reservation</label>
-                            <v-alert
-                                variant="outlined"
-                                type="warning"
-                                prominent
-                                >
+                            <v-alert variant="outlined" type="warning" prominent>
                                 <p class="font-weight-bold">Let's try that again</p>
                                 <p>Please check your payment details.</p>
-                                </v-alert>
-                            <p class="text-h6 my-4 font-weight-bold">Your reservation</p>
+                            </v-alert>
+                            <p class="text-h6 mt-4 font-weight-bold">Your reservation</p>
                                 <v-list>
                                     <v-list-item>
                                         <template v-slot:append>
@@ -114,7 +110,7 @@
                                     </v-list-item>
                                 </v-list>
                             <v-divider />
-                            <p class="text-h6 my-4 font-weight-bold">Choose how to pay</p>
+                            <!-- <p class="text-h6 mt-4 font-weight-bold">Choose how to pay</p>
                             <v-list>
                                 <v-list-item>
                                     <template v-slot:append>
@@ -131,14 +127,14 @@
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                                 </v-list-item>
                             </v-list>
-                            <v-divider/>
+                            <v-divider/> -->
                             <p class="text-h6 my-4 font-weight-bold">Pay with</p>
                             <v-select :items="items" :error-messages="form.errors.payment_process" label="Payment process" v-model="form.payment_process" clearable required variant="outlined"></v-select>
-                            <v-btn block color="green" class="text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn>
+                            <v-btn block color="green" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn>
                         </v-form>
                         <div id="paypal-button-container"></div>
                         <v-divider class="mt-4"/>
-                        <p class="text-h6 my-4 font-weight-bold">Required for your trip</p>
+                        <p class="text-h6 mt-4 font-weight-bold">Required for your trip</p>
                             <v-list>
                                 <v-list-item>
                                     <template v-slot:append>
@@ -156,7 +152,7 @@
                                 </v-list-item>
                             </v-list>
                             <v-divider/>
-                        <p class="text-h6 my-4 font-weight-bold">Cancellation policy</p>
+                        <p class="text-h6 mt-4 font-weight-bold">Cancellation policy</p>
                         <p>Free cancellation for 48 hours. Cancel before Nov 7 for a partial refund. Learn more</p>
                     </v-container>
 
@@ -179,14 +175,14 @@
                             <p class="font-weight-bold text-center">Price Details</p>
                             <v-list-item>
                                 <template v-slot:append>
-                                    {{ `₱${prop.guesthouse.price * 5}` }}
+                                    {{ `₱${prop.guesthouse.price * prop.days}` }}
                                 </template>
-                                {{ '₱'+ prop.guesthouse.price  }} x 5 days
+                                {{ '₱'+ prop.guesthouse.price  }} x {{prop.days}} days
                             </v-list-item>
                             <v-divider/>
                             <v-list-item class="font-weight-bold">
                                 <template v-slot:append>
-                                    {{ `₱${prop.guesthouse.price * 5}` }}
+                                    {{ `₱${prop.guesthouse.price * prop.days}` }}
                                 </template>
                                 <p>Total</p>
                             </v-list-item>

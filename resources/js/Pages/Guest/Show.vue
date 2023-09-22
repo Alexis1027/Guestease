@@ -253,6 +253,7 @@
             <v-col cols="4" class="mt-3">
                 <!-- Check in checkout and Reserve button section -->
                 <v-card id="reserveBtn" class="rounded-xl">
+                    <form>
                     <v-card-item>
                         <v-row>
                             <v-col>
@@ -261,16 +262,20 @@
                                     <template v-slot:activator="{ props }">
                                         <v-row>
                                             <v-col cols="6">
-                                                <v-list-item title="Check-in" id="date" :subtitle="reservationDate ? reserveForm.checkin : 'Add date'" v-bind="props"></v-list-item>
+                                                <v-list-item title="Check-in" name="checkin" id="date" :subtitle="reservationDate ? reserveForm.checkin : 'Add date'" v-bind="props"></v-list-item>
                                             </v-col>
                                             <v-col cols="6">
-                                                <v-list-item title="Check-out" id="date" :subtitle="reservationDate ? reserveForm.checkout : 'Add date'" v-bind="props"></v-list-item>
+                                                <v-list-item title="Check-out" name="checkout" id="date" :subtitle="reservationDate ? reserveForm.checkout : 'Add date'" v-bind="props"></v-list-item>
                                             </v-col>
                                         </v-row>
-                                        <v-btn id="menu-activator" variant="outlined" width="100%" class="mt-2 text-none" append-icon="mdi-chevron-down">
+                                        <v-btn id="menu-activator" variant="outlined" width="100%" size="large" style="border-color: grey" class="mt-2 text-none" append-icon="mdi-chevron-down">
                                             {{ reserveForm.guests }} Guests
                                         </v-btn>
-
+                                        <v-alert variant="outlined" type="warning" class="mt-5" prominent>
+                                            <p class="font-weight-bold">Let's try that again</p>
+                                            <p>Please input your checkin and checkout details.</p>
+                                        </v-alert>
+                                        {{ reserveForm }}
                                         <v-menu activator="#menu-activator" :close-on-content-click="false">
                                             <v-list>
                                                 <v-list-item title="Adults" subtitle="Age 13+">
@@ -336,10 +341,10 @@
                         </v-list>
                     <v-card-item>
                         <!-- <Link  :href=" reserveForm.date ? `/payment/${guesthouse.id}?guests=${reserveForm.guests}&checkin=${reserveForm.date[0]}&checkout=${reserveForm.date[1]}` : ''"> -->
-                            <v-btn color="green" @click="submitReservation" class="text-none mb-4" width="100%" size="large">Reserve</v-btn>
+                            <v-btn color="green" @click="submitReservation" :disabled="reserveForm.processing" :loading="reserveForm.processing" class="text-none mb-4" width="100%" size="large">Reserve</v-btn>
                         <!-- </Link> -->
                     </v-card-item>
-                   
+                    </form>
                 </v-card>
             </v-col>
             <v-divider class="mb-5" />

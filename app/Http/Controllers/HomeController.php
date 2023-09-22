@@ -89,11 +89,20 @@ class HomeController extends Controller
                 'guesthouse' => $id, 
                 'owner' => $owner,
                 'ratings' => $ratings, 
-                'averageRating' => $averageRating]);
+                'averageRating' => $averageRating
+            ]);
         }
     }
 
     public function confirm_reservation(GuestHouse $room, Request $request) {
+
+        $request->validate([
+            'guests' => 'required',
+            'checkin' => 'required',
+            'checkout' => 'required',
+            'days' => 'required',
+        ]);
+        dd('yawa');
         return Inertia::render('ConfirmReservation', [
             'guesthouse' => $room, 
             'guests' => $request->query('guests'),
