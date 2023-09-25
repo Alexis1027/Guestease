@@ -169,7 +169,7 @@
                 <v-col cols="5">
 
                     <v-card class="justify-center" id="card">
-                        <v-card width="400" class="mt-4" style="margin-left: 8%;">
+                        <v-card width="400" max-height="300" class="mt-4" style="margin-left: 8%;">
                             <v-img :src="`/images/${images[0]}`" cover></v-img>
                         </v-card>
                         <v-card-title class="text-center font-weight-bold">

@@ -40,7 +40,7 @@
                 <v-card-title>
                     <v-row>
                         <v-col cols="4">
-                            <v-img :src="`../images/${images[0]}`" width="150"></v-img>
+                            <v-img :src="`../images/${images[0]}`" width="100%" max-height="200"></v-img>
                         </v-col>
                         <v-col class="mt-4">
                             {{ props.guesthouse.title }}

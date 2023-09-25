@@ -21,7 +21,7 @@
     <Head title="Home" />
     <!-- <div class="page-container"> -->
         <v-row>
-            <v-col cols="3" v-for="guesthouse in props.guesthouses" :key="guesthouse.id">
+            <v-col cols="4" v-for="guesthouse in props.guesthouses" :key="guesthouse.id">
                 <GuestHouseCard :guesthouse="guesthouse" :latitude="latitude" :longitude="longitude" />
             </v-col>
         </v-row>
