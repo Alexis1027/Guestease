@@ -52,7 +52,7 @@
                     </v-rating>
                 </v-card-item>
                 <v-card-text>
-                    <v-textarea v-model="form.review" label="Describe your experience (optional)" auto-grow variant="outlined" rows="3" row-height="25" shaped></v-textarea>
+                    <v-textarea v-model="form.review"  @keydown.enter="submit" label="Describe your experience (optional)" auto-grow variant="outlined" rows="3" row-height="25" shaped></v-textarea>
                 </v-card-text>
                 <v-card-actions class="justify-end">
                     <v-btn color="red"  @click="emitcloseReviewModal">Close</v-btn>

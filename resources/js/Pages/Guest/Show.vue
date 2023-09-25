@@ -57,7 +57,8 @@
     const amenities = JSON.parse(props.guesthouse.amenities)
     const reservationDate = ref(null)
     const date = useDate()
-
+    const reserveFormAlert = ref(false)
+    
     const reserveForm = useForm({
         checkin: null,
         checkout: null,
@@ -87,6 +88,7 @@
         reserveForm.checkin = date.format(reservationDate.value[0], 'keyboardDate')
         reserveForm.checkout = date.format(reservationDate.value[1], 'keyboardDate')
         reserveForm.days = reservationDate ? Math.abs((new Date(reserveForm.checkin) - new Date(reserveForm.checkout)) / (1000 * 3600 * 24)) : null
+        reserveFormAlert.value = false
     })
 
     const loading = ref(true)
@@ -96,8 +98,14 @@
         },1000)
     })
 
+
     const submitReservation = () => {
-        reserveForm.get(`/payment/${props.guesthouse.id}`)
+        if(reserveForm.checkin && reserveForm.checkout) {
+            reserveForm.get(`/payment/${props.guesthouse.id}`)
+        }
+        else {
+            reserveFormAlert.value = true
+        }
     }
 
 
@@ -262,20 +270,19 @@
                                     <template v-slot:activator="{ props }">
                                         <v-row>
                                             <v-col cols="6">
-                                                <v-list-item title="Check-in" name="checkin" id="date" :subtitle="reservationDate ? reserveForm.checkin : 'Add date'" v-bind="props"></v-list-item>
+                                                <v-list-item title="Check-in" :style="reserveFormAlert ? 'border-color: red;' : 'border-color: grey;'" name="checkin" id="date" :subtitle="reservationDate ? reserveForm.checkin : 'Add date'" v-bind="props"></v-list-item>
                                             </v-col>
                                             <v-col cols="6">
-                                                <v-list-item title="Check-out" name="checkout" id="date" :subtitle="reservationDate ? reserveForm.checkout : 'Add date'" v-bind="props"></v-list-item>
+                                                <v-list-item title="Check-out" :style="reserveFormAlert ? 'border-color: red;' : 'border-color: grey;'" name="checkout" id="date" :subtitle="reservationDate ? reserveForm.checkout : 'Add date'" v-bind="props"></v-list-item>
                                             </v-col>
                                         </v-row>
                                         <v-btn id="menu-activator" variant="outlined" width="100%" size="large" style="border-color: grey" class="mt-2 text-none" append-icon="mdi-chevron-down">
                                             {{ reserveForm.guests }} Guests
                                         </v-btn>
-                                        <v-alert variant="outlined" type="warning" class="mt-5" prominent>
+                                        <v-alert variant="outlined" type="warning" class="mt-5" prominent v-model="reserveFormAlert">
                                             <p class="font-weight-bold">Let's try that again</p>
-                                            <p>Please input your checkin and checkout details.</p>
+                                            <p>Please input your checkin and checkout dates.</p>
                                         </v-alert>
-                                        {{ reserveForm }}
                                         <v-menu activator="#menu-activator" :close-on-content-click="false">
                                             <v-list>
                                                 <v-list-item title="Adults" subtitle="Age 13+">
@@ -435,7 +442,6 @@
     #date {
         border: 1px solid black; 
         border-radius: 10px; 
-        border-color: grey;
     }
     .v-card.on-hover {
         opacity: 0.8;

@@ -8,12 +8,6 @@
 
     const prop = defineProps(['guesthouse', 'auth', 'guests', 'checkin', 'checkout', 'days'])
     const images = processImages(prop.guesthouse.images)
-    const items = [
-        'Paypal',
-        'Gcash',
-        'Asdssdef',
-      ]
-
     const checkinDate = format(new Date(prop.checkin), 'MMM d')
     const checkoutDate = format(new Date(prop.checkout), 'd')
 
@@ -88,10 +82,7 @@
                                 <v-btn rounded icon="mdi-keyboard-backspace" flat></v-btn>
                             </Link>
                             <label class="text-h5 font-weight-bold">Confirm Reservation</label>
-                            <v-alert variant="outlined" type="warning" prominent>
-                                <p class="font-weight-bold">Let's try that again</p>
-                                <p>Please check your payment details.</p>
-                            </v-alert>
+                            
                             <p class="text-h6 mt-4 font-weight-bold">Your reservation</p>
                                 <v-list>
                                     <v-list-item>
@@ -109,7 +100,7 @@
                                         <p>{{ prop.guests }} guests</p>
                                     </v-list-item>
                                 </v-list>
-                            <v-divider />
+                            <v-divider  class="mb-4"/>
                             <!-- <p class="text-h6 mt-4 font-weight-bold">Choose how to pay</p>
                             <v-list>
                                 <v-list-item>
@@ -128,8 +119,25 @@
                                 </v-list-item>
                             </v-list>
                             <v-divider/> -->
+                            <v-alert variant="outlined" type="warning" prominent v-model="form.hasErrors">
+                                <p class="font-weight-bold">Let's try that again</p>
+                                <p>Please check your payment details.</p>
+                            </v-alert>
                             <p class="text-h6 my-4 font-weight-bold">Pay with</p>
-                            <v-select :items="items" :error-messages="form.errors.payment_process" label="Payment process" v-model="form.payment_process" clearable required variant="outlined"></v-select>
+                            <v-select  
+                            :items="['Paypal', 'Gcash']"
+                            return-object
+                            single-line 
+                            :error-messages="form.errors.payment_process" 
+                            label="Payment process" 
+                            v-model="form.payment_process" 
+                            clearable
+                            item-title="name"
+                            item-value="details"
+                            required 
+                            variant="outlined">
+                            </v-select>
+                            
                             <v-btn block color="green" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn>
                         </v-form>
                         <div id="paypal-button-container"></div>

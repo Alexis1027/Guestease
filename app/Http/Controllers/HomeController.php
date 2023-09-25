@@ -102,7 +102,7 @@ class HomeController extends Controller
             'checkout' => 'required',
             'days' => 'required',
         ]);
-        dd('yawa');
+        
         return Inertia::render('ConfirmReservation', [
             'guesthouse' => $room, 
             'guests' => $request->query('guests'),
