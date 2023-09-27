@@ -2,11 +2,13 @@ import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
+import 'maz-ui/css/main.css'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { VDatePicker } from 'vuetify/labs/VDatePicker'
 import { VuetifyDateAdapter } from 'vuetify/labs/date/adapters/vuetify'
+import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
 import {Link} from '@inertiajs/vue3'
 import {Head} from '@inertiajs/vue3'
 import vue3GoogleLogin from 'vue3-google-login'
@@ -32,6 +34,7 @@ createInertiaApp({
       .component('Link', Link)
       .component('Head', Head)
       .component('VDatePicker', VDatePicker)
+      .component('MazPhoneNumberInput', MazPhoneNumberInput)
       .use(vue3GoogleLogin, {
         clientId: '778324553177-j9gqho3k6qvotg04m4hvcle26mto0vl5.apps.googleusercontent.com'
       })

@@ -2,7 +2,7 @@
 
     import {ref, defineProps} from 'vue'
     import {useForm} from '@inertiajs/vue3'
-    import {GoogleLogin} from 'vue3-google-login'
+    // import {GoogleLogin} from 'vue3-google-login'
  
     const props = defineProps(['callback'])
 
@@ -35,9 +35,9 @@
         }
     ]
 
-    const handleGoogleResponse = (response) => {
-        console.log("Handle the response", response)
-    }
+    // const handleGoogleResponse = (response) => {
+    //     console.log("Handle the response", response)
+    // }
 
 </script>
 
@@ -84,7 +84,7 @@
                             </v-text-field>
                             <!-- <v-checkbox-btn color="blue" class="ms-3 fadeIn second" label="Remember me"></v-checkbox-btn> -->
                             <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="form.processing" :disabled="form.processing" @click="submit" type="submit" block>Log in</v-btn>
-                            <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/>
+                            <!-- <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/> -->
                             <br>
                             <label class="mt-4 fadeIn third">Dont have an account? </label>
                             <Link href="/createGuest" class="text-blue fadeIn third"> Create guest account</Link>

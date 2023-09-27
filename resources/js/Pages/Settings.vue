@@ -1,6 +1,6 @@
 <script setup>
 
-    import {ref} from 'vue'
+    import {ref, onMounted} from 'vue'
     import {useForm} from '@inertiajs/vue3'
     import Layout from '../shared/Layout.vue'
     const {auth} = defineProps(['auth'])
@@ -14,24 +14,36 @@
         email: auth.user.email,
     })
 
+    import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
+    const results = ref()
+
+
     const submit = () => {
-        form.put('/profile/update', {
-            onSuccess: () => {
-                snackbar.value = true
-            }
-        })
+        if(results.value.isValid) {
+            console.log('bruh')
+            form.put('/profile/update', {
+                onSuccess: () => {
+                    snackbar.value = true
+                }
+            })
+        }
+        
     }
 
     const snackbar = ref(false)
+
+
+
+
 
 </script>
 
 
 <template>
         <Head title="Settings" />
-        <v-card class="bg-white">
+        <v-card class="bg-white border">
             <v-card-item>
-                <v-row>
+                <!-- <v-row>
                     <v-col cols="4">
                         <p class="text-h5">Profile information</p>
                         <p>Update your profile's account information.</p>
@@ -49,35 +61,40 @@
                             <v-btn class="mt-5 text-none" rounded="pill" color="red">Delete picture</v-btn>
                         </v-row>
                     </v-col>
-                </v-row>
+                </v-row> -->
                 <v-form>
-                    <v-row>
-                        <v-col cols="5">
-                            <v-text-field variant="outlined" clearable :error-messages="form.errors.firstname" label="First name" color="blue" v-model="form.firstname"></v-text-field>
-                        </v-col>
-                        <v-col cols="5">
+                    <v-container>
+                        <v-breadcrumbs :items="[{title: 'Account', disabled: false}, {title: 'Personal info', disabled: false}]">
+                            <template v-slot:divider>
+                                <v-icon icon="mdi-chevron-right"></v-icon>
+                            </template>
+                            </v-breadcrumbs>
+                        <p class="text-h4">Personal info</p>
+                        <v-card width="700" elevation="0">
+                            <v-text-field class="mt-3" variant="outlined" clearable :error-messages="form.errors.firstname" label="First name" color="blue" v-model="form.firstname"></v-text-field>
                             <v-text-field variant="outlined" clearable :error-messages="form.errors.lastname" label="Last name" color="blue" v-model="form.lastname"></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="5">
-                            <v-text-field variant="outlined" clearable :error-messages="form.errors.contact_no" label="Contact number" color="blue" v-model="form.contact_no"></v-text-field>
-                        </v-col>
-                        <v-col cols="5">
-                            <v-text-field variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col cols="10">
+                            <!-- <v-text-field variant="outlined" clearable :error-messages="form.errors.contact_no" label="Contact number" color="blue" v-model="form.contact_no"></v-text-field> -->
+                            <MazPhoneNumberInput
+                                v-model="form.contact_no"
+                                show-code-on-list
+                                color="primary"
+                                :preferred-countries="['PH']"
+                                :ignored-countries="['AC']"
+                                @update="results = $event"
+                                :success="results?.isValid"
+                            />
+                            <v-text-field class="mt-4" variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
                             <v-text-field variant="outlined" clearable :error-messages="form.errors.email" label="Email" color="blue" v-model="form.email"></v-text-field>
-                        </v-col>
-                    </v-row>
-                    <v-btn rounded="pill" class="text-none" type="submit" @click="submit" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
+                            <v-card-actions class="justify-end d-flex">
+                                <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submit" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-container>
                 </v-form>
 
             </v-card-item>
         </v-card>
-        <v-card class="bg-white mt-6">
+        <v-card class="border bg-white mt-6">
             <v-card-item>
                 <v-row>
                     <v-col>

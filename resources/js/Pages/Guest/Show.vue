@@ -12,6 +12,7 @@
     import {format} from 'date-fns'
     import { VSkeletonLoader } from 'vuetify/lib/labs/components.mjs';
     import {processImages} from '@/utils/imageUtils'
+    import MazGallery from 'maz-ui/components/MazGallery'
 
     defineOptions({layout: Layout})
 
@@ -28,6 +29,7 @@
     })
 
     const images = processImages(props.guesthouse.images)
+    const guesthouseImages = images.map(img => '../images/' + img)
 
     function getBorderRadius(i) {
         if(i === 2) {
@@ -66,24 +68,6 @@
         days: null,
     })
 
-    const selectGuests = [
-        {
-            title: 'Adults',
-            subtitle: 'Age 13+'
-        },
-        {
-            title: 'Children',
-            subtitle: 'Age 2-12'
-        },
-        {
-            title: 'Infants',
-            subtitle: 'Age under 2'
-        },
-        {
-            title: 'Pets',
-        },
-    ]
-
     watch(reservationDate, () => {
         reserveForm.checkin = date.format(reservationDate.value[0], 'keyboardDate')
         reserveForm.checkout = date.format(reservationDate.value[1], 'keyboardDate')
@@ -107,7 +91,7 @@
             reserveFormAlert.value = true
         }
     }
-
+    
 
 </script>
 
@@ -116,6 +100,7 @@
     
     <v-container>
         <h1>{{ guesthouse.title }}</h1>
+        
         <v-row>
             <!-- ratings and location  -->
             <v-col cols="2"> 
@@ -129,7 +114,7 @@
                 <!-- Save guest house button -->
                 <v-form @submit.prevent="submitForm">
                     <v-btn 
-                        class="text-none bg-grey-lighten-3" 
+                        class="text-none" 
                         :loading="saveWishlistForm.processing" 
                         type="submit"
                         rounded 
@@ -144,66 +129,12 @@
                 </v-form>
             </v-col>
         </v-row>
-        <v-container>
-            <v-row>
-                <!-- First image -->
-                <v-col cols="6">
-                    <v-hover v-slot="{ isHovering, props }">
-                        <v-card max-height="370" height="100%" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
-                            <v-img cover height="100%" max-height="370" width="100%" class="rounded-s-xl" :src="`../images/${images[0]}`"  @click="showImageCarouselFunc(0)">
-                                <template v-slot:placeholder>
-                                    <div class="d-flex align-center justify-center fill-height">
-                                        <v-progress-circular color="grey-lighten-4" indeterminate>
-                                        </v-progress-circular>
-                                    </div>
-                                </template>
-                            </v-img>
-                        </v-card>
-                    </v-hover>
-                </v-col>
-                <v-col cols="6">
-                    <v-row>
-                        <v-col cols="6" v-for="i in 4" :key="i">
-                            <v-hover v-slot="{ isHovering, props }">
-                                    <v-card height="100%" max-height="180" :class="{ 'on-hover': isHovering, 'bg-grey-lighten-3' : true }" v-bind="props">
-                                        <v-btn id="showAllBtn" @click="overlay = true" v-if="i === 2" size="small" prepend-icon="mdi-image-multiple-outline" class="text-none">Show all images</v-btn>
-                                        <v-skeleton-loader :loading="loading">
-                                            <v-img cover :src="`../images/${images[i]}`"  max-height="190" :class="getBorderRadius(i)" @click="showImageCarouselFunc(i)">
-                                                <template v-slot:placeholder>
-                                                    <div class="d-flex align-center justify-center fill-height">
-                                                        <v-progress-circular color="grey-lighten-4" indeterminate>
-                                                        </v-progress-circular>
-                                                    </div>
-                                                </template>
-                                            </v-img>
-                                        </v-skeleton-loader>
-                                    </v-card>
-                            </v-hover>
-                        </v-col>
-                    </v-row>
-                </v-col>
-                <!-- <v-col cols="6">
-                    <v-skeleton-loader :loading="loading" type="image, image">
-                        <v-img :src="`../images/${images[0]}`" class="rounded-s-lg" max-height="370" height="100%" cover></v-img>
-                    </v-skeleton-loader>
-                </v-col>
-                <v-col cols="6">
-                    <v-row>
-                        <v-col cols="6" v-for="n in 4" :key="n" @click="showImageCarouselFunc(n)">
-                            <v-skeleton-loader :loading="loading">
-                                <v-btn id="showAllBtn" @click="overlay = true" v-if="n === 2" size="small" prepend-icon="mdi-image-multiple-outline" class="text-none">Show all images</v-btn>
-                                <v-img :src="`../images/${images[0]}`" max-height="172" cover height="100%" :class="getBorderRadius(n)" @click="showImageCarouselFunc(n)"></v-img>
-                            </v-skeleton-loader>
-                        </v-col>
-                    </v-row>
-                </v-col> -->
-            </v-row>
-        </v-container>
-        <v-divider class="mb-5" />
+            <MazGallery :images="guesthouseImages" :height="400" class="mt-1" />
+        <v-divider class="my-2" />
         <v-row>
             <v-col cols="8">
                 <!-- Guest house details -->
-                <v-container class=" bg-white">
+                <v-container>
                     <v-list>
                         <v-list-item>
                             <template v-slot:append>
@@ -227,9 +158,9 @@
                 <v-divider class="my-5" />
 
                 <!-- Place offers -->
-                <v-container  class="bg-white ">
+                <v-container  class="bg-grey-lighten-3">
                     <v-list-item>
-                        <p class="text-h5">What this place offers</p>
+                        <p class="text-h5">Offered amenities</p>
                     </v-list-item>
                     <v-divider class="my-2" />
                     <v-row>

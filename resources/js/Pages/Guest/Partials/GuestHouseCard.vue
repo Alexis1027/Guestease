@@ -21,13 +21,13 @@
             loading.value = false
         },1000)
     })
-    
+
 </script>
 
 <template>
-    <v-card id="carousel">
+    <v-card id="carousel" class="rounded-lg border">
         <v-skeleton-loader class="bg-grey-lighten-3" :loading="loading"  height="100%">
-            <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters show-arrows="hover">
+            <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters="hover" show-arrows="hover">
                 <v-carousel-item v-for="(image, i) in images" :key="i">
                     <Link :href="`/room/${prop.guesthouse.id}`">
                         <v-img id="carousel" :src="`images/${images[i]}`" cover height="275" width="100%" class="rounded-t-lg">
@@ -46,28 +46,29 @@
         <v-skeleton-loader :loading="loading" class="bg-grey-lighten-3"  height="80%" type="image, article">
             <v-container class="bg-white">
                 <v-row id="guestHouseDetails">
-                    <v-col cols="9"><strong class="truncate-text-title text-h5">{{ prop.guesthouse.title }} </strong></v-col>
+                    <v-col cols="9"><strong class="truncate-text-title text-h6 font-weight-bold">{{ prop.guesthouse.title }} </strong></v-col>
                     <v-col cols="3" >
-                        <v-chip color="warning" prepend-icon="mdi-star" text-color="white" size="small">
+                        <v-chip color="warning" prepend-icon="mdi-star-outline" text-color="white" size="small">
                             {{ prop.guesthouse.averageRating }}
                         </v-chip>
                     </v-col>
                 </v-row>
-                <p class="truncate-text">{{ prop.guesthouse.description }}</p>
-                <!-- <p>
-                    {{ prop.latitude && prop.longitude ? Math.floor(getDistance({latitude: 10.250778, longitude: 123.939834}, guesthouseLocation)/1000) + ' km/s away' : 'bruh' }}
-                </p> -->
+                <!-- <p class="truncate-text">{{ prop.guesthouse.description }}</p> -->
                 <p>
-                    <v-icon color="red">mdi-map-marker</v-icon> {{ prop.guesthouse.location }}
+                    <v-icon color="red-lighten-1">mdi-map-marker</v-icon> {{ prop.guesthouse.location }} 
+                    <span class="text-grey-darken-3">
+                        {{ prop.latitude && prop.longitude ? '- ' + Math.floor(getDistance({latitude: 10.250778, longitude: 123.939834}, guesthouseLocation)/1000) + ' km away' : '' }}
+                    </span>
+
                 </p>
-                <p> <strong class="text-h6">₱{{ prop.guesthouse.price }}</strong> / daily </p>
-                <v-chip class="ma-2" color="indigo" text-color="white" prepend-icon="mdi-bed" size="small" >
-                    {{ prop.guesthouse.beds }} Beds
+                <p> <strong class="text-h6">₱{{ prop.guesthouse.price }}</strong> <span class="text-grey-darken-3">/ daily</span> </p>
+                <v-chip class="ma-2 text-grey-darken-3" prepend-icon="mdi-bed" size="small" >
+                    {{ prop.guesthouse.beds }}  Beds
                 </v-chip>
-                <v-chip class="ma-2" color="indigo" text-color="white" prepend-icon="mdi-account-multiple" size="small">
+                <v-chip class="ma-2 text-grey-darken-3" prepend-icon="mdi-account-multiple" size="small">
                     {{ prop.guesthouse.guests }} Guests
                 </v-chip>
-                <v-chip class="ma-2" color="indigo" text-color="white" size="small" prepend-icon="mdi-shower">
+                <v-chip class="ma-2 text-grey-darken-3" size="small" prepend-icon="mdi-shower">
                     {{ prop.guesthouse.bathrooms }} Bathrooms
                 </v-chip>
             </v-container>

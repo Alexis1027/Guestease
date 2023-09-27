@@ -2,13 +2,23 @@
 
     import Layout from '../../shared/Layout.vue';
     import {processImages} from '@/utils/imageUtils'
+    import {ref} from 'vue'
+    import {useForm} from '@inertiajs/vue3'
 
     defineOptions({
         layout: Layout
     })
 
-    const {guesthouse} = defineProps(['guesthouse'])
+    const form = useForm({
+        bldg_permit: null
+    })
 
+    const submit = () => {
+        form.post('/owner/verify-listing/1')
+    }
+
+    const {guesthouse} = defineProps(['guesthouse'])
+    const addBuildingPermitDialog = ref(false)
     const images = processImages(guesthouse.images)
 
 </script>
@@ -28,22 +38,39 @@
                         Complete
                     </p>
                 </v-list-item>
-                <v-divider />
+                <!-- <v-divider />
                 <v-list-item class="my-6" title="Verify your identity">
                     <template v-slot:append>
                         <v-btn flat icon="mdi-chevron-right"></v-btn>
                     </template>
                     <p class="text-grey-darken-2">This is a simple way to help guests feel confident booking your place.</p>
                     <p class="font-weight-bold">Required</p>
-                </v-list-item>
+                </v-list-item> -->
                 <v-divider />
-                <v-list-item class="mt-6" title="Confirm your email address">
+                <!-- <v-list-item class="mt-6" title="Confirm your email address">
                     <template v-slot:append>
-                        <v-btn flat icon="mdi-chevron-right"></v-btn>
+                        <Link href="/settings"><v-btn flat icon="mdi-chevron-right"></v-btn></Link>
                     </template>
                     <p class="text-grey-darken-2">We'll email you to confirm your email address.</p>
                     <p class="font-weight-bold">Required</p>
+                </v-list-item> -->
+                <v-list-item class="my-6" title="Confirm your email address">
+                    <p class="font-weight-bold">
+                        <v-icon color="green" size="20">mdi-check-circle</v-icon> 
+                        Complete
+                    </p>
                 </v-list-item>
+                <v-divider />
+                
+                    <v-list-item class="mt-6" title="Verify your guesthouse">
+                        <template v-slot:append>
+                            <v-btn flat icon="mdi-chevron-right" @click="addBuildingPermitDialog = true"></v-btn>
+                        </template>
+                        <p class="text-grey-darken-2">We'll need you to upload the building permit.</p>
+                        <p class="font-weight-bold">Required</p>
+                    </v-list-item>
+                    
+                
             </v-col>
             <v-divider vertical/>
             <v-col cols="4" class="d-flex ms-6">
@@ -61,9 +88,31 @@
         </v-row>
 
         <v-row justify="end">
-            <v-btn class="text-none me-6" size="large" color="blue">Publish listing</v-btn>
+            <v-btn class="text-none me-6" disabled size="large" color="blue">Publish listing</v-btn>
         </v-row>
     </v-container>
+
+    <v-dialog
+      v-model="addBuildingPermitDialog"
+      width="auto"
+      persistent
+    >
+      <v-card>
+        <v-card-text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <v-file-input
+                accept="image/*"
+                label="File input"
+                v-model="form.bldg_permit"
+                @input="submit"
+                :loading="form.processing"
+            ></v-file-input>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" :disabled="form.processing" block @click="addBuildingPermitDialog = false">Close Dialog</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
 </template>
 

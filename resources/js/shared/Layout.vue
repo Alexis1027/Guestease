@@ -14,17 +14,30 @@
 </script>
 
 <template>
-    <v-layout class="bg-grey-lighten-3">
+    <v-layout>
         <v-app-bar scroll-behavior="elevate" scroll-threshold="438">
             <v-app-bar-nav-icon @click="sidebar = !sidebar" v-if="auth && auth.user.role == 'admin'"></v-app-bar-nav-icon>
             <v-toolbar-title>
                 <Link href="/" class="font-weight-bold">
-                    <p class="text-h4 text-blue" id="logo">App logo</p>
+                    <p class="" id="logo">App logo</p>
                 </Link>
             </v-toolbar-title>
-            <!-- <v-text-field label="Search..." clearable flat rounded prepend-inner-icon="mdi-magnify" v-model="search" variant="outlined" color="blue">
+            <!-- <v-spacer/>
+
+            <v-text-field label="Search..." class="mt-5" clearable flat rounded prepend-inner-icon="mdi-magnify" v-model="search" variant="outlined" color="blue">
             </v-text-field> -->
             <v-spacer/>
+            <Link href="/" v-if="!auth">
+                <p>Home</p>
+            </Link>
+            <Link href="/" class="ms-4" v-if="!auth">
+                <p>About</p>
+            </Link>
+            <Link href="/login" class="ms-4 me-6" v-if="!auth">
+                <v-btn class="text-none" color="blue" variant="flat">
+                    Register / Login
+                </v-btn>
+            </Link>
             <v-menu min-width="200px" rounded v-if="auth && auth.user.role == 'admin'">
                 <template v-slot:activator="{ props }">
                     <v-btn class="text-none" icon v-bind="props" >
@@ -50,7 +63,7 @@
                     </v-list>
                 </v-card>
             </v-menu>
-            <v-menu min-width="200px" rounded >
+            <v-menu min-width="200px" rounded v-if="auth">
                 <template v-slot:activator="{ props }">
                     <v-btn icon v-bind="props" style="margin-right: 6%;">
                         <v-avatar color="blue-lighten-3" size="35">
@@ -184,10 +197,6 @@
   a {
     text-decoration: none;
     color: #000;
-  }
-
-  #logo {
-    font-family: 'Brush Script MT', cursive;
   }
 
 </style>
