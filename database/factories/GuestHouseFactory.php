@@ -41,6 +41,8 @@ class GuestHouseFactory extends Factory
             'beds' => $this->faker->numberBetween(1, 5),
             'rooms' => $this->faker->numberBetween(1, 10),
             'bathrooms' => $this->faker->numberBetween(1, 5),
+            'status' => 'approved',
+            'type' => $this->faker->randomElement(['entire place', 'room']),
             'amenities' => json_encode([
                     [
                         'icon' => $this->faker->randomElement(

@@ -6,12 +6,17 @@ use Inertia\Inertia;
 use App\Models\GuestHouse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use IntlChar;
 
 class ListingController extends Controller
 {
     //
     public function create() {
         return Inertia::render('Owner/CreateListing');
+    }
+
+    public function index() {
+        return Inertia::render('Owner/Listing', ['guesthouses' => GuestHouse::all()->where('owner_id', auth()->user()->id)]);
     }
 
     public function show(GuestHouse $guesthouse) {
@@ -49,8 +54,10 @@ class ListingController extends Controller
             'beds' => 'required',
             'amenities' => 'required',
             'rooms' => 'required',
-            'bathrooms' => 'required'
+            'bathrooms' => 'required',
+            'type' => 'required'
         ]);
+        $form['status'] = "pending";
         $form['images'] = $houseImages;
         $form['amenities'] = json_encode($form['amenities']);
         GuestHouse::create($form);

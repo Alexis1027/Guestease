@@ -1,21 +1,23 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\RoomRequestController;
+use App\Http\Controllers\Owner\ListingController;
+use App\Http\Controllers\Owner\CalendarController;
 use App\Http\Controllers\Admin\GuestHouseController;
 use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\ReservationRequestController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ListingRequestController;
-use App\Http\Controllers\Owner\ListingController;
 use App\Http\Controllers\Owner\OwnerDashboardController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Owner\OwnerReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,9 @@ use Illuminate\Support\Facades\Auth;
 
 //OWNER
 Route::get('/owner/dashboard', [OwnerDashboardController::class, 'dashboard']);
+Route::get('/owner/listing', [ListingController::class, 'index']);
+Route::get('/owner/reservations', [OwnerReservationController::class, 'index']);
+Route::get('/owner/calendar', [CalendarController::class, 'index']);
 Route::get('/owner/create-listing', [ListingController::class, 'create']);
 
 Route::post('/owner/createListing', [ListingController::class, 'store']);

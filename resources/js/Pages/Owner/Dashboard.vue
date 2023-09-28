@@ -18,7 +18,7 @@
 
     <Head title="Owner Dashboard" />
 
-    <v-row>
+    <v-row class="mt-6">
         <v-col cols="9">
             <p class="text-h4">Welcome, {{ auth.user.firstname }}!</p>
             Guests can reserve your place 24 hours after you publish—here's how to prepare.

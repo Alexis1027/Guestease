@@ -21,13 +21,29 @@
         title: '',
         description: '',
         price: 2500,
-        images: null
+        images: null,
+        type: null
     })
 
     const imageRules = [
         value => {
             if(value.length >= 5) return true
             return `Images should have at least 5 images` 
+        }
+    ]
+
+    const placeType = [
+        {
+            icon: 'mdi-home-outline',
+            title: 'The entire place',
+            subtitle: 'Guests have the whole place to themselves',
+            value: 'entire place'
+        },
+        {
+            icon: 'mdi-door-open',
+            title: 'A room',
+            subtitle: 'Guests have their own room in a guest house',
+            value: 'room'
         }
     ]
 
@@ -152,6 +168,20 @@
 
             <v-window-item :value="4">
                 <v-container id="step1">
+                    <p class="text-h4">What type of place will guests have?</p>
+                    {{ form }}
+                    <v-item-group class="justify-center" selected-class="bg-blue-lighten-3">
+                        <v-item v-slot="{  selectedClass, toggle }" class="mt-4" v-for="item in placeType" :key="item">
+                            <v-card width="350" class="mt-5" @click="form.type = item.value">
+                                <v-list-item :class="['d-flex align-center', selectedClass]" dark @click="toggle" :title="item.title" :subtitle="item.subtitle" :append-icon="item.icon"></v-list-item>
+                            </v-card>
+                        </v-item>
+                    </v-item-group>
+                </v-container>
+            </v-window-item>
+
+            <v-window-item :value="5">
+                <v-container id="step1">
                     <p class="text-h4 my-3">Share some basics about your place</p>
                     <v-list>
                         <v-list-item>
@@ -194,7 +224,7 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="5">
+            <v-window-item :value="6">
                 <v-container id="step1">
                     <v-row>
                         <v-col cols="6" class="mt-6">
@@ -211,7 +241,7 @@
                 </v-container>
             </v-window-item>
   
-            <v-window-item :value="6">
+            <v-window-item :value="7">
                 <v-container class="placeoffers">
                     <p class="text-h4 mt-6">What your place offers</p>
                     <p class="text-h6 mb-6 text-grey-darken">You can add more amenities after you publish your listing.</p>
@@ -234,7 +264,7 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="7">
+            <v-window-item :value="8">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 mt-6 text-start">Now, let's give your guest house a title</p>
                     <p class="text-h6 mb-6 text-grey-darken">Short titles work best. Have fun with it—you can always change it later.</p>
@@ -244,7 +274,7 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="8">
+            <v-window-item :value="9">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 mt-6 text-start">Add some photos of your guest house</p>
                     <p class="text-h6 mb-6 text-grey-darken">You'll need 5 photos to get started. You can add more or make changes later.</p>
@@ -272,7 +302,7 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="9">
+            <v-window-item :value="10">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 text-start">Next, let's describe your guest house</p>
                     <p class="text-h6 mb-6 text-grey-darken text-start">Share what makes your place special.</p>
@@ -282,7 +312,7 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="10">
+            <v-window-item :value="11">
                 <v-container id="step1">
                     <v-row>
                         <v-col cols="6" class="mt-6">
@@ -299,7 +329,7 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="11">
+            <v-window-item :value="12">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 text-start">Now, set your price</p>
                     <p class="text-h6 mb-6 text-grey-darken-2 text-start">You can change it anytime.</p>
@@ -308,7 +338,7 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="12">
+            <v-window-item :value="13">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h3 text-start">Review your listing</p>
                     <p class="text-h6 mb-6 text-grey-darken-2 text-start">Here's what we'll show to guests. Make sure everything looks good.</p>
@@ -355,14 +385,14 @@
   
       <div id="action">
         <v-divider></v-divider>
-      <v-progress-linear :model-value="(step/12)*100" color="blue-darken-3"></v-progress-linear>
+      <v-progress-linear :model-value="(step/13)*100" color="blue-darken-3"></v-progress-linear>
   
         <v-card-actions>
             <v-btn v-if="step > 1" variant="text" @click="step--">
                 Back
             </v-btn>
             <v-spacer></v-spacer>
-                <v-btn v-if="step <= 11" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
+                <v-btn v-if="step <= 12" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
                     Next
                 </v-btn>
                 <v-btn v-else type="submit" @click="submit" :disabled="form.processing" :loading="form.processing" color="blue-lighten-3" class="text-none" size="large" variant="flat">

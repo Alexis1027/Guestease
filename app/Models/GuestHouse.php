@@ -21,17 +21,9 @@ class GuestHouse extends Model
         'amenities',
         'beds',
         'bathrooms',
-        'rooms'
+        'rooms',
+        'status',
+        'type',
     ];
 
-    public function scopeFilter($query, array $filters) {
-
-        if($filters['search'] ?? false) {
-            $query->where('name', 'LIKE', '%'. request('search') .'%')
-            ->orWhere('description', 'LIKE', '%'. request('search') .'%')
-            ->orWhere('location', 'LIKE', '%'. request('search') .'%')
-            ->orWhere('price', 'LIKE', '%'. request('search') .'%');
-        }
-
-    }
 }

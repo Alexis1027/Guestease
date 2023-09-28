@@ -1,6 +1,6 @@
 <script setup>
 
-    import Layout from '../../shared/Layout.vue';
+    import Layout from '../../shared/OwnerLayout.vue';
     import {processImages} from '@/utils/imageUtils'
     import {ref} from 'vue'
     import {useForm} from '@inertiajs/vue3'

@@ -7,16 +7,26 @@
 <template>
     
     <v-layout>
-        <v-app-bar scroll-behavior="elevate" scroll-threshold="438">
+        <v-app-bar scroll-threshold="438">
             <v-toolbar-title>
                 <Link href="/" class="font-weight-bold">
                     <v-img :src="logo" height="55" width="260" cover></v-img>
                 </Link>
             </v-toolbar-title>
             <v-spacer/>
-            <v-btn class="text-none rounded-pill">Listing</v-btn>
-            <v-btn class="text-none rounded-pill">Calendar</v-btn>
-            <v-btn class="text-none rounded-pill">Reservations</v-btn>
+            <Link href="/owner/dashboard">
+                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Dashboard' ? 'blue' : ''">Dashboard</v-btn>
+            </Link>
+            <Link href="/owner/listing">
+                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Listing' ? 'blue' : ''">Listing</v-btn>
+            </Link>
+            <Link href="/owner/calendar">
+                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Calendar' ? 'blue' : ''">Calendar</v-btn>
+            </Link>
+            <Link href="/owner/reservations">
+                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Reservations' ? 'blue' : ''">Reservations</v-btn>
+            </Link>
+
             <v-spacer/>
 
             <v-btn icon>
@@ -38,12 +48,17 @@
         </template>
         <v-card width="250">
             <div class="mx-auto text-center">
-                <v-btn variant="text" block class="text-none">
-                    Profile
-                </v-btn>
-                <v-btn  variant="text" block class="text-none">
-                    Account
-                </v-btn>
+                <Link :href="`/profile/${auth.user.id}`">
+                    <v-btn variant="text" block class="text-none">
+                        Profile
+                    </v-btn>
+                </Link>
+                <Link href="/account">
+                    <v-btn  variant="text" block class="text-none">
+                        Account
+                    </v-btn>
+                </Link>
+                
                 <v-divider/>
                 <v-btn variant="text" block class="text-none">
                     Logout
