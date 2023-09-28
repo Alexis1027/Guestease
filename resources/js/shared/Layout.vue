@@ -4,13 +4,12 @@
     import {useForm} from '@inertiajs/vue3'
 
     const sidebar = ref(false)
+    const logo = '/images/logo/frlogo.png'
     const {auth} = defineProps(['auth'])
     const form = useForm({
         user_id: auth ? auth.user.id : null
     })
-    function request() {
-        form.post('/request')
-    }
+
 </script>
 
 <template>
@@ -19,7 +18,7 @@
             <v-app-bar-nav-icon @click="sidebar = !sidebar" v-if="auth && auth.user.role == 'admin'"></v-app-bar-nav-icon>
             <v-toolbar-title>
                 <Link href="/" class="font-weight-bold">
-                    <p class="" id="logo">App logo</p>
+                    <v-img :src="logo" height="55" width="260" cover></v-img>
                 </Link>
             </v-toolbar-title>
             <!-- <v-spacer/>
@@ -101,9 +100,9 @@
                                     Wishlists 
                                 </v-btn>
                             </Link>
-                            <Link href="/settings">
+                            <Link href="/account">
                                 <v-btn block variant="text"  class="text-none">
-                                    Settings
+                                    Account
                                 </v-btn>
                             </Link>
                             <Link href="/logout" method="post">
@@ -164,7 +163,7 @@
                 <Link href="/admin/manage-reservations">
                     <v-list-item prepend-icon="mdi-calendar-edit" title="Reservation management" value="managereservation"></v-list-item>
                 </Link>
-                <Link href="/admin/guesthouse-requests">
+                <Link href="/admin/listing-requests">
                     <v-list-item prepend-icon="mdi-help-box-multiple" title="Listing requests" value="requests"></v-list-item>
                 </Link>
                 <Link href="/admin/create-admin">

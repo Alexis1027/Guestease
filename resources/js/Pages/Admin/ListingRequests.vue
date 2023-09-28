@@ -23,15 +23,17 @@
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
             </v-col>
             <v-col cols="4">
-            <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
+            <v-text-field label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
         </v-col>
         </v-row>
         <v-table hover class="bg-grey-lighten-5 text-center">
             <thead >
                 <tr >
                     <th class="text-center">Request id</th>
-                    <th class="text-center">User</th>
-                    <th class="text-center">Profile link</th>
+                    <th class="text-center">Owner</th>
+                    <th class="text-center">Guest house</th>
+                    <th class="text-center">Bldg permit</th>
+                    <th class="text-center">Owner Profile link</th>
                     <th class="text-center">Date Requested</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -40,6 +42,8 @@
                 <tr v-for="request in requests" :key="request.id">
                     <td>{{ request.id }}</td>
                     <td>{{ request.user.firstname + ' ' + request.user.lastname }}</td>
+                    <td><Link :href="`/profile/${request.user.id}`">Profile</Link></td>
+                    <td><Link :href="`/profile/${request.user.id}`">Profile</Link></td>
                     <td><Link :href="`/profile/${request.user.id}`">Profile</Link></td>
                     <td>{{ format(new Date(request.created_at), 'MMMM dd, yyyy, hh:mm a') }}  </td>
                     <td>

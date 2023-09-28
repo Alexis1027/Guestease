@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('room_requests', function (Blueprint $table) {
+        Schema::create('listing_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('owner_id');
+            $table->foreignId('guesthouse_id');
+            $table->string('bldg_permit');
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('room_requests');
+        Schema::dropIfExists('listing_requests');
     }
 };

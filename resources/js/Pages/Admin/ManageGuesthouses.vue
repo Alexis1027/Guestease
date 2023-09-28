@@ -3,12 +3,10 @@
     import {ref, defineProps, watch, onMounted} from 'vue'
     import {router} from '@inertiajs/vue3'
     import Layout from '../../shared/Layout.vue'
-    import CreateGuestHouseModal from './partials/CreateGuestHouseModal.vue'
     import DeleteGuestHouseModal from './partials/DeleteGuestHouseModal.vue'
     import EditGuestHouseModal from './partials/EditGuestHouseModal.vue'
 
     defineProps({guesthouses: Object, newEntry: Object})
-    const createGuestHouseDialog = ref(false)
     const deleteGuestHouseModal = ref(false)
     const editGuestHouseModal = ref(false)
     const deleteSnackbar = ref(false)
@@ -39,7 +37,6 @@
 
 <template>
     <Head title="Manage guest house" />
-    <v-btn color="green" prepend-icon="mdi-plus-thick" @click="createGuestHouseDialog = true" class="mb-4 text-none mt-2">New Guest House</v-btn>
     <v-container class="bg-white">
         <v-row justify="space-between">
             <v-col cols="2">
@@ -94,7 +91,6 @@
     
     </v-container>
 
-    <CreateGuestHouseModal :dialog="createGuestHouseDialog" @showCreateSuccessfulSnackbar="createSnackbar = true" @CloseDialog="createGuestHouseDialog = false" v-model="createGuestHouseDialog" />
     <DeleteGuestHouseModal :guesthouse="guesthouse" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteGuestHouseModal" @CloseDialog="deleteGuestHouseModal = false" v-model="deleteGuestHouseModal" />
     <EditGuestHouseModal :guesthouse="guesthouse" :show="editGuestHouseModal" @CloseDialog="editGuestHouseModal = false" v-model="editGuestHouseModal" />
 

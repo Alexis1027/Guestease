@@ -4,24 +4,18 @@
     import {defineProps, ref, watch, onMounted} from 'vue'
     import { useForm } from '@inertiajs/vue3'
     import { useDate } from 'vuetify/labs/date'
-    import ImageDrawer from '../Guest/Partials/ImageDrawer.vue'
     import RatingCard from '../Guest/Partials/RatingCard.vue'
-    import ImageCarousel from '../Guest/Partials/ImageCarousel.vue'
     import RatingModal from '../Guest/Partials/RatingModal.vue'
     import Map from '../Guest/Partials/ShowMap.vue'
     import {format} from 'date-fns'
-    import { VSkeletonLoader } from 'vuetify/lib/labs/components.mjs';
     import {processImages} from '@/utils/imageUtils'
     import MazGallery from 'maz-ui/components/MazGallery'
-
+    
     defineOptions({layout: Layout})
 
-    const overlay = ref(false)
     const props = defineProps(['guesthouse', 'ratings', 'averageRating', 'wishlist', 'auth', 'rated', 'owner'])
     const rating = ref(0)
-    const index = ref(0)
     const discount = ref(200)
-    const showImageCarousel = ref(false)
     const showReviewModal = ref(false)
     const saveWishlistForm = useForm({
         user_id: props.auth ? props.auth.user.id : '',
@@ -30,20 +24,6 @@
 
     const images = processImages(props.guesthouse.images)
     const guesthouseImages = images.map(img => '../images/' + img)
-
-    function getBorderRadius(i) {
-        if(i === 2) {
-            return 'rounded-te-lg'
-        }
-        if(i === 4) {
-            return 'rounded-be-lg'
-        }
-    }
-
-    function showImageCarouselFunc(idx) {
-        index.value = idx
-        showImageCarousel.value = true
-    }
 
     const submitForm = () => {
         if(props.wishlist) {
@@ -95,6 +75,7 @@
 
 </script>
 
+
 <template>
     <Head :title="`${guesthouse.title}`" />
     
@@ -130,11 +111,10 @@
             </v-col>
         </v-row>
             <MazGallery :images="guesthouseImages" :height="400" class="mt-1" />
-        <v-divider class="my-2" />
+        <v-divider class="mt-2" />
         <v-row>
             <v-col cols="8">
                 <!-- Guest house details -->
-                <v-container>
                     <v-list>
                         <v-list-item>
                             <template v-slot:append>
@@ -153,7 +133,6 @@
                             {{ guesthouse.location }}
                         </v-list-item>
                     </v-list>
-                </v-container>
 
                 <v-divider class="my-5" />
 
@@ -191,7 +170,7 @@
             </v-col>
             <v-col cols="4" class="mt-3">
                 <!-- Check in checkout and Reserve button section -->
-                <v-card id="reserveBtn" class="rounded-xl">
+                <v-card id="reserveBtn" class="rounded-xl" elevation="5">
                     <form>
                     <v-card-item>
                         <v-row>
@@ -352,8 +331,6 @@
         </v-container>
                 <!-- About this place section -->
         <!-- Components -->
-        <ImageDrawer @closeOverlay="overlay = false" v-if="true" :overlay="overlay" :images="images" />
-        <ImageCarousel :showImageCarousel="showImageCarousel" :images="images" :index="index" @CloseImgCarousel="showImageCarousel = false" />
         <RatingModal :showReviewModal="showReviewModal" :auth="auth" :star="rating" :guesthouse="guesthouse" @closeReviewModal="showReviewModal = false" />
     </v-container>
 </template>

@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\GuestHouseController;
 use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\ReservationRequestController;
 use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\GuestHouseRequestController;
+use App\Http\Controllers\Admin\ListingRequestController;
 use App\Http\Controllers\Owner\ListingController;
 use App\Http\Controllers\Owner\OwnerDashboardController;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +46,7 @@ Route::get('/reservations', [HomeController::class, 'reservations'])->middleware
 Route::get('/payment/{room}', [HomeController::class, 'confirm_reservation'])->middleware('auth');
 Route::get('/guidelines', [HomeController::class, 'guidelines']);
 Route::get('/rules', [HomeController::class, 'rules']);
-Route::get('/settings', [HomeController::class, 'settings'])->middleware('auth');
+Route::get('/account', [HomeController::class, 'settings'])->middleware('auth');
 Route::get('/profile/{user}', [HomeController::class, 'profile']);
 Route::get('/',[HomeController::class, 'index']);
 Route::get('/room/{id}', [HomeController::class, 'show']);
@@ -81,6 +81,6 @@ Route::get('/admin/manage-users/{entry}', [UserController::class, 'manage_users_
 Route::get('/admin/manage-guesthouses', [GuestHouseController::class, 'index'])->name('manage_guesthouse');
 Route::get('/admin/manage-guesthouses/{entry}', [GuestHouseController::class, 'manage_guesthouses_entry']);
 Route::get('/admin/manage-reservations', [ReservationController::class, 'index']);
-Route::get('/admin/guesthouse-requests', [GuestHouseRequestController::class, 'requests']);
+Route::get('/admin/listing-requests', [ListingRequestController::class, 'index']);
 
 Route::post('/rooms/rate/{guesthouse_id}', [RatingController::class, 'store'])->middleware('auth');

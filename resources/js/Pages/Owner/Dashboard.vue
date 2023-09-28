@@ -1,10 +1,11 @@
 <script setup>
     
-    import Layout from '../../shared/Layout.vue'
+    import Layout from '../../shared/OwnerLayout.vue'
     import GuestHouseCard from './Partials/GuestHouseCard.vue'
 
     defineProps({
-        guesthouses: Object
+        guesthouses: Object,
+        auth: Object
     })
 
     defineOptions({
@@ -18,12 +19,13 @@
     <Head title="Owner Dashboard" />
 
     <v-row>
-        <v-col cols="10">
-            <p class="text-h4">Owner dashboard</p>
+        <v-col cols="9">
+            <p class="text-h4">Welcome, {{ auth.user.firstname }}!</p>
+            Guests can reserve your place 24 hours after you publish—here's how to prepare.
         </v-col>
-        <v-col>
+        <v-col class="justify-end d-flex">
             <Link href="/owner/create-listing">
-                <v-btn class="mt-2 text-none" prepend-icon="mdi-home-plus-outline" color="blue">Add new listing</v-btn>
+                <v-btn class="mt-2 text-none" variant="outlined" prepend-icon="mdi-plus" color="blue">Create new listing</v-btn>
             </Link>
         </v-col>
     </v-row>

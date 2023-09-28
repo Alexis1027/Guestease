@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Inertia\Inertia;
-use App\Models\RoomRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\ListingRequest;
 
-class GuestHouseRequestController extends Controller
+class ListingRequestController extends Controller
 {
     //
-    public function requests() {
+    public function index() {
 
-        $requests = RoomRequest::all();
+        $requests = ListingRequest::all();
         foreach($requests as $r) {
             $r->user = User::find($r->user_id);
         }
-        return Inertia::render('Admin/Requests', ['requests' => $requests]);
+        return Inertia::render('Admin/ListingRequests', ['requests' => $requests]);
     }
 }

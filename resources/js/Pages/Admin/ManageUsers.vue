@@ -22,7 +22,7 @@
     }
 
     watch(entry, () => {
-        router.get(`/manage/users/${entry.value}`)
+        router.get(`/admin/manage-users/${entry.value}`)
     })
 
     defineOptions({layout: Layout})
