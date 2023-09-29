@@ -24,7 +24,7 @@ class WishlistController extends Controller
             $wishlist->averageRating = number_format($averageRating, 2);
             $wishlist->totalRatings = $totalRatings;
         }
-        return Inertia::render('Wishlist', ['wishlists' => $wishlists]);
+        return Inertia::render('Guest/Wishlist', ['wishlists' => $wishlists]);
     }
 
     public function store(Request $request) {

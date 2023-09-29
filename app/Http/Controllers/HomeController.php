@@ -103,7 +103,7 @@ class HomeController extends Controller
             'days' => 'required',
         ]);
         
-        return Inertia::render('ConfirmReservation', [
+        return Inertia::render('Guest/ConfirmReservation', [
             'guesthouse' => $room, 
             'guests' => $request->query('guests'),
             'checkin' => $request->query('checkin'),
@@ -121,7 +121,7 @@ class HomeController extends Controller
     }
 
     public function rules() {
-        return Inertia::render('RulesAndRegulations');
+        return Inertia::render('Admin/RulesAndRegulations');
     }
 
     public function wishlist() {
@@ -141,11 +141,11 @@ class HomeController extends Controller
         foreach($reservations as $r) {
             $r->guesthouse = GuestHouse::find($r->room_id);
         }
-        return Inertia::render('Reservations', ['reservations' => $reservations]);
+        return Inertia::render('Guest/Reservations', ['reservations' => $reservations]);
     }
 
     public function map() {
-        return Inertia::render('Map/Index', ['guesthouses' => GuestHouse::all()]);
+        return Inertia::render('Guest/Map', ['guesthouses' => GuestHouse::all()]);
     }
 
 }

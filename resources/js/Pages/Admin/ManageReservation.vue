@@ -2,7 +2,7 @@
 
     import {ref} from 'vue'
     import {format} from 'date-fns'
-    import Layout from '../../shared/Layout.vue'
+    import Layout from '../../shared/AdminLayout.vue'
     defineOptions({layout: Layout})
     const {reservations} = defineProps({
         reservations: Object

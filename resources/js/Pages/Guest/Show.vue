@@ -1,6 +1,6 @@
 <script setup>
 
-    import Layout from '../../shared/Layout.vue'
+    import Layout from '../../shared/GuestLayout.vue'
     import {defineProps, ref, watch, onMounted} from 'vue'
     import { useForm } from '@inertiajs/vue3'
     import { useDate } from 'vuetify/labs/date'

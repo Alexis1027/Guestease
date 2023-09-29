@@ -1,7 +1,7 @@
 <script setup>
 
-    import Layout from '../shared/Layout.vue'
-    import ReservationCard from '../components/ReservationCard.vue'
+    import Layout from '../../shared/GuestLayout.vue'
+    import ReservationCard from '../../components/ReservationCard.vue'
     defineOptions({layout: Layout})
     defineProps({reservations: Object, auth: Object})
 </script>

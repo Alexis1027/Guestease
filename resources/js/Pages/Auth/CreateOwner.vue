@@ -2,7 +2,9 @@
 
     import {ref} from 'vue'
     import { useForm } from '@inertiajs/vue3';
+    import Layout from './Layout.vue'
 
+    defineOptions({layout: Layout})
     const passwordVisible = ref(true)
     const form = useForm({
         firstname: '',
@@ -117,7 +119,6 @@
     width: 100%;
     min-height: 100%;
     padding: 20px;
-    margin-top: 3%;
   }
 
   a {
@@ -126,8 +127,6 @@
   }
   
   #formContent {
-    -webkit-border-radius: 10px 10px 10px 10px;
-    border-radius: 10px 10px 10px 10px;
     background: #fff;
     padding: 30px;
     width: 600px;

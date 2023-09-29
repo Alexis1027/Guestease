@@ -3,7 +3,9 @@
     import {ref, defineProps} from 'vue'
     import {useForm} from '@inertiajs/vue3'
     // import {GoogleLogin} from 'vue3-google-login'
- 
+    import Layout from './Layout.vue'
+    
+    defineOptions({layout: Layout})
     const props = defineProps(['callback'])
 
     const passwordVisible = ref(true)
@@ -46,55 +48,60 @@
     <v-container class="wrapper fadeInDown">
         <!-- <form method="POST" action="/users/authenticate"> -->
         <v-form @submit.prevent>
-            <div id="formContent">
-                <div class="fadeIn first">
-                    <v-row class="text-center">
-                        <v-col>
-                            <p class="text-h5" ><i class="fa fa-address-card-o" aria-hidden="true"></i> Login </p>
-                        </v-col>
-                    </v-row>
-                </div>
-                <v-card elevation="0">
-                    <v-card-item>
-                        <v-container>
-                            <v-text-field 
-                                v-model="form.email" 
-                                color="blue" 
-                                clearable
-                                name="email"
-                                :rules="emailRules"
-                                variant="outlined" 
-                                class="fadeIn second mx-5" 
-                                placeholder="johndoe@gmail.com" 
-                                :error-messages="$page.props.errors.email"
-                                label="Email">
-                            </v-text-field>
-                            <v-text-field 
-                                v-model="form.password" 
-                                color="blue" 
-                                variant="outlined"
-                                name="password"
-                                :rules="passwordRules"
-                                class="fadeIn second mx-5" 
-                                :error-messages="$page.props.errors.password"
-                                :type="passwordVisible ? 'password' : 'text'"
-                                :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                                @click:append-inner="passwordVisible = !passwordVisible" 
-                                label="Password">
-                            </v-text-field>
-                            <!-- <v-checkbox-btn color="blue" class="ms-3 fadeIn second" label="Remember me"></v-checkbox-btn> -->
-                            <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="form.processing" :disabled="form.processing" @click="submit" type="submit" block>Log in</v-btn>
-                            <!-- <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/> -->
-                            <br>
-                            <label class="mt-4 fadeIn third">Dont have an account? </label>
-                            <Link href="/createGuest" class="text-blue fadeIn third"> Create guest account</Link>
-                            <br>
-                            <label class="mt-4 fadeIn third">Dont have an account? </label>
-                            <Link href="/createOwner" class="text-blue fadeIn third"> Create owner account</Link>
-                        </v-container>
-                    </v-card-item>
-                </v-card>
-            </div>
+            <v-row id="formContent">
+                <v-col cols="7" xxl="7" xl="7" lg="7" md="7">
+                    <v-card height="100%" elevation="0">
+                        <v-card-item class="fill-height">
+                            <v-img src="../images/logo/frlogo-transformed.png"  class=" fadeIn second"></v-img>
+                        </v-card-item>
+                    </v-card>
+                </v-col>
+                <v-divider vertical/>
+                <v-col cols="5" xxl="5" xl="5" lg="5" md="5">
+                    <v-card elevation="0">
+                        <p class="fadeIn first text-h5 font-weight-bold">LOGIN</p>
+                        <label class="mt-4 fadeIn third">Don't have an account? </label>
+                        <Link href="/createGuest" class="text-blue fadeIn third"> Sign up</Link>
+                        <v-card-item>
+                            <v-container>
+                                <v-text-field 
+                                    v-model="form.email" 
+                                    color="blue" 
+                                    clearable
+                                    name="email"
+                                    :rules="emailRules"
+                                    variant="outlined" 
+                                    class="fadeIn second mx-5" 
+                                    placeholder="johndoe@gmail.com" 
+                                    :error-messages="$page.props.errors.email"
+                                    label="Email address">
+                                </v-text-field>
+                                <v-text-field 
+                                    v-model="form.password" 
+                                    color="blue" 
+                                    variant="outlined"
+                                    name="password"
+                                    :rules="passwordRules"
+                                    class="fadeIn second mx-5" 
+                                    :error-messages="$page.props.errors.password"
+                                    :type="passwordVisible ? 'password' : 'text'"
+                                    :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                                    @click:append-inner="passwordVisible = !passwordVisible" 
+                                    label="Password">
+                                </v-text-field>
+                                <!-- <v-checkbox-btn color="blue" class="ms-3 fadeIn second" label="Remember me"></v-checkbox-btn> -->
+                                <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="form.processing" :disabled="form.processing" @click="submit" type="submit" block>Log in</v-btn>
+                                <!-- <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/> -->
+                                
+                                <br>
+                                <label class="mt-4 fadeIn third">Rent your place? </label>
+                                <Link href="/createOwner" class="text-blue fadeIn third"> Create owner account</Link>
+                            </v-container>
+                        </v-card-item>
+                    </v-card>
+                </v-col>
+                
+            </v-row>
         </v-form>
     </v-container>
 </template>
@@ -147,21 +154,17 @@ html {
     width: 100%;
     min-height: 100%;
     padding: 20px;
-    margin-top: 5%;
   }
   
   #formContent {
-    -webkit-border-radius: 10px 10px 10px 10px;
-    border-radius: 10px 10px 10px 10px;
     background: #fff;
     padding: 30px;
-    width: 600px;
-    max-width: 500px;
     position: relative;
     padding: 0px;
     -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     text-align: center;
+    width: 1000px;
   }
   
   #formFooter {

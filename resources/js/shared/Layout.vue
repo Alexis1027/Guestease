@@ -1,14 +1,11 @@
 <script setup>
 
     import {ref, defineProps} from 'vue'
-    import {useForm} from '@inertiajs/vue3'
 
     const sidebar = ref(false)
-    const logo = '/images/logo/frlogo.png'
+    const logo = '/images/logo/frlogo-transformed.png'
     const {auth} = defineProps(['auth'])
-    const form = useForm({
-        user_id: auth ? auth.user.id : null
-    })
+    
 
 </script>
 

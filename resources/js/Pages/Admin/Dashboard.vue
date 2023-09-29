@@ -1,11 +1,11 @@
 <script setup>
 
-    import Layout from '../../shared/Layout.vue'
+    import Layout from '../../shared/AdminLayout.vue'
     import Chart from 'chart.js/auto'
     import DashboardSheet from './partials/DashboardSheet.vue'
     import { onMounted, ref, defineProps } from 'vue';
 
-    defineOptions({layout: Layout})
+    defineOptions({ layout: Layout })
     
     const prop = defineProps(['totalUsers', 'totalGuesthouses'])
     const myChartRef = ref(null)
@@ -50,7 +50,7 @@
     <Head title="Dashboard" />
 
     <v-container>
-        <p class="text-h5 mb-1">GHRS Dashboard</p>
+        <p class="text-h5 mb-1">Admin dashboard</p>
         <v-row>
                 <DashboardSheet id="sheet1">
                     <strong class="">Total Users</strong>
@@ -59,13 +59,13 @@
                     </p>
                 </DashboardSheet>
                 <DashboardSheet id="sheet1">
-                    <strong class="">Total Guest Houses</strong>
+                    <strong class="">Total Listings</strong>
                     <p class="mt-3">
                         {{prop.totalGuesthouses}}
                     </p>
                 </DashboardSheet>
                 <DashboardSheet id="sheet1">
-                    <strong class="">Pending Reservations</strong>
+                    <strong class="">Pending Listings</strong>
                     <p class="mt-3">
                         0
                     </p>
