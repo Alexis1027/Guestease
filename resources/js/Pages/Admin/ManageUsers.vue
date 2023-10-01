@@ -2,7 +2,7 @@
 
     import {ref, defineProps, watch} from 'vue'
     import { router } from '@inertiajs/vue3'
-    import Layout from '../../shared/AdminLayout.vue'
+    import Layout from '../../Layouts/AdminLayout.vue'
     import EditUserModal from './partials/EditUserModal.vue'
     import DeleteUserModal from './partials/DeleteUserModal.vue'
     import {format} from 'date-fns'

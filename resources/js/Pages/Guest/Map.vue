@@ -3,7 +3,7 @@
     import {ref, onMounted, defineProps} from 'vue'
     import L from 'leaflet'
     import 'leaflet/dist/leaflet.css'
-    import Layout from '../../shared/GuestLayout.vue';
+    import Layout from '../../Layouts/GuestLayout.vue';
     import MapSidebar from './partials/MapSidebar.vue';
     defineOptions({ layout: Layout })
     // const lat = ref('')

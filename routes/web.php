@@ -4,20 +4,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RatingController;
-use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\RoomRequestController;
+use App\Http\Controllers\Guest\RatingController;
+use App\Http\Controllers\Guest\WishlistController;
+use App\Http\Controllers\Guest\ReservationRequestController;
 use App\Http\Controllers\Owner\ListingController;
 use App\Http\Controllers\Owner\CalendarController;
-use App\Http\Controllers\Admin\GuestHouseController;
-use App\Http\Controllers\Admin\ReservationController;
-use App\Http\Controllers\ReservationRequestController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\ListingRequestController;
 use App\Http\Controllers\Owner\OwnerDashboardController;
 use App\Http\Controllers\Owner\OwnerReservationController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\GuestHouseController;
+use App\Http\Controllers\Admin\ReservationController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\ListingRequestController;
+
 
 /*
 |--------------------------------------------------------------------------

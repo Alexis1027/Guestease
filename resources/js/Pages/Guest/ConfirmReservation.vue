@@ -19,8 +19,14 @@
         room_id: prop.guesthouse.id,
         user_id: prop.auth.user.id,
         payment_process:'',
-        status: 'pending'
+        status: 'pending',
+        checkin: prop.checkin,
+        checkout: prop.checkout,
+        guests: prop.guests
     })
+
+    console.log(prop.checkin)
+    console.log(prop.guests)
         
     const submit = () => {
         form.post('/reserve')

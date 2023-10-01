@@ -2,7 +2,7 @@
 
     import {ref} from 'vue'
     import {format} from 'date-fns'
-    import Layout from '../../shared/AdminLayout.vue'
+    import Layout from '../../Layouts/AdminLayout.vue'
 
     const entries = [5, 10, 15, 20, 25]
     const entry = ref(5)

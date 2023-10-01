@@ -20,9 +20,9 @@
             <Link href="/owner/listing">
                 <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Listing' ? 'blue' : ''">Listing</v-btn>
             </Link>
-            <Link href="/owner/calendar">
+            <!-- <Link href="/owner/calendar">
                 <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Calendar' ? 'blue' : ''">Calendar</v-btn>
-            </Link>
+            </Link> -->
             <Link href="/owner/reservations">
                 <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Reservations' ? 'blue' : ''">Reservations</v-btn>
             </Link>
@@ -60,9 +60,11 @@
                 </Link>
                 
                 <v-divider/>
-                <v-btn variant="text" block class="text-none">
-                    Logout
-                </v-btn>
+                <Link href="/logout" method="post">
+                    <v-btn variant="text" block class="text-none">
+                        Logout
+                    </v-btn>
+                </Link>
             </div>
         </v-card>
       </v-menu>

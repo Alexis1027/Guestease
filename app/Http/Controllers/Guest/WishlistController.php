@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guest;
 
 use Inertia\Inertia;
 use App\Models\Rating;
 use App\Models\Wishlist;
 use App\Models\GuestHouse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class WishlistController extends Controller
 {

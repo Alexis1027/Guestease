@@ -12,6 +12,10 @@ class Reservation extends Model
         'payment_process',
         'user_id',
         'room_id',
-        'status'
+        'status',
+        'checkin',
+        'checkout',
+        'total',
+        'guest'
     ];
 }

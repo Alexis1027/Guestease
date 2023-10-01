@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guest;
 
 use App\Models\User;
 use App\Models\Rating;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RatingController extends Controller
 {

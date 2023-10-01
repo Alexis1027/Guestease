@@ -1,6 +1,6 @@
 <script setup>
 
-    import Layout from '../../shared/OwnerLayout.vue'
+    import Layout from '../../Layouts/OwnerLayout.vue'
     import {ref} from 'vue'
     const page = ref(1)
     const entries = [5, 10, 15, 20, 25]
@@ -18,9 +18,10 @@
 </script>
 
 <template>
-    <h1>Listing page</h1>
     <v-container class="bg-white">
-        <p class="text-red">does not work</p>
+        <Link href="/owner/create-listing">
+                <v-btn class="mt-2 mb-4 text-none" variant="outlined" prepend-icon="mdi-plus" color="blue">Create new listing</v-btn>
+        </Link>
         <v-row justify="space-between">
             <v-col cols="2">
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>

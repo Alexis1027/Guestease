@@ -28,6 +28,8 @@ return new class extends Migration
             $table->text('images');
             $table->string('status');
             $table->string('type');
+            $table->decimal('weekly_discount', 8, 2)->nullable();
+            $table->decimal('monthly_discount', 8, 2)->nullable();
             $table->timestamps();
             
         });

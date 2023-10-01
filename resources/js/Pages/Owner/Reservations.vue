@@ -1,6 +1,6 @@
 <script setup>
 
-    import Layout from '../../shared/OwnerLayout.vue'
+    import Layout from '../../Layouts/OwnerLayout.vue'
     import {ref} from 'vue'
     defineOptions({
         layout: Layout

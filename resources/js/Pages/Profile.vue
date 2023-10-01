@@ -1,10 +1,11 @@
 <script setup>
-    import Layout from '../shared/Layout.vue'
+    import Layout from '../Layouts/Layout.vue'
     defineOptions({layout: Layout})
     defineProps({
         auth: Object,
         user: Object
     })
+
 
 </script>
 

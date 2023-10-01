@@ -17,6 +17,10 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('payment_process');
             $table->string('status');
+            $table->date('checkin');
+            $table->date('checkout');
+            $table->integer('total');
+            $table->integer('guests');
             $table->timestamps();
         });
     }

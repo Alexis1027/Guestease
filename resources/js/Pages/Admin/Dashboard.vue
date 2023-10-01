@@ -1,6 +1,6 @@
 <script setup>
 
-    import Layout from '../../shared/AdminLayout.vue'
+    import Layout from '../../Layouts/AdminLayout.vue'
     import Chart from 'chart.js/auto'
     import DashboardSheet from './partials/DashboardSheet.vue'
     import { onMounted, ref, defineProps } from 'vue';

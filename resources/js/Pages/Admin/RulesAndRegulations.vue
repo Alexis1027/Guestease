@@ -1,6 +1,6 @@
 <script setup>
 
-    import Layout from '../../shared/AdminLayout.vue'
+    import Layout from '../../Layouts/AdminLayout.vue'
     defineOptions({layout: Layout})
 
 </script>

@@ -15,7 +15,19 @@
                     <v-img :src="logo" height="55" width="260" cover></v-img>
                 </Link>
             </v-toolbar-title>
-            <v-menu min-width="200px" rounded>
+            <v-spacer/>
+            <Link href="/" v-if="!auth">
+                <p>Home</p>
+            </Link>
+            <Link href="/" class="ms-4" v-if="!auth">
+                <p>About</p>
+            </Link>
+            <Link href="/login" class="ms-4 me-6" v-if="!auth">
+                <v-btn class="text-none" color="blue" variant="flat">
+                    Register / Login
+                </v-btn>
+            </Link>
+            <v-menu min-width="200px" rounded v-if="auth">
                 <template v-slot:activator="{ props }">
                     <v-btn icon v-bind="props" style="margin-right: 6%;">
                         <v-avatar color="blue-lighten-3" size="35">

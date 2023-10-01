@@ -1,6 +1,6 @@
 <script setup>
 
-    import Layout from '../../shared/OwnerLayout.vue';
+    import Layout from '../../Layouts/OwnerLayout.vue';
     import {processImages} from '@/utils/imageUtils'
     import {ref} from 'vue'
     import {useForm} from '@inertiajs/vue3'
@@ -76,7 +76,7 @@
             <v-col cols="4" class="d-flex ms-6">
 
                 <v-card variant="outlined" color="grey" class="rounded-xl" width="100%" height="100%">
-                    <v-img :src="`../../images/${images[0]}`" height="75%" cover width="100%"></v-img>
+                    <v-img :src="`../../images/${images[0]}`" height="250" cover width="100%"></v-img>
                     <v-card-text class="text-black">
                         <p class="font-weight-bold">{{ guesthouse.title }}</p>
                     <p>{{ guesthouse.location }}</p>

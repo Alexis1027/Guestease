@@ -1,7 +1,7 @@
 <script setup>
 
-    import Layout from '../../shared/GuestLayout.vue'
-    import {defineProps, ref, watch, onMounted} from 'vue'
+    import Layout from '../../Layouts/GuestLayout.vue'
+    import {defineProps, ref, watch} from 'vue'
     import { useForm } from '@inertiajs/vue3'
     import { useDate } from 'vuetify/labs/date'
     import RatingCard from '../Guest/Partials/RatingCard.vue'
@@ -55,14 +55,6 @@
         reserveFormAlert.value = false
     })
 
-    const loading = ref(true)
-    onMounted(() => {
-        setTimeout(() => {
-            loading.value = false
-        },1000)
-    })
-
-
     const submitReservation = () => {
         if(reserveForm.checkin && reserveForm.checkout) {
             reserveForm.get(`/payment/${props.guesthouse.id}`)
@@ -71,7 +63,6 @@
             reserveFormAlert.value = true
         }
     }
-    
 
 </script>
 
@@ -115,7 +106,7 @@
         <v-row>
             <v-col cols="8">
                 <!-- Guest house details -->
-                    <v-list>
+                    <v-list >
                         <v-list-item>
                             <template v-slot:append>
                                 <v-avatar size="90" id="avatar">
@@ -127,17 +118,16 @@
                         </v-list-item>
                         <v-divider class="my-2" />
                         <v-list-item prepend-icon="mdi-information-variant">
-                            {{ guesthouse.description }}
+                            {{ guesthouse.description }} 
+                            <br>
                         </v-list-item>
                         <v-list-item prepend-icon="mdi-map-marker">
                             {{ guesthouse.location }}
                         </v-list-item>
                     </v-list>
 
-                <v-divider class="my-5" />
-
                 <!-- Place offers -->
-                <v-container  class="bg-grey-lighten-3">
+                <v-container >
                     <v-list-item>
                         <p class="text-h5">Offered amenities</p>
                     </v-list-item>
@@ -151,8 +141,6 @@
                     </v-row>  
                 </v-container>
 
-                <v-divider class="my-5" />
-                
                 <!-- Rate this place section -->
                 <v-container class="bg-white ">
                     <p class="text-h5 font-weight-medium">Rate this place </p>
@@ -237,15 +225,23 @@
                     </v-card-item>
                         <v-list v-if="reservationDate">
                             <v-list-item>
-                        {{ `₱ ${guesthouse.price} x ${reserveForm.days} daily` }}
+                        {{ `₱${guesthouse.price} x ${reserveForm.days} daily` }}
                             <template v-slot:append>
                                 {{ `₱${guesthouse.price * reserveForm.days}`  }}
                             </template>
                         </v-list-item>
-                        <v-list-item>
-                            some discount?
+                        <v-list-item v-if="reserveForm.days >= 7 && reserveForm.days < 30">
+                            Weekly stay discount
                             <template v-slot:append>
-                                {{`₱${discount}`}}
+                                <!-- DISPLAYS THE TOTAL - DISCOUNT PRICE -->
+                                {{ `₱${(guesthouse.price * reserveForm.days) * (guesthouse.weekly_discount / 100)}`}}
+                            </template>
+                        </v-list-item>
+                        <v-list-item v-if="reserveForm.days >= 30">
+                            Monthly stay discount
+                            <template v-slot:append>
+                                <!-- DISPLAYS THE TOTAL - DISCOUNT PRICE -->
+                                {{ `₱${(guesthouse.price * reserveForm.days) * (guesthouse.monthly_discount / 100)}`}}
                             </template>
                         </v-list-item>
                         <v-divider/>
@@ -264,7 +260,6 @@
                     </form>
                 </v-card>
             </v-col>
-            <v-divider class="mb-5" />
             <!-- Ratings and reviews section -->
             <v-container class="mb-5 bg-white ">
                 <p class="text-h5 font-weight-medium">Ratings and reviews</p>
@@ -284,7 +279,6 @@
             <p class="text-h5 font-weight-medium mb-6">Where you'll be.</p>
             <Map :latitude="guesthouse.latitude" :longitude="guesthouse.longitude" />
         </v-container>
-        <v-divider class="mb-5" />
         <!-- HOUSE RULES -->
         <v-container class="bg-white">
             <p class="text-h5 font-weight-medium mb-6">House rules</p>

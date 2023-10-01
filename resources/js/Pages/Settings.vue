@@ -2,7 +2,7 @@
 
     import {ref, onMounted} from 'vue'
     import {useForm} from '@inertiajs/vue3'
-    import Layout from '../shared/Layout.vue'
+    import Layout from '../Layouts/Layout.vue'
     const {auth} = defineProps(['auth'])
     defineOptions({layout: Layout})
 

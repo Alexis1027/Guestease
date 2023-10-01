@@ -2,7 +2,7 @@
 
     import {ref, defineProps, watch, onMounted} from 'vue'
     import {router} from '@inertiajs/vue3'
-    import Layout from '../../shared/AdminLayout.vue'
+    import Layout from '../../Layouts/AdminLayout.vue'
     import DeleteGuestHouseModal from './partials/DeleteGuestHouseModal.vue'
     import EditGuestHouseModal from './partials/EditGuestHouseModal.vue'
 

@@ -1,6 +1,6 @@
 <script setup>
     
-    import Layout from '../../shared/OwnerLayout.vue'
+    import Layout from '../../Layouts/OwnerLayout.vue'
     import GuestHouseCard from './Partials/GuestHouseCard.vue'
 
     defineProps({
@@ -16,12 +16,10 @@
 
 <template>
 
-    <Head title="Owner Dashboard" />
-
     <v-row class="mt-6">
         <v-col cols="9">
             <p class="text-h4">Welcome, {{ auth.user.firstname }}!</p>
-            Guests can reserve your place 24 hours after you publish—here's how to prepare.
+            Guests can reserve your place after you publish—here's how to prepare.
         </v-col>
         <v-col class="justify-end d-flex">
             <Link href="/owner/create-listing">
