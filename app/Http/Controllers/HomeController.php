@@ -132,6 +132,10 @@ class HomeController extends Controller
         return Inertia::render('About');
     }
 
+    public function contact_us() {
+        return Inertia::render('ContactUs');
+    }
+
     public function profile(User $user) {
         return Inertia::render('Profile', ['user' => $user]);
     }

@@ -15,16 +15,22 @@
             </v-toolbar-title>
             <v-spacer/>
             <Link href="/owner/dashboard">
-                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Dashboard' ? 'blue' : ''">Dashboard</v-btn>
+                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Dashboard' ? 'blue' : ''">
+                    Dashboard
+                </v-btn>
             </Link>
             <Link href="/owner/listing">
-                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Listing' ? 'blue' : ''">Listing</v-btn>
+                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Listing' ? 'blue' : ''">
+                    Listings
+                </v-btn>
             </Link>
             <!-- <Link href="/owner/calendar">
                 <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Calendar' ? 'blue' : ''">Calendar</v-btn>
             </Link> -->
             <Link href="/owner/reservations">
-                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Reservations' ? 'blue' : ''">Reservations</v-btn>
+                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Reservations' ? 'blue' : ''">
+                    Reservations
+                </v-btn>
             </Link>
 
             <v-spacer/>

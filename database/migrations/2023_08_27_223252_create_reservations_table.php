@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('status');
             $table->date('checkin');
             $table->date('checkout');
+            $table->integer('days');
             $table->integer('total');
             $table->integer('guests');
             $table->timestamps();

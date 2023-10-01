@@ -44,7 +44,7 @@ Route::get('/owner/verify-listing/{guesthouse}', [ListingController::class, 'sho
 Route::post('/owner/verify-listing/{guesthouse}', [ListingController::class, 'verify_listing']);
 //GUEST
 Route::post('/request', [RoomRequestController::class, 'store']);
-
+Route::get('/contact-us', [HomeController::class, 'contact_us']);
 Route::get('/about', [HomeController::class, 'about']);
 Route::get('/map', [HomeController::class, 'map']);
 Route::get('/reservations', [HomeController::class, 'reservations'])->middleware('auth')->name('reservations');

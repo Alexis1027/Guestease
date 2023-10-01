@@ -16,6 +16,7 @@ class Reservation extends Model
         'checkin',
         'checkout',
         'total',
-        'guest'
+        'guests',
+        'days'
     ];
 }

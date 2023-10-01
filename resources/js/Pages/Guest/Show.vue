@@ -1,7 +1,7 @@
 <script setup>
 
     import Layout from '../../Layouts/GuestLayout.vue'
-    import {defineProps, ref, watch} from 'vue'
+    import {defineProps, reactive, ref, watch} from 'vue'
     import { useForm } from '@inertiajs/vue3'
     import { useDate } from 'vuetify/labs/date'
     import RatingCard from '../Guest/Partials/RatingCard.vue'
@@ -61,6 +61,49 @@
         }
         else {
             reserveFormAlert.value = true
+        }
+    }
+
+    const guests = reactive({
+        adults: 0,
+        children: 0,
+        infants: 0,
+        pets: 0,
+    })
+
+    function incrementGuests(guest) {
+        reserveForm.guests++
+        switch(guest) {
+            case 'adults':
+            guests.adults++
+            break
+            case 'children':
+            guests.children++
+            break
+            case 'infants':
+            guests.infants++
+            break
+            case 'pets':
+            guests.pets++
+            break
+        }
+    }
+
+    function decrementGuests(guest) {
+        reserveForm.guests.value--
+        switch(guest) {
+            case 'adults':
+            guests.adults--
+            break
+            case 'children':
+            guests.children--
+            break
+            case 'infants':
+            guests.infants--
+            break
+            case 'pets':
+            guests.pets--
+            break
         }
     }
 
@@ -163,7 +206,7 @@
                     <v-card-item>
                         <v-row>
                             <v-col>
-                                <span class="text-h6">₱{{ guesthouse.price }}</span> daily
+                                <span class="text-h6">₱{{ parseInt(guesthouse.price).toLocaleString() }}</span> daily
                                 <v-menu min-width="200px" rounded  :close-on-content-click="false">
                                     <template v-slot:activator="{ props }">
                                         <v-row>
@@ -179,44 +222,44 @@
                                         </v-btn>
                                         <v-alert variant="outlined" type="warning" class="mt-5" prominent v-model="reserveFormAlert">
                                             <p class="font-weight-bold">Let's try that again</p>
-                                            <p>Please input your checkin and checkout dates.</p>
+                                            <p>Please input your check in and check out dates.</p>
                                         </v-alert>
                                         <v-menu activator="#menu-activator" :close-on-content-click="false">
                                             <v-list>
                                                 <v-list-item title="Adults" subtitle="Age 13+">
                                                     <template v-slot:append>
-                                                        <v-btn icon="mdi-plus" flat size="small" @click="reserveForm.guests++" ></v-btn>
-                                                        <span class="mx-1">0</span> 
-                                                        <v-btn icon="mdi-minus" flat size="small" @click="reserveForm.guests--"> </v-btn>
+                                                        <v-btn icon="mdi-plus" flat size="small" @click="incrementGuests('adults')" ></v-btn>
+                                                        <span class="mx-1">{{ guests.adults }}</span> 
+                                                        <v-btn icon="mdi-minus" flat size="small" @click="decrementGuests('adults')"> </v-btn>
                                                     </template>
                                                 </v-list-item>
                                                 <v-list-item title="Children" subtitle="Age 2 - 12">
                                                     <template v-slot:append>
-                                                        <v-btn icon="mdi-plus" flat size="small" @click="reserveForm.guests++" ></v-btn>
-                                                        <span class="mx-1">0</span> 
-                                                        <v-btn icon="mdi-minus" flat size="small" @click="reserveForm.guests--"> </v-btn>
+                                                        <v-btn icon="mdi-plus" flat size="small" @click="incrementGuests('children')" ></v-btn>
+                                                        <span class="mx-1">{{guests.children}}</span> 
+                                                        <v-btn icon="mdi-minus" flat size="small" @click="decrementGuests('children')"> </v-btn>
                                                     </template>
                                                     
                                                 </v-list-item>
-                                                <v-list-item title="Inftans" subtitle="Age under 2">
+                                                <v-list-item title="Infants" subtitle="Age under 2">
                                                     <template v-slot:append>
-                                                        <v-btn icon="mdi-plus" flat size="small" @click="reserveForm.guests++" ></v-btn>
-                                                        <span class="mx-1">0</span> 
-                                                        <v-btn icon="mdi-minus" flat size="small" @click="reserveForm.guests--"> </v-btn>
+                                                        <v-btn icon="mdi-plus" flat size="small" @click="incrementGuests('infants')" ></v-btn>
+                                                        <span class="mx-1">{{guests.infants}}</span> 
+                                                        <v-btn icon="mdi-minus" flat size="small" @click="decrementGuests('infants')"> </v-btn>
                                                     </template>
                                                 </v-list-item>
                                                 <v-list-item title="Pets" subtitle="bruh">
                                                     <template v-slot:append>
-                                                        <v-btn icon="mdi-plus" flat size="small" @click="reserveForm.guests++" ></v-btn>
-                                                        <span class="mx-1">0</span> 
-                                                        <v-btn icon="mdi-minus" flat size="small" @click="reserveForm.guests--"> </v-btn>
+                                                        <v-btn icon="mdi-plus" flat size="small" @click="incrementGuests('pets')" ></v-btn>
+                                                        <span class="mx-1">{{ guests.pets }}</span> 
+                                                        <v-btn icon="mdi-minus" flat size="small" @click="decrementGuests('pets')"> </v-btn>
                                                     </template>
                                                 </v-list-item>
                                             </v-list>
                                         </v-menu>
                                     </template>
                                     <v-card width="360">
-                                        <v-date-picker color="blue" :landscape="true" width="500" show-adjacent-months multiple v-model="reservationDate"></v-date-picker>
+                                        <v-date-picker color="blue" :landscape="true" :disabled="true" width="500" show-adjacent-months multiple v-model="reservationDate"></v-date-picker>
                                     </v-card>
                                 </v-menu>
                                 <!-- <v-select variant="outlined" class="mt-3"></v-select> -->
@@ -225,30 +268,26 @@
                     </v-card-item>
                         <v-list v-if="reservationDate">
                             <v-list-item>
-                        {{ `₱${guesthouse.price} x ${reserveForm.days} daily` }}
-                            <template v-slot:append>
-                                {{ `₱${guesthouse.price * reserveForm.days}`  }}
-                            </template>
-                        </v-list-item>
-                        <v-list-item v-if="reserveForm.days >= 7 && reserveForm.days < 30">
-                            Weekly stay discount
-                            <template v-slot:append>
-                                <!-- DISPLAYS THE TOTAL - DISCOUNT PRICE -->
-                                {{ `₱${(guesthouse.price * reserveForm.days) * (guesthouse.weekly_discount / 100)}`}}
-                            </template>
-                        </v-list-item>
+                                {{ `₱${parseInt(guesthouse.price).toLocaleString()} x ${reserveForm.days} daily` }}
+                                <template v-slot:append>
+                                    {{ `₱${(guesthouse.price * reserveForm.days).toLocaleString()}`  }}
+                                </template>
+                            </v-list-item>
                         <v-list-item v-if="reserveForm.days >= 30">
                             Monthly stay discount
                             <template v-slot:append>
                                 <!-- DISPLAYS THE TOTAL - DISCOUNT PRICE -->
-                                {{ `₱${(guesthouse.price * reserveForm.days) * (guesthouse.monthly_discount / 100)}`}}
+                                {{ `₱${((guesthouse.price * reserveForm.days) * (guesthouse.monthly_discount / 100)).toLocaleString()}`}}
                             </template>
                         </v-list-item>
                         <v-divider/>
                         <v-list-item class="font-weight-bold">
                             <p>Total</p>
-                            <template v-slot:append>
-                                {{ `₱${(guesthouse.price * reserveForm.days) - discount}`  }}
+                            <template v-slot:append v-if="reserveForm.days >= 30">
+                                {{ `₱${((guesthouse.price * reserveForm.days) - (guesthouse.price * reserveForm.days) * (guesthouse.monthly_discount / 100)).toLocaleString()}`  }}
+                            </template>
+                            <template v-slot:append v-else>
+                                {{ `₱${((guesthouse.price * reserveForm.days)).toLocaleString()}`  }}
                             </template>
                         </v-list-item>
                         </v-list>

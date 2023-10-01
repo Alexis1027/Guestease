@@ -17,10 +17,13 @@
             </v-toolbar-title>
             <v-spacer/>
             <Link href="/" v-if="!auth">
-                <p>Home</p>
+                <v-btn :class="$page.component == 'Guest/Index' ? 'text-blue' : ''">Home</v-btn>
             </Link>
-            <Link href="/" class="ms-4" v-if="!auth">
-                <p>About</p>
+            <Link href="/about" class="ms-4" v-if="!auth">
+                <v-btn :class="$page.component == 'About' ? 'text-blue' : ''">About</v-btn>
+            </Link>
+            <Link href="/contact-us" class="ms-4" v-if="!auth">
+                <v-btn :class="$page.component == 'ContactUs' ? 'text-blue' : ''">Contact us</v-btn>
             </Link>
             <Link href="/login" class="ms-4 me-6" v-if="!auth">
                 <v-btn class="text-none" color="blue" variant="flat">
@@ -61,7 +64,7 @@
                                 </v-btn>
                             </Link>
                             <Link href="/logout" method="post">
-                                <v-btn block variant="text" class="text-none">
+                                <v-btn block variant="text" color="red" class="text-none">
                                     Logout
                                 </v-btn>
                             </Link>
@@ -92,3 +95,8 @@
 
     </v-layout>
 </template>
+
+<style scoped>
+
+
+</style>

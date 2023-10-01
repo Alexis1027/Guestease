@@ -86,13 +86,16 @@
         },
     ]
 
+    const loadingGetCoord = ref(false)
     function getCoord() {
+        loadingGetCoord.value = true
         axios.get(`https://nominatim.openstreetmap.org/search?q=${form.location}&format=json&limit=1`)
         .then(response => {
             form.latitude = response.data[0].lat
             form.longitude = response.data[0].lon
             form.location = response.data[0].display_name
             console.log(response)
+        loadingGetCoord.value = false
         })
         .catch(err => {
             console.log(err)
@@ -151,7 +154,7 @@
                     <p class="text-center text-h4 mb-6">Where's your guest house located?</p>
                     <v-row justify="center">
                         <v-col cols="6" class="mt-5">
-                            <v-text-field variant="solo" v-model="form.location" color="blue" label="Location" @keydown.enter="getCoord()" rounded="pill"></v-text-field>
+                            <v-text-field variant="solo" v-model="form.location" :loading="loadingGetCoord" color="blue" label="Location" @keydown.enter="getCoord()" rounded="pill"></v-text-field>
                             <p class="text-end text-blue-darken-4" id="location" @click="getLocation()">Use my current location</p>
                         </v-col>
                     </v-row>
@@ -159,7 +162,7 @@
             </v-window-item>
             
             <v-window-item :value="3">
-                <v-container>{{ form}}
+                <v-container>
                     <p class="text-h4">Is the pin in the right spot?</p>
                     <p class="text-h6 text-grey-darken">Click at the map to move the pin.</p>
                     <Map :latitude="form.latitude" :longitude="form.longitude" @setPos="setPos" />

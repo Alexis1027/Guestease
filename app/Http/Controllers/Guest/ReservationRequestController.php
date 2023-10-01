@@ -13,6 +13,7 @@ class ReservationRequestController extends Controller
         $form = $request->validate([
             'payment_process' => 'required'
         ]);
+        $form['days'] = $request->days;
         $form['user_id'] = $request->user_id;
         $form['room_id'] = $request->room_id;
         $form['status'] = $request->status;

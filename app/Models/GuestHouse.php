@@ -24,8 +24,7 @@ class GuestHouse extends Model
         'rooms',
         'status',
         'type',
-        'weekly_discount',
-        'monthly_discount'
+        'monthly_discount',
     ];
 
 }

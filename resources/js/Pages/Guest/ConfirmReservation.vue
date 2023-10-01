@@ -12,21 +12,17 @@
     const checkoutDate = format(new Date(prop.checkout), 'd')
 
     const form = useForm({
-        // firstname: prop.auth.user.firstname,
-        // lastname: prop.auth.user.lastname,
-        // email: prop.auth.user.email,
-        // contact_no: prop.auth.user.contact_no,
         room_id: prop.guesthouse.id,
         user_id: prop.auth.user.id,
-        payment_process:'',
+        payment_process: '',
         status: 'pending',
-        checkin: prop.checkin,
-        checkout: prop.checkout,
-        guests: prop.guests
+        checkin: format(new Date(prop.checkin), 'yyyy-MM-dd'),
+        checkout: format(new Date(prop.checkout), 'yyyy-MM-dd'),
+        guests: prop.guests,
+        total: 2000,
+        days: prop.days
     })
-
-    console.log(prop.checkin)
-    console.log(prop.guests)
+    console.log(prop.days)
         
     const submit = () => {
         form.post('/reserve')
@@ -189,14 +185,23 @@
                             <p class="font-weight-bold text-center">Price Details</p>
                             <v-list-item>
                                 <template v-slot:append>
-                                    {{ `₱${prop.guesthouse.price * prop.days}` }}
+                                    {{ `₱${(prop.guesthouse.price * prop.days).toLocaleString()}` }}
                                 </template>
-                                {{ '₱'+ prop.guesthouse.price  }} x {{prop.days}} days
+                                {{ '₱'+ parseInt(prop.guesthouse.price).toLocaleString()  }} x {{prop.days}} days
+                            </v-list-item>
+                            <v-list-item v-if="prop.days >= 30">
+                                <template v-slot:append>
+                                    ₱{{  (( prop.guesthouse.price * prop.days) * (prop.guesthouse.monthly_discount / 100)).toLocaleString()  }}
+                                </template>
+                                Monthly stay discount
                             </v-list-item>
                             <v-divider/>
                             <v-list-item class="font-weight-bold">
-                                <template v-slot:append>
-                                    {{ `₱${prop.guesthouse.price * prop.days}` }}
+                                <template v-slot:append v-if="prop.days >= 30">
+                                    {{ `₱${((prop.guesthouse.price * prop.days) - ( prop.guesthouse.price * prop.days) * (prop.guesthouse.monthly_discount / 100)).toLocaleString()}` }}
+                                </template>
+                                <template v-slot:append v-else>
+                                    {{ `₱${((prop.guesthouse.price * prop.days)).toLocaleString()}` }}
                                 </template>
                                 <p>Total</p>
                             </v-list-item>

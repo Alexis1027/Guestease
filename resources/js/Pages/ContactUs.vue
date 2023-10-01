@@ -5,9 +5,9 @@
 
 </script>
 
-
 <template>
-        <Head title="Guidelines" />
-        <h1>Guidelines...</h1>
+    <Head title="About" />
+       
+    <h1>Contact us page</h1>
 </template>
 
