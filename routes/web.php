@@ -1,22 +1,23 @@
 <?php
 
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Guest\RatingController;
-use App\Http\Controllers\Guest\WishlistController;
-use App\Http\Controllers\Guest\ReservationRequestController;
-use App\Http\Controllers\Owner\ListingController;
-use App\Http\Controllers\Owner\CalendarController;
-use App\Http\Controllers\Owner\OwnerDashboardController;
-use App\Http\Controllers\Owner\OwnerReservationController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Guest\RatingController;
+use App\Http\Controllers\Owner\ListingController;
+use App\Http\Controllers\Guest\WishlistController;
+use App\Http\Controllers\Owner\CalendarController;
 use App\Http\Controllers\Admin\GuestHouseController;
 use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ListingRequestController;
+use App\Http\Controllers\Owner\OwnerDashboardController;
+use App\Http\Controllers\Owner\OwnerReservationController;
+use App\Http\Controllers\Guest\ReservationRequestController;
 
 
 /*
@@ -38,6 +39,7 @@ Route::get('/owner/listing', [ListingController::class, 'index']);
 Route::get('/owner/reservations', [OwnerReservationController::class, 'index']);
 Route::get('/owner/calendar', [CalendarController::class, 'index']);
 Route::get('/owner/create-listing', [ListingController::class, 'create']);
+Route::get('/owner/edit-listing/{guesthouse}', [ListingController::class, 'edit']);
 
 Route::post('/owner/createListing', [ListingController::class, 'store']);
 Route::get('/owner/verify-listing/{guesthouse}', [ListingController::class, 'show']);

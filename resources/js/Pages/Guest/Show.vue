@@ -65,7 +65,7 @@
     }
 
     const guests = reactive({
-        adults: 0,
+        adults: 1,
         children: 0,
         infants: 0,
         pets: 0,
@@ -268,7 +268,7 @@
                     </v-card-item>
                         <v-list v-if="reservationDate">
                             <v-list-item>
-                                {{ `₱${parseInt(guesthouse.price).toLocaleString()} x ${reserveForm.days} daily` }}
+                                {{ `₱${parseInt(guesthouse.price).toLocaleString()} x ${reserveForm.days} days` }}
                                 <template v-slot:append>
                                     {{ `₱${(guesthouse.price * reserveForm.days).toLocaleString()}`  }}
                                 </template>

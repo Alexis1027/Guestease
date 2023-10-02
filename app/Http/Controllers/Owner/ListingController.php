@@ -19,6 +19,10 @@ class ListingController extends Controller
         return Inertia::render('Owner/Listing', ['guesthouses' => GuestHouse::all()->where('owner_id', auth()->user()->id)]);
     }
 
+    public function edit(GuestHouse $guesthouse) {
+        return Inertia::render('Owner/EditListing', ['guesthouse' => $guesthouse]);
+    }
+
     public function show(GuestHouse $guesthouse) {
         return Inertia::render('Owner/VerifyListing', ['guesthouse' => $guesthouse]);
     }
@@ -57,7 +61,7 @@ class ListingController extends Controller
             'bathrooms' => 'required',
             'type' => 'required'
         ]);
-        $form['status'] = "pending";
+        $form['status'] = "To be processed";
         $form['images'] = $houseImages;
         $form['amenities'] = json_encode($form['amenities']);
         GuestHouse::create($form);
