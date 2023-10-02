@@ -8,6 +8,7 @@ use App\Models\GuestHouse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use App\Models\Reservation;
 
 class UserController extends Controller
 {
@@ -25,6 +26,11 @@ class UserController extends Controller
     }
 
     public function destroy(User $user) {
+        $guesthouse = GuestHouse::where('owner_id', $user->id)->get();
+        foreach($guesthouse as $gh) {
+            Reservation::where('room_id', $gh->id)->delete();
+            $gh->delete();
+        }
         $user->delete();
         return back();
     }

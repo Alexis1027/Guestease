@@ -32,6 +32,7 @@
             </template>
             <v-card width="450" >
                 <v-list>
+                    <p class="text-red"> dont work rn</p>
                     <v-list-item value="1">
                         John Doe requested to create a room.
                     </v-list-item>

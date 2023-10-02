@@ -26,6 +26,7 @@
             <v-text-field label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
         </v-col>
         </v-row>
+        <p class="text-red">doestn work rn</p>
         <v-table hover class="bg-grey-lighten-5 text-center">
             <thead >
                 <tr >

@@ -50,7 +50,8 @@
         <thead>
             <tr >
                 <th class="text-center">Id</th>
-                <th class="text-center">Images</th>
+                <th class="text-center">Owner Id</th>
+                <th class="text-center">Image</th>
                 <th class="text-center">Guest house name</th>
                 <th class="text-center">Location</th>
                 <th class="text-center">Price</th>
@@ -61,10 +62,11 @@
             <v-slide-x-transition class="py-0" group>
                 <tr v-for="guesthouse in guesthouses.data" :key="guesthouse.id">
                     <td>{{ guesthouse.id }}</td>
+                    <td>{{ guesthouse.owner_id }}</td>
                     <td class="text-red"> <v-img cover class="my-1" :src="`../images/room1.png`"></v-img> </td>
                     <td>{{ guesthouse.title }}</td>
                     <td>{{ guesthouse.location }}</td>
-                    <td> {{ guesthouse.price }} </td>
+                    <td> {{ '₱'+parseInt(guesthouse.price).toLocaleString() }} </td>
                     <td>
                         <v-btn icon="mdi-pencil" size="small" @click="editGuesthouse(guesthouse)" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
                         <v-btn icon="mdi-delete-outline" @click="deleteGuesthouse(guesthouse)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>

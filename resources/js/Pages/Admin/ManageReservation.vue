@@ -32,6 +32,8 @@
                     <th class="text-center">Guest house id</th>
                     <th class="text-center">Guest id</th>
                     <th class="text-center">Payment Process</th>
+                    <th class="text-center">Check in</th>
+                    <th class="text-center">Check out</th>
                     <th class="text-center">Reserved at</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Actions</th>
@@ -43,6 +45,8 @@
                     <td>{{ reservation.room_id }}</td>
                     <td>{{ reservation.user_id }}</td>
                     <td>{{ reservation.payment_process }}</td>
+                    <td>{{ format(new Date(reservation.checkin), 'MMM d, yyyy') }}</td>
+                    <td>{{ format(new Date(reservation.checkout), 'MMM d, yyyy') }}</td>
                     <td>{{ format(new Date(reservation.created_at), 'M/dd/yyyy') }}</td>
                     <td>{{ reservation.status }}</td>
                     <td>
