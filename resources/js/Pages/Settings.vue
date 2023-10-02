@@ -16,8 +16,6 @@
 
     import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
     const results = ref()
-
-
     const submit = () => {
         if(results.value.isValid) {
             console.log('bruh')
@@ -27,15 +25,12 @@
                 }
             })
         }
+        else {
+            alert('Fill in contact no')
+        }
         
     }
-
     const snackbar = ref(false)
-
-
-
-
-
 </script>
 
 

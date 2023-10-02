@@ -48,7 +48,7 @@
             </v-card>
         </v-menu>
         <Link href="/logout" method="post" class="me-6">
-            <v-btn>Logout</v-btn>
+            <v-btn color="red">Logout</v-btn>
         </Link>
         </v-app-bar>
         <v-navigation-drawer v-model="sidebar" :permanent="true" location="left" temporary>

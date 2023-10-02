@@ -43,7 +43,8 @@
 
                 <v-divider class="my-5"/>
                 <!-- Owner's Guest houses section -->
-                <p class="text-h5 mb-4"> {{ user.firstname }}'s guest houses</p>
+                <p class="text-h5 mb-4"> {{ user.firstname }}'s guest houses  </p> 
+                <p class="text-red">hard coded data pa ni kay kafoy</p>
 
                 <v-row>
                     <v-col cols="4" v-for="n in 4" :key="n">

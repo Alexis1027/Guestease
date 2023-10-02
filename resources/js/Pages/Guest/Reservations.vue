@@ -3,6 +3,7 @@
     import Layout from '../../Layouts/GuestLayout.vue'
     import ReservationCard from './Partials/ReservationCard.vue'
     import {ref} from 'vue'
+    import {processImages} from '@/utils/imageUtils.js'
     defineOptions({layout: Layout})
     defineProps({reservations: Object, auth: Object})
     const cancelReservationDialog = ref(false)

@@ -5,11 +5,10 @@
     import {processImages} from '@/utils/imageUtils'
     import {format} from 'date-fns'
 
-
     const prop = defineProps(['guesthouse', 'auth', 'guests', 'checkin', 'checkout', 'days'])
     const images = processImages(prop.guesthouse.images)
     const checkinDate = format(new Date(prop.checkin), 'MMM d')
-    const checkoutDate = format(new Date(prop.checkout), 'd')
+    const checkoutDate = format(new Date(prop.checkout), 'MMM d')
 
     const form = useForm({
         room_id: prop.guesthouse.id,
@@ -89,21 +88,22 @@
                                 <v-list>
                                     <v-list-item>
                                         <template v-slot:append>
-                                            <v-btn icon="mdi-pencil" flat></v-btn>
+                                            <v-btn icon="mdi-pencil" size="small" flat></v-btn>
                                         </template>
                                         <p class="font-weight-bold">Dates</p>
                                         <p>{{ `${checkinDate} - ${checkoutDate}` }} </p>
                                     </v-list-item>
                                     <v-list-item>
                                         <template v-slot:append>
-                                            <v-btn icon="mdi-pencil" flat></v-btn>
+                                            <v-btn icon="mdi-pencil" size="small" flat></v-btn>
                                         </template>
                                         <p class="font-weight-bold">Guests</p>
                                         <p>{{ prop.guests }} guests</p>
                                     </v-list-item>
                                 </v-list>
                             <v-divider  class="mb-4"/>
-                            <!-- <p class="text-h6 mt-4 font-weight-bold">Choose how to pay</p>
+                            <p class="text-h6 mt-4 font-weight-bold">Choose how to pay <span class="text-red font-weight-thin">(doesnt work rn)</span> </p>
+                            
                             <v-list>
                                 <v-list-item>
                                     <template v-slot:append>
@@ -116,11 +116,11 @@
                                     <template v-slot:append>
                                         <v-checkbox></v-checkbox>
                                     </template>
-                                    <p class="font-weight-bold">Pay in full</p>
+                                    <p class="font-weight-bold">Pay part now, Pay part later</p>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                                 </v-list-item>
                             </v-list>
-                            <v-divider/> -->
+                            <v-divider/>
                             <v-alert variant="outlined" type="warning" prominent v-model="form.hasErrors">
                                 <p class="font-weight-bold">Let's try that again</p>
                                 <p>Please check your payment details.</p>
@@ -143,7 +143,7 @@
                             <v-btn block color="green" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn>
                         </v-form>
                         <div id="paypal-button-container"></div>
-                        <v-divider class="mt-4"/>
+                        <!-- <v-divider class="mt-4"/>
                         <p class="text-h6 mt-4 font-weight-bold">Required for your trip</p>
                             <v-list>
                                 <v-list-item>
@@ -163,7 +163,7 @@
                             </v-list>
                             <v-divider/>
                         <p class="text-h6 mt-4 font-weight-bold">Cancellation policy</p>
-                        <p>Free cancellation for 48 hours. Cancel before Nov 7 for a partial refund. Learn more</p>
+                        <p>Free cancellation for 48 hours. Cancel before Nov 7 for a partial refund. Learn more</p> -->
                     </v-container>
 
                 </v-col>

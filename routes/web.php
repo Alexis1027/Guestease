@@ -10,7 +10,6 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Guest\RatingController;
 use App\Http\Controllers\Owner\ListingController;
 use App\Http\Controllers\Guest\WishlistController;
-use App\Http\Controllers\Owner\CalendarController;
 use App\Http\Controllers\Admin\GuestHouseController;
 use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\AdminDashboardController;
@@ -35,9 +34,8 @@ use App\Http\Controllers\Guest\ReservationRequestController;
 
 //OWNER
 Route::get('/owner/dashboard', [OwnerDashboardController::class, 'dashboard']);
-Route::get('/owner/listing', [ListingController::class, 'index']);
+Route::get('/owner/listings', [ListingController::class, 'index']);
 Route::get('/owner/reservations', [OwnerReservationController::class, 'index']);
-Route::get('/owner/calendar', [CalendarController::class, 'index']);
 Route::get('/owner/create-listing', [ListingController::class, 'create']);
 Route::get('/owner/edit-listing/{guesthouse}', [ListingController::class, 'edit']);
 

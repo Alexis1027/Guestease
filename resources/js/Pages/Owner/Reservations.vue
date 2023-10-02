@@ -2,6 +2,7 @@
 
     import Layout from '../../Layouts/OwnerLayout.vue'
     import {ref} from 'vue'
+    const props = defineProps(['reservations'])
     defineOptions({
         layout: Layout
     })
@@ -16,6 +17,8 @@
     <h1>Reservations page</h1>
     <v-container class="bg-white">
         <p class="text-red">does not work rn</p>
+        {{ reservations }}
+        <p v-for="r in reservations" :key="r">bruh</p>
         <v-row justify="space-between">
             <v-col cols="2">
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
@@ -37,13 +40,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="n in 3" :key="n">
-                    <td>{{ n }}</td>
-                    <td>{{ n }}</td>
-                    <td>{{ n }}</td>
-                    <td>{{ n }}</td>
-                    <td>{{ n }}</td>
-                    <td>{{ n }}</td>
+                <tr v-for="reservation in reservations" :key="reservation.id">
+                    {{ reservation }}
+                    <td>{{ reservation.id }}</td>
+                    <td>{{ reservation.room_id }}</td>
+                    <td>{{ reservation.user_id }}</td>
+                    <td>{{ 'bruh' }}</td>
+                    <td>{{ 'bruh' }}</td>
+                    <td>{{ 'bruh' }}</td>
                     <td>
                         <v-btn icon="mdi-delete-outline" size="small" class="text-red" flat></v-btn>
                         <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->

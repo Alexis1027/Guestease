@@ -19,7 +19,7 @@
                     Dashboard
                 </v-btn>
             </Link>
-            <Link href="/owner/listing">
+            <Link href="/owner/listings">
                 <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Listing' ? 'blue' : ''">
                     Listings
                 </v-btn>
@@ -67,7 +67,7 @@
                 
                 <v-divider/>
                 <Link href="/logout" method="post">
-                    <v-btn variant="text" block class="text-none">
+                    <v-btn variant="text" color="red" block class="text-none">
                         Logout
                     </v-btn>
                 </Link>

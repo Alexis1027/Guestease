@@ -1,6 +1,6 @@
 <script setup>
 
-    import {ref, watch} from 'vue'
+    import {ref} from 'vue'
     import Map from './Partials/Map.vue'
     import {useForm} from '@inertiajs/vue3'
     import axios from 'axios'

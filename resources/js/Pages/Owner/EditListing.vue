@@ -12,7 +12,7 @@
     })
     const amenities = JSON.parse(props.guesthouse.amenities)
 
-    const tab = ref(1)
+    const tab = ref(0)
 
 </script>
 <template>
