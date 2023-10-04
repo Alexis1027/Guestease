@@ -21,6 +21,7 @@
 <template>
     <Head title="Home" />
     <!-- <div class="page-container"> -->
+        <p class="text-h4" v-if="guesthouses.length <= 0">no listings found. pag seed ug data</p>
         <v-row>
             <v-col cols="4" v-for="guesthouse in props.guesthouses" :key="guesthouse.id">
                 <GuestHouseCard :guesthouse="guesthouse" :latitude="latitude" :longitude="longitude" />

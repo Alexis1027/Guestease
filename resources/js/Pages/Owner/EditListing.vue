@@ -17,7 +17,7 @@
 </script>
 <template>
     <v-toolbar>
-      <v-toolbar-title>Edit Listing</v-toolbar-title>
+      <v-toolbar-title>Edit Listing <p class="text-red">doest not work rn</p> </v-toolbar-title>
     </v-toolbar>
     <div class="d-flex flex-row">
         <v-tabs v-model="tab" direction="vertical" color="blue">

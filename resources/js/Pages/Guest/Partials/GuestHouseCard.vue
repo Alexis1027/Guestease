@@ -61,7 +61,7 @@
                     </span>
 
                 </p>
-                <p> <strong class="text-h6">₱{{ prop.guesthouse.price }}</strong> <span class="text-grey-darken-3">/ daily</span> </p>
+                <p> <strong class="text-h6">₱{{ parseInt(prop.guesthouse.price).toLocaleString() }}</strong> <span class="text-grey-darken-3">/ daily</span> </p>
                 <v-chip class="ma-2 text-grey-darken-3" prepend-icon="mdi-bed" size="small" >
                     {{ prop.guesthouse.beds }}  Beds
                 </v-chip>

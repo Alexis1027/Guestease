@@ -40,6 +40,9 @@
                 </tr>
             </thead>
             <tbody>
+                <tr v-if="reservations">
+                    <td>No reservations found.</td>
+                </tr>
                 <tr v-for="reservation in reservations" :key="reservation.id">
                     {{ reservation }}
                     <td>{{ reservation.id }}</td>

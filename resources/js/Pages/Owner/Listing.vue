@@ -44,6 +44,9 @@
                 </tr>
             </thead>
             <tbody>
+                <tr v-if="guesthouses.length <= 0">
+                    <td colspan="8">No listings found.</td>
+                </tr>
                 <tr v-for="listing in guesthouses" :key="listing.id">
                     <td>
                         <v-list-item :title="listing.title">
