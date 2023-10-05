@@ -4,7 +4,7 @@
     import {processImages} from '@/utils/imageUtils'
 
     const prop = defineProps(['wishlist'])
-    const images = processImages(prop.wishlist.guesthouse.images)
+    const images = processImages(prop.wishlist.listing.images)
    
 </script>
 
@@ -21,7 +21,7 @@
                         <v-carousel hide-delimiters height="100%" show-arrows="hover">
                             
                                 <v-carousel-item v-for="(image, i) in images" :key="i">
-                                    <Link :href="`room/${prop.wishlist.guesthouse.id}`">
+                                    <Link :href="`room/${prop.wishlist.listing.id}`">
                                         <v-img :src="`images/${image}`" cover height="100%"></v-img>
                                     </Link>
                                 </v-carousel-item>
@@ -30,12 +30,12 @@
                     </v-card>
                 </v-col>
                 <v-col>
-                    <Link :href="`room/${prop.wishlist.guesthouse.id}`">
-                        <v-card-item class="text-h6">{{ prop.wishlist.guesthouse.title }}</v-card-item>
-                        <v-card-item>{{ prop.wishlist.guesthouse.description }}</v-card-item>
+                    <Link :href="`room/${prop.wishlist.listing.id}`">
+                        <v-card-item class="text-h6">{{ prop.wishlist.listing.title }}</v-card-item>
+                        <v-card-item>{{ prop.wishlist.listing.description }}</v-card-item>
                         <v-card-item>
                             <v-icon color="red">mdi-map-marker</v-icon>
-                            {{ prop.wishlist.guesthouse.location }}
+                            {{ prop.wishlist.listing.location }}
                         </v-card-item>
                         <v-card-item>
                             <v-icon color="orange">mdi-star</v-icon>

@@ -42,7 +42,7 @@
             <tbody>
                 <tr v-for="reservation in reservations" :key="reservation.id">
                     <td>{{ reservation.id }}</td>
-                    <td>{{ reservation.room_id }}</td>
+                    <td>{{ reservation.listing_id }}</td>
                     <td>{{ reservation.user_id }}</td>
                     <td>{{ reservation.payment_process }}</td>
                     <td>{{ format(new Date(reservation.checkin), 'MMM d, yyyy') }}</td>

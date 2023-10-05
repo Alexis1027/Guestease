@@ -10,7 +10,7 @@ class ListingRequest extends Model
     use HasFactory;
     protected $fillable = [
         'owner_id',
-        'guesthouse_id',
+        'listing_id',
         'bldg_permit'
     ];
 }

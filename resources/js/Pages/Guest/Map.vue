@@ -9,16 +9,16 @@
     // const lat = ref('')
     // const lon = ref('')
     // const dataLoaded = ref(false)
-    const prop = defineProps(['guesthouses'])
+    const prop = defineProps(['listings'])
     // const search = ref('')
     const mapContainer = ref(null)
     const mapSnackbar = ref(false)
-    const currentGuestHouse = ref(null)
-    const guesthousesLocation = []
+    const currentlisting = ref(null)
+    const listingsLocation = []
 
-    prop.guesthouses.forEach((gh) => {
-        guesthousesLocation.push({
-            'guesthouse': gh
+    prop.listings.forEach((ls) => {
+        listingsLocation.push({
+            'listing': ls
         })
     })
 
@@ -31,12 +31,12 @@
         const map = L.map(mapContainer.value).setView([10.252763, 123.949394], 13)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
 
-        guesthousesLocation.forEach(place => {
-            const marker = L.marker([place.guesthouse.latitude, place.guesthouse.longitude], {icon: markerIcon}).addTo(map)
-            marker.bindPopup(`<b> Hello from ${place.guesthouse.title}! </b> <br> I'm a popup!`)
+        listingsLocation.forEach(place => {
+            const marker = L.marker([place.listing.latitude, place.listing.longitude], {icon: markerIcon}).addTo(map)
+            marker.bindPopup(`<b> Hello from ${place.listing.title}! </b> <br> I'm a popup!`)
             marker.on('click', () => {
                 mapSnackbar.value = true
-                currentGuestHouse.value = place.guesthouse
+                currentlisting.value = place.listing
             })
         });
     }
@@ -58,7 +58,7 @@
         </template>
     </v-text-field> -->
     
-    <MapSidebar :mapSnackbar="mapSnackbar" :guesthouse="currentGuestHouse" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
+    <MapSidebar :mapSnackbar="mapSnackbar" :listing="currentlisting" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
     <div class="leaflet-container" ref="mapContainer"></div>
 </template>
 

@@ -13,17 +13,16 @@
     
     defineOptions({layout: Layout})
 
-    const props = defineProps(['guesthouse', 'ratings', 'averageRating', 'wishlist', 'auth', 'rated', 'owner'])
+    const props = defineProps(['listing', 'ratings', 'averageRating', 'wishlist', 'auth', 'rated', 'owner'])
     const rating = ref(0)
-    const discount = ref(200)
     const showReviewModal = ref(false)
     const saveWishlistForm = useForm({
         user_id: props.auth ? props.auth.user.id : '',
-        room_id: props.auth ? props.guesthouse.id : '',
+        listing_id: props.auth ? props.listing.id : '',
     })
 
-    const images = processImages(props.guesthouse.images)
-    const guesthouseImages = images.map(img => '../images/' + img)
+    const images = processImages(props.listing.images)
+    const listingImages = images.map(img => '../images/' + img)
 
     const submitForm = () => {
         if(props.wishlist) {
@@ -36,7 +35,7 @@
         }
     }
 
-    const amenities = JSON.parse(props.guesthouse.amenities)
+    const amenities = JSON.parse(props.listing.amenities)
     const reservationDate = ref(null)
     const date = useDate()
     const reserveFormAlert = ref(false)
@@ -57,7 +56,7 @@
 
     const submitReservation = () => {
         if(reserveForm.checkin && reserveForm.checkout) {
-            reserveForm.get(`/payment/${props.guesthouse.id}`)
+            reserveForm.get(`/payment/${props.listing.id}`)
         }
         else {
             reserveFormAlert.value = true
@@ -111,10 +110,10 @@
 
 
 <template>
-    <Head :title="`${guesthouse.title}`" />
+    <Head :title="`${listing.title}`" />
     
     <v-container>
-        <h1>{{ guesthouse.title }}</h1>
+        <h1>{{ listing.title }}</h1>
         
         <v-row>
             <!-- ratings and location  -->
@@ -122,7 +121,7 @@
                 <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ averageRating }} - ({{ ratings.length }} reviews) 
             </v-col>
             <v-col cols="8"> 
-                <v-icon color="red">mdi-map-marker</v-icon> {{ guesthouse.location }}
+                <v-icon color="red">mdi-map-marker</v-icon> {{ listing.location }}
             </v-col>
             <v-spacer></v-spacer>
             <v-col class="text-end">
@@ -144,7 +143,7 @@
                 </v-form>
             </v-col>
         </v-row>
-            <MazGallery :images="guesthouseImages" :height="400" class="mt-1" />
+            <MazGallery :images="listingImages" :height="400" class="mt-1" />
         <v-divider class="mt-2" />
         <v-row>
             <v-col cols="8">
@@ -157,15 +156,15 @@
                                 </v-avatar>
                             </template>
                             <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
-                            <p class="text-grey-darken-1"> {{ guesthouse.guests }} guests - {{ guesthouse.rooms }} room - {{ guesthouse.beds }} bedroom - {{ guesthouse.bathrooms }} bathroom </p>
+                            <p class="text-grey-darken-1"> {{ listing.guests }} guests - {{ listing.rooms }} room - {{ listing.beds }} bedroom - {{ listing.bathrooms }} bathroom </p>
                         </v-list-item>
                         <v-divider class="my-2" />
                         <v-list-item prepend-icon="mdi-information-variant">
-                            {{ guesthouse.description }} 
+                            {{ listing.description }} 
                             <br>
                         </v-list-item>
                         <v-list-item prepend-icon="mdi-map-marker">
-                            {{ guesthouse.location }}
+                            {{ listing.location }}
                         </v-list-item>
                     </v-list>
 
@@ -176,6 +175,7 @@
                     </v-list-item>
                     <v-divider class="my-2" />
                     <v-row>
+                        {{ amenities }}
                         <v-col cols="6" v-for="item in amenities" :key="item">
                             <v-list-item :prepend-icon="`${item.icon}`">
                                 {{ item.title }}
@@ -206,7 +206,7 @@
                     <v-card-item>
                         <v-row>
                             <v-col>
-                                <span class="text-h6">₱{{ parseInt(guesthouse.price).toLocaleString() }}</span> daily
+                                <span class="text-h6">₱{{ parseInt(listing.price).toLocaleString() }}</span> daily
                                 <v-menu min-width="200px" rounded  :close-on-content-click="false">
                                     <template v-slot:activator="{ props }">
                                         <v-row>
@@ -220,7 +220,7 @@
                                         <v-btn id="menu-activator" variant="outlined" width="100%" size="large" style="border-color: grey" class="mt-2 text-none" append-icon="mdi-chevron-down">
                                             {{ reserveForm.guests }} Guests
                                         </v-btn>
-                                        <v-alert variant="outlined" type="warning" class="mt-5" prominent v-model="reserveFormAlert">
+                                        <v-alert variant="outlined" type="error" class="mt-5" prominent v-model="reserveFormAlert">
                                             <p class="font-weight-bold">Let's try that again</p>
                                             <p>Please input your check in and check out dates.</p>
                                         </v-alert>
@@ -268,31 +268,31 @@
                     </v-card-item>
                         <v-list v-if="reservationDate">
                             <v-list-item>
-                                {{ `₱${parseInt(guesthouse.price).toLocaleString()} x ${reserveForm.days} days` }}
+                                {{ `₱${parseInt(listing.price).toLocaleString()} x ${reserveForm.days} days` }}
                                 <template v-slot:append>
-                                    {{ `₱${(guesthouse.price * reserveForm.days).toLocaleString()}`  }}
+                                    {{ `₱${(listing.price * reserveForm.days).toLocaleString()}`  }}
                                 </template>
                             </v-list-item>
                         <v-list-item v-if="reserveForm.days >= 30">
                             Monthly stay discount
                             <template v-slot:append>
                                 <!-- DISPLAYS THE TOTAL - DISCOUNT PRICE -->
-                                {{ `₱${((guesthouse.price * reserveForm.days) * (guesthouse.monthly_discount / 100)).toLocaleString()}`}}
+                                {{ `₱${((listing.price * reserveForm.days) * (listing.monthly_discount / 100)).toLocaleString()}`}}
                             </template>
                         </v-list-item>
                         <v-divider/>
                         <v-list-item class="font-weight-bold">
                             <p>Total</p>
                             <template v-slot:append v-if="reserveForm.days >= 30">
-                                {{ `₱${((guesthouse.price * reserveForm.days) - (guesthouse.price * reserveForm.days) * (guesthouse.monthly_discount / 100)).toLocaleString()}`  }}
+                                {{ `₱${((listing.price * reserveForm.days) - (listing.price * reserveForm.days) * (listing.monthly_discount / 100)).toLocaleString()}`  }}
                             </template>
                             <template v-slot:append v-else>
-                                {{ `₱${((guesthouse.price * reserveForm.days)).toLocaleString()}`  }}
+                                {{ `₱${((listing.price * reserveForm.days)).toLocaleString()}`  }}
                             </template>
                         </v-list-item>
                         </v-list>
                     <v-card-item>
-                        <!-- <Link  :href=" reserveForm.date ? `/payment/${guesthouse.id}?guests=${reserveForm.guests}&checkin=${reserveForm.date[0]}&checkout=${reserveForm.date[1]}` : ''"> -->
+                        <!-- <Link  :href=" reserveForm.date ? `/payment/${listing.id}?guests=${reserveForm.guests}&checkin=${reserveForm.date[0]}&checkout=${reserveForm.date[1]}` : ''"> -->
                             <v-btn color="green" @click="submitReservation" :disabled="reserveForm.processing" :loading="reserveForm.processing" class="text-none mb-4" width="100%" size="large">Reserve</v-btn>
                         <!-- </Link> -->
                     </v-card-item>
@@ -316,7 +316,7 @@
          <!-- MAP SECTION -->
         <v-container>
             <p class="text-h5 font-weight-medium mb-6">Where you'll be.</p>
-            <Map :latitude="guesthouse.latitude" :longitude="guesthouse.longitude" />
+            <Map :latitude="listing.latitude" :longitude="listing.longitude" />
         </v-container>
         <!-- HOUSE RULES -->
         <v-container class="bg-white">
@@ -364,7 +364,7 @@
         </v-container>
                 <!-- About this place section -->
         <!-- Components -->
-        <RatingModal :showReviewModal="showReviewModal" :auth="auth" :star="rating" :guesthouse="guesthouse" @closeReviewModal="showReviewModal = false" />
+        <RatingModal :showReviewModal="showReviewModal" :auth="auth" :star="rating" :listing="listing" @closeReviewModal="showReviewModal = false" />
     </v-container>
 </template>
 

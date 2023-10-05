@@ -5,13 +5,13 @@
     import Overview from './MapSidebarOverview.vue'
     import About from './MapSidebarAbout.vue'
     import {processImages} from '@/utils/imageUtils'
-    const props = defineProps(['mapSnackbar', 'guesthouse'])
+    const props = defineProps(['mapSnackbar', 'listing'])
     const tab = ref(null)
     const emit = defineEmits('closeMapSnackbar')
     var images
     watch(props, () => {
-        console.log(props.guesthouse)
-        images = processImages(props.guesthouse.images)
+        console.log(props.listing)
+        images = processImages(props.listing.images)
     })  
 
     const emitCloseMapSnackbar = () => {
@@ -22,7 +22,7 @@
 
 <template>
     <v-snackbar v-model="props.mapSnackbar" location="right" transition="scroll-x-reverse-transition" color="white">
-    <Link :href="`/room/${props.guesthouse ? props.guesthouse.id : ''}`"><v-btn rounded color="blue" id="reserveBtn" width="50%">See more</v-btn></Link>
+    <Link :href="`/room/${props.listing ? props.listing.id : ''}`"><v-btn rounded color="blue" id="reserveBtn" width="50%">See more</v-btn></Link>
         <div class="custom-snackbar-content">
             <div style="height: 300px;">
                 <v-carousel show-arrows="hover" color="blue-lighten-4" height="100%">
@@ -34,7 +34,7 @@
             <v-card>
                 <v-card-title>
                     <h3>
-                        {{ props.guesthouse ? props.guesthouse.title : '' }}
+                        {{ props.listing ? props.listing.title : '' }}
                     </h3>
                 </v-card-title>
                 <v-tabs v-model="tab" bg-color="blue-lighten-3">
@@ -56,7 +56,7 @@
                             <Reviews/>
                         </v-window-item>
                         <v-window-item value="about">
-                            <About :about="props.guesthouse.description" />
+                            <About :about="props.listing.description" />
                         </v-window-item>
                     </v-window>
                 </v-card-text>

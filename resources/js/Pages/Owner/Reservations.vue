@@ -14,11 +14,9 @@
 </script>
 
 <template>
-    <h1>Reservations page</h1>
     <v-container class="bg-white">
         <p class="text-red">does not work rn</p>
         {{ reservations }}
-        <p v-for="r in reservations" :key="r">bruh</p>
         <v-row justify="space-between">
             <v-col cols="2">
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
@@ -31,9 +29,11 @@
             <thead>
                 <tr>
                     <th class="text-center">Id</th>
-                    <th class="text-center">Guest house id</th>
+                    <th class="text-center">Listing id</th>
                     <th class="text-center">Guest id</th>
                     <th class="text-center">Payment Process</th>
+                    <th class="text-center">Check in</th>
+                    <th class="text-center">Check out</th>
                     <th class="text-center">Reserved at</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Actions</th>
@@ -41,14 +41,16 @@
             </thead>
             <tbody>
                 <tr v-if="reservations">
-                    <td>No reservations found.</td>
+                    <td colspan="10">No reservations found.</td>
                 </tr>
                 <tr v-for="reservation in reservations" :key="reservation.id">
                     {{ reservation }}
                     <td>{{ reservation.id }}</td>
-                    <td>{{ reservation.room_id }}</td>
+                    <td>{{ reservation.listing_id }}</td>
                     <td>{{ reservation.user_id }}</td>
-                    <td>{{ 'bruh' }}</td>
+                    <td>{{ 'payment' }}</td>
+                    <td>{{ reservation.checkin }}</td>
+                    <td>{{ reservation.checkout }}</td>
                     <td>{{ 'bruh' }}</td>
                     <td>{{ 'bruh' }}</td>
                     <td>

@@ -17,9 +17,9 @@
         form.post('/owner/verify-listing/1')
     }
 
-    const {guesthouse} = defineProps(['guesthouse'])
+    const {listing} = defineProps(['listing'])
     const addBuildingPermitDialog = ref(false)
-    const images = processImages(guesthouse.images)
+    const images = processImages(listing.images)
 
 </script>
 <template>
@@ -62,7 +62,7 @@
                 </v-list-item>
                 <v-divider />
                 
-                    <v-list-item class="mt-6" title="Verify your guesthouse">
+                    <v-list-item class="mt-6" title="Verify your listing">
                         <template v-slot:append>
                             <v-btn flat icon="mdi-chevron-right" @click="addBuildingPermitDialog = true"></v-btn>
                         </template>
@@ -78,8 +78,8 @@
                 <v-card variant="outlined" color="grey" class="rounded-xl" width="100%" height="100%">
                     <v-img :src="`../../images/${images[0]}`" height="250" cover width="100%"></v-img>
                     <v-card-text class="text-black">
-                        <p class="font-weight-bold">{{ guesthouse.title }}</p>
-                    <p>{{ guesthouse.location }}</p>
+                        <p class="font-weight-bold">{{ listing.title }}</p>
+                    <p>{{ listing.location }}</p>
                     </v-card-text>
                 </v-card>
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Inertia\Inertia;
-use App\Models\GuestHouse;
+use App\Models\Listing;
 use App\Models\RoomRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

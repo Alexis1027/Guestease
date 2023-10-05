@@ -5,12 +5,12 @@
     import MazCard from 'maz-ui/components/MazCard'
     import {processImages} from '@/utils/imageUtils.js'
     import {ref} from 'vue'
-    const props = defineProps(['guesthouse'])
-    const images = processImages(props.guesthouse.images)
+    const props = defineProps(['listing'])
+    const images = processImages(props.listing.images)
     defineOptions({
         layout: Layout
     })
-    const amenities = JSON.parse(props.guesthouse.amenities)
+    const amenities = JSON.parse(props.listing.amenities)
 
     const tab = ref(0)
 
@@ -101,7 +101,7 @@
                     <v-divider/>
                     <p class="text-h6">Amenities</p>
                         <v-container>
-                            <v-chip :prepend-icon="item.icon" v-for="item in amenities" :key="item.title" class="mx-2">{{ item.title }}</v-chip>
+                            <v-chip :prepend-icon="item.icon" v-for="item in amenities" :key="item.title" class="mx-2 my-1">{{ item.title }}</v-chip>
                             <v-chip prepend-icon="mdi-plus" color="green">Add</v-chip>
                         </v-container>
                 </v-list>

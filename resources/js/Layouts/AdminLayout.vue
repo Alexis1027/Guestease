@@ -63,8 +63,8 @@
                 <Link href="/admin/dashboard">
                     <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
                 </Link>
-                <Link href="/admin/manage-guesthouses">
-                    <v-list-item prepend-icon="mdi-home-edit" title="Guest house management" value="manageguesthouse"></v-list-item>
+                <Link href="/admin/manage-listings">
+                    <v-list-item prepend-icon="mdi-home-edit" title="Listing management" value="managelistings"></v-list-item>
                 </Link>
                 <Link href="/admin/manage-users">
                     <v-list-item prepend-icon="mdi-account-edit" title="User management" value="manageuser"></v-list-item>

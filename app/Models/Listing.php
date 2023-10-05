@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GuestHouse extends Model
+class Listing extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -23,7 +23,6 @@ class GuestHouse extends Model
         'bathrooms',
         'rooms',
         'status',
-        'type',
         'monthly_discount',
     ];
 

@@ -15,7 +15,7 @@ class ReservationRequestController extends Controller
         ]);
         $form['days'] = $request->days;
         $form['user_id'] = $request->user_id;
-        $form['room_id'] = $request->room_id;
+        $form['listing_id'] = $request->listing_id;
         $form['status'] = $request->status;
         $form['checkin'] = $request->checkin;
         $form['checkout'] = $request->checkout;

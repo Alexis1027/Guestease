@@ -5,7 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\Rating;
-use App\Models\GuestHouse;
+use App\Models\Listing;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        GuestHouse::factory(15)->create();
+        Listing::factory(15)->create();
         Rating::factory(15)->create();
         User::factory(10)->create();
     }

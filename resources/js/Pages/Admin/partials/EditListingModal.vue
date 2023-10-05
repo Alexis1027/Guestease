@@ -3,7 +3,7 @@
     import {ref, defineProps, defineEmits} from 'vue'
     import {useForm} from '@inertiajs/vue3'
     const emit = defineEmits('CloseDialog')
-    const prop = defineProps(['show', 'guesthouse'])
+    const prop = defineProps(['show', 'listing'])
     const emitCLoseDialog = () => {
         emit('CloseDialog')
     }
@@ -24,7 +24,7 @@
         <v-container class="justify-center">
             <v-form>
                 <v-row justify="center">
-                    <v-card title="Edit guest house" elevation="0" class="text-center" width="80%"> <p class="text-red">doestn work</p>
+                    <v-card title="Edit listing" elevation="0" class="text-center" width="80%"> <p class="text-red">doestn work</p>
                         <div id="container">
                             <v-text-field variant="outlined" v-model="form.room_name" label="Name" clearable color="blue"></v-text-field>
                         <v-file-input

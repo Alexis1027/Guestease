@@ -5,13 +5,13 @@
     import {processImages} from '@/utils/imageUtils'
     import {format} from 'date-fns'
 
-    const prop = defineProps(['guesthouse', 'auth', 'guests', 'checkin', 'checkout', 'days'])
-    const images = processImages(prop.guesthouse.images)
+    const prop = defineProps(['listing', 'auth', 'guests', 'checkin', 'checkout', 'days'])
+    const images = processImages(prop.listing.images)
     const checkinDate = format(new Date(prop.checkin), 'MMM d')
     const checkoutDate = format(new Date(prop.checkout), 'MMM d')
 
     const form = useForm({
-        room_id: prop.guesthouse.id,
+        listing_id: prop.listing.id,
         user_id: prop.auth.user.id,
         payment_process: '',
         status: 'pending',
@@ -79,7 +79,7 @@
                 <v-col cols="7">
                     <v-container>
                         <v-form @submit.prevent>
-                            <Link :href="`/room/${prop.guesthouse.id}`">
+                            <Link :href="`/room/${prop.listing.id}`">
                                 <v-btn rounded icon="mdi-keyboard-backspace" flat></v-btn>
                             </Link>
                             <label class="text-h5 font-weight-bold">Confirm Reservation</label>
@@ -175,33 +175,33 @@
                             <v-img :src="`/images/${images[0]}`" cover></v-img>
                         </v-card>
                         <v-card-title class="text-center font-weight-bold">
-                            {{ prop.guesthouse.title }}
+                            {{ prop.listing.title }}
                         </v-card-title>
                         <v-card-text>
-                            <p>{{ prop.guesthouse.location }}</p>
+                            <p>{{ prop.listing.location }}</p>
                         </v-card-text>
                         <v-divider/>
                         <v-card-text>
                             <p class="font-weight-bold text-center">Price Details</p>
                             <v-list-item>
                                 <template v-slot:append>
-                                    {{ `₱${(prop.guesthouse.price * prop.days).toLocaleString()}` }}
+                                    {{ `₱${(prop.listing.price * prop.days).toLocaleString()}` }}
                                 </template>
-                                {{ '₱'+ parseInt(prop.guesthouse.price).toLocaleString()  }} x {{prop.days}} days
+                                {{ '₱'+ parseInt(prop.listing.price).toLocaleString()  }} x {{prop.days}} days
                             </v-list-item>
                             <v-list-item v-if="prop.days >= 30">
                                 <template v-slot:append>
-                                    ₱{{  (( prop.guesthouse.price * prop.days) * (prop.guesthouse.monthly_discount / 100)).toLocaleString()  }}
+                                    ₱{{  (( prop.listing.price * prop.days) * (prop.listing.monthly_discount / 100)).toLocaleString()  }}
                                 </template>
                                 Monthly stay discount
                             </v-list-item>
                             <v-divider/>
                             <v-list-item class="font-weight-bold">
                                 <template v-slot:append v-if="prop.days >= 30">
-                                    {{ `₱${((prop.guesthouse.price * prop.days) - ( prop.guesthouse.price * prop.days) * (prop.guesthouse.monthly_discount / 100)).toLocaleString()}` }}
+                                    {{ `₱${((prop.listing.price * prop.days) - ( prop.listing.price * prop.days) * (prop.listing.monthly_discount / 100)).toLocaleString()}` }}
                                 </template>
                                 <template v-slot:append v-else>
-                                    {{ `₱${((prop.guesthouse.price * prop.days)).toLocaleString()}` }}
+                                    {{ `₱${((prop.listing.price * prop.days)).toLocaleString()}` }}
                                 </template>
                                 <p>Total</p>
                             </v-list-item>

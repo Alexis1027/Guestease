@@ -7,7 +7,7 @@
 
     defineOptions({ layout: Layout })
     
-    const prop = defineProps(['totalUsers', 'totalGuesthouses'])
+    const prop = defineProps(['totalUsers', 'totalListings'])
     const myChartRef = ref(null)
 
     onMounted(() => {
@@ -61,7 +61,7 @@
                 <DashboardSheet id="sheet1">
                     <strong class="">Total Listings</strong>
                     <p class="mt-3">
-                        {{prop.totalGuesthouses}}
+                        {{prop.totalListings}}
                     </p>
                 </DashboardSheet>
                 <DashboardSheet id="sheet1">

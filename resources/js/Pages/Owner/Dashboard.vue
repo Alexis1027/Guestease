@@ -4,7 +4,7 @@
     import GuestHouseCard from './Partials/GuestHouseCard.vue'
 
     defineProps({
-        guesthouses: Object,
+        listings: Object,
         auth: Object
     })
 
@@ -19,7 +19,7 @@
     <v-row class="mt-6">
         <v-col cols="9">
             <p class="text-h4">Welcome, {{ auth.user.firstname }}!</p>
-            Guests can reserve your place after you publish—here's how to prepare.
+            Guests can reserve after the administrator publish your place.
         </v-col>
         <v-col class="justify-end d-flex">
             <Link href="/owner/create-listing">
@@ -29,21 +29,20 @@
     </v-row>
 
     <v-row>
-        <v-col cols="3" v-for="guesthouse in guesthouses" :key="guesthouse.id">
-            <GuestHouseCard  :guesthouse="guesthouse" />
+        <v-col cols="3" v-for="listing in listings" :key="listing.id">
+            <GuestHouseCard  :listing="listing" />
         </v-col>
         <v-col cols="3">
-            <v-card class="mt-6 rounded-lg bg-white" height="auto" variant="outlined" color="grey">
-                    <p class="font-weight-bold ms-4 mt-4 text-black">Confirm important details</p>
+            <v-card class="mt-6 rounded-lg bg-white" height="auto" variant="outlined" color="grey" v-if="listings.length <= 0">
+                    <p class="font-weight-bold ms-4 mt-4 text-black">Create new listing</p>
                     <v-list-item>
                         <template v-slot:append>
-                            <v-icon size="35" color="red">mdi-alert-circle-outline</v-icon>
+                            <v-icon size="35" color="green">mdi-plus</v-icon>
                         </template>
-                        <p class="text-red">Required to publish</p>
-                    <p class="text-grey">Guest ashouse ahouse name</p>
+                    <p class="text-grey">Lorem ipsum dolor sit amet.</p>
                     </v-list-item>
                 <v-card-actions>
-                    <Link href="/owner/verify-listing/1" class="ms-2 text-decoration-underline">
+                    <Link href="/owner/create-listing" class="ms-2 text-decoration-underline">
                         Start
                     </Link>
                 </v-card-actions>

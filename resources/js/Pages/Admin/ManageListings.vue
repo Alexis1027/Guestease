@@ -1,32 +1,32 @@
 <script setup>
 
-    import {ref, defineProps, watch, onMounted} from 'vue'
+    import {ref, defineProps, watch} from 'vue'
     import {router} from '@inertiajs/vue3'
     import Layout from '../../Layouts/AdminLayout.vue'
-    import DeleteGuestHouseModal from './partials/DeleteGuestHouseModal.vue'
-    import EditGuestHouseModal from './partials/EditGuestHouseModal.vue'
+    import DeleteListingModal from './partials/DeleteListingModal.vue'
+    import EditListingModal from './partials/EditListingModal.vue'
 
-    defineProps({guesthouses: Object, newEntry: Object})
-    const deleteGuestHouseModal = ref(false)
-    const editGuestHouseModal = ref(false)
+    defineProps({listings: Object, newEntry: Object})
+    const deleteListingModal = ref(false)
+    const editListingModal = ref(false)
     const deleteSnackbar = ref(false)
     const createSnackbar = ref(false)
     const entries = [5, 10, 15, 20, 25]
     const entry = ref()
-    const guesthouse = ref({})
+    const listing = ref({})
 
-    function deleteGuesthouse(gh) {
-        guesthouse.value = gh
-        deleteGuestHouseModal.value = true
+    function deleteListing(gh) {
+        listing.value = gh
+        deleteListingModal.value = true
     }
 
     watch(entry, () => {
-        router.get(`/admin/manage-guesthouses/${entry.value}`)
+        router.get(`/admin/manage-listings/${entry.value}`)
     })
 
-    function editGuesthouse(gh) {
-        guesthouse.value = gh
-        editGuestHouseModal.value = true
+    function editListing(gh) {
+        listing.value = gh
+        editListingModal.value = true
     }
 
     defineOptions({layout: Layout})
@@ -36,7 +36,7 @@
 
 
 <template>
-    <Head title="Manage guest house" />
+    <Head title="Manage Listings" />
     <v-container class="bg-white">
         <v-row justify="space-between">
             <v-col cols="2">
@@ -52,7 +52,7 @@
                 <th class="text-center">Id</th>
                 <th class="text-center">Owner Id</th>
                 <th class="text-center">Image</th>
-                <th class="text-center">Guest house name</th>
+                <th class="text-center">Listing name</th>
                 <th class="text-center">Location</th>
                 <th class="text-center">Price</th>
                 <th class="text-center">Actions</th>
@@ -60,28 +60,28 @@
         </thead>
         <tbody>
             <v-slide-x-transition class="py-0" group>
-                <tr v-for="guesthouse in guesthouses.data" :key="guesthouse.id">
-                    <td>{{ guesthouse.id }}</td>
-                    <td>{{ guesthouse.owner_id }}</td>
+                <tr v-for="listing in listings.data" :key="listing.id">
+                    <td>{{ listing.id }}</td>
+                    <td>{{ listing.owner_id }}</td>
                     <td class="text-red"> <v-img cover class="my-1" :src="`../images/room1.png`"></v-img> </td>
-                    <td>{{ guesthouse.title }}</td>
-                    <td>{{ guesthouse.location }}</td>
-                    <td> {{ '₱'+parseInt(guesthouse.price).toLocaleString() }} </td>
+                    <td>{{ listing.title }}</td>
+                    <td>{{ listing.location }}</td>
+                    <td> {{ '₱'+parseInt(listing.price).toLocaleString() }} </td>
                     <td>
-                        <v-btn icon="mdi-pencil" size="small" @click="editGuesthouse(guesthouse)" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
-                        <v-btn icon="mdi-delete-outline" @click="deleteGuesthouse(guesthouse)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
+                        <v-btn icon="mdi-pencil" size="small" @click="editListing(listing)" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
+                        <v-btn icon="mdi-delete-outline" @click="deleteListing(listing)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
                     </td>
                 </tr>
             </v-slide-x-transition>
-            <tr v-if="guesthouses.data.length <= 0">
-                <td class="text-h6" colspan="6">No Guest houses found.</td>
+            <tr v-if="listings.data.length <= 0">
+                <td class="text-h6" colspan="6">No listing found.</td>
             </tr>
         </tbody>
     </v-table>
     <v-row  class="mt-2">
         <v-col class="d-flex justify-end">
             <Link 
-                v-for="link in guesthouses.links" 
+                v-for="link in listings.links" 
                 :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 
                 :key="link" 
                 :href="link.url"
@@ -93,8 +93,8 @@
     
     </v-container>
 
-    <DeleteGuestHouseModal :guesthouse="guesthouse" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteGuestHouseModal" @CloseDialog="deleteGuestHouseModal = false" v-model="deleteGuestHouseModal" />
-    <EditGuestHouseModal :guesthouse="guesthouse" :show="editGuestHouseModal" @CloseDialog="editGuestHouseModal = false" v-model="editGuestHouseModal" />
+    <DeleteListingModal :listing="listing" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteListingModal" @CloseDialog="deleteListingModal = false" v-model="deleteListingModal" />
+    <EditListingModal :listing="listing" :show="editListingModal" @CloseDialog="editListingModal = false" v-model="editListingModal" />
 
     <v-snackbar
       v-model="deleteSnackbar"

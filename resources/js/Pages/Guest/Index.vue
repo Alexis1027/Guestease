@@ -5,7 +5,7 @@
     import {defineProps, ref} from 'vue'
   
     defineOptions({layout: Layout})
-    const props = defineProps(['guesthouses'])
+    const props = defineProps(['listings'])
     //TOMorrow !
     const latitude = ref()
     const longitude = ref()
@@ -21,10 +21,10 @@
 <template>
     <Head title="Home" />
     <!-- <div class="page-container"> -->
-        <p class="text-h4" v-if="guesthouses.length <= 0">no listings found. pag seed ug data</p>
+        <p class="text-h4" v-if="listings.length <= 0">no listings found. pag seed ug data</p>
         <v-row>
-            <v-col cols="4" v-for="guesthouse in props.guesthouses" :key="guesthouse.id">
-                <GuestHouseCard :guesthouse="guesthouse" :latitude="latitude" :longitude="longitude" />
+            <v-col cols="4" v-for="listing in props.listings" :key="listing.id">
+                <GuestHouseCard :listing="listing" :latitude="latitude" :longitude="longitude" />
             </v-col>
         </v-row>
         <div class="sticky-btn-container">

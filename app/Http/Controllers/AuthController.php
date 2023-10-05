@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;
-use App\Models\GuestHouse;
+use App\Models\Listing;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller

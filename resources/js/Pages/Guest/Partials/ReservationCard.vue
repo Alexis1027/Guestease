@@ -5,7 +5,7 @@
     import {processImages} from '@/utils/imageUtils.js'
 
     const props = defineProps(['reservation'])
-    const images = processImages(props.reservation.guesthouse.images)
+    const images = processImages(props.reservation.listing.images)
     const emit = defineEmits(['openCancelReservationDialog'])
 
     const openCancelReservationDialog = () => {
@@ -17,8 +17,8 @@
 <template>
     <v-card class="mt-3 border" width="100%">
         <!-- title and the image -->
-        <Link :href="`/room/${reservation.guesthouse.id}`">
-            <v-list-item :title="reservation.guesthouse.title" :subtitle="`Guest house in ${reservation.guesthouse.location}`">
+        <Link :href="`/room/${reservation.listing.id}`">
+            <v-list-item :title="reservation.listing.title" :subtitle="`Guest house in ${reservation.listing.location}`">
                 <template v-slot:append>
                     <v-img :src="`../images/${images[0]}`" height="130" cover width="150"></v-img>
                 </template>
@@ -42,26 +42,26 @@
          </v-list-item>
          <!-- price x days -->
          <v-list-item>
-            ₱{{ parseInt(reservation.guesthouse.price).toLocaleString() }} x {{ reservation.days }} days
+            ₱{{ parseInt(reservation.listing.price).toLocaleString() }} x {{ reservation.days }} days
             <template v-slot:append>
-                ₱{{ (reservation.guesthouse.price * ( reservation.days)).toLocaleString() }}
+                ₱{{ (reservation.listing.price * ( reservation.days)).toLocaleString() }}
             </template>
          </v-list-item>
          <!-- if 30 days ipakita ni  -->
          <v-list-item v-if="reservation.days >= 30">
             Monthly stay discount
             <template v-slot:append>
-                ₱{{  (( reservation.guesthouse.price * reservation.days) * (reservation.guesthouse.monthly_discount / 100)).toLocaleString()  }}
+                ₱{{  (( reservation.listing.price * reservation.days) * (reservation.listing.monthly_discount / 100)).toLocaleString()  }}
             </template>
          </v-list-item>
          <!-- total cost -->
          <v-list-item class="font-weight-bold">
             <p >Total cost</p>
             <template v-slot:append v-if="reservation.days >= 30">
-                {{ `₱${((reservation.guesthouse.price * reservation.days) - ( reservation.guesthouse.price * reservation.days) * (reservation.guesthouse.monthly_discount / 100)).toLocaleString()}` }}
+                {{ `₱${((reservation.listing.price * reservation.days) - ( reservation.listing.price * reservation.days) * (reservation.listing.monthly_discount / 100)).toLocaleString()}` }}
             </template>
             <template v-slot:append v-else>
-                ₱{{ (reservation.guesthouse.price * (reservation.days)).toLocaleString() }}
+                ₱{{ (reservation.listing.price * (reservation.days)).toLocaleString() }}
             </template>
 
          </v-list-item>
@@ -69,7 +69,7 @@
         <!-- cancel reservation and contact owner buttons -->
          <v-card-actions class="justify-end d-flex">
             <v-btn color="red" class="text-none" @click="openCancelReservationDialog">Cancel Reservation</v-btn>
-            <Link :href="`/profile/${reservation.guesthouse.owner_id}`">
+            <Link :href="`/profile/${reservation.listing.owner_id}`">
                 <v-btn variant="flat" class="text-none" color="blue">Contact owner</v-btn>
             </Link>
          </v-card-actions>

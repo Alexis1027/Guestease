@@ -5,8 +5,8 @@
     import {processImages} from '@/utils/imageUtils'
 
     const emit = defineEmits('closeReviewModal')
-    const props = defineProps(['showReviewModal', 'guesthouse', 'star', 'auth'])
-    const images = processImages(props.guesthouse.images)
+    const props = defineProps(['showReviewModal', 'listing', 'star', 'auth'])
+    const images = processImages(props.listing.images)
 
     const emitcloseReviewModal = () => {
         emit('closeReviewModal')
@@ -20,13 +20,13 @@
 
     const form = useForm({
         user_id: props.auth ? props.auth.user.id : '',
-        room_id: props.guesthouse.id,
+        listing_id: props.listing.id,
         review: '',
         rating: '', 
     })
 
     const submit = () => {
-        form.post(`/rooms/rate/${props.guesthouse.id}`, {
+        form.post(`/rooms/rate/${props.listing.id}`, {
             preserveScroll: true
         })
         emit('closeReviewModal')
@@ -43,7 +43,7 @@
                             <v-img :src="`../images/${images[0]}`" width="100%" max-height="200"></v-img>
                         </v-col>
                         <v-col class="mt-4">
-                            {{ props.guesthouse.title }}
+                            {{ props.listing.title }}
                         </v-col>
                     </v-row>
                 </v-card-title>

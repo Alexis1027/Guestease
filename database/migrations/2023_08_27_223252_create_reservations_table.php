@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('room_id');
+            $table->foreignId('listing_id');
             $table->foreignId('user_id');
             $table->string('payment_process');
             $table->string('status');

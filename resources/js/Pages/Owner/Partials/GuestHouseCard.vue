@@ -6,18 +6,18 @@
     import getDistance from 'geolib/es/getDistance'
 
     const prop = defineProps({
-        guesthouse: Object,
+        listing: Object,
         latitude: Number,
         longitude: Number
     })
    
     let myLocation = { latitude:  prop.latitude , longitude:  prop.longitude}
-    let guesthouseLocation = { latitude: prop.guesthouse.latitude, longitude: prop.guesthouse.longitude }
+    let listingLocation = { latitude: prop.listing.latitude, longitude: prop.listing.longitude }
     
     const images = []
-    const guestHouseImg = prop.guesthouse.images.split(",")
+    const listingImg = prop.listing.images.split(",")
     const loading = ref(true)
-    guestHouseImg.forEach(img => {
+    listingImg.forEach(img => {
         images.push(img)
     });
 
@@ -34,7 +34,7 @@
         <v-skeleton-loader class="mt-6 bg-grey-lighten-3" :loading="loading"  height="100%">
             <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters show-arrows="hover">
                 <v-carousel-item v-for="(image, i) in images" :key="i">
-                    <Link :href="`/owner/edit-listing/${prop.guesthouse.id}`">
+                    <Link :href="`/owner/edit-listing/${prop.listing.id}`">
                         <v-img id="carousel" :src="`../images/${images[i]}`" cover height="275" width="100%" class="rounded-t-lg">
                             <template v-slot:placeholder>
                                 <div class="d-flex align-center justify-center fill-height">
@@ -54,12 +54,12 @@
                         <v-icon color="orange-lighten-1">
                             mdi-star
                         </v-icon>
-                        {{ prop.guesthouse.averageRating }} 
+                        {{ prop.listing.averageRating }} 
                     </template>
-                    <strong class="truncate-text-title">{{ prop.guesthouse.title }} </strong>
+                    <strong class="truncate-text-title">{{ prop.listing.title }} </strong>
                 </v-list-item>
 
-                <v-list-item class="truncate-text" width="100%">{{ prop.guesthouse.description }}</v-list-item>
+                <v-list-item class="truncate-text" width="100%">{{ prop.listing.location }}</v-list-item>
         </v-skeleton-loader>
         
     </div>

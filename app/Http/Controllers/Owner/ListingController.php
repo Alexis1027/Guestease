@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Owner;
 
 use Inertia\Inertia;
-use App\Models\GuestHouse;
+use App\Models\Listing;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use IntlChar;
@@ -16,20 +16,20 @@ class ListingController extends Controller
     }
 
     public function index() {
-        return Inertia::render('Owner/Listing', ['guesthouses' => GuestHouse::all()->where('owner_id', auth()->user()->id)]);
+        return Inertia::render('Owner/Listing', ['listings' => Listing::all()->where('owner_id', auth()->user()->id)]);
     }
 
-    public function edit(GuestHouse $guesthouse) {
-        return Inertia::render('Owner/EditListing', ['guesthouse' => $guesthouse]);
+    public function edit(Listing $listing) {
+        return Inertia::render('Owner/EditListing', ['listing' => $listing]);
     }
 
-    public function show(GuestHouse $guesthouse) {
-        return Inertia::render('Owner/VerifyListing', ['guesthouse' => $guesthouse]);
+    public function show(Listing $listing) {
+        return Inertia::render('Owner/VerifyListing', ['listing' => $listing]);
     }
 
-    public function verify_listing(GuestHouse $guesthouse, Request $request) {
+    public function verify_listing(Listing $listing, Request $request) {
         dd($request->file('bldg_permit'));
-        return Inertia::render('Owner/VerifyListing', ['guesthouse' => $guesthouse]);
+        return Inertia::render('Owner/VerifyListing', ['listing' => $listing]);
     }
 
     public function store(Request $request) {
@@ -59,12 +59,11 @@ class ListingController extends Controller
             'amenities' => 'required',
             'rooms' => 'required',
             'bathrooms' => 'required',
-            'type' => 'required'
         ]);
         $form['status'] = "To be processed";
         $form['images'] = $houseImages;
         $form['amenities'] = json_encode($form['amenities']);
-        GuestHouse::create($form);
+        Listing::create($form);
         return redirect('/owner/dashboard');
 
     }

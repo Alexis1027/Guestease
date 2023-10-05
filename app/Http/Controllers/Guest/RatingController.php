@@ -18,10 +18,10 @@ class RatingController extends Controller
         Rating::create($request->all());
         // return back()->with('message', 'Ratings and review added.');
             $rating = Rating::where('user_id', $request->user_id)
-            ->where('room_id', $request->room_id)
+            ->where('listing_id', $request->listing_id)
             ->first();
 
-            $ratings = Rating::where('room_id', $request->room_id)
+            $ratings = Rating::where('listing_id', $request->listing_id)
             ->whereIn('user_id', function($query) {
                 $query->select('id')->from('users');
             })

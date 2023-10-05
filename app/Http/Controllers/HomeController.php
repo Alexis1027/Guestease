@@ -6,7 +6,7 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Rating;
 use App\Models\Wishlist;
-use App\Models\GuestHouse;
+use App\Models\Listing;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 
@@ -14,10 +14,10 @@ class HomeController extends Controller
 {
     //
     public function index() {
-        $guesthouses = GuestHouse::latest()->get();
+        $listings = Listing::latest()->get();
 
-        foreach($guesthouses as $gh) {
-            $ratings = Rating::where('room_id', $gh->id)->get();
+        foreach($listings as $gh) {
+            $ratings = Rating::where('listing_id', $gh->id)->get();
             $totalRatings = count($ratings);
             $sumRatings = $ratings->sum('rating');
             $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings) : 0;
@@ -25,25 +25,25 @@ class HomeController extends Controller
         }
 
         return Inertia::render('Guest/Index', [
-            'guesthouses' => $guesthouses
+            'listings' => $listings
         ]);
     }
 
-    public function show(GuestHouse $id) {
+    public function show(Listing $id) {
         if(auth()->user()) {
             $wishlist = Wishlist::where('user_id', auth()->user()->id)
-                ->where('room_id', $id->id)
+                ->where('listing_id', $id->id)
                 ->first();
 
             $rating = Rating::where('user_id', auth()->user()->id)
-            ->where('room_id', $id->id)
+            ->where('listing_id', $id->id)
             ->first();
             
             if($rating) {
                 $rating->user = User::find(auth()->user()->id);
             }
 
-            $ratings = Rating::where('room_id', $id->id)
+            $ratings = Rating::where('listing_id', $id->id)
             ->whereIn('user_id', function($query) {
                 $query->select('id')->from('users');
             })
@@ -60,7 +60,7 @@ class HomeController extends Controller
             $owner = User::find($id->owner_id);
 
             return Inertia::render('Guest/Show', [
-                'guesthouse' => $id,
+                'listing' => $id,
                 'wishlist' => $wishlist, 
                 'rated' => $rating,
                 'owner' => $owner,
@@ -70,7 +70,7 @@ class HomeController extends Controller
             
         }
         else {
-            $ratings = Rating::where('room_id', $id->id)
+            $ratings = Rating::where('listing_id', $id->id)
             ->whereIn('user_id', function($query) {
                 $query->select('id')->from('users');
             })
@@ -86,7 +86,7 @@ class HomeController extends Controller
             $owner = User::find($id->owner_id);
 
             return Inertia::render('Guest/Show', [
-                'guesthouse' => $id, 
+                'listing' => $id, 
                 'owner' => $owner,
                 'ratings' => $ratings, 
                 'averageRating' => $averageRating
@@ -94,7 +94,7 @@ class HomeController extends Controller
         }
     }
 
-    public function confirm_reservation(GuestHouse $room, Request $request) {
+    public function confirm_reservation(Listing $listing, Request $request) {
 
         $request->validate([
             'guests' => 'required',
@@ -102,9 +102,8 @@ class HomeController extends Controller
             'checkout' => 'required',
             'days' => 'required',
         ]);
-        
         return Inertia::render('Guest/ConfirmReservation', [
-            'guesthouse' => $room, 
+            'listing' => $listing, 
             'guests' => $request->query('guests'),
             'checkin' => $request->query('checkin'),
             'checkout' => $request->query('checkout'),
@@ -143,13 +142,13 @@ class HomeController extends Controller
     public function reservations() {
         $reservations = Reservation::where('user_id', auth()->user()->id)->get();
         foreach($reservations as $r) {
-            $r->guesthouse = GuestHouse::find($r->room_id);
+            $r->listing = Listing::find($r->listing_id);
         }
         return Inertia::render('Guest/Reservations', ['reservations' => $reservations]);
     }
 
     public function map() {
-        return Inertia::render('Guest/Map', ['guesthouses' => GuestHouse::all()]);
+        return Inertia::render('Guest/Map', ['listings' => Listing::all()]);
     }
 
 }

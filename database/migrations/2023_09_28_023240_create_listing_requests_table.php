@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('listing_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('owner_id');
-            $table->foreignId('guesthouse_id');
+            $table->foreignId('listing_id');
             $table->string('bldg_permit');
             $table->timestamps();
         });

@@ -11,7 +11,7 @@ class Reservation extends Model
     protected $fillable = [
         'payment_process',
         'user_id',
-        'room_id',
+        'listing_id',
         'status',
         'checkin',
         'checkout',

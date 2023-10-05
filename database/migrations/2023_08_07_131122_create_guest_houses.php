@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('guest_houses', function (Blueprint $table) {
+        Schema::create('listings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('owner_id');
             $table->string('title');
@@ -27,7 +27,6 @@ return new class extends Migration
             $table->json('amenities');
             $table->text('images');
             $table->string('status');
-            $table->string('type');
             $table->decimal('monthly_discount', 8, 2)->nullable();
             $table->timestamps();
             

@@ -19,7 +19,7 @@ class WishlistFactory extends Factory
         return [
             //
             'user_id' => $this->faker->numberBetween(1, 10),
-            'room_id' => $this->faker->numberBetween(1, 15)
+            'listing_id' => $this->faker->numberBetween(1, 15)
         ];
     }
 }

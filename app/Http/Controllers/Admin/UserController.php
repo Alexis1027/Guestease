@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Inertia\Inertia;
-use App\Models\GuestHouse;
+use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
@@ -26,10 +26,10 @@ class UserController extends Controller
     }
 
     public function destroy(User $user) {
-        $guesthouse = GuestHouse::where('owner_id', $user->id)->get();
-        foreach($guesthouse as $gh) {
-            Reservation::where('room_id', $gh->id)->delete();
-            $gh->delete();
+        $listing = Listing::where('owner_id', $user->id)->get();
+        foreach($listing as $ls) {
+            Reservation::where('listing_id', $ls->id)->delete();
+            $ls->delete();
         }
         $user->delete();
         return back();

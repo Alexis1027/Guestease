@@ -1,6 +1,6 @@
 <script setup>
 
-    import {ref, onMounted, defineEmits, watch} from 'vue'
+    import {ref, onMounted, defineEmits} from 'vue'
     import L from 'leaflet'
     import 'leaflet/dist/leaflet.css'
 
@@ -8,15 +8,15 @@
     const mapContainer = ref(null)
     let map
     let marker
-    onMounted(async() => {
-        generateMap()
+    onMounted(() => {
+         generateMap()
     })
 
     const {latitude, longitude} = defineProps(['latitude', 'longitude'])
 
     function generateMap() {
         console.log(latitude)
-        map = L.map(mapContainer.value).setView([latitude, longitude], 13)
+        map = L.map(mapContainer.value).setView([10.252763, 123.949394], 15)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
         map.on('click', onMapClick)
     }
@@ -37,8 +37,6 @@
 </script>
 
 <template>
-    {{ latitude }}
-    {{ longitude }}
     <div class="leaflet-container" ref="mapContainer"></div>
 </template>
 

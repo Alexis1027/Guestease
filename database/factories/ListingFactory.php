@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class GuestHouseFactory extends Factory
+class ListingFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -42,7 +42,6 @@ class GuestHouseFactory extends Factory
             'rooms' => $this->faker->numberBetween(1, 10),
             'bathrooms' => $this->faker->numberBetween(1, 5),
             'status' => 'approved',
-            'type' => $this->faker->randomElement(['entire place', 'room']),
             'monthly_discount' => $this->faker->numberBetween(5, 20),
             'amenities' => json_encode([
                     [
