@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('owner_id');
             $table->foreignId('listing_id');
-            $table->string('bldg_permit');
+
             $table->timestamps();
         });
     }

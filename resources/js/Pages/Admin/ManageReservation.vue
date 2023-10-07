@@ -29,7 +29,7 @@
             <thead >
                 <tr >
                     <th class="text-center">Id</th>
-                    <th class="text-center">Guest house id</th>
+                    <th class="text-center">Listing id</th>
                     <th class="text-center">Guest id</th>
                     <th class="text-center">Payment Process</th>
                     <th class="text-center">Check in</th>

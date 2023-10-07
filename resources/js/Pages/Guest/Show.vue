@@ -175,7 +175,6 @@
                     </v-list-item>
                     <v-divider class="my-2" />
                     <v-row>
-                        {{ amenities }}
                         <v-col cols="6" v-for="item in amenities" :key="item">
                             <v-list-item :prepend-icon="`${item.icon}`">
                                 {{ item.title }}
@@ -370,19 +369,10 @@
 
 <style scoped>
 
-    #showAllBtn {
-        right: 0;
-        top: 0;
-        margin-top: 10px;
-        margin-right: 5%; 
-        position: absolute; 
-        opacity: 0.8;
-        z-index: 999;
-    }
 
     #date {
         border: 1px solid black; 
-        border-radius: 10px; 
+        border-radius: 5px; 
     }
     .v-card.on-hover {
         opacity: 0.8;

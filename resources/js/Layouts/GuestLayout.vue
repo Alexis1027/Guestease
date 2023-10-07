@@ -32,10 +32,14 @@
             </Link>
             <v-menu min-width="200px" rounded v-if="auth">
                 <template v-slot:activator="{ props }">
-                    <v-btn icon v-bind="props" style="margin-right: 6%;">
-                        <v-avatar color="blue-lighten-3" size="35">
-                            <v-icon>mdi-account</v-icon>
+                    <v-btn class="border" size="large" v-bind="props" style="margin-right: 6%;">
+                        <template v-slot:prepend>
+                            <v-avatar color="blue-lighten-3" size="35">
+                            <!-- <v-icon>mdi-account</v-icon> -->
+                            <v-img :src="`../images/profile/${auth.user.profile_pic}`"></v-img>
                         </v-avatar>
+                        </template>
+                        <v-icon>mdi-menu</v-icon>
                     </v-btn>
                 </template>
                 <v-card width="250" >

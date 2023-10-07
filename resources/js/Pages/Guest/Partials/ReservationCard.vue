@@ -8,8 +8,8 @@
     const images = processImages(props.reservation.listing.images)
     const emit = defineEmits(['openCancelReservationDialog'])
 
-    const openCancelReservationDialog = () => {
-        emit('openCancelReservationDialog')
+    const openCancelReservationDialog = (reservation) => {
+        emit('openCancelReservationDialog', reservation)
     }
 
 </script>
@@ -68,7 +68,7 @@
         <v-divider/>
         <!-- cancel reservation and contact owner buttons -->
          <v-card-actions class="justify-end d-flex">
-            <v-btn color="red" class="text-none" @click="openCancelReservationDialog">Cancel Reservation</v-btn>
+            <v-btn color="red" class="text-none" @click="openCancelReservationDialog(reservation.id)">Cancel Reservation</v-btn>
             <Link :href="`/profile/${reservation.listing.owner_id}`">
                 <v-btn variant="flat" class="text-none" color="blue">Contact owner</v-btn>
             </Link>

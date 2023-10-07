@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('images');
             $table->string('status');
             $table->decimal('monthly_discount', 8, 2)->nullable();
+            $table->string('bldg_permit')->nullable();
             $table->timestamps();
             
         });

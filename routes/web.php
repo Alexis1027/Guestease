@@ -11,9 +11,10 @@ use App\Http\Controllers\Guest\RatingController;
 use App\Http\Controllers\Owner\ListingController;
 use App\Http\Controllers\Guest\WishlistController;
 use App\Http\Controllers\Admin\AdminListingController;
-use App\Http\Controllers\Admin\ReservationController;
+use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ListingRequestController;
+use App\Http\Controllers\Guest\GuestReservationController;
 use App\Http\Controllers\Owner\OwnerDashboardController;
 use App\Http\Controllers\Owner\OwnerReservationController;
 use App\Http\Controllers\Guest\ReservationRequestController;
@@ -58,6 +59,7 @@ Route::post('/wishlist/save', [WishlistController::class, 'store'])->middleware(
 Route::delete('/wishlist/unsave',[WishlistController::class, 'destroy'])->middleware('auth');
 Route::get('/wishlist', [WishlistController::class, 'index'])->middleware('auth');
 Route::post('/rooms/rate/{listing_id}', [RatingController::class, 'store'])->middleware('auth');
+Route::put('/reservations/cancel/{reservation}', [GuestReservationController::class, 'cancel']);
 
 //ADMIN
 Route::delete('/delete/listing/{listing}', [AdminListingController::class, 'destroy']);
@@ -69,7 +71,7 @@ Route::get('/admin/manage-users', [UserController::class, 'index'])->name('manag
 Route::get('/admin/manage-users/{entry}', [UserController::class, 'manage_users_entry'])->name('manage_users_entry');
 Route::get('/admin/manage-listings', [AdminListingController::class, 'index'])->name('manage_listing');
 Route::get('/admin/manage-listings/{entry}', [AdminListingController::class, 'manage_listing_entry']);
-Route::get('/admin/manage-reservations', [ReservationController::class, 'index']);
+Route::get('/admin/manage-reservations', [AdminReservationController::class, 'index']);
 Route::get('/admin/listing-requests', [ListingRequestController::class, 'index']);
 
 //Auth

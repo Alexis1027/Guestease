@@ -94,7 +94,7 @@
                                 <!-- <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/> -->
                                 
                                 <br>
-                                <label class="mt-4 fadeIn third">Rent your place? </label>
+                                <label class="mt-4 fadeIn third">List your property? </label>
                                 <Link href="/createOwner" class="text-blue fadeIn third"> Create owner account</Link>
                             </v-container>
                         </v-card-item>

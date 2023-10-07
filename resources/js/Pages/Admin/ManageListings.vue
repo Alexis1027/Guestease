@@ -68,8 +68,12 @@
                     <td>{{ listing.location }}</td>
                     <td> {{ '₱'+parseInt(listing.price).toLocaleString() }} </td>
                     <td>
-                        <v-btn icon="mdi-pencil" size="small" @click="editListing(listing)" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
-                        <v-btn icon="mdi-delete-outline" @click="deleteListing(listing)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
+                        <v-btn size="small" @click="editListing(listing)" variant="tonal" class="text-none bg-grey-lighten-5 me-2 text-blue">
+                            <v-icon>mdi-pencil</v-icon> Edit
+                        </v-btn>
+                        <v-btn @click="deleteListing(listing)" size="small" variant="tonal" class="text-none bg-grey-lighten-5 text-red">
+                            <v-icon>mdi-delete-outline</v-icon> Delete
+                        </v-btn>
                     </td>
                 </tr>
             </v-slide-x-transition>

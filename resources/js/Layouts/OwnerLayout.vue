@@ -13,7 +13,7 @@
                     <v-img :src="logo" height="55" width="260" cover></v-img>
                 </Link>
             </v-toolbar-title>
-            <v-spacer/>
+            <v-divider vertical />
             <Link href="/owner/dashboard">
                 <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Dashboard' ? 'blue' : ''">
                     Dashboard
@@ -32,6 +32,7 @@
                     Reservations
                 </v-btn>
             </Link>
+            <v-spacer/>
 
             <v-spacer/>
 

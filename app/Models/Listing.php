@@ -24,6 +24,7 @@ class Listing extends Model
         'rooms',
         'status',
         'monthly_discount',
+        'bldg_permit'
     ];
 
 }

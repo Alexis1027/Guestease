@@ -31,7 +31,8 @@
 
 <template>
     <div id="carousel">
-        <v-skeleton-loader class="mt-6 bg-grey-lighten-3" :loading="loading"  height="100%">
+        <v-card border :color="listing.status == 'approved' ? '' : 'red'" class="rounded-lg">
+            <v-skeleton-loader :loading="loading"  height="100%">
             <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters show-arrows="hover">
                 <v-carousel-item v-for="(image, i) in images" :key="i">
                     <Link :href="`/owner/edit-listing/${prop.listing.id}`">
@@ -48,20 +49,26 @@
                 </v-carousel-item>
             </v-carousel>
         </v-skeleton-loader>
-        <v-skeleton-loader :loading="loading" class="bg-grey-lighten-3"  height="80%" type="image, article">
-                <v-list-item width="100%">
-                    <template v-slot:append>
+                <v-list-item width="100%" class="bg-white">
+                    <template v-slot:append v-if="listing.status == 'approved'">
                         <v-icon color="orange-lighten-1">
                             mdi-star
                         </v-icon>
-                        {{ prop.listing.averageRating }} 
+                        {{ prop.listing.averageRating == 0 ? ' New!' : listing.averageRating }} 
+                    </template>
+                    <template v-slot:append v-else>
+                        <v-icon color="red">
+                            mdi-alert-circle
+                        </v-icon>
                     </template>
                     <strong class="truncate-text-title">{{ prop.listing.title }} </strong>
                 </v-list-item>
 
-                <v-list-item class="truncate-text" width="100%">{{ prop.listing.location }}</v-list-item>
-        </v-skeleton-loader>
+                <v-list-item class="truncate-text bg-white" width="100%">
+                    <span :class="listing.status == 'approved' ? 'text-green' : 'text-error'">{{ listing.status }}</span>
+                </v-list-item>
         
+        </v-card>
     </div>
   </template>
 

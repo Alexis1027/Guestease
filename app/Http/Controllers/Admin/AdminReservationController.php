@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
 
-class ReservationController extends Controller
+class AdminReservationController extends Controller
 {
     //
     public function index() {

@@ -69,8 +69,13 @@
                         <td> {{ user.role }} </td>
                         <td> {{ format(new Date(user.created_at), 'M/dd/yyyy') }} </td>
                         <td>
-                            <v-btn icon="mdi-pencil" size="small" @click="editUserModal = true" flat class="bg-grey-lighten-5 me-2 text-blue"></v-btn>
-                            <v-btn icon="mdi-delete-outline" @click="deleteUser(user)" size="small" flat class="bg-grey-lighten-5 text-red"></v-btn>
+                            <v-btn size="small" @click="editUserModal = true" variant="tonal" class="text-none bg-grey-lighten-5 me-2 text-blue">
+                                <v-icon>mdi-pencil</v-icon> Edit
+                            </v-btn>
+                            <v-btn @click="deleteUser(user)" size="small" variant="tonal" class="text-none bg-grey-lighten-5 text-red">
+                                <v-icon>mdi-delete-outline</v-icon> Delete
+                            </v-btn>
+                            
                         </td>
                     </tr>
                 </v-slide-x-transition>

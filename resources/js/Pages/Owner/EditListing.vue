@@ -44,12 +44,12 @@
             <v-window-item value="option-1">
                 <v-card flat>
                     <MazCarousel>
-                    <template #title>
-                        <p class="text-h6">Photos</p>
-                    </template>
-                    <MazCard galleryWidth="100%" :elevation="0" v-for="(item, i) in images" zoom :key="i" :images="[`/images/${images[i]}`]" style="min-width: 250px;">
-                    </MazCard>
-                </MazCarousel>
+                        <template #title>
+                            <p class="text-h6">Photos</p>
+                        </template>
+                        <MazCard galleryWidth="100%" :elevation="0" v-for="(item, i) in images" zoom :key="i" :images="[`/images/${images[i]}`]" style="min-width: 250px;">
+                        </MazCard>
+                    </MazCarousel>
                 <v-divider class="mt-4"/>
                 <p class="text-h6">Listing basics</p>
                 <v-list width="100%">

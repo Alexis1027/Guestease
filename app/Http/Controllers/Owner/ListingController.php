@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Owner;
 
+use IntlChar;
+use Exception;
 use Inertia\Inertia;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use IntlChar;
+use App\Models\ListingRequest;
 
 class ListingController extends Controller
 {
@@ -16,7 +18,7 @@ class ListingController extends Controller
     }
 
     public function index() {
-        return Inertia::render('Owner/Listing', ['listings' => Listing::all()->where('owner_id', auth()->user()->id)]);
+        return Inertia::render('Owner/Listings', ['listings' => Listing::all()->where('owner_id', auth()->user()->id)]);
     }
 
     public function edit(Listing $listing) {
@@ -64,6 +66,13 @@ class ListingController extends Controller
         $form['images'] = $houseImages;
         $form['amenities'] = json_encode($form['amenities']);
         Listing::create($form);
+        try {
+            $form['bldg_permit'] = $request->bldg_permit[0]->getClientOriginalName();
+            Listing::create($form);
+        }
+        catch(Exception $e) {
+            Listing::create($form);
+        }
         return redirect('/owner/dashboard');
 
     }

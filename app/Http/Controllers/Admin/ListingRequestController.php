@@ -6,17 +6,17 @@ use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\ListingRequest;
+use App\Models\Listing;
 
 class ListingRequestController extends Controller
 {
     //
     public function index() {
 
-        $requests = ListingRequest::all();
-        foreach($requests as $r) {
-            $r->user = User::find($r->user_id);
+        $listingRequests = Listing::all()->where('status', 'To be processed');
+        foreach($listingRequests as $r) {
+            $r->user = User::find($r->owner_id);
         }
-        return Inertia::render('Admin/ListingRequests', ['requests' => $requests]);
+        return Inertia::render('Admin/ListingRequests', ['listingRequests' => $listingRequests]);
     }
 }
