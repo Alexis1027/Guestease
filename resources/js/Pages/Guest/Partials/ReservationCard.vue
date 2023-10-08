@@ -2,10 +2,9 @@
 
     import {format} from 'date-fns'
     import {defineEmits} from 'vue'
-    import {processImages} from '@/utils/imageUtils.js'
 
     const props = defineProps(['reservation'])
-    const images = processImages(props.reservation.listing.images)
+    const images = JSON.parse(props.reservation.listing.images)
     const emit = defineEmits(['openCancelReservationDialog'])
 
     const openCancelReservationDialog = (reservation) => {

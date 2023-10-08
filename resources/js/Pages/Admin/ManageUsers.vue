@@ -8,7 +8,6 @@
     import {format} from 'date-fns'
 
     const prop = defineProps(['users'])
-
     const entries = [5, 10, 15, 20, 25]
     const entry = ref()
     const editUserModal = ref(false)

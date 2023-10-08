@@ -17,7 +17,7 @@
             <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
         
         <v-toolbar-title>
-            <Link class="font-weight-bold">
+            <Link class="font-weight-bold" href="">
                 <v-img :src="logo" height="55" width="260" cover></v-img>
             </Link>
         </v-toolbar-title>
@@ -48,7 +48,7 @@
                 </v-list>
             </v-card>
         </v-menu>
-        <Link href="/logout" method="post" class="me-6">
+        <Link href="/logout" method="post" as="button" class="me-6">
             <v-btn color="red">Logout</v-btn>
         </Link>
         </v-app-bar>

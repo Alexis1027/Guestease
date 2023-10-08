@@ -4,14 +4,13 @@
     import Reviews from './MapSidebarReviews.vue'
     import Overview from './MapSidebarOverview.vue'
     import About from './MapSidebarAbout.vue'
-    import {processImages} from '@/utils/imageUtils'
     const props = defineProps(['mapSnackbar', 'listing'])
     const tab = ref(null)
     const emit = defineEmits('closeMapSnackbar')
     var images
     watch(props, () => {
         console.log(props.listing)
-        images = processImages(props.listing.images)
+        images = JSON.parse(props.listing.images)
     })  
 
     const emitCloseMapSnackbar = () => {

@@ -25,8 +25,6 @@ class ListingFactory extends Factory
             $room_images[$i] = $images ? str_replace($imagePath . '/', '', $this->faker->randomElement($images)) : null;
         }
 
-        $room_images_string = implode(',', $room_images);
-
         return [
             //
             'owner_id' => $this->faker->numberBetween(1, 10),
@@ -34,7 +32,7 @@ class ListingFactory extends Factory
             'description' => $this->faker->sentence(20),
             'price' => $this->faker->numberBetween(1500, 10000),
             'location' => $this->faker->city(),
-            'images' => $room_images_string,
+            'images' => json_encode($room_images),
             'latitude' => $this->faker->latitude(10.250000, 10.268000),
             'longitude' => $this->faker->longitude(123.930000, 123.970000),
             'guests' => $this->faker->numberBetween(1, 10),

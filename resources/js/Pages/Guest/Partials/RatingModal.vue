@@ -2,11 +2,10 @@
 
     import {useForm} from '@inertiajs/vue3'
     import {defineProps, defineEmits, onUpdated, ref} from 'vue'
-    import {processImages} from '@/utils/imageUtils'
 
     const emit = defineEmits('closeReviewModal')
     const props = defineProps(['showReviewModal', 'listing', 'star', 'auth'])
-    const images = processImages(props.listing.images)
+    const images = JSON.parse(props.listing.images)
 
     const emitcloseReviewModal = () => {
         emit('closeReviewModal')

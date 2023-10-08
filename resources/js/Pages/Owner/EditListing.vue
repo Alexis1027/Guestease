@@ -3,17 +3,16 @@
     import Layout from '../../Layouts/OwnerLayout.vue'
     import MazCarousel from 'maz-ui/components/MazCarousel'
     import MazCard from 'maz-ui/components/MazCard'
-    import {processImages} from '@/utils/imageUtils.js'
     import {ref} from 'vue'
     const props = defineProps(['listing'])
-    const images = processImages(props.listing.images)
-    defineOptions({
-        layout: Layout
-    })
+    const images = JSON.parse(props.listing.images)
+    
     const amenities = JSON.parse(props.listing.amenities)
 
     const tab = ref(0)
-
+    defineOptions({
+        layout: Layout
+    })
 </script>
 <template>
     <v-toolbar>

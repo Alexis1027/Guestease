@@ -1,10 +1,9 @@
 <script setup>
 
     import {defineProps} from 'vue'
-    import {processImages} from '@/utils/imageUtils'
 
     const prop = defineProps(['wishlist'])
-    const images = processImages(prop.wishlist.listing.images)
+    const images = JSON.parse(prop.wishlist.listing.images)
    
 </script>
 

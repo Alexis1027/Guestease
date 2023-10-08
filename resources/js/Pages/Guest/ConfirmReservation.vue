@@ -2,11 +2,10 @@
 
     import {defineProps, onMounted} from 'vue'
     import { useForm } from '@inertiajs/vue3';
-    import {processImages} from '@/utils/imageUtils'
     import {format} from 'date-fns'
 
     const prop = defineProps(['listing', 'auth', 'guests', 'checkin', 'checkout', 'days'])
-    const images = processImages(prop.listing.images)
+    const images = JSON.parse(prop.listing.images)
     const checkinDate = format(new Date(prop.checkin), 'MMM d')
     const checkoutDate = format(new Date(prop.checkout), 'MMM d')
 
@@ -143,27 +142,6 @@
                             <v-btn block color="green" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn>
                         </v-form>
                         <div id="paypal-button-container"></div>
-                        <!-- <v-divider class="mt-4"/>
-                        <p class="text-h6 mt-4 font-weight-bold">Required for your trip</p>
-                            <v-list>
-                                <v-list-item>
-                                    <template v-slot:append>
-                                        <v-btn variant="outlined" class="text-none" color="blue">Add</v-btn>
-                                    </template>
-                                    <p class="font-weight-bold">Message the owner</p>
-                                    <p>Let the owner know why you're traveling and when you'll check in.</p>
-                                </v-list-item>
-                                <v-list-item>
-                                    <template v-slot:append>
-                                        <v-btn variant="outlined" class="text-none" color="blue">Add</v-btn>
-                                    </template>
-                                    <p class="font-weight-bold">Confirm phone number</p>
-                                    <p>Add and confirm your phone number to get trip updates.</p>
-                                </v-list-item>
-                            </v-list>
-                            <v-divider/>
-                        <p class="text-h6 mt-4 font-weight-bold">Cancellation policy</p>
-                        <p>Free cancellation for 48 hours. Cancel before Nov 7 for a partial refund. Learn more</p> -->
                     </v-container>
 
                 </v-col>

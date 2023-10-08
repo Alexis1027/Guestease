@@ -1,7 +1,6 @@
 <script setup>
 
     import Layout from '../../Layouts/OwnerLayout.vue';
-    import {processImages} from '@/utils/imageUtils'
     import {ref} from 'vue'
     import {useForm} from '@inertiajs/vue3'
 
@@ -19,7 +18,7 @@
 
     const {listing} = defineProps(['listing'])
     const addBuildingPermitDialog = ref(false)
-    const images = processImages(listing.images)
+    const images = JSON.parse(listing.images)
 
 </script>
 <template>

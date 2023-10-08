@@ -16,15 +16,25 @@
     const props = defineProps(['listing', 'ratings', 'averageRating', 'wishlist', 'auth', 'rated', 'owner'])
     const rating = ref(0)
     const showReviewModal = ref(false)
+    const images = JSON.parse(props.listing.images)
+    const listingImages = images.map(img => '../images/' + img)
+    const amenities = JSON.parse(props.listing.amenities)
+    const reservationDate = ref(null)
+    const date = useDate()
+    const reserveFormAlert = ref(false)
+    const guests = reactive({
+        adults: 1,
+        children: 0,
+        infants: 0,
+        pets: 0,
+    })
+
     const saveWishlistForm = useForm({
         user_id: props.auth ? props.auth.user.id : '',
         listing_id: props.auth ? props.listing.id : '',
     })
 
-    const images = processImages(props.listing.images)
-    const listingImages = images.map(img => '../images/' + img)
-
-    const submitForm = () => {
+     const submitForm = () => {
         if(props.wishlist) {
             saveWishlistForm.delete('/wishlist/unsave', {
                 preserveScroll: true
@@ -34,11 +44,6 @@
             saveWishlistForm.post('/wishlist/save')
         }
     }
-
-    const amenities = JSON.parse(props.listing.amenities)
-    const reservationDate = ref(null)
-    const date = useDate()
-    const reserveFormAlert = ref(false)
     
     const reserveForm = useForm({
         checkin: null,
@@ -62,13 +67,6 @@
             reserveFormAlert.value = true
         }
     }
-
-    const guests = reactive({
-        adults: 1,
-        children: 0,
-        infants: 0,
-        pets: 0,
-    })
 
     function incrementGuests(guest) {
         reserveForm.guests++

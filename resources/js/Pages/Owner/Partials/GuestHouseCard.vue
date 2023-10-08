@@ -3,23 +3,13 @@
     import {ref, defineProps, onMounted} from 'vue'
     import {Link} from '@inertiajs/vue3'
     import { VSkeletonLoader } from 'vuetify/lib/labs/components.mjs';
-    import getDistance from 'geolib/es/getDistance'
 
     const prop = defineProps({
         listing: Object,
         latitude: Number,
         longitude: Number
     })
-   
-    let myLocation = { latitude:  prop.latitude , longitude:  prop.longitude}
-    let listingLocation = { latitude: prop.listing.latitude, longitude: prop.listing.longitude }
-    
-    const images = []
-    const listingImg = prop.listing.images.split(",")
     const loading = ref(true)
-    listingImg.forEach(img => {
-        images.push(img)
-    });
 
     onMounted(() => {
         setTimeout(() => {
@@ -27,10 +17,13 @@
         },1000)
     })
     
+    const images = JSON.parse(prop.listing.images)
+
 </script>
 
 <template>
     <div id="carousel">
+        {{ images.length }}
         <v-card border :color="listing.status == 'approved' ? '' : 'red'" class="rounded-lg">
             <v-skeleton-loader :loading="loading"  height="100%">
             <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters show-arrows="hover">

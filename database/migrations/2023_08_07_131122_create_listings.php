@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('bathrooms');
             $table->integer('beds');
             $table->json('amenities');
-            $table->text('images');
+            $table->json('images');
             $table->string('status');
             $table->decimal('monthly_discount', 8, 2)->nullable();
             $table->string('bldg_permit')->nullable();

@@ -4,7 +4,6 @@
     import {Link} from '@inertiajs/vue3'
     import { VSkeletonLoader } from 'vuetify/lib/labs/components.mjs';
     import getDistance from 'geolib/es/getDistance'
-    import {processImages} from '@/utils/imageUtils'
 
     const prop = defineProps({
         listing: Object,
@@ -12,10 +11,9 @@
         longitude: Number
     })
     const loading = ref(true)
-    let myLocation = { latitude:  prop.latitude , longitude:  prop.longitude}
     let listingLocation = { latitude: prop.listing.latitude, longitude: prop.listing.longitude }
     
-    const images = processImages(prop.listing.images)
+    const images = JSON.parse(prop.listing.images)
     onMounted(() => {
         setTimeout(() => {
             loading.value = false

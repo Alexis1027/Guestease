@@ -9,6 +9,7 @@ use App\Models\Listing;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ListingRequest;
+use GuzzleHttp\Psr7\UploadedFile;
 
 class ListingController extends Controller
 {
@@ -35,18 +36,13 @@ class ListingController extends Controller
     }
 
     public function store(Request $request) {
-        $houseImages = '';
+        $houseImages = [];
         $uploadedFiles = $request->file('images');
         
         if($request->file('images') != null) {
-            for($i = 0; $i < count($uploadedFiles); $i++) {
-                if($i != count($uploadedFiles)-1) {
-                    $houseImages .= $uploadedFiles[$i]->getClientOriginalName().",";
-                }
-                else {
-                    $houseImages .= $uploadedFiles[$i]->getClientOriginalName();
-                }
-            }
+            foreach($uploadedFiles as $file) {
+                $houseImages[] = $file->getClientOriginalName();
+            }            
         }
         $form = $request->validate([
             'owner_id' => 'required',
@@ -63,9 +59,8 @@ class ListingController extends Controller
             'bathrooms' => 'required',
         ]);
         $form['status'] = "To be processed";
-        $form['images'] = $houseImages;
+        $form['images'] = json_encode($houseImages);
         $form['amenities'] = json_encode($form['amenities']);
-        Listing::create($form);
         try {
             $form['bldg_permit'] = $request->bldg_permit[0]->getClientOriginalName();
             Listing::create($form);

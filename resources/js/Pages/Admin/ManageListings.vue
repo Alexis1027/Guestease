@@ -63,7 +63,7 @@
                 <tr v-for="listing in listings.data" :key="listing.id">
                     <td>{{ listing.id }}</td>
                     <td>{{ listing.owner_id }}</td>
-                    <td class="text-red"> <v-img cover class="my-1" :src="`../images/room1.png`"></v-img> </td>
+                    <td class="text-red"> <v-img cover max-height="80" height="80" class="my-1" :src="`../images/${JSON.parse(listing.images)[0]}`"></v-img> </td>
                     <td>{{ listing.title }}</td>
                     <td>{{ listing.location }}</td>
                     <td> {{ '₱'+parseInt(listing.price).toLocaleString() }} </td>
