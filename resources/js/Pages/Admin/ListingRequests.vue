@@ -88,5 +88,5 @@
             </v-col>
         </v-row>
     </v-container>
-    <ReviewListingModal :show="showListingReviewModal" :listing="currentListing" @closeReviewListingModal="showListingReviewModal = false" />
+    <ReviewListingModal :show="showListingReviewModal" :listing="currentListing" v-if="showListingReviewModal" @closeReviewListingModal="showListingReviewModal = false" />
 </template>

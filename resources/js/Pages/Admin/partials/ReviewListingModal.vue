@@ -1,12 +1,45 @@
 <script setup>
 
-    import {defineEmits, watch, ref} from 'vue'
+    import {defineEmits, onMounted, ref} from 'vue'
     import MazCarousel from 'maz-ui/components/MazCarousel'
     import MazCard from 'maz-ui/components/MazCard'
     import {format} from 'date-fns'
+    import L from 'leaflet'
+    import 'leaflet/dist/leaflet.css'
 
     const emit = defineEmits('closeReviewListingModal')
     const prop = defineProps(['show', 'listing'])
+    const mapContainer = ref(null)
+
+    const address = [
+        {
+            'id': 1,
+            'houseName': 'Guest House 1',
+            'coord': [10.257239, 123.959788]
+        },
+    ]
+    onMounted(async() => {
+        generateMap()
+    })
+
+    function generateMap() {
+        const map = L.map(mapContainer.value).setView([10.257239, 123.959788], 15)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
+        address.forEach(place => {
+            const marker = L.marker([place.coord[0], place.coord[1]], {icon: markerIcon}).addTo(map)
+        })
+    }
+
+    var markerIcon = L.icon({
+        iconUrl: '../images/icons/marker2.png',
+        iconSize:     [50, 50], // size of the icon
+    })
+
+    const approveListing = () => {
+        console.log(prop.listing.id)
+        
+        emit('closeReviewListingModal')
+    }
 
 </script>
 
@@ -21,17 +54,17 @@
             </v-card-actions>
             <v-card-item>
                 <MazCarousel>
-                <template #title>
-                    <p class="text-h6">Photos</p>
-                </template>
-                <MazCard galleryWidth="100%" :elevation="0" v-for="(item, i) in JSON.parse(listing.images)" zoom :key="i" :images="[`../images/${JSON.parse(listing.images)[i]}`]" style="min-width: 250px;">
-                </MazCard>
-            </MazCarousel>
+                    <template #title>
+                        <p class="text-h6">Photos</p>
+                    </template>
+                    <MazCard galleryWidth="100%" :elevation="0" v-for="(item, i) in JSON.parse(listing.images)" zoom :key="i" :images="[`../images/${JSON.parse(listing.images)[i]}`]" style="min-width: 250px;">
+                    </MazCard>
+                </MazCarousel>
             </v-card-item>
             <v-row>
-                <v-col cols="4">
+                <v-col cols="6">
                     <v-list>
-                        <v-list-subheader class="text-h6">Listing details</v-list-subheader>
+                        <p class="text-h6">Listing details</p>
                         <v-list-item subtitle="Description" prepend-icon="mdi-information-outline">
                             {{ listing.description }}
                         </v-list-item>
@@ -47,7 +80,7 @@
                     </v-list>
                 </v-col>
                 <v-divider vertical />
-                <v-col cols="8">
+                <v-col cols="6">
                     <v-row class="mt-1">
                         <v-col cols="12">
                             <p class="text-h6">Amenities</p> 
@@ -65,33 +98,50 @@
                                 </template>
                                 Guests
                             </v-list-item>
-                            <v-list-item prepend-icon="mdi-door-open">
-                                <template v-slot:append>
-                                    {{ listing.rooms }}  
-                                </template>
-                                Rooms
-                            </v-list-item>
-                            <v-list-item prepend-icon="mdi-shower-head">
-                                <template v-slot:append>
-                                    {{ listing.bathrooms }}  
-                                </template>
-                                Bathrooms
-                            </v-list-item>
                             <v-list-item prepend-icon="mdi-bed">
                                 <template v-slot:append>
                                     {{ listing.beds }}  
                                 </template>
                                 Beds
                             </v-list-item>
+                            <v-list-item prepend-icon="mdi-shower">
+                                <template v-slot:append>
+                                    {{ listing.bathrooms }}  
+                                </template>
+                                Bathrooms
+                            </v-list-item>
+                            <v-list-item prepend-icon="mdi-door-open">
+                                <template v-slot:append>
+                                    {{ listing.rooms }}  
+                                </template>
+                                Rooms
+                            </v-list-item>
                         </v-col>
                     </v-row>
                 </v-col>
+                
             </v-row>
+            <v-row>
+                <v-col cols="12">
+                    <div class="leaflet-container" ref="mapContainer"></div>
+                </v-col>
+            </v-row>
+            bruh
             <v-card-actions class="d-flex justify-end">
                 <v-btn color="error" variant="tonal" @click="emit('closeReviewListingModal')">Cancel</v-btn>
-                <v-btn color="green" variant="tonal" @click="emit('closeReviewListingModal')">Approve</v-btn>
+                <v-btn color="green" variant="tonal" @click="approveListing">Approve</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
 
 </template>
+
+<style scoped>
+    
+    .leaflet-container {
+        height: 600px;
+        width: 1000px;
+
+    }
+
+</style>

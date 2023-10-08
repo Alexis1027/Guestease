@@ -23,7 +23,6 @@
 
 <template>
     <div id="carousel">
-        {{ images.length }}
         <v-card border :color="listing.status == 'approved' ? '' : 'red'" class="rounded-lg">
             <v-skeleton-loader :loading="loading"  height="100%">
             <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters show-arrows="hover">

@@ -225,7 +225,7 @@
                 <v-container>
                     <p class="text-h4">Is the pin in the right spot?</p>
                     <p class="text-h6 text-grey-darken">Click at the map to move the pin.</p>
-                    <Map :latitude="form.latitude" :longitude="form.longitude" @setPos="setPos" />
+                    <Map :latitude="form.latitude" v-if="step == 4" :longitude="form.longitude" @setPos="setPos" />
                 </v-container>
             </v-window-item>
 

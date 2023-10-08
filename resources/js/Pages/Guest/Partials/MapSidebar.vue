@@ -21,7 +21,11 @@
 
 <template>
     <v-snackbar v-model="props.mapSnackbar" location="right" transition="scroll-x-reverse-transition" color="white">
-    <Link :href="`/room/${props.listing ? props.listing.id : ''}`"><v-btn rounded color="blue" id="reserveBtn" width="50%">See more</v-btn></Link>
+    <Link :href="`/room/${props.listing ? props.listing.id : ''}`">
+        <v-btn rounded color="blue" id="reserveBtn" width="50%">
+            See more
+        </v-btn>
+    </Link>
         <div class="custom-snackbar-content">
             <div style="height: 300px;">
                 <v-carousel show-arrows="hover" color="blue-lighten-4" height="100%">
