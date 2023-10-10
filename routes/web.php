@@ -42,6 +42,8 @@ Route::get('/owner/edit-listing/{listing}', [ListingController::class, 'edit']);
 Route::get('/owner/verify-listing/{listing}', [ListingController::class, 'show']);
 Route::post('/owner/verify-listing/{listing}', [ListingController::class, 'verify_listing']);
 Route::post('/owner/createListing', [ListingController::class, 'store']);
+Route::put('/owner/update-listing/details/{listing}', [ListingController::class, 'update_details']);
+Route::delete('/owner/delete-listing/{listing}', [ListingController::class, 'destroy']);
 
 //GUEST
 Route::get('/contact-us', [HomeController::class, 'contact_us']);

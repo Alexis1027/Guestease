@@ -71,5 +71,21 @@ class ListingController extends Controller
         return redirect('/owner/dashboard');
 
     }
+
+    public function update_details(Listing $listing, Request $request) {
+        $form = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'location' => 'required',
+        ]);
+        $listing->update(['title' => $form['title'], 'description' => $form['description'], 'location' => $form['location']]);
+        return back();
+    }
+
+    public function destroy(Listing $listing) {
+        $listing->delete();
+        return redirect('/owner/dashboard');
+
+    }
     
 }
