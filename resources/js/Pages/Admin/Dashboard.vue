@@ -81,6 +81,7 @@
 
     <v-container width="400">
         <p class="text-h5 mb-1">Monthly Sales Analytics</p>
+        <p class="text-red mb-1"> not working rn</p>
             <div class="bg-white">
                 <canvas ref="myChartRef"></canvas>
             </div>

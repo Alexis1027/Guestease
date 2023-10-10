@@ -160,6 +160,7 @@
 </script>
 
 <template>
+    <Head title="Create listing" />
     <v-card max-width="100vw" max-height="100vh" elevation="0">
         <v-window v-model="step">
             <v-window-item :value="1">

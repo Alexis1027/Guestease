@@ -18,7 +18,7 @@ use App\Http\Controllers\Guest\GuestReservationController;
 use App\Http\Controllers\Owner\OwnerDashboardController;
 use App\Http\Controllers\Owner\OwnerReservationController;
 use App\Http\Controllers\Guest\ReservationRequestController;
-
+use App\Models\ListingRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +73,7 @@ Route::get('/admin/manage-listings', [AdminListingController::class, 'index'])->
 Route::get('/admin/manage-listings/{entry}', [AdminListingController::class, 'manage_listing_entry']);
 Route::get('/admin/manage-reservations', [AdminReservationController::class, 'index']);
 Route::get('/admin/listing-requests', [ListingRequestController::class, 'index']);
+Route::put('/admin/approve-listing', [ListingRequestController::class, 'approve']);
 
 //Auth
 Route::get('/login', [AuthController::class, 'login'])->name('login');

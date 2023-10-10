@@ -5,6 +5,7 @@
     import Layout from '../../Layouts/AdminLayout.vue'
     import DeleteListingModal from './partials/DeleteListingModal.vue'
     import EditListingModal from './partials/EditListingModal.vue'
+    import {format} from 'date-fns'
 
     defineProps({listings: Object, newEntry: Object})
     const deleteListingModal = ref(false)
@@ -49,12 +50,13 @@
         <v-table hover class="bg-grey-lighten-5 text-center">
         <thead>
             <tr >
-                <th class="text-center">Id</th>
-                <th class="text-center">Owner Id</th>
+                <th class="text-center">ID</th>
+                <th class="text-center">Owner</th>
                 <th class="text-center">Image</th>
                 <th class="text-center">Listing name</th>
                 <th class="text-center">Location</th>
                 <th class="text-center">Price</th>
+                <th class="text-center">Created at</th>
                 <th class="text-center">Actions</th>
             </tr>
         </thead>
@@ -62,11 +64,19 @@
             <v-slide-x-transition class="py-0" group>
                 <tr v-for="listing in listings.data" :key="listing.id">
                     <td>{{ listing.id }}</td>
-                    <td>{{ listing.owner_id }}</td>
-                    <td class="text-red"> <v-img cover max-height="80" height="80" class="my-1" :src="`../images/${JSON.parse(listing.images)[0]}`"></v-img> </td>
+                    <td>
+                        <v-avatar size="50" class="me-2">
+                            <v-img src="../images/profile/21.png"></v-img>
+                        </v-avatar>
+                        {{ listing.owner.firstname + ' ' + listing.owner.lastname }}
+                    </td>
+                    <td class="text-red"> 
+                        <v-img cover max-height="80" height="80" class="my-1" :src="`../images/${JSON.parse(listing.images)[0]}`"></v-img>
+                     </td>
                     <td>{{ listing.title }}</td>
                     <td>{{ listing.location }}</td>
                     <td> {{ '₱'+parseInt(listing.price).toLocaleString() }} </td>
+                    <td>{{ format(new Date(listing.created_at), 'M/d/yyy') }}</td>
                     <td>
                         <v-btn size="small" @click="editListing(listing)" variant="tonal" class="text-none bg-grey-lighten-5 me-2 text-blue">
                             <v-icon>mdi-pencil</v-icon> Edit

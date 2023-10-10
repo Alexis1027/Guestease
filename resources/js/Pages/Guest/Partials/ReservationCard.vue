@@ -31,6 +31,9 @@
             <v-icon>mdi-arrow-right-thin</v-icon>
             {{ format(new Date(reservation.checkout), 'MMMM dd, yyyy') }}
          </v-list-item>
+         <v-list-item prepend-icon="mdi-map-marker"> 
+            {{ reservation.listing.location }}
+         </v-list-item>
         <v-divider/>
         <!-- reservation status  -->
         <v-list-item>

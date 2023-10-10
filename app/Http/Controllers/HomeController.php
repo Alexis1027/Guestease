@@ -14,7 +14,7 @@ class HomeController extends Controller
 {
     //
     public function index() {
-        $listings = Listing::latest()->get();
+        $listings = Listing::latest()->where('status', 'approved')->get();
 
         foreach($listings as $gh) {
             $ratings = Rating::where('listing_id', $gh->id)->get();
@@ -30,24 +30,21 @@ class HomeController extends Controller
     }
 
     public function show(Listing $id) {
-        if(auth()->user()) {
-            $wishlist = Wishlist::where('user_id', auth()->user()->id)
-                ->where('listing_id', $id->id)
-                ->first();
 
-            $rating = Rating::where('user_id', auth()->user()->id)
-            ->where('listing_id', $id->id)
-            ->first();
+        $ratings = Rating::where('listing_id', $id->id)
+        ->whereIn('user_id', function($query) {
+            $query->select('id')->from('users');
+        })->get();
+
+        $owner = User::find($id->owner_id);
+
+        if(auth()->user()) {
+            $wishlist = Wishlist::where('user_id', auth()->user()->id)->where('listing_id', $id->id)->first();
+            $rating = Rating::where('user_id', auth()->user()->id)->where('listing_id', $id->id)->first();
             
             if($rating) {
                 $rating->user = User::find(auth()->user()->id);
             }
-
-            $ratings = Rating::where('listing_id', $id->id)
-            ->whereIn('user_id', function($query) {
-                $query->select('id')->from('users');
-            })
-            ->get();
 
             $totalRatings = count($ratings);
             $sumRatings = $ratings->sum('rating');
@@ -57,7 +54,6 @@ class HomeController extends Controller
                 $r->user = User::find($r->user_id);
             }
 
-            $owner = User::find($id->owner_id);
 
             return Inertia::render('Guest/Show', [
                 'listing' => $id,
@@ -70,12 +66,6 @@ class HomeController extends Controller
             
         }
         else {
-            $ratings = Rating::where('listing_id', $id->id)
-            ->whereIn('user_id', function($query) {
-                $query->select('id')->from('users');
-            })
-            ->get();
-
             $totalRatings = count($ratings);
             $sumRatings = $ratings->sum('rating');
             $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings) : 0;
@@ -83,7 +73,6 @@ class HomeController extends Controller
             foreach($ratings as $r) {
                 $r->user = User::find($r->user_id);
             }
-            $owner = User::find($id->owner_id);
 
             return Inertia::render('Guest/Show', [
                 'listing' => $id, 

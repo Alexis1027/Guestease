@@ -6,18 +6,32 @@
 
     const emit = defineEmits(['setPos'])
     const mapContainer = ref(null)
+    let map
+    let marker
 
     onMounted(async() => {
-        console.log("GO ")
         generateMap()
     })
 
 
     function generateMap() {
-        const map = L.map(mapContainer.value).setView([10.252763, 123.949394], 15)
+        map = L.map(mapContainer.value).setView([10.252763, 123.949394], 15)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
+        map.on('click', onMapClick)
     }
 
+    function onMapClick(pos) {
+        if(marker) {
+            marker.remove()
+        }
+        marker = L.marker([pos.latlng.lat, pos.latlng.lng], {icon: markerIcon}).addTo(map)
+        emit('setPos', pos)
+    }
+
+    var markerIcon = L.icon({
+        iconUrl: '../images/icons/marker2.png',
+        iconSize:     [50, 50], // size of the icon
+    });
  
 
 </script>

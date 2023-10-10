@@ -33,7 +33,7 @@
 
         listingsLocation.forEach(place => {
             const marker = L.marker([place.listing.latitude, place.listing.longitude], {icon: markerIcon}).addTo(map)
-            marker.bindPopup(`<b> Hello from ${place.listing.title}! </b> <br> I'm a popup!`)
+            marker.bindPopup(`<b> Hello from ${place.listing.location}! </b> <br> I'm a popup!`)
             marker.on('click', () => {
                 mapSnackbar.value = true
                 currentlisting.value = place.listing
@@ -50,14 +50,6 @@
 
 <template>
     <Head title="Map" />
-    <!-- <v-text-field variant="outlined" color="blue" label="Where do you want to go?" v-model="search">
-        <template v-slot:append-inner>
-            <v-scroll-x-transition>
-                <v-btn v-show="search" icon="mdi-map-search-outline" variant="text"></v-btn>
-            </v-scroll-x-transition>
-        </template>
-    </v-text-field> -->
-    
     <MapSidebar :mapSnackbar="mapSnackbar" :listing="currentlisting" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
     <div class="leaflet-container" ref="mapContainer"></div>
 </template>

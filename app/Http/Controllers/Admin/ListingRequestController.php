@@ -19,4 +19,12 @@ class ListingRequestController extends Controller
         }
         return Inertia::render('Admin/ListingRequests', ['listingRequests' => $listingRequests]);
     }
+
+    public function approve(Request $request) {
+        $listing = Listing::find($request->listing_id);
+        $listing->status = 'approved';
+        $listing->update();
+        return back();
+    }
+
 }

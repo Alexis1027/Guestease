@@ -15,7 +15,11 @@ class AdminListingController extends Controller
     //
 
     public function index() {
-        return Inertia::render('Admin/ManageListings', ['listings' => Listing::paginate(5)]);
+        $listings = Listing::paginate(5);
+        foreach($listings as $ls) {
+            $ls->owner = User::find($ls->owner_id);
+        }
+        return Inertia::render('Admin/ManageListings', ['listings' => $listings]);
     }
 
     public function manage_listing_entry($entry) {

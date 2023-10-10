@@ -1,11 +1,7 @@
 <script setup>
 
     import {ref, defineProps, defineEmits, watch} from 'vue'
-    import Reviews from './MapSidebarReviews.vue'
-    import Overview from './MapSidebarOverview.vue'
-    import About from './MapSidebarAbout.vue'
     const props = defineProps(['mapSnackbar', 'listing'])
-    const tab = ref(null)
     const emit = defineEmits('closeMapSnackbar')
     var images
     watch(props, () => {
@@ -39,29 +35,10 @@
                     <h3>
                         {{ props.listing ? props.listing.title : '' }}
                     </h3>
+                    {{ listing.location }}
                 </v-card-title>
-                <v-tabs v-model="tab" bg-color="blue-lighten-3">
-                    <v-tab value="overview">Overview</v-tab>
-                    <!-- <v-tab value="prices">Price</v-tab> -->
-                    <v-tab value="reviews">Reviews</v-tab>
-                    <v-tab value="about">About</v-tab>
-                </v-tabs>
-
                 <v-card-text>
-                    <v-window v-model="tab">
-                        <v-window-item value="overview">
-                            <Overview/>
-                        </v-window-item>
-                        <!-- <v-window-item value="prices">
-                            <Prices/>
-                        </v-window-item> -->
-                        <v-window-item value="reviews">
-                            <Reviews/>
-                        </v-window-item>
-                        <v-window-item value="about">
-                            <About :about="props.listing.description" />
-                        </v-window-item>
-                    </v-window>
+                    
                 </v-card-text>
             </v-card>
         </div>

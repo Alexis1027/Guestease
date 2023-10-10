@@ -154,7 +154,32 @@
                                 </v-avatar>
                             </template>
                             <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
-                            <p class="text-grey-darken-1"> {{ listing.guests }} guests - {{ listing.rooms }} room - {{ listing.beds }} bedroom - {{ listing.bathrooms }} bathroom </p>
+                                <v-chip color="white" v-if="listing.guests > 0">
+                                    <p class="text-black">
+                                        <v-icon>mdi-account-multiple</v-icon>
+                                         {{ listing.guests }} Guests
+                                        </p>
+                                </v-chip>
+
+                                <v-chip color="white" v-if="listing.rooms > 0">
+                                    <p class="text-black">
+                                        <v-icon>mdi-door-open</v-icon>
+                                        {{ listing.rooms }} Rooms
+                                    </p>
+                                </v-chip>
+                                <v-chip color="white" v-if="listing.beds > 0">
+                                    <p class="text-black">
+                                        <v-icon>mdi-bed</v-icon>
+                                        {{ listing.beds }} Beds
+                                    </p>
+                                </v-chip>
+                                <v-chip color="white" v-if="listing.bathrooms > 0">
+                                    <p class="text-black">
+                                        <v-icon>mdi-shower</v-icon>
+                                        {{ listing.bathrooms }} Bathrooms
+                                    </p>
+                                </v-chip>
+                            <!-- <p class="text-grey-darken-1"> {{ listing.guests }} guests - {{ listing.rooms }} room - {{ listing.beds }} bedroom - {{ listing.bathrooms }} bathroom </p> -->
                         </v-list-item>
                         <v-divider class="my-2" />
                         <v-list-item prepend-icon="mdi-information-variant">

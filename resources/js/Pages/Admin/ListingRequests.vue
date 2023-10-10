@@ -10,6 +10,7 @@
     const page = ref(1)
     const showListingReviewModal = ref(false)
     const currentListing = ref(null)
+    const snackbar = ref(false)
 
     function showListingReviewModalFunc(listing) {
         currentListing.value = listing
@@ -25,9 +26,8 @@
 
 </script>
 <template>
-    <Head title="Requests"></Head>
+    <Head title="Listing requests"></Head>
     <v-container class="bg-white">
-        {{ showListingReviewModal }}
         <v-row justify="space-between">
             <v-col cols="2">
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
@@ -36,13 +36,12 @@
             <v-text-field label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
         </v-col>
         </v-row>
-        <p class="text-red">doestn work rn</p>
         <v-table hover class="bg-grey-lighten-5 text-center">
             <thead >
                 <tr >
-                    <th class="text-center">Request id</th>
+                    <th class="text-center">ID</th>
                     <th class="text-center">Owner</th>
-                    <th class="text-center">Guest house</th>
+                    <th class="text-center">Listing</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Date Requested</th>
                     <th class="text-center">Actions</th>
@@ -71,22 +70,18 @@
         </v-table>
         <v-row  class="mt-2">
             <v-col class="d-flex justify-end">
-                <!-- <Link 
-                    v-for="link in prop.users.links" 
-                    :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 
-                    :key="link" 
-                    :href="link.url"
-                    v-html="link.label"
-                    >
-                </Link> -->
-                <v-pagination
-                v-model="page"
-                :length="10"
-                :total-visible="4"
-                rounded="circle"
-                ></v-pagination>
+                <v-pagination v-model="page" :length="10" :total-visible="4" rounded="circle">
+                </v-pagination>
             </v-col>
         </v-row>
     </v-container>
-    <ReviewListingModal :show="showListingReviewModal" :listing="currentListing" v-if="showListingReviewModal" @closeReviewListingModal="showListingReviewModal = false" />
+    <ReviewListingModal :show="showListingReviewModal" @approved="snackbar = true" :listing="currentListing" v-if="showListingReviewModal" @closeReviewListingModal="showListingReviewModal = false" />
+    <v-snackbar v-model="snackbar">
+        Listing approved 
+        <template v-slot:actions>
+            <v-btn color="blue" variant="text" @click="snackbar = false">
+                Close
+            </v-btn>
+        </template>
+    </v-snackbar>
 </template>

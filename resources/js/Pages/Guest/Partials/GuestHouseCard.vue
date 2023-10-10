@@ -27,7 +27,7 @@
         <v-skeleton-loader class="bg-grey-lighten-3" :loading="loading"  height="100%">
             <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters="hover" show-arrows="hover">
                 <v-carousel-item v-for="(image, i) in images" :key="i">
-                    <Link :href="`/room/${prop.listing.id}`">
+                    <Link :href="`/room/${listing.id}`">
                         <v-img id="carousel" :src="`images/${images[i]}`" cover height="275" width="100%" class="rounded-t-lg">
                             <template v-slot:placeholder>
                                 <div class="d-flex align-center justify-center fill-height">
@@ -44,30 +44,30 @@
         <v-skeleton-loader :loading="loading" class="bg-grey-lighten-3"  height="80%" type="image, article">
             <v-container class="bg-white">
                 <v-row id="listingDetails">
-                    <v-col cols="9"><strong class="truncate-text-title text-h6 font-weight-bold">{{ prop.listing.title }} </strong></v-col>
+                    <v-col cols="9"><strong class="truncate-text-title text-h6 font-weight-bold">{{ listing.title }} </strong></v-col>
                     <v-col cols="3" >
                         <v-chip color="warning" prepend-icon="mdi-star-outline" text-color="white" size="small">
-                            {{ prop.listing.averageRating }}
+                            {{ listing.averageRating == 0 ? ' New!' : listing.averageRating }} 
                         </v-chip>
                     </v-col>
                 </v-row>
-                <!-- <p class="truncate-text">{{ prop.listing.description }}</p> -->
+                <!-- <p class="truncate-text">{{ listing.description }}</p> -->
                 <p>
-                    <v-icon color="red-lighten-1">mdi-map-marker</v-icon> {{ prop.listing.location }} 
+                    <v-icon color="red-lighten-1">mdi-map-marker</v-icon> {{ listing.location }} 
                     <span class="text-grey-darken-3">
-                        {{ prop.latitude && prop.longitude ? '- ' + Math.floor(getDistance({latitude: 10.250778, longitude: 123.939834}, listingLocation)/1000) + ' km away' : '' }}
+                        {{ latitude && longitude ? '- ' + Math.floor(getDistance({latitude: 10.250778, longitude: 123.939834}, listingLocation)/1000) + ' km away' : '' }}
                     </span>
 
                 </p>
-                <p> <strong class="text-h6">₱{{ parseInt(prop.listing.price).toLocaleString() }}</strong> <span class="text-grey-darken-3">/ daily</span> </p>
-                <v-chip class="ma-2 text-grey-darken-3" prepend-icon="mdi-bed" size="small" >
-                    {{ prop.listing.beds }}  Beds
+                <p> <strong class="text-h6">₱{{ parseInt(listing.price).toLocaleString() }}</strong> <span class="text-grey-darken-3">/ daily</span> </p>
+                <v-chip class="ma-2 text-grey-darken-3" prepend-icon="mdi-bed" size="small" v-if="listing.beds > 0">
+                    {{ listing.beds }}  Beds
                 </v-chip>
-                <v-chip class="ma-2 text-grey-darken-3" prepend-icon="mdi-account-multiple" size="small">
-                    {{ prop.listing.guests }} Guests
+                <v-chip class="ma-2 text-grey-darken-3" prepend-icon="mdi-account-multiple" size="small" v-if="listing.guests > 0">
+                    {{ listing.guests }} Guests
                 </v-chip>
-                <v-chip class="ma-2 text-grey-darken-3" size="small" prepend-icon="mdi-shower">
-                    {{ prop.listing.bathrooms }} Bathrooms
+                <v-chip class="ma-2 text-grey-darken-3" size="small" prepend-icon="mdi-shower" v-if="listing.bathrooms > 0">
+                    {{ listing.bathrooms }} Bathrooms
                 </v-chip>
             </v-container>
         </v-skeleton-loader>

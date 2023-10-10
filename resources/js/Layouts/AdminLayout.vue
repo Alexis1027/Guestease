@@ -25,22 +25,32 @@
         <v-menu min-width="200px" rounded>
             <template v-slot:activator="{ props }">
                 <v-btn class="text-none" icon v-bind="props" >
-                    <v-badge content="2" color="error">
+                    <v-badge content="6" color="error">
                         <v-icon>mdi-bell-outline</v-icon>
                     </v-badge>
                 </v-btn>
             </template>
-            <v-card width="450" >
+            <v-card width="450">
+                <v-toolbar>
+                    <v-toolbar-title>Notifications</v-toolbar-title>
+                    <v-spacer/>
+                    <v-btn icon>
+                        <v-icon>mdi-magnify</v-icon>
+                    </v-btn>
+                    <v-btn icon>
+                        <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                </v-toolbar>
                 <v-list>
-                    <p class="text-red"> dont work rn</p>
-                    <v-list-item value="1">
-                        John Doe requested to create a room.
-                    </v-list-item>
-                    <v-list-item :value="n" v-for="n in 6" :key="n">
-                        Firstname Lastname requested to create a room.
+                    <p class="text-red ms-5">doestn work</p>
+                    <v-list-item :value="n" v-for="n in 6" :key="n"
+                        class="my-2"
+                        prepend-avatar="../images/profile/21.png" 
+                        title="John Doe has a pending listing."
+                        :subtitle="`${n+1} hours ago`">
                     </v-list-item>
                     <v-divider/>
-                    <Link href="/requests">
+                    <Link href="/admin/listing-requests">
                         <v-list-item value="see all" class="text-center">
                             See all
                         </v-list-item>
@@ -64,13 +74,13 @@
                     <v-list-item prepend-icon="mdi-view-dashboard" title="Dashboard" value="dashboard"></v-list-item>
                 </Link>
                 <Link href="/admin/manage-listings">
-                    <v-list-item prepend-icon="mdi-home-edit" title="Listing management" value="managelistings"></v-list-item>
+                    <v-list-item prepend-icon="mdi-home" title="Listing management" value="managelistings"></v-list-item>
                 </Link>
                 <Link href="/admin/manage-users">
-                    <v-list-item prepend-icon="mdi-account-edit" title="User management" value="manageuser"></v-list-item>
+                    <v-list-item prepend-icon="mdi-account" title="User management" value="manageuser"></v-list-item>
                 </Link>
                 <Link href="/admin/manage-reservations">
-                    <v-list-item prepend-icon="mdi-calendar-edit" title="Reservation management" value="managereservation"></v-list-item>
+                    <v-list-item prepend-icon="mdi-calendar" title="Reservation management" value="managereservation"></v-list-item>
                 </Link>
                 <Link href="/admin/listing-requests">
                     <v-list-item prepend-icon="mdi-help-box-multiple" title="Listing requests" value="requests"></v-list-item>

@@ -52,9 +52,10 @@
                         <v-list-item :title="listing.title">
                                 <template v-slot:prepend>
                                     <v-avatar rounded="0" size="60">
-                                    <v-img :src="`../images/room1.png`"></v-img>
-                                </v-avatar>
+                                        <v-img :src="`../images/${JSON.parse(listing.images)[0]}`" cover></v-img>
+                                    </v-avatar>
                                 </template>
+                                {{  }}
                         </v-list-item>
                     </td>
                     <td>{{ listing.status }}</td>

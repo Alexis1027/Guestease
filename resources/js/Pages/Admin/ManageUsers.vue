@@ -31,55 +31,54 @@
 <template>
     <Head title="Manage users" />
     
-    <v-container class="bg-white">
-        <v-row justify="space-between">
-            <v-col cols="2">
-                    <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
-            </v-col>
-            <v-col cols="4">
-            <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
+    <v-row justify="space-between">
+        <v-col cols="2">
+                <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
         </v-col>
-        </v-row>
-        <v-table hover class="bg-grey-lighten-5 text-center">
-            <thead>
-                <tr >
-                    <th class="text-center">Id</th>
-                    <th class="text-center">Profile</th>
-                    <th class="text-center">Full name</th>
-                    <th class="text-center">Email</th>
-                    <th class="text-center">Contact No.</th>
-                    <th class="text-center">Role</th>
-                    <th class="text-center">Created At</th>
-                    <th class="text-center">Actions</th>
+        <v-col cols="4">
+        <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
+    </v-col>
+    </v-row>
+    <v-table hover class="bg-grey-lighten-5 text-center">
+        <thead>
+            <tr >
+                <th class="text-center">Id</th>
+                <th class="text-center">Profile</th>
+                <th class="text-center">Full name</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Contact No.</th>
+                <th class="text-center">Role</th>
+                <th class="text-center">Created At</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <v-slide-x-transition class="py-0" group>
+                <tr v-for="user in prop.users.data" :key="user.id">
+                    <td>{{ user.id }}</td>
+                    <td>
+                        <v-avatar>
+                            <v-img :src="`../images/profile/${user.profile_pic}`"></v-img>
+                        </v-avatar>
+                    </td>
+                    <td>{{ user.firstname + ' ' + user.lastname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.contact_no ? user.contact_no : 'Not available' }}</td>
+                    <td> {{ user.role }} </td>
+                    <td> {{ format(new Date(user.created_at), 'M/dd/yyyy') }} </td>
+                    <td>
+                        <v-btn size="small" @click="editUserModal = true" variant="tonal" class="text-none bg-grey-lighten-5 me-2 text-blue">
+                            <v-icon>mdi-pencil</v-icon> Edit
+                        </v-btn>
+                        <v-btn @click="deleteUser(user)" size="small" variant="tonal" class="text-none bg-grey-lighten-5 text-red">
+                            <v-icon>mdi-delete-outline</v-icon> Delete
+                        </v-btn>
+                        
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <v-slide-x-transition class="py-0" group>
-                    <tr v-for="user in prop.users.data" :key="user.id">
-                        <td>{{ user.id }}</td>
-                        <td>
-                            <v-avatar>
-                                <v-img :src="`../images/profile/${user.profile_pic}`"></v-img>
-                            </v-avatar>
-                        </td>
-                        <td>{{ user.firstname + ' ' + user.lastname }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.contact_no ? user.contact_no : 'Not available' }}</td>
-                        <td> {{ user.role }} </td>
-                        <td> {{ format(new Date(user.created_at), 'M/dd/yyyy') }} </td>
-                        <td>
-                            <v-btn size="small" @click="editUserModal = true" variant="tonal" class="text-none bg-grey-lighten-5 me-2 text-blue">
-                                <v-icon>mdi-pencil</v-icon> Edit
-                            </v-btn>
-                            <v-btn @click="deleteUser(user)" size="small" variant="tonal" class="text-none bg-grey-lighten-5 text-red">
-                                <v-icon>mdi-delete-outline</v-icon> Delete
-                            </v-btn>
-                            
-                        </td>
-                    </tr>
-                </v-slide-x-transition>
-            </tbody>
-        </v-table>
+            </v-slide-x-transition>
+        </tbody>
+    </v-table>
     <v-row  class="mt-2">
         <v-col class="d-flex justify-end">
             <Link 
@@ -92,23 +91,13 @@
             </Link>
         </v-col>
     </v-row>
-    </v-container>
 
-    <v-snackbar
-      v-model="deleteSnackbar"
-      color="red-lighten-3"
-      timeout="1500"
-    >
+    <v-snackbar v-model="deleteSnackbar" color="red-lighten-3" timeout="1500">
       Deleted successfully
-
-      <template v-slot:actions>
-        <v-btn
-          variant="text"
-          @click="deleteSnackbar = false"
-          icon="mdi-close"
-        >
-        </v-btn>
-      </template>
+        <template v-slot:actions>
+            <v-btn variant="text" @click="deleteSnackbar = false" icon="mdi-close">
+            </v-btn>
+        </template>
     </v-snackbar>
 
     <EditUserModal :show="editUserModal" @CloseDialog="editUserModal = false" v-model="editUserModal" />
