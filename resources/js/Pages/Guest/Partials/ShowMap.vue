@@ -6,37 +6,15 @@
     const props = defineProps(['latitude', 'longitude'])
     const mapContainer = ref(null)
 
-    const address = [
-        {
-            'id': 1,
-            'houseName': 'Guest House 1',
-            'coord': [props.latitude, props.longitude]
-        },
-        // {
-        //     'id': 2,
-        //     'houseName': 'Guest House 2',
-        //     'coord': [10.257239, 123.959788]
-        // },
-        
-    ]
-
     onMounted(async() => {
-
         generateMap()
-
     })
 
     function generateMap() {
         const map = L.map(mapContainer.value).setView([props.latitude, props.longitude], 13)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
-        address.forEach(place => {
-            const marker = L.marker([place.coord[0], place.coord[1]], {icon: markerIcon}).addTo(map)
-            marker.bindPopup(`<b> This is where you'll be! </b>`)
-            marker.on('click', () => {
-                mapSnackbar.value = true
-                currentGuestHouse.value = place
-            })
-        });
+        const marker = L.marker([props.latitude, props.longitude], {icon: markerIcon}).addTo(map)
+        marker.bindPopup(`<b> This is where you'll be! </b>`)
     }
 
     var markerIcon = L.icon({

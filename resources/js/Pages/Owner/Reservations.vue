@@ -2,6 +2,7 @@
 
     import Layout from '../../Layouts/OwnerLayout.vue'
     import {ref} from 'vue'
+    import {format} from 'date-fns'
     const props = defineProps(['reservations'])
     defineOptions({
         layout: Layout
@@ -14,9 +15,6 @@
 </script>
 
 <template>
-    <v-container class="bg-white">
-        <p class="text-red">does not work rn</p>
-        {{ reservations }}
         <v-row justify="space-between">
             <v-col cols="2">
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
@@ -28,31 +26,36 @@
         <v-table hover class="bg-grey-lighten-5 text-center">
             <thead>
                 <tr>
-                    <th class="text-center">Id</th>
-                    <th class="text-center">Listing id</th>
-                    <th class="text-center">Guest id</th>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Listing ID</th>
+                    <th class="text-center">Guest ID</th>
                     <th class="text-center">Payment Process</th>
                     <th class="text-center">Check in</th>
                     <th class="text-center">Check out</th>
                     <th class="text-center">Reserved at</th>
+                    <th class="text-center">Total</th>
+                    <th class="text-center">Guests</th>
+                    <th class="text-center">Length of stay</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-if="reservations">
+                <tr v-if="reservations.data.length <= 0">
                     <td colspan="10">No reservations found.</td>
                 </tr>
-                <tr v-for="reservation in reservations" :key="reservation.id">
-                    {{ reservation }}
+                <tr v-for="reservation in reservations.data" :key="reservation.id">
                     <td>{{ reservation.id }}</td>
                     <td>{{ reservation.listing_id }}</td>
                     <td>{{ reservation.user_id }}</td>
-                    <td>{{ 'payment' }}</td>
+                    <td>{{ reservation.payment_process }}</td>
                     <td>{{ reservation.checkin }}</td>
                     <td>{{ reservation.checkout }}</td>
-                    <td>{{ 'bruh' }}</td>
-                    <td>{{ 'bruh' }}</td>
+                    <td>{{ format(new Date(reservation.created_at), 'MMM d, y') }}</td>
+                    <td>₱{{ parseInt(reservation.total).toLocaleString() }}</td>
+                    <td>{{ reservation.guests }}</td>
+                    <td>{{ reservation.days }} days</td>
+                    <td>{{ reservation.status }}</td>
                     <td>
                         <v-btn icon="mdi-delete-outline" size="small" class="text-red" flat></v-btn>
                         <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->
@@ -79,5 +82,4 @@
                 ></v-pagination>
             </v-col>
         </v-row>
-    </v-container>
 </template>

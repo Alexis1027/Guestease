@@ -3,13 +3,13 @@
     import {ref, defineProps, watch} from 'vue'
     import {router} from '@inertiajs/vue3'
     import Layout from '../../Layouts/AdminLayout.vue'
-    import DeleteListingModal from './partials/DeleteListingModal.vue'
-    import EditListingModal from './partials/EditListingModal.vue'
+    import DeleteListingDialog from './partials/DeleteListingDialog.vue'
+    import EditListingDialog from './partials/EditListingDialog.vue'
     import {format} from 'date-fns'
 
     defineProps({listings: Object, newEntry: Object})
-    const deleteListingModal = ref(false)
-    const editListingModal = ref(false)
+    const deleteListingDialog = ref(false)
+    const editListingDialog = ref(false)
     const deleteSnackbar = ref(false)
     const createSnackbar = ref(false)
     const entries = [5, 10, 15, 20, 25]
@@ -18,7 +18,7 @@
 
     function deleteListing(gh) {
         listing.value = gh
-        deleteListingModal.value = true
+        deleteListingDialog.value = true
     }
 
     watch(entry, () => {
@@ -27,7 +27,7 @@
 
     function editListing(gh) {
         listing.value = gh
-        editListingModal.value = true
+        editListingDialog.value = true
     }
 
     defineOptions({layout: Layout})
@@ -66,7 +66,7 @@
                     <td>{{ listing.id }}</td>
                     <td>
                         <v-avatar size="50" class="me-2">
-                            <v-img src="../images/profile/21.png"></v-img>
+                            <v-img :src="`../images/profile/${listing.owner.profile_pic}`"></v-img>
                         </v-avatar>
                         {{ listing.owner.firstname + ' ' + listing.owner.lastname }}
                     </td>
@@ -107,8 +107,8 @@
     
     </v-container>
 
-    <DeleteListingModal :listing="listing" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteListingModal" @CloseDialog="deleteListingModal = false" v-model="deleteListingModal" />
-    <EditListingModal :listing="listing" :show="editListingModal" @CloseDialog="editListingModal = false" v-model="editListingModal" />
+    <DeleteListingDialog :listing="listing" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteListingDialog" @CloseDialog="deleteListingDialog = false" v-model="deleteListingDialog" />
+    <EditListingDialog :listing="listing" :show="editListingDialog" @CloseDialog="editListingDialog = false" v-model="editListingDialog" />
 
     <v-snackbar
       v-model="deleteSnackbar"

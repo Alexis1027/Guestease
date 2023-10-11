@@ -12,23 +12,14 @@
     const prop = defineProps(['show', 'listing'])
     const mapContainer = ref(null)
 
-    const address = [
-        {
-            'id': 1,
-            'houseName': 'Guest House 1',
-            'coord': [10.257239, 123.959788]
-        },
-    ]
     onMounted(async() => {
         generateMap()
     })
 
     function generateMap() {
-        const map = L.map(mapContainer.value).setView([10.257239, 123.959788], 15)
+        const map = L.map(mapContainer.value).setView([prop.listing.latitude, prop.listing.longitude], 15)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
-        address.forEach(place => {
-            const marker = L.marker([place.coord[0], place.coord[1]], {icon: markerIcon}).addTo(map)
-        })
+        L.marker([prop.listing.latitude, prop.listing.longitude], {icon: markerIcon}).addTo(map)
     }
 
     var markerIcon = L.icon({
@@ -87,7 +78,7 @@
                         <v-row class="mt-1">
                             <v-col cols="12">
                                 <p class="text-h6">Amenities</p> 
-                                <v-chip class="ms-2" :prepend-icon="amenity.icon" v-for="amenity in JSON.parse(listing.amenities)" :key="amenity">
+                                <v-chip class="ms-2 mt-2" :prepend-icon="amenity.icon" v-for="amenity in JSON.parse(listing.amenities)" :key="amenity">
                                     {{ amenity.title }}
                                 </v-chip>
                             </v-col>

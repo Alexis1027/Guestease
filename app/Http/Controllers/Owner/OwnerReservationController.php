@@ -16,7 +16,8 @@ class OwnerReservationController extends Controller
         $reservations = new stdClass;
         foreach($listings as $ls) {
             //find the rooms of owner and find the rooms in the reservation table,
-            $reservations->{$ls->id} = Reservation::where('listing_id', $ls->id)->get();
+            $rs = Reservation::where('listing_id', $ls->id)->get();
+            $reservations->data = $rs;
         }
         return Inertia::render('Owner/Reservations', ['reservations' => $reservations]);
     }

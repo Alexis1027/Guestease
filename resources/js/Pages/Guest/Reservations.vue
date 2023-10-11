@@ -20,7 +20,6 @@
 <template>
         <Head title="Reservations" />
         <p class="text-h4">Welcome, {{ auth.user.firstname }}</p>
-        {{ reservationToCancel }}
         <p class="text-h6 mb-6">Here, you can view a history of all your bookings.</p>
         <v-row>
             <v-col cols="6" v-for="reservation in reservations" :key="reservation.id">

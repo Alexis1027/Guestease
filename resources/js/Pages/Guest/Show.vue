@@ -5,10 +5,9 @@
     import { useForm } from '@inertiajs/vue3'
     import { useDate } from 'vuetify/labs/date'
     import RatingCard from '../Guest/Partials/RatingCard.vue'
-    import RatingModal from '../Guest/Partials/RatingModal.vue'
+    import RatingDialog from './Partials/RatingDialog.vue'
     import Map from '../Guest/Partials/ShowMap.vue'
     import {format} from 'date-fns'
-    import {processImages} from '@/utils/imageUtils'
     import MazGallery from 'maz-ui/components/MazGallery'
     
     defineOptions({layout: Layout})
@@ -386,7 +385,7 @@
         </v-container>
                 <!-- About this place section -->
         <!-- Components -->
-        <RatingModal :showReviewModal="showReviewModal" :auth="auth" :star="rating" :listing="listing" @closeReviewModal="showReviewModal = false" />
+        <RatingDialog :showReviewModal="showReviewModal" :auth="auth" :star="rating" :listing="listing" @closeReviewModal="showReviewModal = false" />
     </v-container>
 </template>
 

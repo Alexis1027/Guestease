@@ -3,6 +3,7 @@
     import {defineProps} from 'vue'
 
     const prop = defineProps(['wishlist'])
+    console.log(prop)
     const images = JSON.parse(prop.wishlist.listing.images)
    
 </script>

@@ -39,18 +39,23 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="reservation in reservations" :key="reservation.id">
+                <tr v-if="reservations.length <= 0">
+                    <td colspan="8"> No reservations.</td>
+                </tr>
+                <tr v-for="reservation in reservations" :key="reservation.id" v-else>
                     <td>{{ reservation.id }}</td>
                     <td>
-                        <v-list-item :title="reservation.listing.title">
-                        </v-list-item>
+                        <p v-if="reservation.listing">{{ reservation.listing.title }}</p>
+                        <p v-else class="text-red">Guest house not found</p>
                     </td>
                     <td>
                         <v-list-item
+                        v-if="reservation.user"
                         :prepend-avatar="`../images/profile/${reservation.user.profile_pic}`" 
                         :title="reservation.user.firstname + ' ' + reservation.user.lastname"
                         :subtitle="reservation.user.email"
                         ></v-list-item>
+                        <p v-else class="text-red">User not found</p>
                     </td>
                     <td>{{ reservation.payment_process }}</td>
                     <td>{{ format(new Date(reservation.checkin), 'MMM d, yyyy') }}</td>
@@ -60,9 +65,6 @@
                     <td>
                         <v-btn icon="mdi-delete-outline" size="small" class="text-red" flat></v-btn>
                     </td>
-                </tr>
-                <tr v-if="reservations.length <= 0">
-                    <td colspan="8"> No reservations.</td>
                 </tr>
             </tbody>
         </v-table>

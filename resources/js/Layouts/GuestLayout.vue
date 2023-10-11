@@ -19,13 +19,13 @@
             <Link href="/" v-if="!auth">
                 <v-btn :class="$page.component == 'Guest/Index' ? 'text-blue' : ''">Home</v-btn>
             </Link>
-            <Link href="/about" class="ms-4" v-if="!auth">
+            <Link href="/about" v-if="!auth">
                 <v-btn :class="$page.component == 'About' ? 'text-blue' : ''">About</v-btn>
             </Link>
-            <Link href="/contact-us" class="ms-4" v-if="!auth">
+            <Link href="/contact-us" v-if="!auth">
                 <v-btn :class="$page.component == 'ContactUs' ? 'text-blue' : ''">Contact us</v-btn>
             </Link>
-            <Link href="/login" class="ms-4 me-6" v-if="!auth">
+            <Link href="/login" class="me-6" v-if="!auth">
                 <v-btn class="text-none" color="blue" variant="flat">
                     Register / Login
                 </v-btn>

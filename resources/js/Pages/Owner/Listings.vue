@@ -49,6 +49,7 @@
                 </tr>
                 <tr v-for="listing in listings" :key="listing.id">
                     <td>
+                        
                         <v-list-item :title="listing.title">
                                 <template v-slot:prepend>
                                     <v-avatar rounded="0" size="60">
@@ -65,8 +66,10 @@
                     <td>{{ listing.location }}</td>
                     <td>{{ listing.created_at }}</td>
                     <td>
-                        <v-btn icon="mdi-delete-outline" size="small" class="text-red" flat></v-btn>
-                        <v-btn icon="mdi-pencil" size="small" class="text-blue" flat></v-btn>
+                        <Link :href="`/owner/edit-listing/${listing.id}`">
+                            <v-btn prepend-icon="mdi-pencil" size="small" color="blue" variant="tonal">Edit</v-btn>
+                        </Link>
+                        <v-btn prepend-icon="mdi-delete-outline" size="small" color="red" class="ms-1" variant="tonal">Delete</v-btn>
                         <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
                     </td>
                 </tr>

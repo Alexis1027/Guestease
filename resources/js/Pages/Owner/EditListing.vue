@@ -204,19 +204,26 @@
     </div>
     <!-- DELETE LISTING MODAL -->
     <v-dialog v-model="showDeleteModal" width="auto">
-        <v-card>
-            <v-card-title>
-                Delete listing
-            </v-card-title>
-            <v-card-text>
-                Are you sure you want to delete this listing?
-            </v-card-text>
-            <v-card-actions class="justify-end d-flex">
-                <v-form>
-                    <v-btn color="grey" @click="showDeleteModal = false">No</v-btn>
-                    <v-btn color="red" @click="deleteListing">Yes</v-btn>
-                </v-form>
-            </v-card-actions>
+        <v-card class="justify-center" width="600">
+            <v-form @submit.prevent>
+                <v-sheet elevation="12" rounded="lg" class="pa-4 text-center mx-auto">
+                    <v-icon class="mb-5" color="red" icon="mdi-close-circle" size="112"></v-icon>
+                    <h2 class="text-h5 mb-6">Are you sure?</h2>
+                    <p class="mb-4 text-medium-emphasis text-body-2">
+                        This will delete listing <strong>{{ listing.title }}</strong>
+                        <br> This process cannot be undone.
+                    </p>
+                    <v-divider class="mb-4"></v-divider>
+                    <div class="text-end">
+                        <v-btn class="text-none me-4" @click="showDeleteModal = false" color="grey" rounded variant="flat" width="90">
+                            Cancel
+                        </v-btn>
+                        <v-btn class="text-none" color="red" type="submit" @click="deleteListing" rounded variant="flat" width="90">
+                            Delete
+                        </v-btn>
+                    </div>
+                </v-sheet>
+            </v-form>
         </v-card>
     </v-dialog>
     <!-- UPDATE SUCCESSFUL SNACKBAR -->
