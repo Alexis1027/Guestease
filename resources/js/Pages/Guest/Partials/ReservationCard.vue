@@ -39,7 +39,7 @@
         <v-list-item>
             <p>Reservation status</p>
             <template v-slot:append>
-                <p :class="reservation.status == 'approved' ? 'text-green' : 'text-orange'">{{reservation.status}}</p>
+                <v-chip size="small" :class="reservation.status == 'approved' ? 'text-green' : 'text-orange'">{{reservation.status}}</v-chip>
             </template>
          </v-list-item>
          <!-- price x days -->

@@ -29,8 +29,13 @@
 
     const approveListing = () => {
         console.log(prop.listing.id)
-        router.put(`/admin/approve-listing`, {listing_id: prop.listing.id})
+        router.put(`/admin/approve-listing/${prop.listing.id}`)
         emit('approved')
+        emit('closeReviewListingModal')
+    }
+
+    const declineListing = () => {
+        router.put(`/admin/decline-listing/${prop.listing.id}`)
         emit('closeReviewListingModal')
     }
 
@@ -127,7 +132,7 @@
                 </v-row>
             </v-card-item>
             <v-card-actions class="d-flex justify-end my-3">
-                <v-btn color="error" variant="tonal" @click="emit('closeReviewListingModal')">Decline</v-btn>
+                <v-btn color="error" variant="tonal" @click="declineListing">Decline</v-btn>
                 <v-btn color="green" variant="tonal" @click="approveListing">Approve</v-btn>
             </v-card-actions>
         </v-card>

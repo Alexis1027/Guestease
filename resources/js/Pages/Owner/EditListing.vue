@@ -88,9 +88,7 @@
                 <v-card flat>
                     <MazCarousel>
                         <template #title>
-                            <span class="text-h6"> Photos </span>
-                        {{ photosForm.images }}
-
+                            <span class="text-h6"> Photos </span> <span class="text-red">not working rn</span>
                                 <v-btn :append-icon="showEditPhotos ? 'mdi-pencil' : 'mdi-close'" variant="text" color="blue" class="text-none" @click="showEditPhotos = !showEditPhotos">
                                     Edit
                                 </v-btn> 
@@ -98,8 +96,6 @@
                                     Add new photo
                                 </v-btn>
                         </template>
-                        {{ photosForm.images.length }}
-
                         <MazCard galleryWidth="100%" v-for="(item, i) in photosForm.images" zoom :key="i" :images="[`/images/${photosForm.images[i]}`]" style="min-width: 250px;">
                             <v-row v-if="!showEditPhotos">
                                 <v-col cols="6">
@@ -140,7 +136,7 @@
                     </v-form>
                     <v-divider/>
                     <v-list>
-                        <span class="text-h6">Properties and rooms</span>
+                        <span class="text-h6">Properties and rooms</span> <span class="text-red">not working rn</span>
                         <v-btn :append-icon="showEditProperties ? 'mdi-pencil' : 'mdi-close'" variant="text" @click="showEditProperties = !showEditProperties" class="text-none" color="blue">Edit</v-btn> 
                         <v-list-item>
                             Number of guests
@@ -190,6 +186,7 @@
             </v-window-item>
             <v-window-item value="option-2">
                 <v-card flat>
+                    <span class="text-red">not working rn</span>
                     <v-card-item>
                         <v-text-field type="number" label="Pricing"></v-text-field>
                         <v-text-field type="number" label="Add discount"></v-text-field>
@@ -205,6 +202,7 @@
                 <v-card width="69vw" height="100%">
                     <v-card-item>
                         <v-list>
+                            <span class="text-red">not working rn</span>
                             <v-list-item prepend-icon="mdi-home">
                                 Rules and policies
                             </v-list-item>

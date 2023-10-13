@@ -83,7 +83,9 @@
                         :loading="saveWishlistForm.processing" 
                         type="submit"
                         rounded 
-                        flat 
+                        size="small"
+                        :color="wishlist ? 'red' : ''"
+                        variant="tonal"
                         :prepend-icon="wishlist ? 'mdi-heart' : 'mdi-heart-outline'"
                         >
                             <template v-slot:prepend v-if="wishlist">
@@ -162,7 +164,7 @@
                 <!-- Rate this place section -->
                 <v-container class="bg-white ">
                     <p class="text-h5 font-weight-medium">Rate this place </p>
-                    <p style="color: gray">Tell others what you think.</p>
+                    <p style="color: gray">Tell others what you think. <span class="text-red"> still working on how to not show if user hasnt reserved/booked  </span> </p>
                     <v-divider class="my-3" />
                     <div v-if="rated">
                         <RatingCard :rating="rated" />
@@ -292,7 +294,8 @@
 
     #date {
         border: 1px solid black; 
-        border-radius: 5px; 
+        border-radius: 5px;
+
     }
     .v-card.on-hover {
         opacity: 0.8;
@@ -301,6 +304,7 @@
     #reserveBtn {
         position: sticky;
         top: 130px;
+        box-shadow: 10px 10px 5px lightblue;
     }
 
 </style>

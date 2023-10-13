@@ -10,14 +10,13 @@
         longitude: Number
     })
     const loading = ref(true)
+    const images = JSON.parse(prop.listing.images)
 
     onMounted(() => {
         setTimeout(() => {
             loading.value = false
         },1000)
     })
-    
-    const images = JSON.parse(prop.listing.images)
 
 </script>
 

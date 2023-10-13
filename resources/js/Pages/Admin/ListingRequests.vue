@@ -42,8 +42,29 @@
                     <th class="text-center">ID</th>
                     <th class="text-center">Owner</th>
                     <th class="text-center">Listing</th>
-                    <th class="text-center">Status</th>
                     <th class="text-center">Date Requested</th>
+                    <th class="text-center">
+                        <v-menu open-on-hover>
+                            <template v-slot:activator="{ props }">
+                                <v-btn variant="text" append-icon="mdi-menu-down" class="text-none" v-bind="props">
+                                    Status
+                                </v-btn>
+                            </template>
+
+                            <v-list>
+                                <p class="text-red">dont work rn</p>
+                                <v-list-item value="for approval">
+                                    For Approval
+                                </v-list-item>
+                                <v-list-item value="declined">
+                                    Declined
+                                </v-list-item>
+                                <v-list-item value="approved">
+                                    Approved
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
+                    </th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -52,8 +73,8 @@
                     <td>{{ listing.id }}</td>
                     <td>{{ listing.user.firstname + ' ' + listing.user.lastname }}</td>
                     <td>{{ listing.title }}</td>
-                    <td> <v-chip size="small" color="orange">{{ listing.status }}</v-chip> </td>
                     <td>{{ format(new Date(listing.created_at), 'MMM dd, yyyy') }}  </td>
+                    <td> <v-chip size="small" color="orange">{{ listing.status }}</v-chip> </td>
                     <td>
                         <v-btn prepend-icon="mdi-file-find" @click="showListingReviewModalFunc(listing)" size="small" class="text-green text-none bg-grey-lighten-5" variant="tonal">Review</v-btn>
                         <v-btn size="small" class="text-red bg-grey-lighten-5 text-none ms-1" variant="tonal"> 

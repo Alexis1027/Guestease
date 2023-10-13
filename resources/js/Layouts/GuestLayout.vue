@@ -16,13 +16,13 @@
                 </Link>
             </v-toolbar-title>
             <v-spacer/>
-            <Link href="/" v-if="!auth">
+            <Link href="/">
                 <v-btn :class="[$page.component == 'Guest/Index' ? 'text-blue' : '', 'text-none']">Home</v-btn>
             </Link>
-            <Link href="/about" v-if="!auth">
+            <Link href="/about">
                 <v-btn :class="[$page.component == 'About' ? 'text-blue' : '', 'text-none']">About</v-btn>
             </Link>
-            <Link href="/contact-us" v-if="!auth">
+            <Link href="/contact-us">
                 <v-btn :class="[$page.component == 'ContactUs' ? 'text-blue' : '', 'text-none']">Contact us</v-btn>
             </Link>
             <Link href="/login" class="me-6" v-if="!auth">
