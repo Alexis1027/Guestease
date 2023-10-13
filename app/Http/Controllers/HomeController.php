@@ -29,18 +29,21 @@ class HomeController extends Controller
         ]);
     }
 
-    public function show(Listing $id) {
+    public function show(Listing $listing) {
 
-        $ratings = Rating::where('listing_id', $id->id)
+        $ratings = Rating::where('listing_id', $listing->id)
         ->whereIn('user_id', function($query) {
             $query->select('id')->from('users');
         })->get();
+        $reservedDates = Reservation::where('listing_id', $listing->id)
+            ->select('checkin', 'checkout')
+            ->get();
 
-        $owner = User::find($id->owner_id);
+        $owner = User::find($listing->owner_id);
 
         if(auth()->user()) {
-            $wishlist = Wishlist::where('user_id', auth()->user()->id)->where('listing_id', $id->id)->first();
-            $rating = Rating::where('user_id', auth()->user()->id)->where('listing_id', $id->id)->first();
+            $wishlist = Wishlist::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
+            $rating = Rating::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
             
             if($rating) {
                 $rating->user = User::find(auth()->user()->id);
@@ -50,32 +53,35 @@ class HomeController extends Controller
             $sumRatings = $ratings->sum('rating');
             $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings) : 0;
             $averageRating = number_format($averageRating, 2);
+
             foreach($ratings as $r) {
                 $r->user = User::find($r->user_id);
             }
 
-
             return Inertia::render('Guest/Show', [
-                'listing' => $id,
+                'listing' => $listing,
                 'wishlist' => $wishlist, 
                 'rated' => $rating,
                 'owner' => $owner,
                 'ratings' => $ratings,
-                'averageRating' => $averageRating
+                'averageRating' => $averageRating,
+                'reservedDates' => $reservedDates
             ]);
             
         }
         else {
+
             $totalRatings = count($ratings);
             $sumRatings = $ratings->sum('rating');
             $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings) : 0;
             $averageRating = number_format($averageRating, 2);
+
             foreach($ratings as $r) {
                 $r->user = User::find($r->user_id);
             }
 
             return Inertia::render('Guest/Show', [
-                'listing' => $id, 
+                'listing' => $listing, 
                 'owner' => $owner,
                 'ratings' => $ratings, 
                 'averageRating' => $averageRating

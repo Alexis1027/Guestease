@@ -55,7 +55,7 @@ Route::get('/guidelines', [HomeController::class, 'guidelines']);
 Route::get('/rules', [HomeController::class, 'rules']);
 Route::get('/profile/{user}', [HomeController::class, 'profile']);
 Route::get('/',[HomeController::class, 'index']);
-Route::get('/room/{id}', [HomeController::class, 'show']);
+Route::get('/room/{listing}', [HomeController::class, 'show']);
 Route::post('/reserve', [ReservationRequestController::class, 'store']);
 Route::post('/wishlist/save', [WishlistController::class, 'store'])->middleware('auth');
 Route::delete('/wishlist/unsave',[WishlistController::class, 'destroy'])->middleware('auth');

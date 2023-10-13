@@ -1,39 +1,31 @@
 <script setup>
 
     import Layout from '../../Layouts/GuestLayout.vue'
-    import {defineProps, reactive, ref, watch} from 'vue'
+    import {defineProps, ref} from 'vue'
     import { useForm } from '@inertiajs/vue3'
-    import { useDate } from 'vuetify/labs/date'
     import RatingCard from '../Guest/Partials/RatingCard.vue'
     import RatingDialog from './Partials/RatingDialog.vue'
     import Map from '../Guest/Partials/ShowMap.vue'
     import {format} from 'date-fns'
     import MazGallery from 'maz-ui/components/MazGallery'
+    import DatePicker from './Partials/DatePicker.vue'
     
     defineOptions({layout: Layout})
 
-    const props = defineProps(['listing', 'ratings', 'averageRating', 'wishlist', 'auth', 'rated', 'owner'])
+    const props = defineProps(['listing', 'ratings', 'averageRating', 'wishlist', 'auth', 'rated', 'owner', 'reservedDates'])
     const rating = ref(0)
     const showReviewModal = ref(false)
     const images = JSON.parse(props.listing.images)
     const listingImages = images.map(img => '../images/' + img)
     const amenities = JSON.parse(props.listing.amenities)
-    const reservationDate = ref(null)
-    const date = useDate()
     const reserveFormAlert = ref(false)
-    const guests = reactive({
-        adults: 1,
-        children: 0,
-        infants: 0,
-        pets: 0,
-    })
 
     const saveWishlistForm = useForm({
         user_id: props.auth ? props.auth.user.id : '',
         listing_id: props.auth ? props.listing.id : '',
     })
 
-     const submitForm = () => {
+     const submitSaveWishlistForm = () => {
         if(props.wishlist) {
             saveWishlistForm.delete('/wishlist/unsave', {
                 preserveScroll: true
@@ -51,13 +43,6 @@
         days: null,
     })
 
-    watch(reservationDate, () => {
-        reserveForm.checkin = date.format(reservationDate.value[0], 'keyboardDate')
-        reserveForm.checkout = date.format(reservationDate.value[1], 'keyboardDate')
-        reserveForm.days = reservationDate ? Math.abs((new Date(reserveForm.checkin) - new Date(reserveForm.checkout)) / (1000 * 3600 * 24)) : null
-        reserveFormAlert.value = false
-    })
-
     const submitReservation = () => {
         if(reserveForm.checkin && reserveForm.checkout) {
             reserveForm.get(`/payment/${props.listing.id}`)
@@ -67,40 +52,10 @@
         }
     }
 
-    function incrementGuests(guest) {
-        reserveForm.guests++
-        switch(guest) {
-            case 'adults':
-            guests.adults++
-            break
-            case 'children':
-            guests.children++
-            break
-            case 'infants':
-            guests.infants++
-            break
-            case 'pets':
-            guests.pets++
-            break
-        }
-    }
-
-    function decrementGuests(guest) {
-        reserveForm.guests.value--
-        switch(guest) {
-            case 'adults':
-            guests.adults--
-            break
-            case 'children':
-            guests.children--
-            break
-            case 'infants':
-            guests.infants--
-            break
-            case 'pets':
-            guests.pets--
-            break
-        }
+    const updateDate = (date) => {
+        reserveForm.checkin = date.value.start,
+        reserveForm.checkout = date.value.end
+        reserveForm.days = Math.abs((new Date(reserveForm.checkin) - new Date(reserveForm.checkout)) / (1000 * 3600 * 24)) 
     }
 
 </script>
@@ -111,7 +66,6 @@
     
     <v-container>
         <h1>{{ listing.title }}</h1>
-        
         <v-row>
             <!-- ratings and location  -->
             <v-col cols="2"> 
@@ -123,7 +77,7 @@
             <v-spacer></v-spacer>
             <v-col class="text-end">
                 <!-- Save guest house button -->
-                <v-form @submit.prevent="submitForm">
+                <v-form @submit.prevent="submitSaveWishlistForm">
                     <v-btn 
                         class="text-none" 
                         :loading="saveWishlistForm.processing" 
@@ -219,106 +173,50 @@
                     </div>
                 </v-container>
                 
-            </v-col>
+            </v-col> 
             <v-col cols="4" class="mt-3">
                 <!-- Check in checkout and Reserve button section -->
-                <v-card id="reserveBtn" class="rounded-xl" elevation="5">
-                    <form>
-                    <v-card-item>
-                        <v-row>
-                            <v-col>
-                                <span class="text-h6">₱{{ parseInt(listing.price).toLocaleString() }}</span> daily
-                                <v-menu min-width="200px" rounded  :close-on-content-click="false">
-                                    <template v-slot:activator="{ props }">
-                                        <v-row>
-                                            <v-col cols="6">
-                                                <v-list-item title="Check-in" :style="reserveFormAlert ? 'border-color: red;' : 'border-color: grey;'" name="checkin" id="date" :subtitle="reservationDate ? reserveForm.checkin : 'Add date'" v-bind="props"></v-list-item>
-                                            </v-col>
-                                            <v-col cols="6">
-                                                <v-list-item title="Check-out" :style="reserveFormAlert ? 'border-color: red;' : 'border-color: grey;'" name="checkout" id="date" :subtitle="reservationDate ? reserveForm.checkout : 'Add date'" v-bind="props"></v-list-item>
-                                            </v-col>
-                                        </v-row>
-                                        <v-btn id="menu-activator" variant="outlined" width="100%" size="large" style="border-color: grey" class="mt-2 text-none" append-icon="mdi-chevron-down">
-                                            {{ reserveForm.guests }} Guests
-                                        </v-btn>
-                                        <v-alert variant="outlined" type="error" class="mt-5" prominent v-model="reserveFormAlert">
-                                            <p class="font-weight-bold">Let's try that again</p>
-                                            <p>Please input your check in and check out dates.</p>
-                                        </v-alert>
-                                        <v-menu activator="#menu-activator" :close-on-content-click="false">
-                                            <v-list>
-                                                <v-list-item title="Adults" subtitle="Age 13+">
-                                                    <template v-slot:append>
-                                                        <v-btn icon="mdi-plus" flat size="small" @click="incrementGuests('adults')" ></v-btn>
-                                                        <span class="mx-1">{{ guests.adults }}</span> 
-                                                        <v-btn icon="mdi-minus" flat size="small" @click="decrementGuests('adults')"> </v-btn>
-                                                    </template>
-                                                </v-list-item>
-                                                <v-list-item title="Children" subtitle="Age 2 - 12">
-                                                    <template v-slot:append>
-                                                        <v-btn icon="mdi-plus" flat size="small" @click="incrementGuests('children')" ></v-btn>
-                                                        <span class="mx-1">{{guests.children}}</span> 
-                                                        <v-btn icon="mdi-minus" flat size="small" @click="decrementGuests('children')"> </v-btn>
-                                                    </template>
-                                                    
-                                                </v-list-item>
-                                                <v-list-item title="Infants" subtitle="Age under 2">
-                                                    <template v-slot:append>
-                                                        <v-btn icon="mdi-plus" flat size="small" @click="incrementGuests('infants')" ></v-btn>
-                                                        <span class="mx-1">{{guests.infants}}</span> 
-                                                        <v-btn icon="mdi-minus" flat size="small" @click="decrementGuests('infants')"> </v-btn>
-                                                    </template>
-                                                </v-list-item>
-                                                <v-list-item title="Pets" subtitle="bruh">
-                                                    <template v-slot:append>
-                                                        <v-btn icon="mdi-plus" flat size="small" @click="incrementGuests('pets')" ></v-btn>
-                                                        <span class="mx-1">{{ guests.pets }}</span> 
-                                                        <v-btn icon="mdi-minus" flat size="small" @click="decrementGuests('pets')"> </v-btn>
-                                                    </template>
-                                                </v-list-item>
-                                            </v-list>
-                                        </v-menu>
-                                    </template>
-                                    <v-card width="360">
-                                        <v-date-picker color="blue" :landscape="true" :disabled="true" width="500" show-adjacent-months multiple v-model="reservationDate"></v-date-picker>
-                                    </v-card>
-                                </v-menu>
-                                <!-- <v-select variant="outlined" class="mt-3"></v-select> -->
-                            </v-col>
-                        </v-row>
-                    </v-card-item>
-                        <v-list v-if="reservationDate">
+                    <v-container id="reserveBtn" class="border">
+                        <span class="text-h6">₱{{ parseInt(listing.price).toLocaleString() }}</span> daily
+                        <DatePicker @updateDate="updateDate" :reservedDates="reservedDates" />
+                        <v-alert variant="outlined" type="error" class="mt-5" prominent v-model="reserveFormAlert">
+                            <p class="font-weight-bold">Let's try that again</p>
+                            <p>Please input your check in and check out dates.</p>
+                        </v-alert>
+                        <v-list-item prepend-icon="mdi-account-multiple" title="Guests">
+                            <template v-slot:append>
+                                <v-btn icon="mdi-plus" size="small" variant="text" @click="reserveForm.guests++"></v-btn>
+                                {{ reserveForm.guests }} 
+                                <v-btn icon="mdi-minus" size="small" variant="text" @click="reserveForm.guests--"></v-btn> 
+                            </template>
+                        </v-list-item>
+                        <v-list v-if="reserveForm.checkin && reserveForm.checkout">
                             <v-list-item>
                                 {{ `₱${parseInt(listing.price).toLocaleString()} x ${reserveForm.days} days` }}
                                 <template v-slot:append>
                                     {{ `₱${(listing.price * reserveForm.days).toLocaleString()}`  }}
                                 </template>
                             </v-list-item>
-                        <v-list-item v-if="reserveForm.days >= 30">
-                            Monthly stay discount
-                            <template v-slot:append>
-                                <!-- DISPLAYS THE TOTAL - DISCOUNT PRICE -->
-                                {{ `₱${((listing.price * reserveForm.days) * (listing.monthly_discount / 100)).toLocaleString()}`}}
-                            </template>
-                        </v-list-item>
-                        <v-divider/>
-                        <v-list-item class="font-weight-bold">
-                            <p>Total</p>
-                            <template v-slot:append v-if="reserveForm.days >= 30">
-                                {{ `₱${((listing.price * reserveForm.days) - (listing.price * reserveForm.days) * (listing.monthly_discount / 100)).toLocaleString()}`  }}
-                            </template>
-                            <template v-slot:append v-else>
-                                {{ `₱${((listing.price * reserveForm.days)).toLocaleString()}`  }}
-                            </template>
-                        </v-list-item>
+                            <v-list-item v-if="reserveForm.days >= 30">
+                                Monthly stay discount
+                                <template v-slot:append>
+                                    <!-- DISPLAYS THE TOTAL - DISCOUNT PRICE -->
+                                    {{ `₱${((listing.price * reserveForm.days) * (listing.monthly_discount / 100)).toLocaleString()}`}}
+                                </template>
+                            </v-list-item>
+                            <v-divider/>
+                            <v-list-item class="font-weight-bold">
+                                <p>Total</p>
+                                <template v-slot:append v-if="reserveForm.days >= 30">
+                                    {{ `₱${((listing.price * reserveForm.days) - (listing.price * reserveForm.days) * (listing.monthly_discount / 100)).toLocaleString()}`  }}
+                                </template>
+                                <template v-slot:append v-else>
+                                    {{ `₱${((listing.price * reserveForm.days)).toLocaleString()}`  }}
+                                </template>
+                            </v-list-item>
                         </v-list>
-                    <v-card-item>
-                        <!-- <Link  :href=" reserveForm.date ? `/payment/${listing.id}?guests=${reserveForm.guests}&checkin=${reserveForm.date[0]}&checkout=${reserveForm.date[1]}` : ''"> -->
-                            <v-btn color="green" @click="submitReservation" :disabled="reserveForm.processing" :loading="reserveForm.processing" class="text-none mb-4" width="100%" size="large">Reserve</v-btn>
-                        <!-- </Link> -->
-                    </v-card-item>
-                    </form>
-                </v-card>
+                        <v-btn color="green" @click="submitReservation" :disabled="reserveForm.processing" :loading="reserveForm.processing" class="text-none mb-4" width="100%" size="large">Reserve</v-btn>
+                    </v-container>
             </v-col>
             <!-- Ratings and reviews section -->
             <v-container class="mb-5 bg-white ">

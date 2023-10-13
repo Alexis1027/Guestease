@@ -6,12 +6,12 @@
     import {ref} from 'vue'
     import {useForm, router} from '@inertiajs/vue3'
     
-
+    const tab = ref(0)
     const props = defineProps(['listing'])
-    const images = JSON.parse(props.listing.images)
     const amenities = JSON.parse(props.listing.amenities)
-    const disableDetails = ref(true)
-    const disableProperties = ref(true)
+    const showEditDetails = ref(true)
+    const showEditProperties = ref(true)
+    const showEditPhotos = ref(true)
     const successSnackbar = ref(false)
     const showDeleteModal = ref(false)
 
@@ -26,14 +26,17 @@
         beds: props.listing.beds,
         rooms: props.listing.rooms,
         bathrooms: props.listing.bathrooms,
+    })
 
+    const photosForm = useForm({
+        images: JSON.parse(props.listing.images)
     })
 
     const submitDetailsForm = () => {
         detailsForm.put(`/owner/update-listing/details/${props.listing.id}`, {
             preserveScroll: true,
             onSuccess: () => {
-                disableDetails.value = true
+                showEditDetails.value = true
                 successSnackbar.value = true
             }
         })
@@ -45,7 +48,10 @@
         })
     }
 
-    const tab = ref(0)
+    function deletePhoto(index) {
+        photosForm.images = photosForm.images.splice(index, 1)
+    }
+
     defineOptions({
         layout: Layout
     })
@@ -55,6 +61,7 @@
     <v-toolbar>
       <v-toolbar-title>Edit Listing <p class="text-red">doest not work rn</p> </v-toolbar-title>
     </v-toolbar>
+
     <div class="d-flex flex-row">
         <v-tabs v-model="tab" direction="vertical" color="blue">
             <v-tab value="option-1" class="text-none">
@@ -81,78 +88,100 @@
                 <v-card flat>
                     <MazCarousel>
                         <template #title>
-                            <p class="text-h6">Photos</p>
+                            <span class="text-h6"> Photos </span>
+                        {{ photosForm.images }}
+
+                                <v-btn :append-icon="showEditPhotos ? 'mdi-pencil' : 'mdi-close'" variant="text" color="blue" class="text-none" @click="showEditPhotos = !showEditPhotos">
+                                    Edit
+                                </v-btn> 
+                                <v-btn append-icon="mdi-image-plus-outline" variant="text" color="green" class="text-none" v-show="!showEditPhotos">
+                                    Add new photo
+                                </v-btn>
                         </template>
-                        <MazCard galleryWidth="100%" :elevation="0" v-for="(item, i) in images" zoom :key="i" :images="[`/images/${images[i]}`]" style="min-width: 250px;">
+                        {{ photosForm.images.length }}
+
+                        <MazCard galleryWidth="100%" v-for="(item, i) in photosForm.images" zoom :key="i" :images="[`/images/${photosForm.images[i]}`]" style="min-width: 250px;">
+                            <v-row v-if="!showEditPhotos">
+                                <v-col cols="6">
+                                    <v-btn prepend-icon="mdi-close" @click="photosForm.images.splice(i, 1)" variant="text" color="red" class="text-none">
+                                        Remove {{ i }}
+                                    </v-btn>
+                                </v-col>
+                                <v-col cols="6">
+                                    <v-btn prepend-icon="mdi-image-edit-outline" variant="text" color="blue" class="text-none">
+                                        Change
+                                    </v-btn>  
+                                </v-col>
+                            </v-row>
                         </MazCard>
                     </MazCarousel>
                 <v-divider class="mt-4"/>
                 <span class="text-h6">Listing basics</span>
-                <v-btn :append-icon="disableDetails ? 'mdi-pencil' : 'mdi-close'" variant="text" @click="disableDetails = !disableDetails" class="text-none" color="blue">Edit</v-btn> 
+                <v-btn :append-icon="showEditDetails ? 'mdi-pencil' : 'mdi-close'" variant="text" @click="showEditDetails = !showEditDetails" class="text-none" color="blue">Edit</v-btn> 
                 <v-list width="100%">
                     <v-form @submit.prevent>
                         <v-list-item>
                         Listing title
-                        <v-text-field :disabled="disableDetails" v-model="detailsForm.title" variant="outlined"></v-text-field>
+                        <v-text-field :disabled="showEditDetails" v-model="detailsForm.title" variant="outlined"></v-text-field>
                     </v-list-item>
                     <v-list-item>
                         Listing description
-                        <v-textarea :disabled="disableDetails" v-model="detailsForm.description" variant="outlined"></v-textarea>
+                        <v-textarea :disabled="showEditDetails" v-model="detailsForm.description" variant="outlined"></v-textarea>
                     </v-list-item>
                     <v-list-item>
                         Listing location
-                        <v-text-field :disabled="disableDetails" v-model="detailsForm.location" variant="outlined"></v-text-field>
+                        <v-text-field :disabled="showEditDetails" v-model="detailsForm.location" variant="outlined"></v-text-field>
                     </v-list-item>
                     <v-row class="justify-end d-flex mb-1 me-4">
                         <v-col cols="1">
-                            <v-btn color="blue" type="submit" class="rounded-pill text-none" :loading="detailsForm.processing" @click="submitDetailsForm" v-show="!disableDetails">Save</v-btn>
+                            <v-btn color="blue" type="submit" class="rounded-pill text-none" :loading="detailsForm.processing" @click="submitDetailsForm" v-show="!showEditDetails">Save</v-btn>
                         </v-col>
                     </v-row>
                     </v-form>
                     <v-divider/>
                     <v-list>
                         <span class="text-h6">Properties and rooms</span>
-                        <v-btn :append-icon="disableProperties ? 'mdi-pencil' : 'mdi-close'" variant="text" @click="disableProperties = !disableProperties" class="text-none" color="blue">Edit</v-btn> 
+                        <v-btn :append-icon="showEditProperties ? 'mdi-pencil' : 'mdi-close'" variant="text" @click="showEditProperties = !showEditProperties" class="text-none" color="blue">Edit</v-btn> 
                         <v-list-item>
                             Number of guests
                             <template v-slot:append>
-                                <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.guests++" v-show="!disableProperties"></v-btn>
+                                <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.guests++" v-show="!showEditProperties"></v-btn>
                                 {{ propertyForm.guests }}
-                                <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.guests--" v-show="!disableProperties"></v-btn>
+                                <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.guests--" v-show="!showEditProperties"></v-btn>
                             </template>
                         </v-list-item>
                         <v-list-item>
                             Number of bed
                             <template v-slot:append>
-                                <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.beds++" v-show="!disableProperties"></v-btn>
+                                <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.beds++" v-show="!showEditProperties"></v-btn>
                                 {{ propertyForm.beds }}
-                                <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.beds--" v-show="!disableProperties"></v-btn>
+                                <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.beds--" v-show="!showEditProperties"></v-btn>
                             </template>
                         </v-list-item>
                         <v-list-item>
                             Number of rooms
                             <template v-slot:append>
-                                <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.rooms++" v-show="!disableProperties"></v-btn>
+                                <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.rooms++" v-show="!showEditProperties"></v-btn>
                                 {{ propertyForm.rooms }}
-                                <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.rooms--" v-show="!disableProperties"></v-btn>
+                                <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.rooms--" v-show="!showEditProperties"></v-btn>
                             </template>
                         </v-list-item>
                         <v-list-item>
                             Number of bathroom
                             <template v-slot:append>
-                                <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.bathrooms++" v-show="!disableProperties"></v-btn>
+                                <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.bathrooms++" v-show="!showEditProperties"></v-btn>
                                 {{ propertyForm.bathrooms }}
-                                <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.bathrooms--" v-show="!disableProperties"></v-btn>
+                                <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.bathrooms--" v-show="!showEditProperties"></v-btn>
                             </template>
                         </v-list-item>
                     </v-list>
                     <p class="text-h6">Amenities</p>
                         <v-container>
                             <v-chip :prepend-icon="item.icon" v-for="item in amenities" :key="item.title" class="mx-2 my-1">{{ item.title }}</v-chip>
-                            <v-chip prepend-icon="mdi-plus" color="green">Add</v-chip>
+                            <v-chip prepend-icon="mdi-plus" color="green" v-show="!showEditProperties">Add</v-chip>
                         </v-container>
                         <v-card-actions class="justify-end d-flex">
-                            <v-btn color="blue" variant="flat" class="text-none rounded-pill" v-show="!disableProperties">Save</v-btn>
+                            <v-btn color="blue" variant="flat" class="text-none rounded-pill" v-show="!showEditProperties">Save</v-btn>
                         </v-card-actions>
                     <v-divider/>
 
@@ -189,7 +218,7 @@
                         
                     </v-card-item>
                     <v-card-actions class="justify-end d-flex">
-                        <v-btn class="text-none" variant="flat" color="blue">Add</v-btn>
+                        <v-btn class="text-none" variant="flat" prepend-icon="mdi-plus" color="blue">Add</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-window-item>

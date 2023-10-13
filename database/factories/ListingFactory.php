@@ -30,7 +30,7 @@ class ListingFactory extends Factory
             'owner_id' => $this->faker->numberBetween(1, 10),
             'title' => $this->faker->company(),
             'description' => $this->faker->sentence(20),
-            'price' => $this->faker->numberBetween(1500, 10000),
+            'price' => $this->faker->numberBetween(100, 3000),
             'location' => $this->faker->city(),
             'images' => json_encode($room_images),
             'latitude' => $this->faker->latitude(10.250000, 10.268000),

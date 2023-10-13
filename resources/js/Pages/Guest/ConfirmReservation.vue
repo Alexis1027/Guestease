@@ -3,6 +3,7 @@
     import {defineProps, onMounted} from 'vue'
     import { useForm } from '@inertiajs/vue3';
     import {format} from 'date-fns'
+    import emailjs from '@emailjs/browser'
 
     const prop = defineProps(['listing', 'auth', 'guests', 'checkin', 'checkout', 'days'])
     const images = JSON.parse(prop.listing.images)
@@ -52,6 +53,17 @@
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
                 form.status = 'approved'
+                emailjs.send('service_kfsphbh', 'template_xzp03ja', 
+                {
+                    sendername: "Guestease team",
+                    to: prop.auth.user.email,
+                    subject: "Your reservation has been approved.",
+                    replyto: "guestease@team.com",
+                    message: "Hello, your reservation has been approved :)"
+                }
+                , 'eEt-YCYeYc0LoTRxJ').then(() => {
+                    alert('Success')
+                })
                 form.post('/reserve')
                 // $('#status').val('approved')
                 // $('#confirm_payment_form').submit()
@@ -72,7 +84,6 @@
 
 <template>
         <Head title="Confirm Reservation" />
-
         <v-container>
             <v-row>
                 <v-col cols="7">

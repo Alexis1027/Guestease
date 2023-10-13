@@ -27,9 +27,11 @@ class AdminListingController extends Controller
     }
 
     public function destroy(Listing $listing) {
-        $wishlist = Wishlist::where('listing_id', $listing->id)->get();
-        $wishlist->each->delete();
-        $listing->delete();
+        $listing->status = 'deleted';
+        $listing->update();
+        // $wishlist = Wishlist::where('listing_id', $listing->id)->get();
+        // $wishlist->each->delete();
+        // $listing->delete();
         return back();
     }
 

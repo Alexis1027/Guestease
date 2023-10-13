@@ -3,6 +3,7 @@
     import {defineProps} from 'vue'
     import Layout from '../../Layouts/GuestLayout.vue'
     import WishlistCard from './Partials/WishlistCard.vue'
+    
     defineOptions({layout: Layout})
     defineProps({
         wishlists: Object

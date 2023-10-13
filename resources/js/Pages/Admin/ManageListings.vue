@@ -56,6 +56,7 @@
                 <th class="text-center">Listing name</th>
                 <th class="text-center">Location</th>
                 <th class="text-center">Price</th>
+                <th class="text-center">Status</th>
                 <th class="text-center">Created at</th>
                 <th class="text-center">Actions</th>
             </tr>
@@ -76,6 +77,7 @@
                     <td>{{ listing.title }}</td>
                     <td>{{ listing.location }}</td>
                     <td> {{ '₱'+parseInt(listing.price).toLocaleString() }} </td>
+                    <td>{{ listing.status }}</td>
                     <td>{{ format(new Date(listing.created_at), 'M/d/yyy') }}</td>
                     <td>
                         <v-btn size="small" @click="editListing(listing)" variant="tonal" class="text-none bg-grey-lighten-5 me-2 text-blue">

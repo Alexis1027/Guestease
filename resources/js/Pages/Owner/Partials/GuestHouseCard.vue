@@ -23,7 +23,7 @@
 
 <template>
     <div id="carousel">
-        <v-card border :color="listing.status == 'approved' ? '' : 'red'" class="rounded-lg">
+        <v-card border :color="listing.status == 'approved' ? '' : 'warning'" class="rounded-lg">
             <v-skeleton-loader :loading="loading"  height="100%">
             <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters show-arrows="hover">
                 <v-carousel-item v-for="(image, i) in images" :key="i">
@@ -49,7 +49,7 @@
                         {{ prop.listing.averageRating == 0 ? ' New!' : listing.averageRating }} 
                     </template>
                     <template v-slot:append v-else>
-                        <v-icon color="red">
+                        <v-icon color="warning">
                             mdi-alert-circle
                         </v-icon>
                     </template>

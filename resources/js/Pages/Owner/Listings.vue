@@ -2,18 +2,21 @@
 
     import Layout from '../../Layouts/OwnerLayout.vue'
     import {ref} from 'vue'
+    import {format} from 'date-fns'
+    import DeleteListingDialog from './Partials/DeleteListingDialog.vue'
+
     const page = ref(1)
     const entries = [5, 10, 15, 20, 25]
     const entry = ref(5)
+    const listingToDelete = ref(null)
+    const deleteListingDialog = ref(false)
+    function deleteListing(listing) {
+        listingToDelete.value = listing
+        deleteListingDialog.value = true
+    }
 
-
-    defineOptions({
-        layout: Layout
-    })
-
-    defineProps({
-        listings: Object
-    })
+    defineOptions({ layout: Layout })
+    defineProps({ listings: Object })
 
 </script>
 
@@ -35,9 +38,8 @@
                 <tr>
                     <th class="text-center">Listing</th>
                     <th class="text-center">Status</th>
-                    <th class="text-center">Guests</th>
-                    <th class="text-center">Bathrooms</th>
-                    <th class="text-center">Beds</th>
+                    <th class="text-center">Property</th>
+                    <th class="text-center">Price</th>
                     <th class="text-center">Location</th>
                     <th class="text-center">Created at</th>
                     <th class="text-center">Actions</th>
@@ -60,17 +62,54 @@
                         </v-list-item>
                     </td>
                     <td>{{ listing.status }}</td>
-                    <td>{{ listing.guests }}</td>
-                    <td>{{ listing.bathrooms }}</td>
-                    <td>{{ listing.beds }}</td>
-                    <td>{{ listing.location }}</td>
-                    <td>{{ listing.created_at }}</td>
                     <td>
-                        <Link :href="`/owner/edit-listing/${listing.id}`">
-                            <v-btn prepend-icon="mdi-pencil" size="small" color="blue" variant="tonal">Edit</v-btn>
-                        </Link>
-                        <v-btn prepend-icon="mdi-delete-outline" size="small" color="red" class="ms-1" variant="tonal">Delete</v-btn>
+                        <v-menu open-on-hover>
+                            <template v-slot:activator="{ props }">
+                                <v-btn color="black" append-icon="mdi-menu-down" class="text-none" variant="text" v-bind="props">
+                                    Details
+                                </v-btn>
+                            </template>
+
+                            <v-list>
+                                <v-list-item>
+                                    {{ listing.guests }} Guests
+                                </v-list-item>
+                                <v-list-item>
+                                    {{ listing.beds }} Bedrooms
+                                </v-list-item>
+                                <v-list-item>
+                                    {{ listing.rooms }} Rooms
+                                </v-list-item>
+                                <v-list-item>
+                                    {{ listing.bathrooms }} Bathrooms
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
+                    </td>
+                    <td>₱{{ parseInt(listing.price).toLocaleString() }}</td>
+                    
+                    <td>{{ listing.location }}</td>
+                    <td>{{ format(new Date(listing.created_at), 'M/d/y') }}</td>
+                    <td>
+                        
                         <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
+                        <v-menu open-on-hover>
+                            <template v-slot:activator="{ props }">
+                                <v-btn color="black" icon="mdi-cog" class="text-none" variant="text" v-bind="props">
+                                    
+                                </v-btn>
+                            </template>
+
+                            <v-list>
+                                <Link :href="`/owner/edit-listing/${listing.id}`">
+                                    <v-list-item prepend-icon="mdi-pencil" title="Edit" value="edit-listing" base-color="blue">
+                                    </v-list-item>
+                                </Link>
+                                <v-list-item prepend-icon="mdi-delete-outline" title="Delete" @click="deleteListing(listing)" base-color="red">
+                                </v-list-item>
+                                
+                            </v-list>
+                        </v-menu>
                     </td>
                 </tr>
             </tbody>
@@ -94,4 +133,5 @@
             </v-col>
         </v-row>
     </v-container>
+    <DeleteListingDialog :show="deleteListingDialog" :listing="listingToDelete" @CloseDialog="deleteListingDialog = false" />
 </template>
