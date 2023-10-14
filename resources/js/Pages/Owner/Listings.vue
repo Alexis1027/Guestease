@@ -51,14 +51,12 @@
                 </tr>
                 <tr v-for="listing in listings" :key="listing.id">
                     <td>
-                        
                         <v-list-item :title="listing.title">
                                 <template v-slot:prepend>
                                     <v-avatar rounded="0" size="60">
                                         <v-img :src="`../images/${JSON.parse(listing.images)[0]}`" cover></v-img>
                                     </v-avatar>
                                 </template>
-                                {{  }}
                         </v-list-item>
                     </td>
                     <td>{{ listing.status }}</td>
@@ -95,8 +93,7 @@
                         <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
                         <v-menu open-on-hover>
                             <template v-slot:activator="{ props }">
-                                <v-btn color="black" icon="mdi-cog" class="text-none" variant="text" v-bind="props">
-                                    
+                                <v-btn color="grey-darken-2" icon="mdi-cog" class="text-none" variant="text" v-bind="props">
                                 </v-btn>
                             </template>
 

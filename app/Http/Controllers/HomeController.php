@@ -131,7 +131,8 @@ class HomeController extends Controller
     }
 
     public function profile(User $user) {
-        return Inertia::render('Profile', ['user' => $user]);
+        $listings =  Listing::where('owner_id', $user->id)->select(['id', 'images', 'title', 'location'])->get();
+        return Inertia::render('Profile', ['user' => $user, 'listings' => $listings]);
     }
 
     public function reservations() {

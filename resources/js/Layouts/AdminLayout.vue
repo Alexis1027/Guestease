@@ -43,8 +43,11 @@
                 </v-toolbar>
                 <v-list>
                     <p class="text-red ms-5">doestn work</p>
-                    <v-list-item :value="n" v-for="n in 6" :key="n"
-                        class="my-2"
+                    <v-list-item 
+                        :value="n" 
+                        v-for="n in 6" 
+                        :key="n"
+                        class="py-2"
                         prepend-avatar="../images/profile/21.png" 
                         title="John Doe has a pending listing."
                         :subtitle="`${n+1} hours ago`">

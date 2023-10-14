@@ -3,7 +3,8 @@
     defineOptions({layout: Layout})
     defineProps({
         auth: Object,
-        user: Object
+        user: Object,
+        listings: Object
     })
 
 
@@ -43,16 +44,21 @@
 
                 <v-divider class="my-5"/>
                 <!-- Owner's Guest houses section -->
-                <p class="text-h5 mb-4"> {{ user.firstname }}'s guest houses  </p> 
-                <p class="text-red">hard coded data pa ni kay kafoy</p>
-
-                <v-row>
-                    <v-col cols="4" v-for="n in 4" :key="n">
-                        <v-img src="../images/room.png" class="rounded-lg" cover></v-img>
-                        <strong>Guest House name</strong>
-                        <p>Guest House Location</p>
+                <p class="text-h5 mb-4"> {{ user.firstname }}'s listings </p> 
+                <v-row v-if="listings.length > 0">
+                    <v-col cols="4" v-for="listing in listings" :key="listing.id">
+                        <v-card>
+                            <v-img :src="`../images/${JSON.parse(listing.images)[0]}`" class="rounded-lg" cover max-height="300"></v-img>
+                            <v-card-text>
+                                <strong>{{ listing.title }}</strong>
+                                <p>{{ listing.location }}</p>
+                            </v-card-text>
+                        </v-card>
                     </v-col>
                 </v-row>
+                <p v-else>
+                    This user does not have a listing yet.
+                </p>
 
             </v-container>
         </v-col>

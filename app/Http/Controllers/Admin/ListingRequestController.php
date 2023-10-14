@@ -13,7 +13,7 @@ class ListingRequestController extends Controller
     //
     public function index() {
 
-        $listingRequests = Listing::all()->where('status', 'To be processed');
+        $listingRequests = Listing::all()->where('status', 'For approval');
         foreach($listingRequests as $r) {
             $r->user = User::find($r->owner_id);
         }
