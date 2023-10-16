@@ -21,7 +21,6 @@
         total: 2000,
         days: prop.days
     })
-    console.log(prop.days)
         
     const submit = () => {
         form.post('/reserve')
@@ -37,18 +36,13 @@
             height: 40
         },
         createOrder: function(data, actions) {
-            // if(checkForm2()){
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                        value: '0.01'
-                        }
-                    }]
-                });
-            // }
-            // else {
-            //     alert("Fill in missing fields")
-            // }
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                    value: '0.01'
+                    }
+                }]
+            });
         },
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
@@ -65,17 +59,10 @@
                     alert('Success')
                 })
                 form.post('/reserve')
-                // $('#status').val('approved')
-                // $('#confirm_payment_form').submit()
-                // alert('Transaction completed by ' + details.payer.name.given_name + '!');
-                // window.location.href = 'reservation.php'
             });
         },
         onCancel: function(data) {
             alert('cancelled')
-            // $('#status').val('pending')
-            // $('#confirm_payment_form').submit()
-            // window.location.href = 'reservation.php'
         }
         }).render('#paypal-button-container');
     })
@@ -93,20 +80,13 @@
                                 <v-btn rounded icon="mdi-keyboard-backspace" flat></v-btn>
                             </Link>
                             <label class="text-h5 font-weight-bold">Confirm Reservation</label>
-                            
                             <p class="text-h6 mt-4 font-weight-bold">Your reservation</p>
                                 <v-list>
-                                    <v-list-item>
-                                        <template v-slot:append>
-                                            <v-btn icon="mdi-pencil" size="small" flat></v-btn>
-                                        </template>
+                                    <v-list-item prepend-icon="mdi-calendar">
                                         <p class="font-weight-bold">Dates</p>
                                         <p>{{ `${checkinDate} - ${checkoutDate}` }} </p>
                                     </v-list-item>
-                                    <v-list-item>
-                                        <template v-slot:append>
-                                            <v-btn icon="mdi-pencil" size="small" flat></v-btn>
-                                        </template>
+                                    <v-list-item prepend-icon="mdi-account-multiple">
                                         <p class="font-weight-bold">Guests</p>
                                         <p>{{ prop.guests }} guests</p>
                                     </v-list-item>
@@ -167,7 +147,11 @@
                             {{ prop.listing.title }}
                         </v-card-title>
                         <v-card-text>
-                            <p>{{ prop.listing.location }}</p>
+                            <v-icon>mdi-map-marker</v-icon>
+                            {{ prop.listing.location }}
+                            <p>
+                            {{ prop.listing.description }}
+                            </p>
                         </v-card-text>
                         <v-divider/>
                         <v-card-text>

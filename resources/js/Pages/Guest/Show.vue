@@ -20,10 +20,12 @@
     const amenities = JSON.parse(props.listing.amenities)
     const reserveFormAlert = ref(false)
 
+    // save and unsave wishlist form
     const saveWishlistForm = useForm({
         user_id: props.auth ? props.auth.user.id : '',
         listing_id: props.auth ? props.listing.id : '',
     })
+
 
      const submitSaveWishlistForm = () => {
         if(props.wishlist) {
@@ -36,6 +38,7 @@
         }
     }
     
+    
     const reserveForm = useForm({
         checkin: null,
         checkout: null,
@@ -45,7 +48,7 @@
 
     const submitReservation = () => {
         if(reserveForm.checkin && reserveForm.checkout) {
-            reserveForm.get(`/payment/${props.listing.id}`)
+            reserveForm.get(`/confirm-reservation/${props.listing.id}`)
         }
         else {
             reserveFormAlert.value = true

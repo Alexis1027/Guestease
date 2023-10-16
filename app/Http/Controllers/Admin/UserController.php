@@ -36,6 +36,7 @@ class UserController extends Controller
     }
 
     public function update(Request $request) {
+        
         $request->validate([
             'firstname' => ['required', 'min:3'],
             'lastname' => ['required', 'min:3'],
@@ -43,6 +44,7 @@ class UserController extends Controller
             'address' => ['required', 'min:3'],
             'email' => ['required'],
         ]);
+
         $user = auth()->user();
         $user->firstname = $request->input('firstname');
         $user->lastname = $request->input('lastname');

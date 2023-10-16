@@ -26,15 +26,6 @@ class ListingController extends Controller
         return Inertia::render('Owner/EditListing', ['listing' => $listing]);
     }
 
-    public function show(Listing $listing) {
-        return Inertia::render('Owner/VerifyListing', ['listing' => $listing]);
-    }
-
-    public function verify_listing(Listing $listing, Request $request) {
-        dd($request->file('bldg_permit'));
-        return Inertia::render('Owner/VerifyListing', ['listing' => $listing]);
-    }
-
     public function store(Request $request) {
         $houseImages = [];
         $uploadedFiles = $request->file('images');

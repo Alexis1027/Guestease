@@ -76,8 +76,8 @@ class AuthController extends Controller
         $user = User::create($form);
         $user->profile_pic = "default_profile.png";
         $user->save();
-        auth()->login($user);
-        return redirect('/');
+        // auth()->login($user);
+        return redirect('/login');
     }
 
     public function storeOwner(Request $request) {
@@ -94,8 +94,8 @@ class AuthController extends Controller
         $user = User::create($form);
         $user->profile_pic = "default_profile.png";
         $user->save();
-        auth()->login($user);
-        return redirect('/owner/dashboard');
+        // auth()->login($user);
+        return redirect('/login');
     }
 
 }

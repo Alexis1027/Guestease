@@ -317,7 +317,7 @@
 
             <v-window-item :value="8">
                 <v-container id="step1" class="placeoffers">
-                    <p class="text-h4 mt-6 text-start">Now, let's give your guest house a title</p>
+                    <p class="text-h4 mt-6 text-start">Now, let's give your {{form.type}} a title</p>
                     <p class="text-h6 mb-6 text-grey-darken">Short titles work best. Have fun with it—you can always change it later.</p>
                     <v-textarea v-model="form.title" :error-messages="form.errors.title" variant="outlined" counter="30">
 

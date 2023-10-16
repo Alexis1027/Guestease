@@ -47,13 +47,15 @@
                 <p class="text-h5 mb-4"> {{ user.firstname }}'s listings </p> 
                 <v-row v-if="listings.length > 0">
                     <v-col cols="4" v-for="listing in listings" :key="listing.id">
-                        <v-card>
-                            <v-img :src="`../images/${JSON.parse(listing.images)[0]}`" class="rounded-lg" cover max-height="300"></v-img>
-                            <v-card-text>
-                                <strong>{{ listing.title }}</strong>
-                                <p>{{ listing.location }}</p>
-                            </v-card-text>
-                        </v-card>
+                        <Link :href="`/room/${listing.id}`">
+                            <v-card>
+                                <v-img :src="`../images/${JSON.parse(listing.images)[0]}`" class="rounded-lg" cover max-height="300"></v-img>
+                                <v-card-text>
+                                    <strong>{{ listing.title }}</strong>
+                                    <p>{{ listing.location }}</p>
+                                </v-card-text>
+                            </v-card>
+                        </Link>
                     </v-col>
                 </v-row>
                 <p v-else>

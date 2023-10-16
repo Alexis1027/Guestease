@@ -97,6 +97,7 @@ class HomeController extends Controller
             'checkout' => 'required',
             'days' => 'required',
         ]);
+
         return Inertia::render('Guest/ConfirmReservation', [
             'listing' => $listing, 
             'guests' => $request->query('guests'),
@@ -124,6 +125,10 @@ class HomeController extends Controller
 
     public function about() {
         return Inertia::render('About');
+    }
+
+    public function notifications() {
+        return Inertia::render('Guest/Notifications');
     }
 
     public function contact_us() {

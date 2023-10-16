@@ -25,7 +25,7 @@
     })
 
     const submit = () => {
-        form.post(`/rooms/rate/${props.listing.id}`, {
+        form.post(`/rate-listing/${props.listing.id}`, {
             preserveScroll: true
         })
         emit('closeReviewModal')
