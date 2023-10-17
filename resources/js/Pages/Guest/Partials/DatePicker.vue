@@ -21,13 +21,15 @@
   const disabledDates = []
 
     // DISABLE ANG DATES NGA NAAY RESERVATION
-    for(let i = 0; i < prop.reservedDates.length; i++) {
-        for(let date = new Date(prop.reservedDates[i].checkin); date <= new Date(prop.reservedDates[i].checkout); date.setDate(date.getDate() + 1)) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        disabledDates.push(`${year}-${month}-${day}`);
-    }
+    if(prop.reservedDates) {
+        for(let i = 0; i < prop.reservedDates.length; i++) {
+            for(let date = new Date(prop.reservedDates[i].checkin); date <= new Date(prop.reservedDates[i].checkout); date.setDate(date.getDate() + 1)) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                disabledDates.push(`${year}-${month}-${day}`);
+            }
+        }
     }
 
     // E DISABLE ANG DATES SA MGA NE-AGING ADLAW

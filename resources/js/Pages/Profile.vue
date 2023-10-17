@@ -11,6 +11,7 @@
 </script>
 
 <template>
+    <Head :title="user.firstname + ' ' + user.lastname "></Head>
     <v-row justify="center">
         
         <v-col cols="10">
@@ -49,7 +50,7 @@
                     <v-col cols="4" v-for="listing in listings" :key="listing.id">
                         <Link :href="`/room/${listing.id}`">
                             <v-card>
-                                <v-img :src="`../images/${JSON.parse(listing.images)[0]}`" class="rounded-lg" cover max-height="300"></v-img>
+                                <v-img :src="`../images/${JSON.parse(listing.images)[0]}`" class="rounded-lg" height="300" cover max-height="300"></v-img>
                                 <v-card-text>
                                     <strong>{{ listing.title }}</strong>
                                     <p>{{ listing.location }}</p>

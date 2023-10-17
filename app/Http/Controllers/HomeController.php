@@ -31,31 +31,40 @@ class HomeController extends Controller
 
     public function show(Listing $listing) {
 
+        // get all the ratings from the listing
         $ratings = Rating::where('listing_id', $listing->id)
         ->whereIn('user_id', function($query) {
             $query->select('id')->from('users');
         })->get();
+
+        // if $ratings has a value then loop each to get the user
+        foreach($ratings as $r) {
+            $r->user = User::find($r->user_id);
+        }
+
+        // this code gets the average rating
+        $totalRatings = count($ratings);
+        $sumRatings = $ratings->sum('rating');
+        $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings) : 0;
+        $averageRating = number_format($averageRating, 2);
+
+        // get all the reserved dates from the listing
         $reservedDates = Reservation::where('listing_id', $listing->id)
             ->select('checkin', 'checkout')
             ->get();
 
+        // get the owner of the listing
         $owner = User::find($listing->owner_id);
 
         if(auth()->user()) {
+
+            // if logged in, check if the user has rated or wishlisted the listing
             $wishlist = Wishlist::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
             $rating = Rating::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
             
+            // if $rating is true then get the user
             if($rating) {
                 $rating->user = User::find(auth()->user()->id);
-            }
-
-            $totalRatings = count($ratings);
-            $sumRatings = $ratings->sum('rating');
-            $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings) : 0;
-            $averageRating = number_format($averageRating, 2);
-
-            foreach($ratings as $r) {
-                $r->user = User::find($r->user_id);
             }
 
             return Inertia::render('Guest/Show', [
@@ -67,24 +76,15 @@ class HomeController extends Controller
                 'averageRating' => $averageRating,
                 'reservedDates' => $reservedDates
             ]);
-            
         }
         else {
-
-            $totalRatings = count($ratings);
-            $sumRatings = $ratings->sum('rating');
-            $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings) : 0;
-            $averageRating = number_format($averageRating, 2);
-
-            foreach($ratings as $r) {
-                $r->user = User::find($r->user_id);
-            }
 
             return Inertia::render('Guest/Show', [
                 'listing' => $listing, 
                 'owner' => $owner,
                 'ratings' => $ratings, 
-                'averageRating' => $averageRating
+                'averageRating' => $averageRating,
+                'reservedDates' => $reservedDates
             ]);
         }
     }

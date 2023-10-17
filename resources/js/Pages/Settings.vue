@@ -35,85 +35,56 @@
 
 
 <template>
-        <Head title="Settings" />
-        <v-card class="bg-white border">
-            <v-card-item>
-                <!-- <v-row>
-                    <v-col cols="4">
-                        <p class="text-h5">Profile information</p>
-                        <p>Update your profile's account information.</p>
-                    </v-col>
-                    <v-col cols="2">
-                        <v-avatar size="106px">
-                            <v-img alt="Avatar" :src="`../images/Profile/${auth.user.profile_pic}`"></v-img>
-                        </v-avatar>
-                    </v-col>
-                    <v-col>
-                        <v-row>
-                            <v-btn class="mt-5 text-none" rounded="pill" color="blue">Change picture</v-btn>
-                        </v-row>
-                        <v-row>
-                            <v-btn class="mt-5 text-none" rounded="pill" color="red">Delete picture</v-btn>
-                        </v-row>
-                    </v-col>
-                </v-row> -->
-                <v-form>
-                    <v-container>
-                        <v-breadcrumbs :items="[{title: 'Account', disabled: false}, {title: 'Personal info', disabled: false}]">
-                            <template v-slot:divider>
-                                <v-icon icon="mdi-chevron-right"></v-icon>
-                            </template>
-                            </v-breadcrumbs>
-                        <p class="text-h4">Personal info</p>
-                        <v-card width="700" elevation="0">
-                            <v-text-field class="mt-3" variant="outlined" clearable :error-messages="form.errors.firstname" label="First name" color="blue" v-model="form.firstname"></v-text-field>
-                            <v-text-field variant="outlined" clearable :error-messages="form.errors.lastname" label="Last name" color="blue" v-model="form.lastname"></v-text-field>
-                            <!-- <v-text-field variant="outlined" clearable :error-messages="form.errors.contact_no" label="Contact number" color="blue" v-model="form.contact_no"></v-text-field> -->
-                            <MazPhoneNumberInput
-                                v-model="form.contact_no"
-                                show-code-on-list
-                                color="primary"
-                                :preferred-countries="['PH']"
-                                :ignored-countries="['AC']"
-                                @update="results = $event"
-                                :success="results?.isValid"
-                            />
-                            <v-text-field class="mt-4" variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
-                            <v-text-field variant="outlined" clearable :error-messages="form.errors.email" label="Email" color="blue" v-model="form.email"></v-text-field>
-                            <v-card-actions class="justify-end d-flex">
-                                <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submit" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-container>
-                </v-form>
+    <Head title="Account settings" />
+    <v-breadcrumbs :items="[{title: 'Account', disabled: false}, {title: 'Personal info', disabled: false}]">
+        <template v-slot:divider>
+            <v-icon icon="mdi-chevron-right"></v-icon>
+        </template>
+    </v-breadcrumbs>
+        
+    <v-card width="80%" class="border mb-4" title="Profile picture">
+        <v-card-item>
+            <v-avatar size="100">
+                <v-img src="../images/profile/21.png" ></v-img>
+            </v-avatar>
+            <v-btn class="text-none mx-6" color="blue">Upload</v-btn>
+            <v-btn class="text-none" variant="text" color="red" prepend-icon="mdi-close">Delete</v-btn>
+        </v-card-item>
+    </v-card>
 
-            </v-card-item>
-        </v-card>
-        <v-card class="border bg-white mt-6">
-            <v-card-item>
-                <v-row>
-                    <v-col>
-                        <p>Change password <span class="text-red">doestn work</span> </p>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col cols="5">
-                        <v-text-field variant="outlined" label="Current password" color="blue"></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col cols="5">
-                        <v-text-field variant="outlined" label="New password" color="blue" ></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col cols="5">
-                        <v-text-field variant="outlined" label="Confirm new password" color="blue"></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-btn rounded="pill" class="text-none" color="blue">Save</v-btn>
-            </v-card-item>
-        </v-card>
+    <v-card width="80%" class="border mb-4" title="Personal details">
+        <v-card-item>
+            <v-text-field class="mt-3" variant="outlined" clearable :error-messages="form.errors.firstname" label="First name" color="blue" v-model="form.firstname"></v-text-field>
+            <v-text-field variant="outlined" clearable :error-messages="form.errors.lastname" label="Last name" color="blue" v-model="form.lastname"></v-text-field>
+            <MazPhoneNumberInput
+                v-model="form.contact_no"
+                show-code-on-list
+                color="primary"
+                :preferred-countries="['PH']"
+                :ignored-countries="['AC']"
+                @update="results = $event"
+                :success="results?.isValid"
+            />
+            <v-text-field class="mt-4" variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
+            <v-text-field variant="outlined" clearable :error-messages="form.errors.email" label="Email" color="blue" v-model="form.email"></v-text-field>
+        </v-card-item>
+        <v-card-actions class="justify-end d-flex">
+            <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submit" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
+        </v-card-actions>
+    </v-card>
+
+    <v-card class="border bg-white mt-6" width="80%" title="Change password">
+        <v-card-item>
+            <span class="text-red">doestn work</span>
+            <v-text-field variant="outlined" label="Current password" color="blue"></v-text-field>
+            <v-text-field variant="outlined" label="New password" color="blue" ></v-text-field>
+            <v-text-field variant="outlined" label="Confirm new password" color="blue"></v-text-field>
+        </v-card-item>
+        <v-card-actions class="justify-end d-flex">
+            <v-btn rounded="pill" class="text-none" variant="flat" color="blue">Save</v-btn>
+        </v-card-actions>
+    </v-card>
+        
 
         <v-snackbar
       v-model="snackbar"
@@ -124,7 +95,6 @@
       timeout="1200"
     >
       Update Sucessful.
-
       <template v-slot:actions>
         <v-btn
           color="white"
