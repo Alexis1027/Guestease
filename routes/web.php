@@ -18,6 +18,7 @@ use App\Http\Controllers\Guest\GuestReservationController;
 use App\Http\Controllers\Owner\OwnerDashboardController;
 use App\Http\Controllers\Owner\OwnerReservationController;
 use App\Http\Controllers\Guest\ReservationRequestController;
+use App\Models\Listing;
 use App\Models\ListingRequest;
 
 /*
@@ -51,6 +52,9 @@ Route::get('/owner/create-listing', [ListingController::class, 'create']);
 Route::get('/owner/edit-listing/{listing}', [ListingController::class, 'edit']);
 Route::post('/owner/createListing', [ListingController::class, 'store']);
 Route::put('/owner/update-listing/details/{listing}', [ListingController::class, 'update_details']);
+Route::put('/owner/update-listing/photos/{listing}', [ListingController::class, 'update_photos']);
+Route::put('/owner/update-listing/property/{listing}', [ListingController::class, 'update_property']);
+Route::put('/owner/update-listing/pricing/{listing}', [ListingController::class, 'update_pricing']);
 Route::delete('/owner/delete-listing/{listing}', [ListingController::class, 'destroy']);
 
 //ADMIN

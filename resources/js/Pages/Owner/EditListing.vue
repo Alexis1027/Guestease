@@ -1,19 +1,107 @@
 <script setup>
 
     import Layout from '../../Layouts/OwnerLayout.vue'
-    import MazCarousel from 'maz-ui/components/MazCarousel'
-    import MazCard from 'maz-ui/components/MazCard'
-    import {ref} from 'vue'
+    import {ref, watch} from 'vue'
     import {useForm, router} from '@inertiajs/vue3'
     
     const tab = ref(0)
     const props = defineProps(['listing'])
-    const amenities = JSON.parse(props.listing.amenities)
     const showEditDetails = ref(true)
     const showEditProperties = ref(true)
     const showEditPhotos = ref(true)
-    const successSnackbar = ref(false)
     const showDeleteModal = ref(false)
+    const successSnackbar = ref(false)
+    const addPhoto = ref(null)
+
+    const placeOffers = [
+        {
+            icon: 'mdi-wifi',
+            title: 'Wifi'            
+        },
+        {
+            icon: 'mdi-television',
+            title: 'Television'            
+        },
+        {
+            icon: 'mdi-countertop-outline',
+            title: 'Kitchen'            
+        },
+        {
+            icon: 'mdi-car-parking',
+            title: 'Parking'
+        },
+        {
+            icon: 'mdi-paw',
+            title: 'Pet-Friendly'
+        },
+        {
+            icon: 'mdi-smoking',
+            title: 'Smoking Allowed'
+        },
+        {
+            icon: 'mdi-hiking',
+            title: 'Hiking Trails'
+        },
+        {
+            icon: 'mdi-gamepad-variant',
+            title: 'Game Room'
+        },
+        {
+            icon: 'mdi-cctv',
+            title: 'Security Cameras'
+        },
+        {
+            icon: 'mdi-shower',
+            title: 'Shower'
+        },
+        {
+            icon: 'mdi-coffee',
+            title: 'Coffee Maker'
+        },
+        {
+            icon: 'mdi-silverware-fork-knife',
+            title: 'Dining Area'
+        },
+        {
+            icon: 'mdi-chair-school',
+            title: 'Workspace'
+        },
+        {
+            icon: 'mdi-fridge-outline',
+            title: 'Fridge'            
+        },
+        {
+            icon: 'mdi-dishwasher',
+            title: 'Dishwasher'            
+        },
+        {
+            icon: 'mdi-air-conditioner',
+            title: 'Air conditioner'            
+        },
+        {
+            icon: 'mdi-pool',
+            title: 'Pool'            
+        },
+        {
+            icon: 'mdi-hot-tub',
+            title: 'Hot tub'            
+        },
+        {
+            icon: 'mdi-grill-outline',
+            title: 'BBQ grill'            
+        },
+    ]
+
+    watch(addPhoto, () => {
+        console.log(addPhoto.value[0].name)
+        addPhoto.value.forEach(element => {
+            photosForm.images.push(element.name)
+        })
+    })
+
+    const photosForm = useForm({
+        images: JSON.parse(props.listing.images)
+    })
 
     const detailsForm = useForm({
         title: props.listing.title,
@@ -26,11 +114,15 @@
         beds: props.listing.beds,
         rooms: props.listing.rooms,
         bathrooms: props.listing.bathrooms,
+        amenities: JSON.parse(props.listing.amenities)
     })
 
-    const photosForm = useForm({
-        images: JSON.parse(props.listing.images)
+    const pricingForm = useForm({
+        price: props.listing.price,
+        monthly_discount: props.listing.monthly_discount,
+        status: props.listing.status,
     })
+
 
     const submitDetailsForm = () => {
         detailsForm.put(`/owner/update-listing/details/${props.listing.id}`, {
@@ -45,8 +137,27 @@
     const submitPhotosForm = () => {
         photosForm.put(`/owner/update-listing/photos/${props.listing.id}`, {
             onSuccess: () => {
-                alert('success')
+                showEditPhotos.value = true
+                successSnackbar.value = true
             }
+        })
+    }
+
+    const submitPropertyForm = () => {
+        propertyForm.put(`/owner/update-listing/property/${props.listing.id}`, {
+            onSuccess: () => {
+                showEditProperties.value = true
+                successSnackbar.value = true
+            },
+            preserveScroll: true,
+        })
+    }
+
+    const submitPricingForm = () => {
+        pricingForm.put(`/owner/update-listing/pricing/${props.listing.id}`, {
+            onSuccess: () => {
+                successSnackbar.value = true
+            },
         })
     }
 
@@ -56,9 +167,10 @@
         })
     }
 
-    function deletePhoto(index) {
-        photosForm.images = photosForm.images.splice(index, 1)
-    }
+    const handleChipClick = (item, toggle) => {
+        toggle(); // Call the toggle function
+        propertyForm.amenities.push(item); // Push the item to propertyForm.amenities
+    };
 
     defineOptions({
         layout: Layout
@@ -67,21 +179,21 @@
 <template>
     <Head title="Edit listing" />
     <v-toolbar>
-      <v-toolbar-title>Edit Listing <p class="text-red">doest not work rn</p> </v-toolbar-title>
+      <v-toolbar-title>Edit listing( {{ listing.title }} )</v-toolbar-title>
     </v-toolbar>
 
     <div class="d-flex flex-row">
         <v-tabs v-model="tab" direction="vertical" color="blue">
             <v-tab value="option-1" class="text-none">
-                <v-icon start>mdi-account</v-icon>
+                <v-icon start>mdi-home-edit</v-icon>
                 Listing details
             </v-tab>
             <v-tab value="option-2" class="text-none">
-                <v-icon start>mdi-lock</v-icon>
+                <v-icon start>mdi-cash</v-icon>
                 Pricing and availability
                 </v-tab>
             <v-tab value="option-3" class="text-none">
-                <v-icon start> mdi-access-point</v-icon>
+                <v-icon start> mdi-shield-edit</v-icon>
                 Policies and rules
             </v-tab>
             
@@ -94,20 +206,17 @@
         <v-window v-model="tab">
             <v-window-item value="option-1">
                 <v-card flat>
-                    <span class="text-h6"> Photos </span> <span class="text-red">not working rn</span>
+                    <span class="text-h6"> Photos </span> 
                         <v-btn :append-icon="showEditPhotos ? 'mdi-pencil' : 'mdi-close'" variant="text" color="blue" class="text-none" @click="showEditPhotos = !showEditPhotos">
                             Edit
                         </v-btn> 
-                        <v-btn append-icon="mdi-image-plus-outline" variant="text" color="green" class="text-none" v-show="!showEditPhotos">
-                            Add new photo
-                        </v-btn>
+                        <v-file-input label="Add new photos" color="blue" multiple v-model="addPhoto" variant="outlined" v-if="!showEditPhotos"></v-file-input>
                     <v-slide-group v-model="model" class="pa-4" show-arrows>
                         <v-slide-group-item v-for="(item, i) in photosForm.images" :key="i">
                             <v-badge class="mt-2" @click="photosForm.images.splice(i, 1)" offset-x="15" color="red" icon="mdi-close" id="badge">
                                 <v-card class="mx-4 " height="230" width="250" elevation="0">
-                                <v-img :src="`/images/${photosForm.images[i]}`" height="180" cover></v-img>
-                               
-                            </v-card>
+                                    <v-img :src="`/images/${photosForm.images[i]}`" height="180" cover></v-img>
+                                </v-card>
                             </v-badge>
                         </v-slide-group-item>
                     </v-slide-group>
@@ -123,15 +232,15 @@
                         <v-form @submit.prevent>
                             <v-list-item>
                             Listing title
-                            <v-text-field :disabled="showEditDetails" v-model="detailsForm.title" variant="outlined"></v-text-field>
+                            <v-text-field :disabled="showEditDetails" color="blue" v-model="detailsForm.title" variant="outlined"></v-text-field>
                         </v-list-item>
                         <v-list-item>
                             Listing description
-                            <v-textarea :disabled="showEditDetails" v-model="detailsForm.description" variant="outlined"></v-textarea>
+                            <v-textarea :disabled="showEditDetails" color="blue" v-model="detailsForm.description" variant="outlined"></v-textarea>
                         </v-list-item>
                         <v-list-item>
                             Listing location
-                            <v-text-field :disabled="showEditDetails" v-model="detailsForm.location" variant="outlined"></v-text-field>
+                            <v-text-field :disabled="showEditDetails" color="blue" v-model="detailsForm.location" variant="outlined"></v-text-field>
                         </v-list-item>
                         <v-row class="justify-end d-flex mb-1 me-4">
                             <v-col cols="1">
@@ -141,7 +250,7 @@
                         </v-form>
                         <v-divider/>
                         <v-list>
-                            <span class="text-h6">Properties and rooms</span> <span class="text-red">not working rn</span>
+                            <span class="text-h6">Properties and rooms</span> 
                             <v-btn :append-icon="showEditProperties ? 'mdi-pencil' : 'mdi-close'" variant="text" @click="showEditProperties = !showEditProperties" class="text-none" color="blue">Edit</v-btn> 
                             <v-list-item>
                                 Number of guests
@@ -178,11 +287,22 @@
                         </v-list>
                         <p class="text-h6">Amenities</p>
                             <v-container>
-                                <v-chip :prepend-icon="item.icon" v-for="item in amenities" :key="item.title" class="mx-2 my-1">{{ item.title }}</v-chip>
-                                <v-chip prepend-icon="mdi-plus" color="green" v-show="!showEditProperties">Add</v-chip>
+                                <v-chip :prepend-icon="item.icon" v-for="item in propertyForm.amenities" :key="item.title" class="mx-2 my-1">{{ item.title }}</v-chip>
+                                <v-card  v-show="!showEditProperties" elevation="0" class="border">
+                                    <v-card-title>Add amenities</v-card-title>
+                                    <v-card-item>
+                                        <v-item-group multiple selected-class="bg-blue" >
+                                            <v-item v-for="item in placeOffers" :key="item.title" v-slot="{ selectedClass, toggle }">
+                                                <v-chip :class="[selectedClass, 'ma-1']" @click="handleChipClick(item, toggle)" :prepend-icon="item.icon">
+                                                    {{ item.title }}
+                                                </v-chip>
+                                            </v-item>
+                                        </v-item-group>
+                                    </v-card-item>
+                                </v-card>
                             </v-container>
                             <v-card-actions class="justify-end d-flex">
-                                <v-btn color="blue" variant="flat" class="text-none rounded-pill" v-show="!showEditProperties">Save</v-btn>
+                                <v-btn color="blue" variant="flat" class="text-none rounded-pill" type="submit" v-show="!showEditProperties" @click="submitPropertyForm" :loading="propertyForm.processing">Save</v-btn>
                             </v-card-actions>
                         <v-divider/>
 
@@ -191,15 +311,14 @@
             </v-window-item>
             <v-window-item value="option-2">
                 <v-card flat>
-                    <span class="text-red">not working rn</span>
                     <v-card-item>
-                        <v-text-field type="number" color="blue" variant="outlined" label="Price" class="mt-2"></v-text-field>
-                        <v-text-field type="number" color="blue" variant="outlined" label="Add discount"></v-text-field>
-                        <v-select label="Availability" color="blue" variant="outlined" :items="['Available', 'Not available']">
+                        <v-text-field type="number" color="blue" v-model="pricingForm.price" variant="outlined" label="Price" class="mt-2"></v-text-field>
+                        <v-text-field type="number" color="blue" v-model="pricingForm.monthly_discount" variant="outlined" label="Add discount"></v-text-field>
+                        <v-select label="Availability" color="blue" v-model="pricingForm.status" variant="outlined" :items="['Available', 'Not available']">
                         </v-select>
                     </v-card-item>
                     <v-card-actions class="d-flex justify-end">
-                        <v-btn color="blue" class="text-none" variant="flat">Save</v-btn>
+                        <v-btn color="blue" class="text-none" variant="flat" type="submit" :loading="pricingForm.processing" @click="submitPricingForm">Save</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-window-item>

@@ -73,6 +73,30 @@ class ListingController extends Controller
         return back();
     }
 
+    public function update_photos(Listing $listing, Request $request) {
+        $listing->images = json_encode($request->images);
+        $listing->update();
+        return back();
+    }
+
+    public function update_property(Listing $listing, Request $request) {
+        $listing->guests = $request->guests;
+        $listing->beds = $request->beds;
+        $listing->rooms = $request->rooms;
+        $listing->bathrooms = $request->bathrooms;
+        $listing->amenities = json_encode($request->amenities);
+        $listing->update();
+        return back();
+    }
+
+    public function update_pricing(Listing $listing, Request $request) {
+        $listing->price = $request->price;
+        $listing->monthly_discount = intval($request->monthly_discount, 10);
+        $listing->status = $request->status;
+        $listing->update();
+        return back();
+    }
+
     public function destroy(Listing $listing) {
         $listing->delete();
         return redirect('/owner/dashboard');
