@@ -24,14 +24,15 @@
                     Listings
                 </v-btn>
             </Link>
-            <!-- <Link href="/owner/calendar">
-                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Calendar' ? 'blue' : ''">Calendar</v-btn>
-            </Link> -->
             <Link href="/owner/reservations">
                 <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Reservations' ? 'blue' : ''">
                     Reservations
                 </v-btn>
             </Link>
+            <Link href="/owner/calendar">
+                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Calendar' ? 'blue' : ''">Calendar</v-btn>
+            </Link>
+            
             <v-spacer/>
 
             <v-spacer/>

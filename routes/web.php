@@ -56,6 +56,9 @@ Route::put('/owner/update-listing/photos/{listing}', [ListingController::class, 
 Route::put('/owner/update-listing/property/{listing}', [ListingController::class, 'update_property']);
 Route::put('/owner/update-listing/pricing/{listing}', [ListingController::class, 'update_pricing']);
 Route::delete('/owner/delete-listing/{listing}', [ListingController::class, 'destroy']);
+Route::get('/owner/calendar', function() {
+    return Inertia::render('Owner/Calendar');
+});
 
 //ADMIN
 Route::delete('/delete/listing/{listing}', [AdminListingController::class, 'destroy']);

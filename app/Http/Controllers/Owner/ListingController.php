@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Owner;
 
-use IntlChar;
 use Exception;
 use Inertia\Inertia;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\ListingRequest;
-use GuzzleHttp\Psr7\UploadedFile;
 
 class ListingController extends Controller
 {

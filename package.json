@@ -12,6 +12,10 @@
     },
     "dependencies": {
         "@emailjs/browser": "^3.11.0",
+        "@fullcalendar/core": "^6.1.9",
+        "@fullcalendar/daygrid": "^6.1.9",
+        "@fullcalendar/interaction": "^6.1.9",
+        "@fullcalendar/vue3": "^6.1.9",
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/vue3": "^1.0.9",
         "@mdi/font": "^7.2.96",

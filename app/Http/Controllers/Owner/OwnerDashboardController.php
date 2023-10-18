@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Owner;
 use Inertia\Inertia;
 use App\Models\Rating;
 use App\Models\Listing;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class OwnerDashboardController extends Controller
