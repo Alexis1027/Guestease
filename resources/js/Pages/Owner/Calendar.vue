@@ -16,14 +16,10 @@
         },
         events: [
             { title: `John doe's reservation`, start: '2023-10-20', end: '2023-10-25' },
-            { title: `Mr. Perrel Brown's reservation`, start: '2023-10-10', end: '2023-10-19' }
+            { title: `Mr. Perrel Brown's reservation`, start: '2023-10-10', end: '2023-10-19' },
+            { title: `John Doe's reservation`, start: '2023-10-01' },
+            { title: `Jane Doe's reservation`, start: '2023-10-19' }
         ],
-        dayMaxEventRows: 2, // Adjust as needed
-  views: {
-    dayGrid: {
-      dayMaxEventRows: 2, // Adjust as needed
-    },
-}
     }
 </script>
 

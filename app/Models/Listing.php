@@ -23,6 +23,7 @@ class Listing extends Model
         'bathrooms',
         'rooms',
         'status',
+        'type',
         'monthly_discount',
         'bldg_permit'
     ];

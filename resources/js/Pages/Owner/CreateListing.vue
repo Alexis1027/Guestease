@@ -25,6 +25,10 @@
         images: null,
         type: null
     })
+    
+    const submit = () => {
+        form.post('/owner/createListing')
+    }
 
     const imageRules = [
         value => {
@@ -151,9 +155,6 @@
         form.longitude = e.latlng.lng
     }
 
-    const submit = () => {
-        form.post('/owner/createListing')
-    }
 
 
 
@@ -186,7 +187,7 @@
                     <v-row justify="center">
                         <v-col cols="6" class="mt-5">
                             <v-list>
-                                <v-list-item value="gueshouse" @click="form.type = 'guest house'">
+                                <v-list-item value="gueshouse" active-color="blue" @click="form.type = 'Guest house'">
                                     <template v-slot:append>
                                         <v-icon size="50">
                                             mdi-home-outline
@@ -195,7 +196,7 @@
                                     <p class="text-h6"> A guest house</p>
                                     <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae csmque saepe!</p>
                                 </v-list-item>
-                                <v-list-item value="room" class="mt-6" @click="form.type = 'room'">
+                                <v-list-item value="room" active-color="blue" class="mt-6" @click="form.type = 'Room'">
                                     <template v-slot:append>
                                         <v-icon size="50">
                                             mdi-door-open
@@ -243,7 +244,7 @@
                             <span class="text-h6">Guests</span>
                         </v-list-item>
                         <v-divider></v-divider>
-                        <v-list-item v-if="form.type == 'guest house'">
+                        <v-list-item v-if="form.type == 'Guest house'">
                             <template v-slot:append>
                                 <v-btn flat class="mx-1" icon="mdi-minus" @click="form.rooms--"></v-btn>
                                 <span class="text-h6">{{ form.rooms }}</span>
@@ -327,7 +328,7 @@
 
             <v-window-item :value="9">
                 <v-container id="step1" class="placeoffers">
-                    <p class="text-h5 text-start">Add some photos of your guest house</p>
+                    <p class="text-h5 text-start">Add some photos of your {{ form.type }}</p>
                     <p class="text-h6 mb-6 text-grey-darken">You'll need 5 photos to get started. You can add more or make changes later.</p>
                     <v-file-input
                         chips
@@ -350,7 +351,7 @@
                         </template>
                     </v-file-input>
                     <div v-if="form.type == 'guest house'">
-                        <p class="text-h5 text-start">Upload the building permit of your guest house</p>
+                        <p class="text-h5 text-start">Upload the building permit of the guest house</p>
                         <p class="text-h6 mb-6 text-grey-darken">You'll need it to confirm your listing.</p>
                         <v-file-input 
                             label="Building permit" 
@@ -367,7 +368,7 @@
 
             <v-window-item :value="10">
                 <v-container id="step1" class="placeoffers">
-                    <p class="text-h4 text-start">Next, let's describe your guest house</p>
+                    <p class="text-h4 text-start">Next, let's describe your {{ form.type }}</p>
                     <p class="text-h6 mb-6 text-grey-darken text-start">Share what makes your place special.</p>
                     <v-textarea color="blue" variant="outlined" :error-messages="form.errors.description" v-model="form.description" counter="255" placeholder="You'll have a great time at this comfortable place to stay.">
 

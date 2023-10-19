@@ -9,27 +9,19 @@
         latitude: Number,
         longitude: Number
     })
-    const loading = ref(true)
     const images = JSON.parse(prop.listing.images)
-
-    onMounted(() => {
-        setTimeout(() => {
-            loading.value = false
-        },1000)
-    })
 
 </script>
 
 <template>
     <div id="carousel">
-        <v-card border :color="listing.status == 'approved' ? '' : 'warning'" class="rounded-lg">
-            <v-skeleton-loader :loading="loading"  height="100%">
+        <v-card border :id="listing.status == 'For approval' ? 'forapproval' : '' " class="rounded-lg">
             <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters show-arrows="hover">
                 <v-carousel-item v-for="(image, i) in images" :key="i">
                     <Link :href="`/owner/edit-listing/${prop.listing.id}`">
                         <v-img id="carousel" :src="`../images/${images[i]}`" cover height="275" width="100%" class="rounded-t-lg">
                             <template v-slot:placeholder>
-                                <div class="d-flex align-center justify-center fill-height">
+                                <div class="d-flex align-center justify-center fill-height bg-grey">
                                     <v-progress-circular color="grey-lighten-4" indeterminate>
 
                                     </v-progress-circular>
@@ -39,7 +31,6 @@
                     </Link>
                 </v-carousel-item>
             </v-carousel>
-        </v-skeleton-loader>
                 <v-list-item width="100%" class="bg-white">
                     <template v-slot:append v-if="listing.status == 'approved'">
                         <v-icon color="orange-lighten-1">
@@ -67,6 +58,10 @@
 
   #carousel:hover{
     cursor: pointer;
+  }
+
+  #forapproval {
+    border: 1px solid orange;
   }
 
   .truncate-text {

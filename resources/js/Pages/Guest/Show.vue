@@ -107,11 +107,13 @@
                     <v-list >
                         <v-list-item>
                             <template v-slot:append>
-                                <v-avatar size="90" id="avatar">
-                                    <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
-                                </v-avatar>
+                                <Link :href="`/profile/${owner.id}`">
+                                    <v-avatar size="90" id="avatar">
+                                        <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
+                                    </v-avatar>
+                                </Link>
                             </template>
-                            <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
+                            <p class="text-h5">{{listing.type}} owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
                                 <v-chip color="white" v-if="listing.guests > 0">
                                     <p class="text-black">
                                         <v-icon>mdi-account-multiple</v-icon>

@@ -205,7 +205,7 @@
         </v-tabs>
         <v-window v-model="tab">
             <v-window-item value="option-1">
-                <v-card flat>
+                <v-card flat border class="pa-2">
                     <span class="text-h6"> Photos </span> 
                         <v-btn :append-icon="showEditPhotos ? 'mdi-pencil' : 'mdi-close'" variant="text" color="blue" class="text-none" @click="showEditPhotos = !showEditPhotos">
                             Edit
@@ -231,26 +231,26 @@
                     <v-list width="100%">
                         <v-form @submit.prevent>
                             <v-list-item>
-                            Listing title
-                            <v-text-field :disabled="showEditDetails" color="blue" v-model="detailsForm.title" variant="outlined"></v-text-field>
-                        </v-list-item>
-                        <v-list-item>
-                            Listing description
-                            <v-textarea :disabled="showEditDetails" color="blue" v-model="detailsForm.description" variant="outlined"></v-textarea>
-                        </v-list-item>
-                        <v-list-item>
-                            Listing location
-                            <v-text-field :disabled="showEditDetails" color="blue" v-model="detailsForm.location" variant="outlined"></v-text-field>
-                        </v-list-item>
-                        <v-row class="justify-end d-flex mb-1 me-4">
-                            <v-col cols="1">
-                                <v-btn color="blue" type="submit" class="rounded-pill text-none" :loading="detailsForm.processing" @click="submitDetailsForm" v-show="!showEditDetails">Save</v-btn>
-                            </v-col>
-                        </v-row>
+                                Title
+                                <v-text-field :disabled="showEditDetails" color="blue" v-model="detailsForm.title" variant="outlined"></v-text-field>
+                            </v-list-item>
+                            <v-list-item>
+                                Description
+                                <v-textarea :disabled="showEditDetails" color="blue" v-model="detailsForm.description" variant="outlined"></v-textarea>
+                            </v-list-item>
+                            <v-list-item>
+                                Location
+                                <v-text-field :disabled="showEditDetails" color="blue" v-model="detailsForm.location" variant="outlined"></v-text-field>
+                            </v-list-item>
+                            <v-row class="justify-end d-flex mb-1 me-4">
+                                <v-col cols="1">
+                                    <v-btn color="blue" type="submit" class="rounded-pill text-none" :loading="detailsForm.processing" @click="submitDetailsForm" v-show="!showEditDetails">Save</v-btn>
+                                </v-col>
+                            </v-row>
                         </v-form>
                         <v-divider/>
                         <v-list>
-                            <span class="text-h6">Properties and rooms</span> 
+                            <span class="text-h6">Property and amenities</span> 
                             <v-btn :append-icon="showEditProperties ? 'mdi-pencil' : 'mdi-close'" variant="text" @click="showEditProperties = !showEditProperties" class="text-none" color="blue">Edit</v-btn> 
                             <v-list-item>
                                 Number of guests
@@ -288,7 +288,7 @@
                         <p class="text-h6">Amenities</p>
                             <v-container>
                                 <v-chip :prepend-icon="item.icon" v-for="item in propertyForm.amenities" :key="item.title" class="mx-2 my-1">{{ item.title }}</v-chip>
-                                <v-card  v-show="!showEditProperties" elevation="0" class="border">
+                                <v-card  v-show="!showEditProperties" elevation="0" class="border mt-4">
                                     <v-card-title>Add amenities</v-card-title>
                                     <v-card-item>
                                         <v-item-group multiple selected-class="bg-blue" >
@@ -304,8 +304,6 @@
                             <v-card-actions class="justify-end d-flex">
                                 <v-btn color="blue" variant="flat" class="text-none rounded-pill" type="submit" v-show="!showEditProperties" @click="submitPropertyForm" :loading="propertyForm.processing">Save</v-btn>
                             </v-card-actions>
-                        <v-divider/>
-
                     </v-list>
                 </v-card>
             </v-window-item>

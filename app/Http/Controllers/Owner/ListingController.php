@@ -45,6 +45,7 @@ class ListingController extends Controller
             'amenities' => 'required',
             'rooms' => 'required',
             'bathrooms' => 'required',
+            'type' => 'required'
         ]);
         $form['status'] = "For approval";
         $form['images'] = json_encode($houseImages);

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->json('amenities');
             $table->json('images');
             $table->string('status');
+            $table->string('type');
             $table->decimal('monthly_discount', 8, 2)->nullable();
             $table->string('bldg_permit')->nullable();
             $table->timestamps();
