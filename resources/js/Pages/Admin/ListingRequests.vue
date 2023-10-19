@@ -69,24 +69,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="listing in listingRequests" :key="listing.id">
-                    <td>{{ listing.id }}</td>
-                    <td>{{ listing.user.firstname + ' ' + listing.user.lastname }}</td>
-                    <td>{{ listing.title }}</td>
-                    <td>{{ format(new Date(listing.created_at), 'MMM dd, yyyy') }}  </td>
-                    <td> <v-chip size="small" color="orange">{{ listing.status }}</v-chip> </td>
-                    <td>
-                        <v-btn prepend-icon="mdi-file-find" @click="showListingReviewModalFunc(listing)" size="small" class="text-green text-none bg-grey-lighten-5" variant="tonal">Review</v-btn>
-                        <v-btn size="small" class="text-red bg-grey-lighten-5 text-none ms-1" variant="tonal"> 
-                            <v-icon>mdi-delete-outline</v-icon> Delete
-                         </v-btn>
-                        <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->
-                        <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
-                    </td>
-                </tr>
-                <tr v-if="listingRequests.length <= 0">
-                    <td colspan="8"> No requests.</td>
-                </tr>
+                <v-slide-x-transition class="py-0" group>
+                    <tr v-for="listing in listingRequests" :key="listing.id">
+                        <td>{{ listing.id }}</td>
+                        <td>{{ listing.user.firstname + ' ' + listing.user.lastname }}</td>
+                        <td>{{ listing.title }}</td>
+                        <td>{{ format(new Date(listing.created_at), 'MMM dd, yyyy') }}  </td>
+                        <td> <v-chip size="small" color="orange">{{ listing.status }}</v-chip> </td>
+                        <td>
+                            <v-btn prepend-icon="mdi-file-find" @click="showListingReviewModalFunc(listing)" size="small" class="text-green text-none bg-grey-lighten-5" variant="tonal">Review</v-btn>
+                            <v-btn size="small" class="text-red bg-grey-lighten-5 text-none ms-1" variant="tonal"> 
+                                <v-icon>mdi-delete-outline</v-icon> Delete
+                            </v-btn>
+                            <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->
+                            <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
+                        </td>
+                    </tr>
+                    <tr v-if="listingRequests.length <= 0">
+                        <td colspan="8"> No requests.</td>
+                    </tr>
+                </v-slide-x-transition>
             </tbody>
         </v-table>
         <v-row  class="mt-2">

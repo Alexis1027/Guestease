@@ -6,8 +6,9 @@ use Inertia\Inertia;
 use App\Models\Rating;
 use App\Models\Listing;
 use App\Http\Controllers\Controller;
+use App\Models\Reservation;
 
-class OwnerDashboardController extends Controller
+class OwnerViewController extends Controller
 {
     //
     public function dashboard() {
@@ -25,4 +26,13 @@ class OwnerDashboardController extends Controller
             'listings' => $listings
         ]);
     }
+
+    public function calendar() {
+
+        $listing = Listing::where('owner_id', auth()->user()->id)->first();
+        $reservations = Reservation::where('listing_id', $listing->id)->get();
+
+        return Inertia::render('Owner/Calendar', ['listing' => $listing, 'reservations' => $reservations]);
+    }
+
 }

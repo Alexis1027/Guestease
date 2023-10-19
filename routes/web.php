@@ -1,7 +1,6 @@
 <?php
 
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
@@ -15,11 +14,9 @@ use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ListingRequestController;
 use App\Http\Controllers\Guest\GuestReservationController;
-use App\Http\Controllers\Owner\OwnerDashboardController;
+use App\Http\Controllers\Owner\OwnerViewController;
 use App\Http\Controllers\Owner\OwnerReservationController;
 use App\Http\Controllers\Guest\ReservationRequestController;
-use App\Models\Listing;
-use App\Models\ListingRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +43,8 @@ Route::put('/profile/update', [UserController::class, 'update']);
 Route::get('/account', [HomeController::class, 'settings'])->middleware('auth');
 
 //OWNER
-Route::get('/owner/dashboard', [OwnerDashboardController::class, 'dashboard']);
+Route::get('/owner/dashboard', [OwnerViewController::class, 'dashboard']);
+Route::get('/owner/calendar', [OwnerViewController::class, 'calendar']);
 Route::get('/owner/listings', [ListingController::class, 'index']);
 Route::get('/owner/reservations', [OwnerReservationController::class, 'index']);
 Route::get('/owner/create-listing', [ListingController::class, 'create']);
@@ -57,9 +55,6 @@ Route::put('/owner/update-listing/photos/{listing}', [ListingController::class, 
 Route::put('/owner/update-listing/property/{listing}', [ListingController::class, 'update_property']);
 Route::put('/owner/update-listing/pricing/{listing}', [ListingController::class, 'update_pricing']);
 Route::delete('/owner/delete-listing/{listing}', [ListingController::class, 'destroy']);
-Route::get('/owner/calendar', function() {
-    return Inertia::render('Owner/Calendar');
-});
 
 //ADMIN
 Route::delete('/delete/listing/{listing}', [AdminListingController::class, 'destroy']);
