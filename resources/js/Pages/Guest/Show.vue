@@ -1,6 +1,6 @@
 <script setup>
 
-    import Layout from '../../Layouts/GuestLayout.vue'
+    import GuestLayout from '../../Layouts/GuestLayout.vue'
     import {defineProps, ref} from 'vue'
     import { useForm } from '@inertiajs/vue3'
     import RatingCard from '../Guest/Partials/RatingCard.vue'
@@ -10,7 +10,7 @@
     import MazGallery from 'maz-ui/components/MazGallery'
     import DatePicker from './Partials/DatePicker.vue'
     
-    defineOptions({layout: Layout})
+    defineOptions({layout: GuestLayout})
 
     const props = defineProps(['listing', 'ratings', 'averageRating', 'wishlist', 'auth', 'rated', 'owner', 'reservedDates'])
     const rating = ref(0)

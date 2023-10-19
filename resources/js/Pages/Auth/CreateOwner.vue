@@ -2,7 +2,7 @@
 
     import {ref} from 'vue'
     import { useForm } from '@inertiajs/vue3';
-    import Layout from './Layout.vue'
+    import Layout from '../../Layouts/AuthLayout.vue'
 
     defineOptions({layout: Layout})
     const passwordVisible = ref(true)

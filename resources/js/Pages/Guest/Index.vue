@@ -1,10 +1,10 @@
 <script setup>
 
     import GuestHouseCard from '../Guest/Partials/GuestHouseCard.vue';
-    import Layout from '../../Layouts/GuestLayout.vue';
+    import GuestLayout from '../../Layouts/GuestLayout.vue';
     import {defineProps, ref} from 'vue'
 
-    defineOptions({layout: Layout})
+    defineOptions({layout: GuestLayout})
     const props = defineProps(['listings'])
     //TOMorrow !
     const latitude = ref()
@@ -22,8 +22,8 @@
     <Head title="Home" />
     <!-- <div class="page-container"> -->
         <p class="text-h4" v-if="listings.length <= 0">no listings found. pag seed ug data</p>
-        <v-row>
-            <v-col cols="4" v-for="listing in props.listings" :key="listing.id">
+        <v-row class="ma-2">
+            <v-col cols="3" v-for="listing in props.listings" :key="listing.id">
                 <GuestHouseCard :listing="listing" :latitude="latitude" :longitude="longitude" />
             </v-col>
         </v-row>

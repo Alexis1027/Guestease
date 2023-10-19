@@ -1,11 +1,11 @@
 <script setup>
 
-    import Layout from '../../Layouts/AdminLayout.vue'
+    import AdminLayout from '../../Layouts/AdminLayout.vue'
     import Chart from 'chart.js/auto'
     import DashboardSheet from './partials/DashboardSheet.vue'
     import { onMounted, ref, defineProps } from 'vue';
 
-    defineOptions({ layout: Layout })
+    defineOptions({ layout: AdminLayout })
     
     const prop = defineProps(['totalUsers', 'totalListings'])
     const myChartRef = ref(null)

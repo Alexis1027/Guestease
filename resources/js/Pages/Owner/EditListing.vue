@@ -1,6 +1,6 @@
 <script setup>
 
-    import Layout from '../../Layouts/OwnerLayout.vue'
+    import OwnerLayout from '../../Layouts/OwnerLayout.vue'
     import {ref, watch} from 'vue'
     import {useForm, router} from '@inertiajs/vue3'
     
@@ -173,7 +173,7 @@
     };
 
     defineOptions({
-        layout: Layout
+        layout: OwnerLayout
     })
 </script>
 <template>

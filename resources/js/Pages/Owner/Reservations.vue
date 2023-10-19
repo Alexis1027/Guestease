@@ -1,11 +1,11 @@
 <script setup>
 
-    import Layout from '../../Layouts/OwnerLayout.vue'
+    import OwnerLayout from '../../Layouts/OwnerLayout.vue'
     import {ref} from 'vue'
     import {format} from 'date-fns'
     const props = defineProps(['reservations'])
     defineOptions({
-        layout: Layout
+        layout: OwnerLayout
     })
 
     const page = ref(1)

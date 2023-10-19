@@ -1,10 +1,10 @@
 <script setup>
 
-    import Layout from '../../Layouts/GuestLayout.vue'
+    import GuestLayout from '../../Layouts/GuestLayout.vue'
     import ReservationCard from './Partials/ReservationCard.vue'
     import {ref} from 'vue'
 
-    defineOptions({layout: Layout})
+    defineOptions({layout: GuestLayout})
     defineProps({reservations: Object, auth: Object})
     const cancelReservationDialog = ref(false)
     const reservationToCancel = ref(null)
@@ -19,15 +19,17 @@
 
 <template>
     <Head title="Reservations" />
-    <p class="text-h4">Welcome, {{ auth.user.firstname }}</p>
-    <p class="text-h6 mb-6">Here, you can view a history of all your bookings.</p>
-    <v-row>
-        <v-col cols="6" v-for="reservation in reservations" :key="reservation.id">
-            <ReservationCard :reservation="reservation" @openCancelReservationDialog="cancelReservation" />
-        </v-col>
-    </v-row>
-    <p class="ms-6 mt-6" v-if="reservations.length == 0">No reservations found.</p>
-    
+    <v-container>
+        <p class="text-h4">Welcome, {{ auth.user.firstname }}</p>
+        <p class="text-h6 mb-6">Here, you can view a history of all your bookings.</p>
+        <v-row>
+            <v-col cols="6" v-for="reservation in reservations" :key="reservation.id">
+                <ReservationCard :reservation="reservation" @openCancelReservationDialog="cancelReservation" />
+            </v-col>
+        </v-row>
+        <p class="ms-6 mt-6" v-if="reservations.length == 0">No reservations found.</p>
+        
+    </v-container>
     <v-dialog v-model="cancelReservationDialog" width="auto">
         <v-card>
             <v-card-title>

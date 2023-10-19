@@ -2,7 +2,7 @@
 
     import {ref} from 'vue'
     import {format} from 'date-fns'
-    import Layout from '../../Layouts/AdminLayout.vue'
+    import AdminLayout from '../../Layouts/AdminLayout.vue'
     import ReviewListingModal from './partials/ReviewListingModal.vue'
 
     const entries = [5, 10, 15, 20, 25]
@@ -21,7 +21,7 @@
         listingRequests: Object
     })
     defineOptions({
-        layout: Layout
+        layout: AdminLayout
     })
 
 </script>

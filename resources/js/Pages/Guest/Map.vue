@@ -3,9 +3,9 @@
     import {ref, onMounted, defineProps} from 'vue'
     import L from 'leaflet'
     import 'leaflet/dist/leaflet.css'
-    import Layout from '../../Layouts/GuestLayout.vue';
+    import GuestLayout from '../../Layouts/GuestLayout.vue';
     import MapSidebar from './partials/MapSidebar.vue';
-    defineOptions({ layout: Layout })
+    defineOptions({ layout: GuestLayout })
     // const lat = ref('')
     // const lon = ref('')
     // const dataLoaded = ref(false)
@@ -51,7 +51,9 @@
 <template>
     <Head title="Map" />
     <MapSidebar :mapSnackbar="mapSnackbar" :listing="currentlisting" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
-    <div class="leaflet-container" ref="mapContainer"></div>
+    <v-container>
+        <div class="leaflet-container" ref="mapContainer"></div>
+    </v-container>
 </template>
 
 <style scoped>

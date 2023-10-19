@@ -2,8 +2,10 @@
 
     import {ref} from 'vue'
     import {format} from 'date-fns'
-    import Layout from '../../Layouts/AdminLayout.vue'
-    defineOptions({layout: Layout})
+    import AdminLayout from '../../Layouts/AdminLayout.vue'
+    
+    defineOptions({layout: AdminLayout})
+
     const {reservations} = defineProps({
         reservations: Object
     })

@@ -25,19 +25,18 @@
             <Link href="/contact-us">
                 <v-btn :class="[$page.component == 'ContactUs' ? 'text-blue' : '', 'text-none']">Contact us</v-btn>
             </Link>
-            <Link href="/login" class="me-6" v-if="!auth">
+            <Link href="/login" v-if="!auth">
                 <v-btn class="text-none" color="blue" variant="flat">
                     Register / Login
                 </v-btn>
             </Link>
             <v-menu min-width="200px" rounded v-if="auth">
                 <template v-slot:activator="{ props }">
-                    <v-btn class="border" size="large" v-bind="props" style="margin-right: 6%;">
+                    <v-btn class="border me-3" size="large" v-bind="props">
                         <template v-slot:prepend>
                             <v-avatar color="blue-lighten-3" size="35">
-                            <!-- <v-icon>mdi-account</v-icon> -->
-                            <v-img :src="`../images/profile/${auth.user.profile_pic}`"></v-img>
-                        </v-avatar>
+                                <v-img :src="`../images/profile/${auth.user.profile_pic}`"></v-img>
+                            </v-avatar>
                         </template>
                         <v-icon>mdi-menu</v-icon>
                     </v-btn>
@@ -79,15 +78,8 @@
             </v-menu>
         </v-app-bar>
         <v-main>
-            <v-container>
-                <slot></slot>
-            </v-container>
+            <slot></slot>
         </v-main>
 
     </v-layout>
 </template>
-
-<style scoped>
-
-
-</style>

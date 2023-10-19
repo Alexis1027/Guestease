@@ -2,10 +2,12 @@
 
     import {ref, defineProps, watch} from 'vue'
     import { router } from '@inertiajs/vue3'
-    import Layout from '../../Layouts/AdminLayout.vue'
+    import AdminLayout from '../../Layouts/AdminLayout.vue'
     import EditUserDialog from './partials/EditUserDialog.vue'
     import DeleteUserDialog from './partials/DeleteUserDialog.vue'
     import {format} from 'date-fns'
+    
+    defineOptions({layout: AdminLayout})
 
     const prop = defineProps(['users'])
     const entries = [5, 10, 15, 20, 25]
@@ -24,7 +26,6 @@
         router.get(`/admin/manage-users/${entry.value}`)
     })
 
-    defineOptions({layout: Layout})
 </script>
 
 

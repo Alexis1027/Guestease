@@ -1,7 +1,7 @@
 <script setup>
 
-    import Layout from '../../Layouts/AdminLayout.vue'
-    defineOptions({layout: Layout})
+    import AdminLayout from '../../Layouts/AdminLayout.vue'
+    defineOptions({layout: AdminLayout})
 
 </script>
 

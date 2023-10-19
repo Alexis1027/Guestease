@@ -3,7 +3,7 @@
     import {ref, defineProps} from 'vue'
     import {useForm} from '@inertiajs/vue3'
     // import {GoogleLogin} from 'vue3-google-login'
-    import Layout from './Layout.vue'
+    import Layout from '../../Layouts/AuthLayout.vue'
     
     defineOptions({layout: Layout})
     const props = defineProps(['callback'])

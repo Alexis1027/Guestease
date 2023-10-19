@@ -1,6 +1,6 @@
 <script setup>
     
-    import Layout from '../../Layouts/OwnerLayout.vue'
+    import OwnerLayout from '../../Layouts/OwnerLayout.vue'
     import GuestHouseCard from './Partials/GuestHouseCard.vue'
 
     defineProps({
@@ -9,7 +9,7 @@
     })
 
     defineOptions({
-        layout: Layout
+        layout: OwnerLayout
     })
 
 </script>

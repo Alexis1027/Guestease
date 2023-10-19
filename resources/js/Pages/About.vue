@@ -1,7 +1,7 @@
 <script setup>
 
-    import Layout from '../Layouts/GuestLayout.vue'
-    defineOptions({layout: Layout})
+    import GuestLayout from '../Layouts/GuestLayout.vue'
+    defineOptions({layout: GuestLayout})
 
 </script>
 

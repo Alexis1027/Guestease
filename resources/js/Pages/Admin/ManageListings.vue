@@ -2,12 +2,14 @@
 
     import {ref, defineProps, watch} from 'vue'
     import {router} from '@inertiajs/vue3'
-    import Layout from '../../Layouts/AdminLayout.vue'
+    import AdminLayout from '../../Layouts/AdminLayout.vue'
     import DeleteListingDialog from './partials/DeleteListingDialog.vue'
     import EditListingDialog from './partials/EditListingDialog.vue'
     import {format} from 'date-fns'
 
+    defineOptions({layout: AdminLayout})
     defineProps({listings: Object, newEntry: Object})
+    
     const deleteListingDialog = ref(false)
     const editListingDialog = ref(false)
     const deleteSnackbar = ref(false)
@@ -30,7 +32,6 @@
         editListingDialog.value = true
     }
 
-    defineOptions({layout: Layout})
 </script>
 
 
