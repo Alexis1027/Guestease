@@ -38,7 +38,7 @@
         <v-card-item class="bg-white">
             <v-row id="listingDetails">
                 <v-col cols="8">
-                    <p class="truncate-text-title text-body-1 font-weight-medium">
+                    <p class="truncate-text text-body-1 font-weight-medium">
                         {{ listing.title }} 
                     </p>
                 </v-col>
@@ -50,11 +50,14 @@
             </v-row>
             <v-divider class="my-1" />
             <p>
+                <span class="text-body-2 truncate-text">
                 <v-icon color="red-lighten-1">mdi-map-marker</v-icon> 
-                <span class="text-body-2"> {{ listing.location }} </span>
-                <span class="text-grey-darken-3 text-caption">
-                    {{ latitude && longitude ? ' - ' + Math.floor(getDistance({latitude: 10.250778, longitude: 123.939834}, listingLocation)/1000) + ' km away' : '' }}
-                </span>
+                     {{ listing.location }}
+                     <span class="text-grey-darken-3 text-caption">
+                        {{ latitude && longitude ? ' - ' + Math.floor(getDistance({latitude: 10.250778, longitude: 123.939834}, listingLocation)/1000) + ' km away' : '' }}
+                    </span>
+                 </span>
+                
             </p>
             <p> 
                 <strong class="text-h6">
@@ -83,19 +86,13 @@
 
   .truncate-text {
       display: -webkit-box;
-      -webkit-line-clamp: 2; /* Adjust the number of lines to show */
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .truncate-text-title {
-      display: -webkit-box;
       -webkit-line-clamp: 1; /* Adjust the number of lines to show */
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+
 
   #listingDetails{
     text-decoration: none;

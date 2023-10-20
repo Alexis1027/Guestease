@@ -13,11 +13,13 @@ class OwnerReservationController extends Controller
     //
     public function index() {
         $listings = Listing::where('owner_id', auth()->user()->id)->get();
-        $reservations = new stdClass;
+        $reservations = [];
         foreach($listings as $ls) {
             //find the rooms of owner and find the rooms in the reservation table,
-            $rs = Reservation::where('listing_id', $ls->id)->get();
-            $reservations->data = $rs;
+            $res = Reservation::where('listing_id', $ls->id)->get();
+            foreach($res as $r) {
+                array_push($reservations, $r);
+            }
         }
         return Inertia::render('Owner/Reservations', ['reservations' => $reservations]);
     }

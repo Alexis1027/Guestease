@@ -1,6 +1,6 @@
 <script setup>
 
-    import GuestHouseCard from '../Guest/Partials/GuestHouseCard.vue';
+    import GuestHouseCard from './Partials/ListingCard.vue';
     import GuestLayout from '../../Layouts/GuestLayout.vue';
     import {defineProps, ref} from 'vue'
 
@@ -23,7 +23,7 @@
     <!-- <div class="page-container"> -->
         <p class="text-h4" v-if="listings.length <= 0">no listings found. pag seed ug data</p>
         <v-row class="ma-2">
-            <v-col cols="3" v-for="listing in props.listings" :key="listing.id">
+            <v-col cols="3" sm="6" md="4" lg="3" v-for="listing in props.listings" :key="listing.id">
                 <GuestHouseCard :listing="listing" :latitude="latitude" :longitude="longitude" />
             </v-col>
         </v-row>

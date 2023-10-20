@@ -92,10 +92,8 @@
             </v-menu>
         </v-app-bar>
         <v-main>
-            <v-container>   
                 <slot>
                 </slot>
-            </v-container>
         </v-main>
     </v-layout>
 </template>

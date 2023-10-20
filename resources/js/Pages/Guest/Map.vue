@@ -51,16 +51,14 @@
 <template>
     <Head title="Map" />
     <MapSidebar :mapSnackbar="mapSnackbar" :listing="currentlisting" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
-    <v-container>
         <div class="leaflet-container" ref="mapContainer"></div>
-    </v-container>
 </template>
 
 <style scoped>
 
     .leaflet-container {
-        height: 75vh;
-        width: 86vw;
+        height: 100vh;
+        width: 100vw;
     }
 
 </style>

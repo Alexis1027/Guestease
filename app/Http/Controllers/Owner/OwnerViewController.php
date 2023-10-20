@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Owner;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Rating;
 use App\Models\Listing;
-use App\Http\Controllers\Controller;
 use App\Models\Reservation;
+use App\Http\Controllers\Controller;
 
 class OwnerViewController extends Controller
 {
@@ -27,12 +28,23 @@ class OwnerViewController extends Controller
         ]);
     }
 
-    public function calendar() {
+    public function calendar(Listing $listing) {
 
-        $listing = Listing::where('owner_id', auth()->user()->id)->first();
-        $reservations = Reservation::where('listing_id', $listing->id)->get();
+        if(!$listing->exists) {
+            $listing = Listing::where('owner_id', auth()->user()->id)->first();
+        }
 
-        return Inertia::render('Owner/Calendar', ['listing' => $listing, 'reservations' => $reservations]);
+        $listings = Listing::where('owner_id', auth()->user()->id)->select(['id', 'title'])->get();
+        $reservations = [];
+        if($listing) {
+            $reservations = Reservation::where('listing_id', $listing->id)->get();
+        }
+
+        foreach($reservations as $rs) {
+            $rs->user = User::find($rs->user_id);
+        }
+
+        return Inertia::render('Owner/Calendar', ['listing' => $listing, 'listings' => $listings, 'reservations' => $reservations]);
     }
 
 }

@@ -18,7 +18,7 @@
         checkin: format(new Date(prop.checkin), 'yyyy-MM-dd'),
         checkout: format(new Date(prop.checkout), 'yyyy-MM-dd'),
         guests: prop.guests,
-        total: 2000,
+        total: parseInt(prop.listing.price) * parseInt(prop.days),
         days: prop.days
     })
         

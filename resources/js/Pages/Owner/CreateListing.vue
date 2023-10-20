@@ -350,7 +350,7 @@
                             </template>
                         </template>
                     </v-file-input>
-                    <div v-if="form.type == 'guest house'">
+                    <div v-if="form.type == 'Guest house'">
                         <p class="text-h5 text-start">Upload the building permit of the guest house</p>
                         <p class="text-h6 mb-6 text-grey-darken">You'll need it to confirm your listing.</p>
                         <v-file-input 

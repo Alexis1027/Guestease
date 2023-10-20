@@ -45,6 +45,7 @@ Route::get('/account', [HomeController::class, 'settings'])->middleware('auth');
 //OWNER
 Route::get('/owner/dashboard', [OwnerViewController::class, 'dashboard']);
 Route::get('/owner/calendar', [OwnerViewController::class, 'calendar']);
+Route::get('/owner/calendar/{listing}', [OwnerViewController::class, 'calendar']);
 Route::get('/owner/listings', [ListingController::class, 'index']);
 Route::get('/owner/reservations', [OwnerReservationController::class, 'index']);
 Route::get('/owner/create-listing', [ListingController::class, 'create']);

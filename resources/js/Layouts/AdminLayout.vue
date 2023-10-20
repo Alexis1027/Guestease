@@ -17,7 +17,7 @@
             <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
         
         <v-toolbar-title>
-            <Link class="font-weight-bold" href="">
+            <Link class="font-weight-bold" href="/owner/dashboard" >
                 <v-img :src="logo" height="55" width="260" cover></v-img>
             </Link>
         </v-toolbar-title>

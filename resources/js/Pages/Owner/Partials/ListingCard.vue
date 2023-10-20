@@ -1,8 +1,6 @@
 <script setup>
 
-    import {ref, defineProps, onMounted} from 'vue'
     import {Link} from '@inertiajs/vue3'
-    import { VSkeletonLoader } from 'vuetify/lib/labs/components.mjs';
 
     const prop = defineProps({
         listing: Object,
@@ -66,7 +64,7 @@
 
   .truncate-text {
       display: -webkit-box;
-      -webkit-line-clamp: 2; /* Adjust the number of lines to show */
+      -webkit-line-clamp: 1; /* Adjust the number of lines to show */
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -74,7 +72,7 @@
 
     .truncate-text-title {
       display: -webkit-box;
-      -webkit-line-clamp: 2; /* Adjust the number of lines to show */
+      -webkit-line-clamp: 1; /* Adjust the number of lines to show */
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
