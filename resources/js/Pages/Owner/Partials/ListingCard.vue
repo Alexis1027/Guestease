@@ -30,7 +30,7 @@
                 </v-carousel-item>
             </v-carousel>
                 <v-list-item width="100%" class="bg-white">
-                    <template v-slot:append v-if="listing.status == 'approved'">
+                    <template v-slot:append v-if="listing.status == 'Approved'">
                         <v-icon color="orange-lighten-1">
                             mdi-star
                         </v-icon>
@@ -45,7 +45,7 @@
                 </v-list-item>
 
                 <v-list-item class="truncate-text bg-white" width="100%">
-                    <span :class="listing.status == 'approved' ? 'text-green' : 'text-error'">{{ listing.status }}</span>
+                    <span :class="listing.status == 'Approved' ? 'text-green' : 'text-error'">{{ listing.status }}</span>
                 </v-list-item>
         
         </v-card>

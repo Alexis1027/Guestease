@@ -396,16 +396,16 @@
                             <p class="text-h5">Step 3</p>
                             <p class="text-h3 my-2 mx-2">Finish up and publish</p>
                             
-                                <v-list-item>
-                                    <template v-slot:prepend>
-                                        <v-icon size="50" color="red">mdi-file-clock-outline</v-icon>
-                                    </template>
-                                    <p>Your listing won't be published until the admin  accepts your request.</p>
+                            <v-list-item>
+                                <template v-slot:prepend>
+                                    <v-icon size="50" color="red">mdi-file-clock-outline</v-icon>
+                                </template>
+                                <p>Your listing won't be published until the admin  accepts your request.</p>
 
-                                    <v-list-item-subtitle>
-                                        Lorem ipsum dolor sit, amet consectetur adipisicing
-                                    </v-list-item-subtitle>
-                                </v-list-item>
+                                <v-list-item-subtitle>
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing
+                                </v-list-item-subtitle>
+                            </v-list-item>
                         </v-col>
                         <v-col cols="5">
                             <v-img cover height="100%" width="100%" src="../images/listing/Home-Interior-Design-PNG.png"></v-img>
@@ -413,8 +413,6 @@
                     </v-row>
                 </v-container>
             </v-window-item>
-
-            
       </v-window>
   
       <div id="action">

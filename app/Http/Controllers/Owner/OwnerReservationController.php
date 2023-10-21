@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Owner;
 
+use stdClass;
+use App\Models\User;
 use Inertia\Inertia;
-use App\Http\Controllers\Controller;
 use App\Models\Listing;
 use App\Models\Reservation;
-use stdClass;
+use App\Http\Controllers\Controller;
 
 class OwnerReservationController extends Controller
 {
@@ -18,6 +19,8 @@ class OwnerReservationController extends Controller
             //find the rooms of owner and find the rooms in the reservation table,
             $res = Reservation::where('listing_id', $ls->id)->get();
             foreach($res as $r) {
+                $r->listing = Listing::select(['title', 'images'])->find($r->listing_id);
+                $r->user = User::select(['firstname', 'lastname', 'profile_pic', 'email'])->find($r->user_id);
                 array_push($reservations, $r);
             }
         }

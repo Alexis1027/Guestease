@@ -1,7 +1,7 @@
 <script setup>
     
     import OwnerLayout from '../../Layouts/OwnerLayout.vue'
-    import GuestHouseCard from './Partials/ListingCard.vue'
+    import ListingCard from './Partials/ListingCard.vue'
 
     defineProps({
         listings: Object,
@@ -31,7 +31,7 @@
 
         <v-row>
             <v-col cols="3" v-for="listing in listings" :key="listing.id">
-                <GuestHouseCard  :listing="listing" />
+                <ListingCard  :listing="listing" />
             </v-col>
             <v-col cols="3">
                 <v-card class="mt-6 rounded-lg bg-white" height="auto" variant="outlined" color="grey" v-if="listings.length <= 0">

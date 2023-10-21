@@ -27,34 +27,43 @@
         <thead>
             <tr>
                 <th class="text-center">ID</th>
-                <th class="text-center">Listing ID</th>
-                <th class="text-center">Guest ID</th>
-                <th class="text-center">Payment Process</th>
-                <th class="text-center">Check in</th>
-                <th class="text-center">Check out</th>
+                <th class="text-center">Listing</th>
+                <th class="text-center">Guest info</th>
+                <th class="text-center">Check-in/Check-out</th>
                 <th class="text-center">Reserved at</th>
-                <th class="text-center">Total</th>
+                <th class="text-center">Price</th>
                 <th class="text-center">Guests</th>
-                <th class="text-center">Length of stay</th>
                 <th class="text-center">Status</th>
                 <th class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="reservation in reservations" :key="reservation.id">
+            <tr v-for="reservation in reservations" :key="reservation.id" id="datas">
                 <td>{{ reservation.id }}</td>
-                <td>{{ reservation.listing_id }}</td>
-                <td>{{ reservation.user_id }}</td>
-                <td>{{ reservation.payment_process }}</td>
-                <td>{{ reservation.checkin }}</td>
-                <td>{{ reservation.checkout }}</td>
-                <td>{{ format(new Date(reservation.created_at), 'MMM d, y') }}</td>
+                <td>
+                    <v-list-item 
+                    :prepend-avatar="`../../images/${JSON.parse(reservation.listing.images)[0]}`" 
+                    :title="reservation.listing.title">
+                    </v-list-item>
+                </td>
+                <td>
+                    <v-list-item 
+                    :prepend-avatar="`../../images/profile/${reservation.user.profile_pic}`" 
+                    :title="reservation.user.firstname + ' ' + reservation.user.lastname" 
+                    :subtitle="reservation.user.email">
+                    </v-list-item>
+                </td>
+                <td>
+                    {{ format(new Date(reservation.checkin), 'MMM dd') + ' - ' + format(new Date(reservation.checkout), 'MMM dd')  }}
+                    <br>
+                    {{ reservation.days }} days
+                </td>
+                <td>{{ format(new Date(reservation.created_at), 'y/M/d') }}</td>
                 <td>₱{{ parseInt(reservation.total).toLocaleString() }}</td>
                 <td>{{ reservation.guests }}</td>
-                <td>{{ reservation.days }} days</td>
                 <td>{{ reservation.status }}</td>
                 <td>
-                    <v-btn icon="mdi-delete-outline" size="small" class="text-red" flat></v-btn>
+                    <v-btn size="small" class="text-red text-none" variant="tonal">Button</v-btn>
                     <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->
                     <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
                 </td>
@@ -80,3 +89,11 @@
         </v-col>
     </v-row>
 </template>
+
+<style>
+
+    #datas td{
+        padding: 10px;
+    }
+
+</style>
