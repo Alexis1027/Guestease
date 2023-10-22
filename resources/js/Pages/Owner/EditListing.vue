@@ -324,17 +324,14 @@
                 <v-window-item value="option-3">
                     <v-card width="69vw" height="100%">
                         <v-card-item>
-                            <v-list>
                                 <span class="text-red">not working rn</span>
-                                <v-list-item prepend-icon="mdi-home">
-                                    Rules and policies
-                                </v-list-item>
-                                <v-list-item>
-                                    Lorem ipsum dolor sit amet consectetur.
-                                </v-list-item>
-                            </v-list>
-                            <v-textarea variant="outlined" color="blue" placeholder="Lorem ipsum dolor sit amet consectetur.">
-
+                                    <p class="text-h6">Rules and policies</p>
+                                    <p v-for="rule in JSON.parse(listing.rules)" :key="rule">
+                                       <v-icon>mdi-circle-small</v-icon> {{ rule }}
+                                    </p>
+                                
+                            <v-textarea class="mt-3" variant="outlined" color="blue" placeholder="" label="Add new rule">
+                                
                             </v-textarea>
                             
                         </v-card-item>
@@ -342,6 +339,7 @@
                             <v-btn class="text-none" variant="flat" prepend-icon="mdi-plus" color="blue">Add</v-btn>
                         </v-card-actions>
                     </v-card>
+                    
                 </v-window-item>
                 <v-window-item value="option-4">
                     <v-card flat>

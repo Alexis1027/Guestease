@@ -24,6 +24,7 @@ class Listing extends Model
         'rooms',
         'status',
         'type',
+        'rules',
         'monthly_discount',
         'bldg_permit'
     ];

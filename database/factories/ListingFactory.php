@@ -42,6 +42,12 @@ class ListingFactory extends Factory
             'status' => 'approved',
             'type' => $this->faker->randomElement(['Room', 'Guest house']),
             'monthly_discount' => $this->faker->numberBetween(5, 20),
+            'rules' =>json_encode([
+                $this->faker->sentence(10),
+                $this->faker->sentence(10),
+                $this->faker->sentence(10),
+                $this->faker->sentence(10),
+            ]),
             'amenities' => json_encode([
                     [
                         'icon' => $this->faker->randomElement(

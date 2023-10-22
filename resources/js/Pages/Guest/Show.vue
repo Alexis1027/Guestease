@@ -100,7 +100,6 @@
             </v-col>
         </v-row>
             <MazGallery :images="listingImages" :height="400" class="mt-1" />
-        <v-divider class="mt-2" />
         <v-row>
             <v-col cols="8">
                 <!-- Guest house details -->
@@ -139,23 +138,20 @@
                                         {{ listing.bathrooms }} Bathrooms
                                     </p>
                                 </v-chip>
-                            <!-- <p class="text-grey-darken-1"> {{ listing.guests }} guests - {{ listing.rooms }} room - {{ listing.beds }} bedroom - {{ listing.bathrooms }} bathroom </p> -->
-                        </v-list-item>
-                        <v-divider class="my-2" />
-                        <v-list-item prepend-icon="mdi-information-variant">
-                            {{ listing.description }} 
-                            <br>
-                        </v-list-item>
-                        <v-list-item prepend-icon="mdi-map-marker">
-                            {{ listing.location }}
                         </v-list-item>
                     </v-list>
 
+                    <v-container>
+                        <p class="text-h5 font-weight-medium">About this place </p>
+                        <v-divider class="my-2" />
+                        {{ listing.description }}
+                        <br>
+                        Located in - {{ listing.location }}
+                    </v-container>
+
                 <!-- Place offers -->
                 <v-container >
-                    <v-list-item>
-                        <p class="text-h5">Offered amenities</p>
-                    </v-list-item>
+                    <p class="text-h5">Offered amenities</p>
                     <v-divider class="my-2" />
                     <v-row>
                         <v-col cols="6" v-for="item in amenities" :key="item">
@@ -240,10 +236,8 @@
         <v-divider class="mt-5" />
 
          <!-- MAP SECTION -->
-        <v-container>
             <p class="text-h5 font-weight-medium mb-6">Where you'll be.</p>
-            <Map :latitude="listing.latitude" :longitude="listing.longitude" />
-        </v-container>
+            <Map class="ms-5" :latitude="listing.latitude" :longitude="listing.longitude" />
         <!-- HOUSE RULES -->
         <v-container class="bg-white">
             <p class="text-h5 font-weight-medium mb-6">House rules</p>
@@ -262,7 +256,7 @@
         <v-divider class="my-5" />
 
         <!-- CONTACT OWNER SECTION -->
-        <v-container class="bg-white">
+        <!-- <v-container class="bg-white">
             <v-list-item>
                 <template v-slot:prepend>
                     <v-avatar size="90" id="avatar">
@@ -287,7 +281,7 @@
                     </Link>
                 </v-list-item>
             </v-list>
-        </v-container>
+        </v-container> -->
                 <!-- About this place section -->
         <!-- Components -->
         <RatingDialog :showReviewModal="showReviewModal" :auth="auth" :star="rating" :listing="listing" @closeReviewModal="showReviewModal = false" />
