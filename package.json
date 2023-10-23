@@ -23,6 +23,7 @@
         "chart.js": "^4.3.3",
         "date-fns": "^2.30.0",
         "dayjs": "^1.11.10",
+        "firebase": "^10.5.0",
         "geolib": "^3.3.4",
         "install": "^0.13.0",
         "leaflet": "^1.9.4",

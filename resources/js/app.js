@@ -12,6 +12,7 @@ import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
 import {Link} from '@inertiajs/vue3'
 import {Head} from '@inertiajs/vue3'
 import vue3GoogleLogin from 'vue3-google-login'
+import {auth} from './firebase.js'
 
 const vuetify = createVuetify({
     components,

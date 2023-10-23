@@ -2,9 +2,11 @@
 
     import {ref} from 'vue'
     import { useForm } from '@inertiajs/vue3';
+    import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
     import Layout from '../../Layouts/AuthLayout.vue'
 
     defineOptions({layout: Layout})
+    const provider = new GoogleAuthProvider();
     const passwordVisible = ref(true)
     const form = useForm({
         firstname: '',
@@ -14,8 +16,44 @@
         terms: false
     })
 
-    const submit = () => {
-        form.post('/create/user')
+    const signupButton = ref(false)
+    // const submit = () => {
+    //   form.post('/create/user')
+    // }
+
+    const signUp = () => {
+        signupButton.value = true
+        createUserWithEmailAndPassword(getAuth(), form.email, form.password)
+            .then((userCredential) => {
+                form.post('/create/user')
+            })
+            .catch((error) => {
+                console.log(error.message);
+                // ..
+            })
+    }
+
+
+    const signUpWithGoogle = () => {
+        signInWithPopup(getAuth(), provider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                // IdP data available using getAdditionalUserInfo(result)
+                // ...
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+            })
     }
 
 </script>
@@ -97,7 +135,8 @@
                                     label="I agree to site terms and conditions">
                                 </v-checkbox>
                             <!-- <v-text-field color="blue" clearable variant="outlined" class="fadeIn second mx-5" label="Confirm password"></v-text-field> -->
-                            <v-btn block class="fadeIn third" :loading="form.processing" :disabled="form.processing" @click="submit" type="submit" id="btn-login" color="blue">Register</v-btn>
+                            <v-btn block class="fadeIn third" :loading="signupButton" :disabled="signupButton" @click="signUp" type="submit" id="btn-login" color="blue">Register</v-btn>
+                                <v-btn icon="mdi-google" color="blue" size="small" class="mt-2" @click="signUpWithGoogle"></v-btn>
                         </v-container>
                         <label class="mt-4 fadeIn third">Already have an account? </label>
                         <Link href="/login" class="text-blue mb-4 fadeIn third"> Log In </Link>

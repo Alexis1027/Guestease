@@ -1,31 +1,26 @@
 <script setup>
 
     import {ref} from 'vue'
-    import {useForm} from '@inertiajs/vue3'
     import Layout from '../../Layouts/AuthLayout.vue'
-    import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+    import { getAuth, sendPasswordResetEmail } from "firebase/auth"
     
     defineOptions({layout: Layout})
 
-    const passwordVisible = ref(true)
-    const loginBtn = ref(false)
-    const errorMssg = ref('')
-    const form = useForm({
-        email: '',
-        password: ''
-    })
-
-    const submit = () => {
-        loginBtn.value = true
-        signInWithEmailAndPassword(getAuth(), form.email, form.password)
-        .then((userCredential) => {
-            loginBtn.value = false
-            form.post('/login')
+    const sendButton = ref(false)
+    const email = ref('')
+    const linkSent = ref(false)
+    const send = () => {
+        sendButton.value = true
+        sendPasswordResetEmail(getAuth(), email.value)
+        .then(() => {
+            linkSent.value = true
+            sendButton.value = false
+            alert('Success! Please check your email.')
         })
         .catch((error) => {
-            loginBtn.value = false
-            errorMssg.value = "auth/invalid-login-credentials"
-        })
+            sendButton.value = false
+            alert(error.message)
+        });
     }
 
     const emailRules = [
@@ -38,22 +33,10 @@
             return 'E-mail must be valid.'
         },
     ]
-
-    const passwordRules = [
-        value => {
-            if(value) return true
-            return `Password is requred.`
-        }
-    ]
-
-    // const handleGoogleResponse = (response) => {
-    //     console.log("Handle the response", response)
-    // }
-
 </script>
 
 <template>
-    <Head title="Login" />
+    <Head title="Forgot password" />
     <v-container class="wrapper fadeInDown">
         <!-- <form method="POST" action="/users/authenticate"> -->
         <v-form @submit.prevent>
@@ -68,13 +51,12 @@
                 <v-divider vertical/>
                 <v-col cols="5" xxl="5" xl="5" lg="5" md="5">
                     <v-card elevation="0">
-                        <p class="fadeIn first text-h5 font-weight-bold">LOGIN</p>
-                        <label class="mt-4 fadeIn third">Don't have an account? </label>
-                        <Link href="/createGuest" class="text-blue fadeIn third"> Sign up</Link>
-                        <v-card-item>
+                        <p class="fadeIn first text-h5 font-weight-bold text-center">FORGOT PASSWORD</p>
+                        <p class="pa-3 fadeIn second">Lorem ipsum dolor sit amet consectetur, adipisicin. Lorem ipsum dolor ambatukam.</p>
+                        <v-card-item v-if="!linkSent">
                             <v-container>
                                 <v-text-field 
-                                    v-model="form.email" 
+                                    v-model="email" 
                                     color="blue" 
                                     clearable
                                     name="email"
@@ -82,29 +64,19 @@
                                     variant="outlined" 
                                     class="fadeIn second mx-5" 
                                     placeholder="johndoe@gmail.com" 
+                                    :error-messages="$page.props.errors.email"
                                     label="Email address">
                                 </v-text-field>
-                                <v-text-field 
-                                    v-model="form.password" 
-                                    color="blue" 
-                                    variant="outlined"
-                                    name="password"
-                                    :rules="passwordRules"
-                                    class="fadeIn second mx-5" 
-                                    :error-messages="errorMssg"
-                                    :type="passwordVisible ? 'password' : 'text'"
-                                    :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                                    @click:append-inner="passwordVisible = !passwordVisible" 
-                                    label="Password">
-                                </v-text-field>
-                                <Link href="/forgot-password" class="text-blue mb-2 third fadeIn">Forgot your password?</Link>
-                                <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="loginBtn" :disabled="loginBtn" @click="submit" type="submit" block>Log in</v-btn>
-                                <!-- <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/> -->
-                                
-                                <br>
-                                <label class="mt-4 fadeIn third">List your property? </label>
-                                <Link href="/createOwner" class="text-blue fadeIn third"> Create owner account</Link>
+                                <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="sendButton" :disabled="sendButton" @click="send" type="submit" block>Send</v-btn>
                             </v-container>
+                        </v-card-item>
+                        <v-card-item v-else>
+                            <v-alert color="green" variant="tonal" icon="mdi-check-circle-outline" title="Sent!">
+                                An email with a link to reset your password has just been sent to your email.
+                            </v-alert>
+                            <Link href="/login">
+                                <v-btn color="blue" class="mt-2">Back to login</v-btn>
+                            </Link>
                         </v-card-item>
                     </v-card>
                 </v-col>
@@ -171,7 +143,6 @@ html {
     padding: 0px;
     -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-    text-align: center;
     width: 1000px;
   }
   

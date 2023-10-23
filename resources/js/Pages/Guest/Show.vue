@@ -163,7 +163,7 @@
                 </v-container>
 
                 <!-- Rate this place section -->
-                <v-container class="bg-white ">
+                <v-container class="bg-white" v-if="auth">
                     <p class="text-h5 font-weight-medium">Rate this place </p>
                     <p style="color: gray">Tell others what you think. <span class="text-red"> still working on how to not show if user hasnt reserved/booked  </span> </p>
                     <v-divider class="my-3" />

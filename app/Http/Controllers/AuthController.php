@@ -34,32 +34,31 @@ class AuthController extends Controller
         return Inertia::render('Auth/CreateOwner');
     }
 
+    public function forgot_password() {
+        return Inertia::render('Auth/ForgotPassword');
+    }
+
     public function authenticate(Request $request) {
-        $form = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => 'required'
-        ]);
+        // $form = $request->validate([
+        //     'email' => ['required', 'email'],
+        //     'password' => 'required'
+        // ]);
 
-        if(auth()->attempt($form)) {
-            $request->session()->regenerate();
-
-            switch(auth()->user()->role) {
-                case 'admin':
-                    // return redirect()->route('reservations');
-                    return redirect('/admin/dashboard');
-                    break;
-                case 'owner':
-                    return redirect('/owner/dashboard');
-                    break;
-                case 'guest':
-                    return redirect('/');
-                    break;
-            }
-            return redirect('/');
+        $request->session()->regenerate();
+        $user = User::where('email',$request->email)->first();
+        auth()->login($user);
+        switch(auth()->user()->role) {
+            case 'admin':
+                return redirect('/admin/dashboard');
+                break;
+            case 'owner':
+                return redirect('/owner/dashboard');
+                break;
+            case 'guest':
+                return redirect('/');
+                break;
         }
-        else {
-            return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
-        }
+        return redirect('/');
     }
 
     public function storeUser(Request $request) {

@@ -34,6 +34,7 @@ use App\Http\Controllers\Guest\ReservationRequestController;
 //Auth
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'authenticate']);
+Route::get('/forgot-password', [AuthController::class, 'forgot_password']);
 Route::get('/createGuest', [AuthController::class, 'create_guest']);
 Route::get('/createOwner', [AuthController::class, 'create_owner']);
 Route::post('/create/user', [AuthController::class, 'storeUser']);
