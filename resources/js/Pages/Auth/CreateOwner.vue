@@ -2,20 +2,42 @@
 
     import {ref} from 'vue'
     import { useForm } from '@inertiajs/vue3';
+    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification  } from "firebase/auth";
     import Layout from '../../Layouts/AuthLayout.vue'
 
     defineOptions({layout: Layout})
+
     const passwordVisible = ref(true)
+    const auth = getAuth()
+    const signupButton = ref(false)
+    const emailErrMsg = ref('')
     const form = useForm({
         firstname: '',
         lastname: '',
         email: '',
         password: '',
-        terms: false
     })
 
-    const submit = () => {
-        form.post('/create/owner')
+    // const submit = () => {
+    //     form.post('/create/owner')
+    // }
+
+    const signUp = () => {
+        signupButton.value = true
+        createUserWithEmailAndPassword(auth, form.email, form.password)
+            .then((userCredential) => {
+                sendEmailVerification(auth.currentUser)
+                .then(() => {
+                    alert('Email verification sent!')
+                });
+                form.post('/create/owner')
+            })
+            .catch((error) => {
+                signupButton.value = false
+                emailErrMsg.value = "Email already in use"
+                console.log(error.message);
+                // ..
+            })
     }
 
 </script>
@@ -68,7 +90,7 @@
                                     name="email"
                                     v-model="form.email"
                                     variant="outlined" 
-                                    :error-messages="form.errors.email" 
+                                    :error-messages="emailErrMsg" 
                                     class="fadeIn second" 
                                     placeholder="johndoe@gmail.com" 
                                     label="Email">
@@ -88,16 +110,8 @@
                                     label="Password">
                                 </v-text-field>
                             </v-row>
-                                <v-checkbox 
-                                    class="fadeIn third ms-4" 
-                                    v-model="form.terms" 
-                                    color="blue"
-                                    name="terms"
-                                    :error-messages="form.errors.terms" 
-                                    label="I agree to site terms and conditions">
-                                </v-checkbox>
                             <!-- <v-text-field color="blue" clearable variant="outlined" class="fadeIn second mx-5" label="Confirm password"></v-text-field> -->
-                            <v-btn block class="fadeIn third" :loading="form.processing" :disabled="form.processing" @click="submit" type="submit" id="btn-login" color="blue">Register</v-btn>
+                            <v-btn block class="fadeIn third" :loading="signupButton" :disabled="signupButton" @click="signUp" type="submit" id="btn-login" color="blue">Register</v-btn>
                         </v-container>
                         <label class="mt-4 fadeIn third">Already have an account? </label>
                         <Link href="/login" class="text-blue mb-4 fadeIn third"> Log In </Link>

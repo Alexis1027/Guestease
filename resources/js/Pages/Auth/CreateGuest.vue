@@ -2,57 +2,37 @@
 
     import {ref} from 'vue'
     import { useForm } from '@inertiajs/vue3';
-    import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification  } from "firebase/auth";
     import Layout from '../../Layouts/AuthLayout.vue'
 
     defineOptions({layout: Layout})
-    const provider = new GoogleAuthProvider();
+
+    const auth = getAuth()
     const passwordVisible = ref(true)
+    const signupButton = ref(false)
+    const emailErrMsg = ref('')
     const form = useForm({
         firstname: '',
         lastname: '',
         email: '',
         password: '',
-        terms: false
     })
-
-    const signupButton = ref(false)
-    // const submit = () => {
-    //   form.post('/create/user')
-    // }
 
     const signUp = () => {
         signupButton.value = true
-        createUserWithEmailAndPassword(getAuth(), form.email, form.password)
+        createUserWithEmailAndPassword(auth, form.email, form.password)
             .then((userCredential) => {
+                sendEmailVerification(auth.currentUser)
+                .then(() => {
+                    alert('Email verification sent!')
+                });
                 form.post('/create/user')
             })
             .catch((error) => {
+                signupButton.value = false
+                emailErrMsg.value = "Email is already in use"
                 console.log(error.message);
                 // ..
-            })
-    }
-
-
-    const signUpWithGoogle = () => {
-        signInWithPopup(getAuth(), provider)
-            .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                // The signed-in user info.
-                const user = result.user;
-                // IdP data available using getAdditionalUserInfo(result)
-                // ...
-            }).catch((error) => {
-                // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // The email of the user's account used.
-                const email = error.customData.email;
-                // The AuthCredential type that was used.
-                const credential = GoogleAuthProvider.credentialFromError(error);
-                // ...
             })
     }
 
@@ -106,7 +86,7 @@
                                     name="email"
                                     v-model="form.email"
                                     variant="outlined" 
-                                    :error-messages="form.errors.email" 
+                                    :error-messages="emailErrMsg" 
                                     class="fadeIn second" 
                                     placeholder="johndoe@gmail.com" 
                                     label="Email">
@@ -126,14 +106,6 @@
                                     label="Password">
                                 </v-text-field>
                             </v-row>
-                                <v-checkbox 
-                                    class="fadeIn third ms-4" 
-                                    v-model="form.terms" 
-                                    color="blue"
-                                    name="terms"
-                                    :error-messages="form.errors.terms" 
-                                    label="I agree to site terms and conditions">
-                                </v-checkbox>
                             <!-- <v-text-field color="blue" clearable variant="outlined" class="fadeIn second mx-5" label="Confirm password"></v-text-field> -->
                             <v-btn block class="fadeIn third" :loading="signupButton" :disabled="signupButton" @click="signUp" type="submit" id="btn-login" color="blue">Register</v-btn>
                                 <v-btn icon="mdi-google" color="blue" size="small" class="mt-2" @click="signUpWithGoogle"></v-btn>

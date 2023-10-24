@@ -38,6 +38,10 @@ class AuthController extends Controller
         return Inertia::render('Auth/ForgotPassword');
     }
 
+    public function verify() {
+        return Inertia::render('Auth/Verify');
+    }
+
     public function authenticate(Request $request) {
         // $form = $request->validate([
         //     'email' => ['required', 'email'],
@@ -66,8 +70,7 @@ class AuthController extends Controller
             'firstname' => ['required', 'min:3'],
             'lastname' => ['required', 'min:3'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'min:6'],
-            'terms' => ['required', 'accepted']
+            'password' => ['required', 'min:6']
         ]);
         //hash password
         $form['role'] = 'user';
@@ -84,8 +87,7 @@ class AuthController extends Controller
             'firstname' => ['required', 'min:3'],
             'lastname' => ['required', 'min:3'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'min:6'],
-            'terms' => ['required', 'accepted']
+            'password' => ['required', 'min:6']
         ]);
         //hash password
         $form['role'] = 'owner';

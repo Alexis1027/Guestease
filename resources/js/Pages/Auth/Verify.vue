@@ -1,134 +1,39 @@
 <script setup>
 
-    import {ref} from 'vue'
-    import {useForm, router} from '@inertiajs/vue3'
     import Layout from '../../Layouts/AuthLayout.vue'
-    import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
-    
     defineOptions({layout: Layout})
-
-    const provider = new GoogleAuthProvider()
-    const auth = getAuth();
-    const passwordVisible = ref(true)
-    const loginBtn = ref(false)
-    const errorMssg = ref('')
-    const form = useForm({
-        email: '',
-        password: ''
-    })
-
-    const submit = () => {
-        loginBtn.value = true
-        signInWithEmailAndPassword(getAuth(), form.email, form.password)
-        .then((userCredential) => {
-            console.log(userCredential.user.emailVerified)
-            if(userCredential.user.emailVerified) {
-                form.post('/login', { onSuccess: () => {
-                    loginBtn.value = false
-                }})
-            }
-            else {
-                router.get('/verify')
-            }
-          
-        })
-        .catch((error) => {
-            loginBtn.value = false
-            errorMssg.value = "auth/invalid-login-credentials"
-        })
-    }
-
-    const handleGoogleSignin = () => {
-        signInWithPopup(auth, provider)
-            .then((result) => {
-               
-            }).catch((error) => {
-               
-            })
-    }
-
-    const emailRules = [
-        value => {
-            if (value) return true
-            return 'E-mail is requred.'
-        },
-        value => {
-            if (/.+@.+\..+/.test(value)) return true
-            return 'E-mail must be valid.'
-        },
-    ]
-
-    const passwordRules = [
-        value => {
-            if(value) return true
-            return `Password is requred.`
-        }
-    ]
-
-    // const handleGoogleResponse = (response) => {
-    //     console.log("Handle the response", response)
-    // }
 
 </script>
 
 <template>
-    <Head title="Login" />
+    <Head title="Verify" />
     <v-container class="wrapper fadeInDown">
         <!-- <form method="POST" action="/users/authenticate"> -->
         <v-form @submit.prevent>
-            <v-row id="formContent">
-                <v-col cols="7" xxl="7" xl="7" lg="7" md="7">
-                    <v-card height="100%" elevation="0">
-                        <v-card-item class="fill-height">
-                            <v-img src="../images/logo/frlogo-transformed.png"  class=" fadeIn second"></v-img>
-                        </v-card-item>
-                    </v-card>
-                </v-col>
-                <v-divider vertical/>
-                <v-col cols="5" xxl="5" xl="5" lg="5" md="5">
-                    <v-card elevation="0">
-                        <p class="fadeIn first text-h5 font-weight-bold">LOGIN</p>
-                        <label class="mt-4 fadeIn third">Don't have an account? </label>
-                        <Link href="/createGuest" class="text-blue fadeIn third"> Sign up</Link>
-                        <v-card-item>
-                            <v-container>
-                                <v-text-field 
-                                    v-model="form.email" 
-                                    color="blue" 
-                                    clearable
-                                    name="email"
-                                    :rules="emailRules"
-                                    variant="outlined" 
-                                    class="fadeIn second mx-5" 
-                                    placeholder="johndoe@gmail.com" 
-                                    label="Email address">
-                                </v-text-field>
-                                <v-text-field 
-                                    v-model="form.password" 
-                                    color="blue" 
-                                    variant="outlined"
-                                    name="password"
-                                    :rules="passwordRules"
-                                    class="fadeIn second mx-5" 
-                                    :error-messages="errorMssg"
-                                    :type="passwordVisible ? 'password' : 'text'"
-                                    :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                                    @click:append-inner="passwordVisible = !passwordVisible" 
-                                    label="Password">
-                                </v-text-field>
-                                <Link href="/forgot-password" class="text-blue mb-2 third fadeIn">Forgot your password?</Link>
-                                <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="loginBtn" :disabled="loginBtn" @click="submit" type="submit" block>Log in</v-btn>
-                                <v-btn color="blue" class="fadeIn third my-3" id="btn-login" prepend-icon="mdi-google" block @click="handleGoogleSignin">Continue with Google</v-btn>
-                                <v-btn color="blue" class="fadeIn third" id="btn-login" prepend-icon="mdi-facebook" block>Continue with Facebook</v-btn>
-                                <!-- <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/> -->
-                                
+            <v-row id="formContent" justify="center" class="d-flex">
+                    <v-col cols="12">
+                        <v-card height="100%" elevation="0">
+                            <v-card-item class="fill-height">
+                                <v-img src="../images/logo/frlogo-transformed.png" width="50%"  class=" fadeIn second" style="margin-left: 25%;"></v-img>
+                            </v-card-item>
+                        </v-card>
+                    </v-col>
+                    <v-divider></v-divider>
+                    <v-row>
+                        <v-col cols="12" class="text-center pa-5 mb-6">
+                            <v-card elevation="0">
+                                <p class="fadeIn first text-h5 font-weight-bold text-center">Please verify your email</p>
+                                <p class="fadeIn second">You're almost there! We sent an email to @email </p>
+                                <p>Just click on the link in that email to complete your signup. If you don't see it, you may need to check your spam folder.</p>
+                                <p class="mt-3">Still can't find your email?</p>
+                                <v-btn color="blue" class="mb-4">Resend email</v-btn>
+                                <Link href="/login">
+                                    <v-btn color="blue" class="mb-4 ms-5">Back to login</v-btn>
+                                </Link>
                                 <br>
-                                <label class="mt-4 fadeIn third">List your property? </label>
-                                <Link href="/createOwner" class="text-blue fadeIn third"> Create owner account</Link>
-                            </v-container>
-                        </v-card-item>
-                    </v-card>
-                </v-col>
+                            </v-card>
+                        </v-col>
+                    </v-row>
                 
             </v-row>
         </v-form>
@@ -192,7 +97,6 @@ html {
     padding: 0px;
     -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-    text-align: center;
     width: 1000px;
   }
   
