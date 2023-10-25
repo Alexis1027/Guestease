@@ -3,11 +3,12 @@
     import {ref} from 'vue'
     import {useForm, router} from '@inertiajs/vue3'
     import Layout from '../../Layouts/AuthLayout.vue'
-    import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+    import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider  } from "firebase/auth"
     
     defineOptions({layout: Layout})
 
-    const provider = new GoogleAuthProvider()
+    const googleProvider = new GoogleAuthProvider()
+    const facebookProvider = new FacebookAuthProvider()
     const auth = getAuth();
     const passwordVisible = ref(true)
     const loginBtn = ref(false)
@@ -39,12 +40,23 @@
     }
 
     const handleGoogleSignin = () => {
-        signInWithPopup(auth, provider)
+        signInWithPopup(auth, googleProvider)
             .then((result) => {
                
             }).catch((error) => {
                
             })
+    }
+
+    const handleFacebookSignin = () => {
+        signInWithPopup(auth, facebookProvider)
+            .then((result) => {
+            
+            })
+            .catch((error) => {
+                
+            }
+        )
     }
 
     const emailRules = [
@@ -118,8 +130,8 @@
                                 </v-text-field>
                                 <Link href="/forgot-password" class="text-blue mb-2 third fadeIn">Forgot your password?</Link>
                                 <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="loginBtn" :disabled="loginBtn" @click="submit" type="submit" block>Log in</v-btn>
-                                <v-btn color="blue" class="fadeIn third my-3" id="btn-login" prepend-icon="mdi-google" block @click="handleGoogleSignin">Continue with Google</v-btn>
-                                <v-btn color="blue" class="fadeIn third" id="btn-login" prepend-icon="mdi-facebook" block>Continue with Facebook</v-btn>
+                                <!-- <v-btn color="blue" class="fadeIn third my-3" id="btn-login" prepend-icon="mdi-google" block @click="handleGoogleSignin">Continue with Google</v-btn>
+                                <v-btn color="blue" class="fadeIn third" id="btn-login" prepend-icon="mdi-facebook" block @click="handleFacebookSignin">Continue with Facebook</v-btn> -->
                                 <!-- <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/> -->
                                 
                                 <br>
