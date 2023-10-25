@@ -45,33 +45,38 @@ Route::put('/profile/update', [UserController::class, 'update']);
 Route::get('/account', [HomeController::class, 'settings'])->middleware('auth');
 
 //OWNER
-Route::get('/owner/dashboard', [OwnerViewController::class, 'dashboard']);
-Route::get('/owner/calendar', [OwnerViewController::class, 'calendar']);
-Route::get('/owner/calendar/{listing}', [OwnerViewController::class, 'calendar']);
-Route::get('/owner/listings', [ListingController::class, 'index']);
-Route::get('/owner/reservations', [OwnerReservationController::class, 'index']);
-Route::get('/owner/create-listing', [ListingController::class, 'create']);
-Route::get('/owner/edit-listing/{listing}', [ListingController::class, 'edit']);
-Route::post('/owner/createListing', [ListingController::class, 'store']);
-Route::put('/owner/update-listing/details/{listing}', [ListingController::class, 'update_details']);
-Route::put('/owner/update-listing/photos/{listing}', [ListingController::class, 'update_photos']);
-Route::put('/owner/update-listing/property/{listing}', [ListingController::class, 'update_property']);
-Route::put('/owner/update-listing/pricing/{listing}', [ListingController::class, 'update_pricing']);
-Route::delete('/owner/delete-listing/{listing}', [ListingController::class, 'destroy']);
+Route::middleware(['auth', 'owner', 'no-cache'])->group(function () {
+    Route::get('/owner/dashboard', [OwnerViewController::class, 'dashboard']);
+    Route::get('/owner/calendar', [OwnerViewController::class, 'calendar']);
+    Route::get('/owner/calendar/{listing}', [OwnerViewController::class, 'calendar']);
+    Route::get('/owner/listings', [ListingController::class, 'index']);
+    Route::get('/owner/reservations', [OwnerReservationController::class, 'index']);
+    Route::get('/owner/create-listing', [ListingController::class, 'create']);
+    Route::get('/owner/edit-listing/{listing}', [ListingController::class, 'edit']);
+    Route::post('/owner/createListing', [ListingController::class, 'store']);
+    Route::put('/owner/update-listing/details/{listing}', [ListingController::class, 'update_details']);
+    Route::put('/owner/update-listing/photos/{listing}', [ListingController::class, 'update_photos']);
+    Route::put('/owner/update-listing/property/{listing}', [ListingController::class, 'update_property']);
+    Route::put('/owner/update-listing/pricing/{listing}', [ListingController::class, 'update_pricing']);
+    Route::delete('/owner/delete-listing/{listing}', [ListingController::class, 'destroy']);
+});
 
 //ADMIN
-Route::delete('/delete/listing/{listing}', [AdminListingController::class, 'destroy']);
-Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->middleware('auth')->name('admin-dashboard');
-Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
-Route::get('/admin/create-admin', [AdminController::class, 'create']);
-Route::get('/admin/manage-users', [UserController::class, 'index'])->name('manage_users');
-Route::get('/admin/manage-users/{entry}', [UserController::class, 'manage_users_entry'])->name('manage_users_entry');
-Route::get('/admin/manage-listings', [AdminListingController::class, 'index'])->name('manage_listing');
-Route::get('/admin/manage-listings/{entry}', [AdminListingController::class, 'manage_listing_entry']);
-Route::get('/admin/manage-reservations', [AdminReservationController::class, 'index']);
-Route::get('/admin/listing-requests', [ListingRequestController::class, 'index']);
-Route::put('/admin/approve-listing/{listing}', [ListingRequestController::class, 'approve']);
-Route::put('/admin/decline-listing/{listing}', [ListingRequestController::class, 'decline']);
+Route::middleware(['auth', 'admin', 'no-cache'])->group(function () {
+    Route::delete('/delete/listing/{listing}', [AdminListingController::class, 'destroy']);
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin-dashboard');
+    Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
+    Route::get('/admin/create-admin', [AdminController::class, 'create']);
+    Route::get('/admin/manage-users', [UserController::class, 'index'])->name('manage_users');
+    Route::get('/admin/manage-users/{entry}', [UserController::class, 'manage_users_entry'])->name('manage_users_entry');
+    Route::get('/admin/manage-listings', [AdminListingController::class, 'index'])->name('manage_listing');
+    Route::get('/admin/manage-listings/{entry}', [AdminListingController::class, 'manage_listing_entry']);
+    Route::get('/admin/manage-reservations', [AdminReservationController::class, 'index']);
+    Route::get('/admin/listing-requests', [ListingRequestController::class, 'index']);
+    Route::put('/admin/approve-listing/{listing}', [ListingRequestController::class, 'approve']);
+    Route::put('/admin/decline-listing/{listing}', [ListingRequestController::class, 'decline']);
+});
+
 
 //GUEST
 Route::post('/reserve', [ReservationRequestController::class, 'store']);
