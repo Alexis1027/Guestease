@@ -1,6 +1,6 @@
 <script setup>
 
-    import {ref} from 'vue'
+    import {ref, onMounted} from 'vue'
     import {useForm, router} from '@inertiajs/vue3'
     import Layout from '../../Layouts/AuthLayout.vue'
     import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider  } from "firebase/auth"
@@ -77,10 +77,7 @@
         }
     ]
 
-    // const handleGoogleResponse = (response) => {
-    //     console.log("Handle the response", response)
-    // }
-
+    
 </script>
 
 <template>

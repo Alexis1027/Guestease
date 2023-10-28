@@ -31,21 +31,10 @@ use App\Http\Controllers\Guest\ReservationRequestController;
 
 //group later
 
-//Auth
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/verify', [AuthController::class, 'verify']);
-Route::post('/login', [AuthController::class, 'authenticate']);
-Route::get('/forgot-password', [AuthController::class, 'forgot_password']);
-Route::get('/createGuest', [AuthController::class, 'create_guest']);
-Route::get('/createOwner', [AuthController::class, 'create_owner']);
-Route::post('/create/user', [AuthController::class, 'storeUser']);
-Route::post('/create/owner', [AuthController::class, 'storeOwner']);
-Route::post('/logout', [AuthController::class, 'logout']);
-Route::put('/profile/update', [UserController::class, 'update']);
-Route::get('/account', [HomeController::class, 'settings'])->middleware('auth');
+
 
 //OWNER
-Route::middleware(['auth', 'owner', 'no-cache'])->group(function () {
+Route::middleware(['auth', 'owner'])->group(function () {
     Route::get('/owner/dashboard', [OwnerViewController::class, 'dashboard']);
     Route::get('/owner/calendar', [OwnerViewController::class, 'calendar']);
     Route::get('/owner/calendar/{listing}', [OwnerViewController::class, 'calendar']);
@@ -62,7 +51,7 @@ Route::middleware(['auth', 'owner', 'no-cache'])->group(function () {
 });
 
 //ADMIN
-Route::middleware(['auth', 'admin', 'no-cache'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/delete/listing/{listing}', [AdminListingController::class, 'destroy']);
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin-dashboard');
     Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
@@ -79,15 +68,18 @@ Route::middleware(['auth', 'admin', 'no-cache'])->group(function () {
 
 
 //GUEST
-Route::post('/reserve', [ReservationRequestController::class, 'store']);
-Route::get('/confirm-reservation/{listing}', [HomeController::class, 'confirm_reservation'])->middleware('auth');
-Route::post('/wishlist/save', [WishlistController::class, 'store'])->middleware('auth');
-Route::delete('/wishlist/unsave',[WishlistController::class, 'destroy'])->middleware('auth');
-Route::get('/wishlists', [WishlistController::class, 'index'])->middleware('auth');
-Route::post('/rate-listing/{listing_id}', [RatingController::class, 'store'])->middleware('auth');
-Route::put('/reservations/cancel/{reservation}', [GuestReservationController::class, 'cancel']);
-Route::get('/map', [HomeController::class, 'map']);
-Route::get('/reservations', [HomeController::class, 'reservations'])->middleware('auth')->name('reservations');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/reserve', [ReservationRequestController::class, 'store']);
+    Route::get('/confirm-reservation/{listing}', [HomeController::class, 'confirm_reservation']);
+    Route::post('/wishlist/save', [WishlistController::class, 'store']);
+    Route::delete('/wishlist/unsave',[WishlistController::class, 'destroy']);
+    Route::get('/wishlists', [WishlistController::class, 'index']);
+    Route::post('/rate-listing/{listing_id}', [RatingController::class, 'store']);
+    Route::put('/reservations/cancel/{reservation}', [GuestReservationController::class, 'cancel']);
+    Route::get('/reservations', [HomeController::class, 'reservations'])->name('reservations');
+    Route::get('/notifications', [HomeController::class, 'notifications']);
+});
+
 Route::get('/room/{listing}', [HomeController::class, 'show']);
 Route::get('/guidelines', [HomeController::class, 'guidelines']);
 Route::get('/rules', [HomeController::class, 'rules']);
@@ -95,8 +87,20 @@ Route::get('/profile/{user}', [HomeController::class, 'profile']);
 Route::get('/',[HomeController::class, 'index']);
 Route::get('/contact-us', [HomeController::class, 'contact_us']);
 Route::get('/about', [HomeController::class, 'about']);
-Route::get('/notifications', [HomeController::class, 'notifications']);
+Route::get('/map', [HomeController::class, 'map']);
 
+//Auth
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/verify', [AuthController::class, 'verify']);
+Route::post('/login', [AuthController::class, 'authenticate']);
+Route::get('/forgot-password', [AuthController::class, 'forgot_password']);
+Route::get('/createGuest', [AuthController::class, 'create_guest']);
+Route::get('/createOwner', [AuthController::class, 'create_owner']);
+Route::post('/create/user', [AuthController::class, 'storeUser']);
+Route::post('/create/owner', [AuthController::class, 'storeOwner']);
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::put('/profile/update', [UserController::class, 'update']);
+Route::get('/account', [HomeController::class, 'settings'])->middleware('auth');
 // Route::get('/about', function() {
 //     return Inertia::render('About');
 // });
