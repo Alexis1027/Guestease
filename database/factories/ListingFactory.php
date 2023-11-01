@@ -39,7 +39,7 @@ class ListingFactory extends Factory
             'beds' => $this->faker->numberBetween(1, 5),
             'rooms' => $this->faker->numberBetween(1, 10),
             'bathrooms' => $this->faker->numberBetween(1, 5),
-            'status' => 'approved',
+            'status' => 'Available',
             'type' => $this->faker->randomElement(['Room', 'Guest house']),
             'monthly_discount' => $this->faker->numberBetween(5, 20),
             'rules' =>json_encode([

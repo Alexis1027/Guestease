@@ -23,10 +23,8 @@
                         <v-col cols="12" class="text-center pa-5 mb-6">
                             <v-card elevation="0">
                                 <p class="fadeIn first text-h5 font-weight-bold text-center">Please verify your email</p>
-                                <p class="fadeIn second">You're almost there! We sent an email to @email </p>
+                                <p class="fadeIn second">You're almost there! We sent a link verification to your email. </p>
                                 <p>Just click on the link in that email to complete your signup. If you don't see it, you may need to check your spam folder.</p>
-                                <p class="mt-3">Still can't find your email?</p>
-                                <v-btn color="blue" class="mb-4">Resend email</v-btn>
                                 <Link href="/login">
                                     <v-btn color="blue" class="mb-4 ms-5">Back to login</v-btn>
                                 </Link>

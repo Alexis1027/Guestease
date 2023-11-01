@@ -4,14 +4,12 @@
     import {router} from '@inertiajs/vue3'
     import AdminLayout from '../../Layouts/AdminLayout.vue'
     import DeleteListingDialog from './partials/DeleteListingDialog.vue'
-    import EditListingDialog from './partials/EditListingDialog.vue'
     import {format} from 'date-fns'
 
     defineOptions({layout: AdminLayout})
     defineProps({listings: Object, newEntry: Object})
     
     const deleteListingDialog = ref(false)
-    const editListingDialog = ref(false)
     const deleteSnackbar = ref(false)
     const createSnackbar = ref(false)
     const entries = [5, 10, 15, 20, 25]
@@ -27,10 +25,6 @@
         router.get(`/admin/manage-listings/${entry.value}`)
     })
 
-    function editListing(gh) {
-        listing.value = gh
-        editListingDialog.value = true
-    }
 
 </script>
 
@@ -81,11 +75,8 @@
                     <td>{{ listing.status }}</td>
                     <td>{{ format(new Date(listing.created_at), 'M/d/yyy') }}</td>
                     <td>
-                        <v-btn size="small" @click="editListing(listing)" variant="tonal" class="text-none bg-grey-lighten-5 me-2 text-blue">
-                            <v-icon>mdi-pencil</v-icon> Edit
-                        </v-btn>
                         <v-btn @click="deleteListing(listing)" size="small" variant="tonal" class="text-none bg-grey-lighten-5 text-red">
-                            <v-icon>mdi-delete-outline</v-icon> Delete
+                            Delete
                         </v-btn>
                     </td>
                 </tr>
@@ -111,7 +102,6 @@
     </v-container>
 
     <DeleteListingDialog :listing="listing" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteListingDialog" @CloseDialog="deleteListingDialog = false" v-model="deleteListingDialog" />
-    <EditListingDialog :listing="listing" :show="editListingDialog" @CloseDialog="editListingDialog = false" v-model="editListingDialog" />
 
     <v-snackbar
       v-model="deleteSnackbar"

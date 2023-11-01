@@ -20,8 +20,16 @@
 <template>
     <Head title="Reservations" />
     <v-container>
-        <p class="text-h4">Welcome, {{ auth.user.firstname }}</p>
-        <p class="text-h6 mb-6">Here, you can view a history of all your bookings.</p>
+        <v-row justify="end">
+            <v-col>
+                <p class="text-h4">Reservations</p>
+            </v-col>
+            <v-col cols="3">
+                <Link href="/reservation-history">
+                    <v-btn variant="tonal" color="blue">View reservation history</v-btn>
+                </Link>
+            </v-col>
+        </v-row>
         <v-row>
             <v-col cols="6" v-for="reservation in reservations" :key="reservation.id">
                 <ReservationCard :reservation="reservation" @openCancelReservationDialog="cancelReservation" />

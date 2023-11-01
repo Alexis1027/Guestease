@@ -51,7 +51,7 @@ Route::middleware(['auth', 'owner'])->group(function () {
 });
 
 //ADMIN
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['PreventBackHistory', 'auth', 'admin'])->group(function () {
     Route::delete('/delete/listing/{listing}', [AdminListingController::class, 'destroy']);
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin-dashboard');
     Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
@@ -71,6 +71,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/reserve', [ReservationRequestController::class, 'store']);
     Route::get('/confirm-reservation/{listing}', [HomeController::class, 'confirm_reservation']);
+    Route::get('/reservation-history', [HomeController::class, 'reservation_history']);
     Route::post('/wishlist/save', [WishlistController::class, 'store']);
     Route::delete('/wishlist/unsave',[WishlistController::class, 'destroy']);
     Route::get('/wishlists', [WishlistController::class, 'index']);
@@ -98,7 +99,7 @@ Route::get('/createGuest', [AuthController::class, 'create_guest']);
 Route::get('/createOwner', [AuthController::class, 'create_owner']);
 Route::post('/create/user', [AuthController::class, 'storeUser']);
 Route::post('/create/owner', [AuthController::class, 'storeOwner']);
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('PreventBackHistory');
 Route::put('/profile/update', [UserController::class, 'update']);
 Route::get('/account', [HomeController::class, 'settings'])->middleware('auth');
 // Route::get('/about', function() {

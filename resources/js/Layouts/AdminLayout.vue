@@ -5,13 +5,6 @@
     const sidebar = ref(false)
     const logo = '/images/logo/frlogo-transformed.png'
 
-    onMounted(() => {
-        history.pushState(null, null, location.href)
-        window.onpopstate = () => {
-            history.go(1)
-        }
-    })
-
     defineProps({
         auth: Object
     })

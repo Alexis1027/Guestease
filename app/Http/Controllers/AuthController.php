@@ -50,7 +50,12 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
         $user = User::where('email',$request->email)->first();
-        auth()->login($user);
+        if($user) {
+            auth()->login($user);
+        }
+        else {
+            return back()->withErrors(['loginError' => 'Invalid creadentials']);
+        }
         switch(auth()->user()->role) {
             case 'admin':
                 return redirect('/admin/dashboard');

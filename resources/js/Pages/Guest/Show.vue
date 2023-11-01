@@ -86,9 +86,8 @@
                         :loading="saveWishlistForm.processing" 
                         type="submit"
                         rounded 
-                        size="small"
                         :color="wishlist ? 'red' : ''"
-                        variant="tonal"
+                        variant="text"
                         :prepend-icon="wishlist ? 'mdi-heart' : 'mdi-heart-outline'"
                         >
                             <template v-slot:prepend v-if="wishlist">
@@ -103,7 +102,6 @@
         <v-row>
             <v-col cols="8">
                 <!-- Guest house details -->
-                    <v-list >
                         <v-list-item>
                             <template v-slot:append>
                                 <Link :href="`/profile/${owner.id}`">
@@ -113,33 +111,32 @@
                                 </Link>
                             </template>
                             <p class="text-h5">{{listing.type}} owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
-                                <v-chip color="white" v-if="listing.guests > 0">
-                                    <p class="text-black">
+                                <v-chip v-if="listing.guests > 0">
+                                    <p>
                                         <v-icon>mdi-account-multiple</v-icon>
                                          {{ listing.guests }} Guests
                                         </p>
                                 </v-chip>
 
-                                <v-chip color="white" v-if="listing.rooms > 0">
-                                    <p class="text-black">
+                                <v-chip v-if="listing.rooms > 0">
+                                    <p>
                                         <v-icon>mdi-door-open</v-icon>
                                         {{ listing.rooms }} Rooms
                                     </p>
                                 </v-chip>
-                                <v-chip color="white" v-if="listing.beds > 0">
-                                    <p class="text-black">
+                                <v-chip v-if="listing.beds > 0">
+                                    <p>
                                         <v-icon>mdi-bed</v-icon>
                                         {{ listing.beds }} Beds
                                     </p>
                                 </v-chip>
-                                <v-chip color="white" v-if="listing.bathrooms > 0">
-                                    <p class="text-black">
+                                <v-chip v-if="listing.bathrooms > 0">
+                                    <p>
                                         <v-icon>mdi-shower</v-icon>
                                         {{ listing.bathrooms }} Bathrooms
                                     </p>
                                 </v-chip>
                         </v-list-item>
-                    </v-list>
 
                     <v-container>
                         <p class="text-h5 font-weight-medium">About this place </p>
@@ -163,9 +160,9 @@
                 </v-container>
 
                 <!-- Rate this place section -->
-                <v-container class="bg-white" v-if="auth">
+                <v-container v-if="auth">
                     <p class="text-h5 font-weight-medium">Rate this place </p>
-                    <p style="color: gray">Tell others what you think. <span class="text-red"> still working on how to not show if user hasnt reserved/booked  </span> </p>
+                    <p>Tell others what you think. <span class="text-red"> still working on how to not show if user hasnt reserved/booked  </span> </p>
                     <v-divider class="my-3" />
                     <div v-if="rated">
                         <RatingCard :rating="rated" />
@@ -222,7 +219,7 @@
                     </v-container>
             </v-col>
             <!-- Ratings and reviews section -->
-            <v-container class="mb-5 bg-white ">
+            <v-container class="mb-5">
                 <p class="text-h5 font-weight-medium">Ratings and reviews</p>
                 <v-divider class="mt-3" />
                 <v-row>
@@ -239,10 +236,9 @@
             <p class="text-h5 font-weight-medium mb-6">Where you'll be.</p>
             <Map class="ms-5" :latitude="listing.latitude" :longitude="listing.longitude" />
         <!-- HOUSE RULES -->
-        <v-container class="bg-white">
+        <v-container>
             <p class="text-h5 font-weight-medium mb-6">House rules</p>
             <v-divider />
-            <v-list>
                 <v-list-item prepend-icon="mdi-circle-medium"> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit ipsum repellat eaque. </v-list-item>
                 <v-list-item prepend-icon="mdi-circle-medium">No smoking.</v-list-item>
                 <v-list-item prepend-icon="mdi-circle-medium">No parties/events.</v-list-item>
@@ -251,7 +247,6 @@
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil aperiam quam,
                     assumenda optio sed autem dicta quisquam! Repellat illum vitae sint asperiores corporis modi 
                     eveniet debitis exercitationem magnam dignissimos eius, repellendus, quis officiis nam iure! </v-list-item>
-            </v-list>
         </v-container>
         <v-divider class="my-5" />
 
@@ -304,6 +299,10 @@
         position: sticky;
         top: 130px;
         box-shadow: 10px 10px 5px lightblue;
+    }
+
+    .v-chip {
+        margin: 6px;
     }
 
 </style>

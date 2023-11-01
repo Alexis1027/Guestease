@@ -14,7 +14,7 @@ class HomeController extends Controller
 {
     //
     public function index() {
-        $listings = Listing::latest()->where('status', 'approved')->get();
+        $listings = Listing::latest()->where('status', 'Available')->get();
 
         foreach($listings as $gh) {
             $ratings = Rating::where('listing_id', $gh->id)->get();
@@ -150,6 +150,10 @@ class HomeController extends Controller
 
     public function map() {
         return Inertia::render('Guest/Map', ['listings' => Listing::all()]);
+    }
+
+    public function reservation_history() {
+        return Inertia::render('Guest/ReservationHistory');
     }
 
 }

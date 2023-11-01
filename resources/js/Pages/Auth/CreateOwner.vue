@@ -18,10 +18,6 @@
         password: '',
     })
 
-    // const submit = () => {
-    //     form.post('/create/owner')
-    // }
-
     const signUp = () => {
         signupButton.value = true
         createUserWithEmailAndPassword(auth, form.email, form.password)
@@ -60,8 +56,8 @@
                             <v-row class="mx-2">
                                 <v-col cols="6">
                                     <v-text-field 
-                                        color="blue" 
-                                        clearable 
+                                        color="blue"
+                                        clearable
                                         name="firstname"
                                         v-model="form.firstname"
                                         variant="outlined"

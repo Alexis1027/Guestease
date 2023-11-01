@@ -1,79 +1,56 @@
 <script setup>
 
-    import {ref, onMounted} from 'vue'
+    import {ref} from 'vue'
     import {useForm, router} from '@inertiajs/vue3'
     import Layout from '../../Layouts/AuthLayout.vue'
-    import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider  } from "firebase/auth"
+    import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
     
     defineOptions({layout: Layout})
 
-    const googleProvider = new GoogleAuthProvider()
-    const facebookProvider = new FacebookAuthProvider()
-    const auth = getAuth();
     const passwordVisible = ref(true)
-    const loginBtn = ref(false)
+    const loadingLoginButton = ref(false)
     const errorMssg = ref('')
+    
     const form = useForm({
         email: '',
         password: ''
     })
 
     const submit = () => {
-        loginBtn.value = true
+        loadingLoginButton.value = true
         signInWithEmailAndPassword(getAuth(), form.email, form.password)
         .then((userCredential) => {
-            console.log(userCredential.user.emailVerified)
+            loadingLoginButton.value = false
             if(userCredential.user.emailVerified) {
                 form.post('/login', { onSuccess: () => {
-                    loginBtn.value = false
+                    loadingLoginButton.value = false
                 }})
             }
             else {
                 router.get('/verify')
             }
-          
         })
         .catch((error) => {
-            loginBtn.value = false
+            loadingLoginButton.value = false
             errorMssg.value = "auth/invalid-login-credentials"
         })
-    }
-
-    const handleGoogleSignin = () => {
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-               
-            }).catch((error) => {
-               
-            })
-    }
-
-    const handleFacebookSignin = () => {
-        signInWithPopup(auth, facebookProvider)
-            .then((result) => {
-            
-            })
-            .catch((error) => {
-                
-            }
-        )
     }
 
     const emailRules = [
         value => {
             if (value) return true
-            return 'E-mail is requred.'
+            return 'E-mail is required'
         },
         value => {
             if (/.+@.+\..+/.test(value)) return true
-            return 'E-mail must be valid.'
+            return 'E-mail must be valid'
         },
     ]
 
     const passwordRules = [
         value => {
             if(value) return true
-            return `Password is requred.`
+            return `Password is required`
         }
     ]
 
@@ -119,14 +96,14 @@
                                     name="password"
                                     :rules="passwordRules"
                                     class="fadeIn second mx-5" 
-                                    :error-messages="errorMssg"
+                                    :error-messages="errorMssg || form.errors.loginError"
                                     :type="passwordVisible ? 'password' : 'text'"
                                     :append-inner-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
                                     @click:append-inner="passwordVisible = !passwordVisible" 
                                     label="Password">
                                 </v-text-field>
                                 <Link href="/forgot-password" class="text-blue mb-2 third fadeIn">Forgot your password?</Link>
-                                <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="loginBtn" :disabled="loginBtn" @click="submit" type="submit" block>Log in</v-btn>
+                                <v-btn color="blue" class="fadeIn third" id="btn-login" :loading="loadingLoginButton" :disabled="loadingLoginButton" @click="submit" type="submit" block>Log in</v-btn>
                                 <!-- <v-btn color="blue" class="fadeIn third my-3" id="btn-login" prepend-icon="mdi-google" block @click="handleGoogleSignin">Continue with Google</v-btn>
                                 <v-btn color="blue" class="fadeIn third" id="btn-login" prepend-icon="mdi-facebook" block @click="handleFacebookSignin">Continue with Facebook</v-btn> -->
                                 <!-- <GoogleLogin class="my-3 fadeIn third" :callback="handleGoogleResponse"/> -->

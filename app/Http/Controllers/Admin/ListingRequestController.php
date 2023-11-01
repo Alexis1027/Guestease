@@ -21,7 +21,7 @@ class ListingRequestController extends Controller
     }
 
     public function approve(Listing $listing) {
-        $listing->status = 'Approved';
+        $listing->status = 'Available';
         $listing->update();
         return back();
     }

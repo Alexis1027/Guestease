@@ -7,7 +7,7 @@
 
     defineOptions({ layout: AdminLayout })
     
-    const prop = defineProps(['totalUsers', 'totalListings'])
+    const prop = defineProps(['totalUsers', 'totalListings', 'auth'])
     const myChartRef = ref(null)
 
     onMounted(() => {
@@ -51,6 +51,7 @@
 
     <v-container>
         <p class="text-h5 mb-1">Admin dashboard</p>
+        {{auth}}
         <v-row>
                 <DashboardSheet id="sheet1">
                     <strong class="">Total Users</strong>
