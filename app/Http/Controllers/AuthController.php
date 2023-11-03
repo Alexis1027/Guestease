@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
@@ -75,7 +76,8 @@ class AuthController extends Controller
             'firstname' => ['required', 'min:3'],
             'lastname' => ['required', 'min:3'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'min:6']
+            'password' => ['required', 'min:6'],
+            'phone_number' => 'required'
         ]);
         //hash password
         $form['role'] = 'user';
@@ -92,11 +94,13 @@ class AuthController extends Controller
             'firstname' => ['required', 'min:3'],
             'lastname' => ['required', 'min:3'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'min:6']
+            'password' => ['required', 'min:6'],
+            'phone_number' => 'required'
         ]);
         //hash password
         $form['role'] = 'owner';
         $form['password'] = bcrypt($form['password']);
+        dd($form);
         $user = User::create($form);
         $user->profile_pic = "default_profile.png";
         $user->save();
@@ -105,7 +109,7 @@ class AuthController extends Controller
     }
 
     public function sendVerificationCode(Request $request) {
-        return redirect()->back()->with("showInputVerificationCodeProp", "Forda Show The verification code");
+        return redirect()->back();
         // $sid = getenv("TWILIO_ACCOUNT_SID");
         // $token = getenv("TWILIO_AUTH_TOKEN");
 
@@ -114,12 +118,33 @@ class AuthController extends Controller
         // $verification = $twilio->verify->v2->services("VA678c4c11b87e1cd19c25641424aa402a")
         // ->verifications
         // ->create("+639168290756", "sms");
-        // dd($verification);
-
+        // return redirect()->back();
     } 
 
     public function verifyVerificationCode(Request $request) {
-        dd($request);
+        // dd($request->code);
+        dd(auth()->user());
+        // $sid = getenv("TWILIO_ACCOUNT_SID");
+        // $token = getenv("TWILIO_AUTH_TOKEN");
+        // $twilio = new Client($sid, $token);
+
+        // try {
+        //     $verification_check = $twilio->verify->v2->services("VA678c4c11b87e1cd19c25641424aa402a")
+        //     ->verificationChecks
+        //     ->create([
+        //                 "to" => "+639168290756",
+        //                 "code" => $request->code
+        //             ]
+        //     );
+                $user = auth()->user();
+                $user->phone_number_verified = true;
+                $user->update();
+
+        // }
+        // catch(Exception $e) {
+        //     return back()->withErrors(['badVerificationCode' => 'Invalid verification code']);
+        // }
+
     }
 
 }

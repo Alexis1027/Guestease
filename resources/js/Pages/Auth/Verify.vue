@@ -9,7 +9,7 @@
     <Head title="Verify" />
     <v-container class="wrapper fadeInDown">
         <!-- <form method="POST" action="/users/authenticate"> -->
-        <v-form @submit.prevent>
+        <v-form @submit.prevent class="fadeInDown">
             <v-row id="formContent" justify="center" class="d-flex">
                     <v-col cols="12">
                         <v-card height="100%" elevation="0">
@@ -20,13 +20,13 @@
                     </v-col>
                     <v-divider></v-divider>
                     <v-row>
-                        <v-col cols="12" class="text-center pa-5 mb-6">
+                        <v-col cols="12" class="fadeIn text-center pa-5 mb-6 second">
                             <v-card elevation="0">
-                                <p class="fadeIn first text-h5 font-weight-bold text-center">Please verify your email</p>
+                                <p class="fadeIn first text-h5 font-weight-bold mb-3 text-center">Please verify your email</p>
                                 <p class="fadeIn second">You're almost there! We sent a link verification to your email. </p>
                                 <p>Just click on the link in that email to complete your signup. If you don't see it, you may need to check your spam folder.</p>
                                 <Link href="/login">
-                                    <v-btn color="blue" class="mb-4 ms-5">Back to login</v-btn>
+                                    <v-btn color="blue" class="mb-4 ms-5 mt-2">Back to login</v-btn>
                                 </Link>
                                 <br>
                             </v-card>

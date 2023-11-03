@@ -16,7 +16,7 @@
     const form = useForm({
         firstname: props.auth.user.firstname,
         lastname: props.auth.user.lastname,
-        contact_no: props.auth.user.contact_no,
+        phone_number: props.auth.user.phone_number,
         address: props.auth.user.address,
         email: props.auth.user.email,
     })
@@ -65,7 +65,6 @@
             <v-icon icon="mdi-chevron-right"></v-icon>
         </template>
     </v-breadcrumbs>
-        
     <v-card width="80%" class="border mb-4" title="Profile picture">
         <v-card-item>
             <v-avatar size="100">
@@ -83,7 +82,7 @@
             <v-row>
                 <v-col cols="5">
                     <MazPhoneNumberInput
-                        v-model="form.contact_no"
+                        v-model="form.phone_number"
                         show-code-on-list
                         color="primary"
                         :onlyCountries="['PH']"
@@ -93,7 +92,8 @@
                     />
                 </v-col>
                 <v-col cols="3" class="mt-2">
-                    <v-btn type="submit" color="blue" :loading="sendVerificationCodeLoading" :disabled="sendVerificationCodeLoading" @click="sendVerificationCode">Send SMS code</v-btn>
+                    <p class="text-green" v-if="auth.phone_number_verified"><v-icon>mdi-check</v-icon> Verified</p>
+                    <v-btn type="submit" v-else color="blue" :loading="sendVerificationCodeLoading" :disabled="sendVerificationCodeLoading" @click="sendVerificationCode">Send SMS code</v-btn>
                 </v-col>
             </v-row>
             <v-row v-if="sendVerificationCodeForm.wasSuccessful">

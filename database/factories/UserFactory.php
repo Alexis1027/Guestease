@@ -25,7 +25,7 @@ class UserFactory extends Factory
             'lastname' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'address' => fake()->address(),
-            'contact_no' => fake()->phoneNumber(),
+            'phone_number' => fake()->phoneNumber(),
             'profile_pic' => $profile_pic ? str_replace($profile_pic_path . '/', '', $this->faker->randomElement($profile_pic)) : null,
             'role' => 'user',
             'email_verified_at' => now(),

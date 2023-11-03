@@ -16,6 +16,7 @@
         lastname: '',
         email: '',
         password: '',
+        phone_number: ''
     })
 
     const signUp = () => {
@@ -54,7 +55,6 @@
                     <v-card-item>
                         <v-container class="mt-2">
                             <v-row class="mx-2">
-                                <v-col cols="6">
                                     <v-text-field 
                                         color="blue"
                                         clearable
@@ -65,9 +65,9 @@
                                         class="fadeIn second" 
                                         label="First name">
                                     </v-text-field>
-                                </v-col>
-                                <v-col cols="6">
-                                    <v-text-field 
+                            </v-row>
+                            <v-row class="mx-2">
+                                <v-text-field 
                                         color="blue" 
                                         clearable 
                                         name="lastname"
@@ -77,22 +77,35 @@
                                         class="fadeIn second" 
                                         label="Last name">
                                     </v-text-field>
-                                </v-col>
                             </v-row>
-                            <v-row class="mx-5">
+                            <v-row class="mb-2 mx-2">
+                                    <MazPhoneNumberInput
+                                    v-model="form.phone_number"
+                                    show-code-on-list
+                                    style="width: 100%;"
+                                    color="primary"
+                                    name="phone_number"
+                                    :onlyCountries="['PH']"
+                                    defaultCountryCode="PH"
+                                    @update="results = $event"
+                                    :success="results?.isValid"
+                                    label="Phone number"
+                                />
+                            </v-row>
+                            <v-row class="mx-2">
                                 <v-text-field 
                                     color="blue" 
                                     clearable 
                                     name="email"
                                     v-model="form.email"
                                     variant="outlined" 
-                                    :error-messages="emailErrMsg" 
+                                    :error-messages="form.errors.email" 
                                     class="fadeIn second" 
                                     placeholder="johndoe@gmail.com" 
                                     label="Email">
                                 </v-text-field>
                             </v-row>
-                            <v-row class="mx-5">
+                            <v-row class="mx-2">
                                 <v-text-field 
                                     color="blue" 
                                     v-model="form.password"
