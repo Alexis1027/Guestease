@@ -107,8 +107,8 @@ class HomeController extends Controller
         ]);
     }
 
-    public function settings() {
-        return Inertia::render('Settings');
+    public function account() {
+        return Inertia::render('Account');
     }
 
     public function guidelines() {

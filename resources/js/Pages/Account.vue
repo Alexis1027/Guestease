@@ -1,50 +1,18 @@
 <script setup>
 
-    import {ref, onMounted} from 'vue'
+    import {ref} from 'vue'
     import {useForm} from '@inertiajs/vue3'
     import Layout from '../Layouts/Layout.vue'
-    import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
     import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
+    import {router} from '@inertiajs/vue3'
 
     defineOptions({layout: Layout})
-    onMounted(() => {
-        const phoneNumber = props.auth.user.contact_no
 
-        window.recaptchaVerifier = new RecaptchaVerifier(getAuth(), 'recaptcha-container', {
-            'size': 'normal',
-            'callback': (response) => {
-                const appVerifier = window.recaptchaVerifier
-                const auth = getAuth();
-                signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-                    .then((confirmationResult) => {
-                        alert("SMS sent!")
-                    // SMS sent. Prompt user to type the code from the message, then sign the
-                    // user in with confirmationResult.confirm(code).
-                        window.confirmationResult = confirmationResult
-                        console.log(confirmationResult)
-                    }).catch((error) => {
-                    // Error; SMS not sent
-                    console.log(error.message)
-                    console.log(error)
-                    console.log("bruh")
-                })
-            },
-            'expired-callback': () => {
-                alert('captcha expired')
-            }
-        })
-
-
-    })
-
-    function showCaptcha() {
-        recaptchaVerifier.render()
-    }
-
-    const props = defineProps(['auth'])
+    const props = defineProps(['auth', 'showInputVerificationCodeProp'])
+    const sendVerificationCodeLoading = ref(false)
+    const verificationCode = ref('')
     const results = ref()
     const snackbar = ref(false)
-    console.log(props)
     const form = useForm({
         firstname: props.auth.user.firstname,
         lastname: props.auth.user.lastname,
@@ -52,7 +20,6 @@
         address: props.auth.user.address,
         email: props.auth.user.email,
     })
-
 
     const submit = () => {
         if(results.value.isValid) {
@@ -68,11 +35,31 @@
         }
         
     }
+
+    const sendVerificationCodeForm = useForm({
+        phoneNumber: props.auth.user.contact_no
+    })
+
+    const verifyVerificationCodeForm = useForm({
+        code: null
+    })
+
+    function sendVerificationCode() {
+        sendVerificationCodeForm.get('/sendVerificationCode', {
+            preserveState: true,
+            preserveScroll: true
+        })
+    }
+
+    function verifyVerificationCode() {
+        verifyVerificationCodeForm.get('/verifyVerificationCode')
+    }
+
 </script>
 
 
 <template>
-    <Head title="Account settings" />
+    <Head title="Account" />
     <v-breadcrumbs :items="[{title: 'Account', disabled: false}, {title: 'Personal info', disabled: false}]">
         <template v-slot:divider>
             <v-icon icon="mdi-chevron-right"></v-icon>
@@ -94,7 +81,7 @@
             <v-text-field class="mt-3" variant="outlined" clearable :error-messages="form.errors.firstname" label="First name" color="blue" v-model="form.firstname"></v-text-field>
             <v-text-field variant="outlined" clearable :error-messages="form.errors.lastname" label="Last name" color="blue" v-model="form.lastname"></v-text-field>
             <v-row>
-                <v-col cols="9">
+                <v-col cols="5">
                     <MazPhoneNumberInput
                         v-model="form.contact_no"
                         show-code-on-list
@@ -105,12 +92,23 @@
                         :success="results?.isValid"
                     />
                 </v-col>
-                <v-col cols="3">
-                    
-                    <v-btn type="submit" color="blue" @click="showCaptcha">Send SMS Code</v-btn>
+                <v-col cols="3" class="mt-2">
+                    <v-btn type="submit" color="blue" :loading="sendVerificationCodeLoading" :disabled="sendVerificationCodeLoading" @click="sendVerificationCode">Send SMS code</v-btn>
                 </v-col>
             </v-row>
-            <div id="recaptcha-container" class="my-3"></div>
+            <v-row v-if="sendVerificationCodeForm.wasSuccessful">
+                <v-col cols="5">
+                    <div>
+                        <v-text-field type="number" placeholder="******" label="Enter verification code" v-model="verifyVerificationCodeForm.code" variant="outlined">
+                            <template v-slot:append>
+                                <v-btn color="blue" @click="verifyVerificationCode">
+                                    Verify
+                                </v-btn>
+                            </template>
+                        </v-text-field>
+                    </div>
+                </v-col>
+            </v-row>
             <v-text-field class="mt-4" variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
             <v-text-field variant="outlined" clearable :error-messages="form.errors.email" label="Email" color="blue" v-model="form.email"></v-text-field>
         </v-card-item>

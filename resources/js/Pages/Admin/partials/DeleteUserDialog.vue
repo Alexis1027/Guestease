@@ -10,7 +10,7 @@
     }
 
     const submit = () => {
-        router.delete(`/user/delete/${prop.user.id}`, {
+        router.delete(`/admin/delete-user/${prop.user.id}`, {
             onFinish: () => {
                 emit('CloseDialog')
                 emit('showDeleteSuccessfulSnackbar')

@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('contact_no')->nullable();
             $table->string('profile_pic')->nullable();
             $table->string('role');
-            $table->boolean('room_requested')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

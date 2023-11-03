@@ -52,9 +52,9 @@ Route::middleware(['auth', 'owner'])->group(function () {
 
 //ADMIN
 Route::middleware(['PreventBackHistory', 'auth', 'admin'])->group(function () {
-    Route::delete('/delete/listing/{listing}', [AdminListingController::class, 'destroy']);
+    Route::delete('/admin/delete-listing/{listing}', [AdminListingController::class, 'destroy']);
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin-dashboard');
-    Route::delete('/user/delete/{user}', [UserController::class, 'destroy']);
+    Route::delete('/admin/delete-user/{user}', [UserController::class, 'destroy']);
     Route::get('/admin/create-admin', [AdminController::class, 'create']);
     Route::get('/admin/manage-users', [UserController::class, 'index'])->name('manage_users');
     Route::get('/admin/manage-users/{entry}', [UserController::class, 'manage_users_entry'])->name('manage_users_entry');
@@ -79,6 +79,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/reservations/cancel/{reservation}', [GuestReservationController::class, 'cancel']);
     Route::get('/reservations', [HomeController::class, 'reservations'])->name('reservations');
     Route::get('/notifications', [HomeController::class, 'notifications']);
+    Route::get('/account', [HomeController::class, 'account'])->middleware('auth');
 });
 
 Route::get('/room/{listing}', [HomeController::class, 'show']);
@@ -89,6 +90,10 @@ Route::get('/',[HomeController::class, 'index']);
 Route::get('/contact-us', [HomeController::class, 'contact_us']);
 Route::get('/about', [HomeController::class, 'about']);
 Route::get('/map', [HomeController::class, 'map']);
+
+
+Route::get('/sendVerificationCode', [AuthController::class,'sendVerificationCode']);
+Route::get('/verifyVerificationCode', [AuthController::class, 'verifyVerificationCode']);
 
 //Auth
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -101,7 +106,6 @@ Route::post('/create/user', [AuthController::class, 'storeUser']);
 Route::post('/create/owner', [AuthController::class, 'storeOwner']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('PreventBackHistory');
 Route::put('/profile/update', [UserController::class, 'update']);
-Route::get('/account', [HomeController::class, 'settings'])->middleware('auth');
 // Route::get('/about', function() {
 //     return Inertia::render('About');
 // });

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;
-use App\Models\Listing;
 use Illuminate\Http\Request;
+use Twilio\Rest\Client;
 
 class AuthController extends Controller
 {
@@ -102,6 +102,24 @@ class AuthController extends Controller
         $user->save();
         // auth()->login($user);
         return redirect('/login');
+    }
+
+    public function sendVerificationCode(Request $request) {
+        return redirect()->back()->with("showInputVerificationCodeProp", "Forda Show The verification code");
+        // $sid = getenv("TWILIO_ACCOUNT_SID");
+        // $token = getenv("TWILIO_AUTH_TOKEN");
+
+        // $twilio = new Client($sid, $token);
+
+        // $verification = $twilio->verify->v2->services("VA678c4c11b87e1cd19c25641424aa402a")
+        // ->verifications
+        // ->create("+639168290756", "sms");
+        // dd($verification);
+
+    } 
+
+    public function verifyVerificationCode(Request $request) {
+        dd($request);
     }
 
 }

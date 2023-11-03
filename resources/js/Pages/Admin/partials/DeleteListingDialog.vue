@@ -9,7 +9,7 @@
     }
 
     const submit = () => {
-        router.delete(`/delete/listing/${prop.listing.id}`, {
+        router.delete(`/admin/delete-listing/${prop.listing.id}`, {
             onFinish: () => {
                 emit('CloseDialog')
                 emit('showDeleteSuccessfulSnackbar')
