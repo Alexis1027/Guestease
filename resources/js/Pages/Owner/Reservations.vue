@@ -20,7 +20,7 @@
                 <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
         </v-col>
         <v-col cols="4">
-            <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
+            <!-- <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field> -->
         </v-col>
     </v-row>
     <v-table hover class="bg-grey-lighten-5 text-center ma-4">
@@ -28,15 +28,17 @@
             <tr>
                 <th class="text-center">ID</th>
                 <th class="text-center">Listing</th>
+                <th class="text-center">Guest</th>
                 <th class="text-center">Guest info</th>
                 <th class="text-center">Check-in/Check-out</th>
                 <th class="text-center">Reserved at</th>
-                <th class="text-center">Price</th>
+                <th class="text-center">Total cost</th>
                 <th class="text-center">Guests</th>
                 <th class="text-center">Status</th>
                 <th class="text-center">Actions</th>
             </tr>
         </thead>
+
         <tbody>
             <tr v-for="reservation in reservations" :key="reservation.id" id="datas">
                 <td>{{ reservation.id }}</td>
@@ -47,16 +49,20 @@
                     </v-list-item>
                 </td>
                 <td>
-                    <v-list-item 
-                    :prepend-avatar="`../../images/profile/${reservation.user.profile_pic}`" 
-                    :title="reservation.user.firstname + ' ' + reservation.user.lastname" 
-                    :subtitle="reservation.user.email">
+                    <v-list-item :title="reservation.user.firstname + ' ' + reservation.user.lastname" >
+                    </v-list-item>
+                </td>
+                <td>
+                    <v-list-item>
+                        {{ reservation.user.phone_number }}
+                        <v-divider/>
+                        {{ reservation.user.email }}
                     </v-list-item>
                 </td>
                 <td>
                     {{ format(new Date(reservation.checkin), 'MMM dd') + ' - ' + format(new Date(reservation.checkout), 'MMM dd')  }}
-                    <br>
-                    {{ reservation.days }} days
+                    <v-divider/>
+                    Length: {{ reservation.days }} days
                 </td>
                 <td>{{ format(new Date(reservation.created_at), 'y/M/d') }}</td>
                 <td>₱{{ parseInt(reservation.total).toLocaleString() }}</td>

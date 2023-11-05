@@ -34,7 +34,7 @@ use App\Http\Controllers\Guest\ReservationRequestController;
 
 
 //OWNER
-Route::middleware(['auth', 'owner'])->group(function () {
+// Route::middleware(['auth', 'owner'])->group(function () {
     Route::get('/owner/dashboard', [OwnerViewController::class, 'dashboard']);
     Route::get('/owner/calendar', [OwnerViewController::class, 'calendar']);
     Route::get('/owner/calendar/{listing}', [OwnerViewController::class, 'calendar']);
@@ -48,10 +48,10 @@ Route::middleware(['auth', 'owner'])->group(function () {
     Route::put('/owner/update-listing/property/{listing}', [ListingController::class, 'update_property']);
     Route::put('/owner/update-listing/pricing/{listing}', [ListingController::class, 'update_pricing']);
     Route::delete('/owner/delete-listing/{listing}', [ListingController::class, 'destroy']);
-});
+// });
 
 //ADMIN
-Route::middleware(['PreventBackHistory', 'auth', 'admin'])->group(function () {
+// Route::middleware(['PreventBackHistory', 'auth', 'admin'])->group(function () {
     Route::delete('/admin/delete-listing/{listing}', [AdminListingController::class, 'destroy']);
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin-dashboard');
     Route::delete('/admin/delete-user/{user}', [UserController::class, 'destroy']);
@@ -64,7 +64,7 @@ Route::middleware(['PreventBackHistory', 'auth', 'admin'])->group(function () {
     Route::get('/admin/listing-requests', [ListingRequestController::class, 'index']);
     Route::put('/admin/approve-listing/{listing}', [ListingRequestController::class, 'approve']);
     Route::put('/admin/decline-listing/{listing}', [ListingRequestController::class, 'decline']);
-});
+// });
 
 
 //GUEST

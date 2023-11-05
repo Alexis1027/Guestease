@@ -45,6 +45,20 @@
                     
                     <v-card-item v-if="auth">
                         <div class="mx-auto">
+                            <Link :href="`/profile/${auth.user.id}`">
+                                <v-btn block variant="text" class="text-none">
+                                    Profile
+                                </v-btn>
+                            </Link>
+                        </div>
+                        <div class="mx-auto">
+                            <Link href="/account">
+                                <v-btn block variant="text" class="text-none">
+                                    Account
+                                </v-btn>
+                            </Link>
+                        </div>
+                        <div class="mx-auto">
                             <Link href="/logout" method="post">
                                 <v-btn block variant="text" class="text-none">
                                     Logout

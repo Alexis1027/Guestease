@@ -1,5 +1,6 @@
 <script setup>
     import Layout from '../Layouts/Layout.vue'
+    import {format} from 'date-fns'
 
 
     defineOptions({layout: Layout})
@@ -34,13 +35,18 @@
                     <v-col cols="7">
                         <!-- About section -->
                         <v-list height="100%">
-                            <v-list-item prepend-icon="mdi-home" :title="`Lives in ${user.address}`">
-                        </v-list-item>
-                        <v-list-item prepend-icon="mdi-facebook-messenger">
-                            {{ user.firstname + ' ' + user.lastname }}
-                        </v-list-item>
-                        <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="user.contact_no">
-                        </v-list-item>
+                            <v-list-item v-if="user.address" prepend-icon="mdi-home" :title="`Lives in ${user.address}`">
+                            </v-list-item>
+                            <v-list-item prepend-icon="mdi-facebook-messenger">
+                                {{ user.firstname + ' ' + user.lastname }}
+                            </v-list-item>
+                            <v-list-item prepend-icon="mdi-email-open" subtitle="Email" :title="user.email">
+                            </v-list-item>
+                            <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="user.phone_number">
+                            </v-list-item>
+                            <v-list-item prepend-icon="mdi-calendar-range">
+                                Joined {{ format(new Date(user.created_at), 'MMMM dd, y') }}
+                            </v-list-item>
                         </v-list>
                     </v-col>
                 </v-row>

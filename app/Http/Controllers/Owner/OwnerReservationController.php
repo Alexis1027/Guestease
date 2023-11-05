@@ -20,7 +20,7 @@ class OwnerReservationController extends Controller
             $res = Reservation::where('listing_id', $ls->id)->get();
             foreach($res as $r) {
                 $r->listing = Listing::select(['title', 'images'])->find($r->listing_id);
-                $r->user = User::select(['firstname', 'lastname', 'profile_pic', 'email'])->find($r->user_id);
+                $r->user = User::select(['firstname', 'lastname', 'profile_pic', 'email', 'phone_number'])->find($r->user_id);
                 array_push($reservations, $r);
             }
         }

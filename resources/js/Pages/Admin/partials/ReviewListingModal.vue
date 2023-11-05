@@ -51,13 +51,15 @@
                 <v-btn color="error" icon="mdi-close" @click="emit('closeReviewListingModal')"></v-btn>
             </v-card-actions>
             <v-card-item>
-                <MazCarousel>
-                    <template #title>
-                        <p class="text-h6">Photos</p>
-                    </template>
-                    <MazCard galleryWidth="100%" :elevation="0" v-for="(item, i) in JSON.parse(listing.images)" zoom :key="i" :images="[`../images/${JSON.parse(listing.images)[i]}`]" style="min-width: 250px;">
-                    </MazCard>
-                </MazCarousel>
+                <div style="width: 100vw">
+                    <MazCarousel>
+                        <template #title>
+                            <p class="text-h6">Photos</p>
+                        </template>
+                        <MazCard galleryWidth="100%" :elevation="0" v-for="(item, i) in JSON.parse(listing.images)" zoom :key="i" :images="[`../images/${JSON.parse(listing.images)[i]}`]" style="min-width: 250px;">
+                        </MazCard>
+                    </MazCarousel>
+                </div>
             </v-card-item>
             <v-card-item>
                 <v-row>
@@ -67,13 +69,16 @@
                             <v-list-item subtitle="Description" prepend-icon="mdi-information-outline">
                                 {{ listing.description }}
                             </v-list-item>
+                            <v-list-item subtitle="Type" prepend-icon="mdi-home">
+                                {{ listing.type }}
+                            </v-list-item>
                             <v-list-item subtitle="Location" prepend-icon="mdi-map-marker">
                                 {{ listing.location }}
                             </v-list-item>
                             <v-list-item subtitle="Price" prepend-icon="mdi-cash-multiple">
                                 ₱{{ parseInt(listing.price).toLocaleString() }}
                             </v-list-item>
-                            <v-list-item subtitle="Created at" prepend-icon="mdi-map-marker">
+                            <v-list-item subtitle="Created at" prepend-icon="mdi-update">
                                 {{ format(new Date(listing.created_at), 'MMM dd, y') }}
                             </v-list-item>
                         </v-list>
@@ -132,8 +137,8 @@
                 </v-row>
             </v-card-item>
             <v-card-actions class="d-flex justify-end my-3">
-                <v-btn color="error" variant="tonal" @click="declineListing">Decline</v-btn>
-                <v-btn color="green" variant="tonal" @click="approveListing">Approve</v-btn>
+                <v-btn color="error" variant="flat" @click="declineListing">Decline</v-btn>
+                <v-btn color="green" variant="flat" @click="approveListing">Approve</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>

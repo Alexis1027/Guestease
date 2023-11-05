@@ -206,21 +206,24 @@
             </v-tabs>
             <v-window v-model="tab">
                 <v-window-item value="option-1">
-                    <v-card flat border class="pa-2">
+                    <v-card flat border class="pa-2" width="100%">
                         <span class="text-h6"> Photos </span> 
                             <v-btn :append-icon="showEditPhotos ? 'mdi-pencil' : 'mdi-close'" variant="text" color="blue" class="text-none" @click="showEditPhotos = !showEditPhotos">
                                 Edit
                             </v-btn> 
-                            <v-file-input label="Add new photos" color="blue" multiple v-model="addPhoto" variant="outlined" v-if="!showEditPhotos"></v-file-input>
-                        <v-slide-group v-model="model" class="pa-4" show-arrows>
-                            <v-slide-group-item v-for="(item, i) in photosForm.images" :key="i">
-                                <v-badge class="mt-2" @click="photosForm.images.splice(i, 1)" offset-x="15" color="red" icon="mdi-close" id="badge">
-                                    <v-card class="mx-4 " height="230" width="250" elevation="0">
-                                        <v-img :src="`/images/${photosForm.images[i]}`" height="180" cover></v-img>
-                                    </v-card>
-                                </v-badge>
-                            </v-slide-group-item>
-                        </v-slide-group>
+                            <v-file-input label="Add new photos" chips color="blue" multiple v-model="addPhoto" variant="outlined" v-if="!showEditPhotos && listing.type == 'Guest house'"></v-file-input>
+                            <v-file-input label="Add new photos" chips color="blue" v-model="addPhoto" variant="outlined" v-if="!showEditPhotos && listing.type == 'Room'"></v-file-input>
+                        <div style="width: 100vw;">
+                            <v-slide-group v-model="model" class="pa-4" show-arrows >
+                                <v-slide-group-item v-for="(item, i) in photosForm.images" :key="i">
+                                    <v-badge class="mt-2" @click="photosForm.images.splice(i, 1)" offset-x="15" color="red" icon="mdi-close" id="badge">
+                                        <v-card class="mx-4 " height="230" width="250" elevation="0">
+                                            <v-img :src="`/images/${photosForm.images[i]}`" height="180" cover></v-img>
+                                        </v-card>
+                                    </v-badge>
+                                </v-slide-group-item>
+                            </v-slide-group>
+                        </div>
                         <v-row class="justify-end d-flex mb-1 me-4">
                             <v-col cols="1">
                                 <v-btn color="blue" type="submit" class="rounded-pill text-none" :loading="photosForm.processing" @click="submitPhotosForm" v-show="!showEditPhotos">Save</v-btn>
@@ -269,7 +272,7 @@
                                         <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.beds--" v-show="!showEditProperties"></v-btn>
                                     </template>
                                 </v-list-item>
-                                <v-list-item>
+                                <v-list-item v-if="listing.type != 'Room'">
                                     Number of rooms
                                     <template v-slot:append>
                                         <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.rooms++" v-show="!showEditProperties"></v-btn>
@@ -313,7 +316,7 @@
                         <v-card-item>
                             <v-text-field type="number" color="blue" v-model="pricingForm.price" variant="outlined" label="Price" class="mt-2"></v-text-field>
                             <v-text-field type="number" color="blue" v-model="pricingForm.monthly_discount" variant="outlined" label="Add discount"></v-text-field>
-                            <v-select label="Availability" color="blue" v-model="pricingForm.status" variant="outlined" :items="['Available', 'Not available']">
+                            <v-select label="Availability" :disabled="pricingForm.status == 'For approval' ? true : false" color="blue" v-model="pricingForm.status" variant="outlined" :items="['Available', 'Not available']">
                             </v-select>
                         </v-card-item>
                         <v-card-actions class="d-flex justify-end">

@@ -1,6 +1,6 @@
 <script setup>
 
-    import {ref} from 'vue'
+    import {ref, watch} from 'vue'
     import Map from './Partials/Map.vue'
     import {useForm} from '@inertiajs/vue3'
     import axios from 'axios'
@@ -116,6 +116,7 @@
         },
     ]
 
+
     const loadingGetCoord = ref(false)
     function getCoord() {
         loadingGetCoord.value = true
@@ -225,8 +226,7 @@
             
             <v-window-item :value="4">
                 <v-container>
-                    <p class="text-h4">Is the pin in the right spot?</p>
-                    <p class="text-h6 text-grey-darken">Click at the map to move the pin.</p>
+                    <p class="text-h6 text-grey-darken text-center">Click on the map to place the marker.</p>
                     <Map :latitude="form.latitude" v-if="step == 4" :longitude="form.longitude" @setPos="setPos" />
                 </v-container>
             </v-window-item>
@@ -328,31 +328,31 @@
 
             <v-window-item :value="9">
                 <v-container id="step1" class="placeoffers">
-                    <p class="text-h5 text-start">Add some photos of your {{ form.type }}</p>
-                    <p class="text-h6 mb-6 text-grey-darken">You'll need 5 photos to get started. You can add more or make changes later.</p>
-                    <v-file-input
-                        chips
-                        variant="outlined"
-                        prepend-inner-icon="mdi-image-outline"
-                        v-model="form.images"
-                        multiple
-                        :rules="imageRules"
-                        :error-messages="form.errors.images"
-                        accept="image/png, image/jpeg"
-                        name="room_image"
-                        label="Images (minimum of 5 images)"
-                        color="blue">
-                        <template v-slot:selection="{ fileNames }">
-                            <template v-for="fileName in fileNames" :key="fileName">
-                                <v-chip size="small" label  color="blue" class="me-2">
-                                {{ fileName }}
-                                </v-chip>
-                            </template>
-                        </template>
-                    </v-file-input>
                     <div v-if="form.type == 'Guest house'">
+                        <p class="text-h5 text-start">Add some photos of your guest house.</p>
+                        <p class="text-h6 mb-6 text-grey-darken-1 ms-3">You'll need 5 photos to get started. You can add more or make changes later.</p>
+                        <v-file-input
+                            chips
+                            variant="outlined"
+                            prepend-inner-icon="mdi-image-outline"
+                            v-model="form.images"
+                            multiple
+                            :rules="imageRules"
+                            :error-messages="form.errors.images"
+                            accept="image/png, image/jpeg"
+                            name="room_image"
+                            label="Images (minimum of 5 images)"
+                            color="blue">
+                            <template v-slot:selection="{ fileNames }">
+                                <template v-for="fileName in fileNames" :key="fileName">
+                                    <v-chip size="small" label  color="blue" class="me-2">
+                                    {{ fileName }}
+                                    </v-chip>
+                                </template>
+                            </template>
+                        </v-file-input>
                         <p class="text-h5 text-start">Upload the building permit of the guest house</p>
-                        <p class="text-h6 mb-6 text-grey-darken">You'll need it to confirm your listing.</p>
+                        <p class="text-h6 mb-6 text-grey-darken-1 ms-3">You'll need it to confirm your listing.</p>
                         <v-file-input 
                             label="Building permit" 
                             variant="outlined" 
@@ -362,7 +362,20 @@
                             prepend-inner-icon="mdi-image-outline">
                         </v-file-input>
                     </div>
-
+                    <div v-else>
+                        <p class="text-h5 text-start">Upload one photo of the room.</p>
+                        <p class="text-h6 mb-2 text-grey-darken-1 ms-3">You can add more or make changes later.</p>
+                        <v-file-input 
+                                label="Room photo" 
+                                chips
+                                variant="outlined" 
+                                v-model="form.images" 
+                                :error-messages="form.errors.images"
+                                color="blue"
+                                name="room_image"
+                                prepend-inner-icon="mdi-image-outline">
+                            </v-file-input>
+                    </div>
                 </v-container>
             </v-window-item>
 

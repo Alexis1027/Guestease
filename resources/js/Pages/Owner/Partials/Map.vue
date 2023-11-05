@@ -43,8 +43,8 @@
 <style scoped>
 
     .leaflet-container {
-        height: 500px;
-        width: 1000px;
+        height: 80vh;
+        width: 85vw;
     }
 
 </style>

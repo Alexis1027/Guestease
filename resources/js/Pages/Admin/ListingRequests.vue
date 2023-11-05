@@ -23,7 +23,6 @@
     defineOptions({
         layout: AdminLayout
     })
-
 </script>
 <template>
     <Head title="Listing requests"></Head>

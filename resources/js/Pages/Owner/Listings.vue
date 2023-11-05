@@ -22,16 +22,17 @@
 
 <template>
     <v-container class="bg-white">
-        <Link href="/owner/create-listing">
-                <v-btn class="mt-2 mb-4 text-none" variant="outlined" prepend-icon="mdi-plus" color="blue">Create new listing</v-btn>
-        </Link>
+        
         <v-row justify="space-between">
             <v-col cols="2">
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
             </v-col>
-            <v-col cols="4">
-            <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
-        </v-col>
+            <v-col cols="2">
+                <Link href="/owner/create-listing">
+                    <v-btn class="mt-4 me-4 mb-4 text-none" variant="flat" prepend-icon="mdi-plus" color="blue">Create new listing</v-btn>
+                </Link>
+                <!-- <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field> -->
+            </v-col>
         </v-row>
         <v-table hover class="bg-grey-lighten-5 text-center">
             <thead>
