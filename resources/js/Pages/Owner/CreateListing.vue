@@ -392,7 +392,7 @@
 
             <v-window-item :value="11">
                 <v-container id="step1" class="placeoffers">
-                    <p class="text-h4 text-start">Now, set your price</p>
+                    <p class="text-h4 text-start">Now, set your {{form.type == 'Guest house' ? 'monthy' : 'daily'}} price</p>
                     <p class="text-h6 mb-6 text-grey-darken-2 text-start">You can change it anytime.</p>
                     
                     <input type="text" v-model="form.price" style="width: 300px;" class="text-h1 ms-6">

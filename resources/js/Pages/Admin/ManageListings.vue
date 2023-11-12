@@ -33,13 +33,12 @@
 
 <template>
     <Head title="Manage Listings" />
-    <v-container class="bg-white">
         <v-row justify="space-between">
             <v-col cols="2">
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
             </v-col>
             <v-col cols="4">
-            <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
+            <!-- <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field> -->
         </v-col>
         </v-row>
         <v-table hover class="bg-grey-lighten-5 text-center">
@@ -50,6 +49,7 @@
                 <th class="text-center">Image</th>
                 <th class="text-center">Listing name</th>
                 <th class="text-center">Location</th>
+                <th class="text-center">Type</th>
                 <th class="text-center">Price</th>
                 <th class="text-center">Status</th>
                 <th class="text-center">Created at</th>
@@ -71,6 +71,7 @@
                      </td>
                     <td>{{ listing.title }}</td>
                     <td>{{ listing.location }}</td>
+                    <td>{{ listing.type }}</td>
                     <td> {{ '₱'+parseInt(listing.price).toLocaleString() }} </td>
                     <td>{{ listing.status }}</td>
                     <td>{{ format(new Date(listing.created_at), 'M/d/yyy') }}</td>
@@ -99,7 +100,6 @@
         </v-col>
     </v-row>
     
-    </v-container>
 
     <DeleteListingDialog :listing="listing" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteListingDialog" @CloseDialog="deleteListingDialog = false" v-model="deleteListingDialog" />
 

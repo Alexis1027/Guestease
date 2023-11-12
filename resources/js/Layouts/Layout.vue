@@ -1,10 +1,16 @@
 <script setup>
 
     import {ref, defineProps} from 'vue'
-
+    import {router} from '@inertiajs/vue3'
     const sidebar = ref(false)
     const logo = '/images/logo/frlogo-transformed.png'
     const {auth} = defineProps(['auth'])
+
+    function logout() {
+        router.post('/logout')
+        location.href = '/login'
+        window.history.replaceState({}, document.title, '/login')
+    }
     
 
 </script>
@@ -59,7 +65,7 @@
                             </Link>
                         </div>
                         <div class="mx-auto">
-                            <Link href="/logout" method="post">
+                            <Link @click="logout" method="post">
                                 <v-btn block variant="text" class="text-none">
                                     Logout
                                 </v-btn>

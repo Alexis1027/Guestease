@@ -15,9 +15,11 @@ class AuthController extends Controller
     public function logout(Request $request) {
         auth()->logout();
         $request->session()->invalidate();
-        return back()->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
-        ->header('Cache-Control', 'post-check=0, pre-check=0')
-        ->header('Pragma', 'no-cache');
+        $request->session()->regenerate();
+        // return back()->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+        // ->header('Cache-Control', 'post-check=0, pre-check=0')
+        // ->header('Pragma', 'no-cache');
+        return back();
     }
 
     public function login() {
@@ -29,6 +31,10 @@ class AuthController extends Controller
 
     public function create_guest() {
         return Inertia::render('Auth/CreateGuest');
+    }
+
+    public function create_admin() {
+        return Inertia::render('Admin/CreateAdmin');
     }
 
     public function create_owner() {
@@ -49,7 +55,6 @@ class AuthController extends Controller
         //     'password' => 'required'
         // ]);
 
-        $request->session()->regenerate();
         $user = User::where('email',$request->email)->first();
         if($user) {
             auth()->login($user);
@@ -100,12 +105,25 @@ class AuthController extends Controller
         //hash password
         $form['role'] = 'owner';
         $form['password'] = bcrypt($form['password']);
-        dd($form);
         $user = User::create($form);
         $user->profile_pic = "default_profile.png";
         $user->save();
         // auth()->login($user);
         return redirect('/login');
+    }
+
+    public function store_admin(Request $request) {
+        $admin = $request->validate([
+            'firstname' => ['required', 'min:3'],
+            'lastname' => ['required', 'min:3'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'min:6'],
+            'phone_number' => 'required'
+        ]);
+        $admin['role'] = 'owner';
+        $admin['profile_pic'] = "default_profile.png";
+            User::create($admin);
+        return back();
     }
 
     public function sendVerificationCode(Request $request) {

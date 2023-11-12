@@ -32,7 +32,6 @@ class ListingFactory extends Factory
             'description' => $this->faker->sentence(20),
             'price' => $this->faker->numberBetween(100, 3000),
             'location' => $this->faker->city(),
-            'images' => json_encode($room_images),
             'latitude' => $this->faker->latitude(10.250000, 10.268000),
             'longitude' => $this->faker->longitude(123.930000, 123.970000),
             'guests' => $this->faker->numberBetween(1, 10),
@@ -41,6 +40,7 @@ class ListingFactory extends Factory
             'bathrooms' => $this->faker->numberBetween(1, 5),
             'status' => 'Available',
             'type' => $this->faker->randomElement(['Room', 'Guest house']),
+            'images' => json_encode($room_images),
             'monthly_discount' => $this->faker->numberBetween(5, 20),
             'rules' =>json_encode([
                 $this->faker->sentence(10),

@@ -63,7 +63,7 @@
                 <strong class="text-h6">
                     ₱{{ parseInt(listing.price).toLocaleString() }}
                 </strong> 
-                <span class="text-grey-darken-3">/ daily</span> 
+                <span class="text-grey-darken-3">/ {{listing.type == 'Guest house' ? 'monthly' : 'daily'}}</span> 
             </p>
             <v-chip class="ma-2 text-grey-darken-3" prepend-icon="mdi-bed" size="small" v-if="listing.beds > 0">
                 {{ listing.beds }}  Bed

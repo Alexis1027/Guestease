@@ -1,6 +1,14 @@
 <script setup>
 
+    import {router} from '@inertiajs/vue3'
+
     const logo = '/images/logo/frlogo-transformed.png'
+    function logout() {
+        router.post('/logout')
+        location.href = '/login'
+        window.history.replaceState({}, document.title, '/login')
+    }
+
     defineProps({
         auth: Object
     })
@@ -67,7 +75,7 @@
                                     Account
                                 </v-btn>
                             </Link>
-                            <Link href="/logout" method="post">
+                            <Link @click="logout" method="post">
                                 <v-btn block variant="text" color="red" class="text-none">
                                     Logout
                                 </v-btn>

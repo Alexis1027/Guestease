@@ -23,7 +23,7 @@
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
             </v-col>
             <v-col cols="4">
-                <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field>
+                <!-- <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field> -->
             </v-col>
         </v-row>
         <v-table hover class="bg-grey-lighten-5 text-center">
@@ -32,10 +32,11 @@
                     <th class="text-center">ID</th>
                     <th class="text-center">Listing</th>
                     <th class="text-center">Guest</th>
-                    <th class="text-center">Payment process</th>
-                    <th class="text-center">Check in</th>
-                    <th class="text-center">Check out</th>
+                    <th class="text-center">Guest info</th>
+                    <th class="text-center">Check-in/Check-out</th>
                     <th class="text-center">Reserved at</th>
+                    <th class="text-center">Total cost</th>
+                    <th class="text-center">Guests</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -53,20 +54,31 @@
                     <td>
                         <v-list-item
                         v-if="reservation.user"
-                        :prepend-avatar="`../images/profile/${reservation.user.profile_pic}`" 
                         :title="reservation.user.firstname + ' ' + reservation.user.lastname"
-                        :subtitle="reservation.user.email"
                         ></v-list-item>
                         <p v-else class="text-red">User not found</p>
                     </td>
-                    <td>{{ reservation.payment_process }}</td>
-                    <td>{{ format(new Date(reservation.checkin), 'MMM d, yyyy') }}</td>
-                    <td>{{ format(new Date(reservation.checkout), 'MMM d, yyyy') }}</td>
-                    <td>{{ format(new Date(reservation.created_at), 'M/dd/yyyy') }}</td>
-                    <td>{{ reservation.status }}</td>
                     <td>
-                        <v-btn icon="mdi-delete-outline" size="small" class="text-red" flat></v-btn>
-                    </td>
+                    <v-list-item>
+                        {{ reservation.user.phone_number }}
+                        <v-divider/>
+                        {{ reservation.user.email }}
+                    </v-list-item>
+                </td>
+                <td>
+                    {{ format(new Date(reservation.checkin), 'MMM dd') + ' - ' + format(new Date(reservation.checkout), 'MMM dd')  }}
+                    <v-divider/>
+                    Length: {{ reservation.days }} days
+                </td>
+                <td>{{ format(new Date(reservation.created_at), 'y/M/d') }}</td>
+                <td>₱{{ parseInt(reservation.total).toLocaleString() }}</td>
+                <td>{{ reservation.guests }}</td>
+                <td>{{ reservation.status }}</td>
+                <td>
+                    <v-btn size="small" class="text-red text-none" variant="tonal">Button</v-btn>
+                    <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->
+                    <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
+                </td>
                 </tr>
             </tbody>
         </v-table>

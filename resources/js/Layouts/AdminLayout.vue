@@ -1,9 +1,16 @@
 <script setup>
 
-    import {ref, onMounted} from 'vue'
+    import {ref} from 'vue'
+    import { router } from '@inertiajs/vue3';
 
     const sidebar = ref(false)
     const logo = '/images/logo/frlogo-transformed.png'
+
+    function logout() {
+        router.post('/logout')
+        location.href = '/login'
+        window.history.replaceState({}, document.title, '/login')
+    }
 
     defineProps({
         auth: Object
@@ -96,7 +103,7 @@
                         </v-list>
                     </v-card>
                 </v-menu>
-                <Link href="/logout" method="post" as="button" class="me-6">
+                <Link @click="logout" method="post" as="button" class="me-6">
                     <v-btn color="red">Logout</v-btn>
                 </Link>
             </v-app-bar>
