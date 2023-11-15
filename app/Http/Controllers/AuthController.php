@@ -122,46 +122,46 @@ class AuthController extends Controller
         ]);
         $admin['role'] = 'owner';
         $admin['profile_pic'] = "default_profile.png";
-            User::create($admin);
+        User::create($admin);
         return back();
     }
 
     public function sendVerificationCode(Request $request) {
         return redirect()->back();
-        // $sid = getenv("TWILIO_ACCOUNT_SID");
-        // $token = getenv("TWILIO_AUTH_TOKEN");
+        $sid = getenv("TWILIO_ACCOUNT_SID");
+        $token = getenv("TWILIO_AUTH_TOKEN");
 
-        // $twilio = new Client($sid, $token);
+        $twilio = new Client($sid, $token);
 
-        // $verification = $twilio->verify->v2->services("VA678c4c11b87e1cd19c25641424aa402a")
-        // ->verifications
-        // ->create("+639168290756", "sms");
-        // return redirect()->back();
+        $verification = $twilio->verify->v2->services("VA678c4c11b87e1cd19c25641424aa402a")
+        ->verifications
+        ->create("+639168290756", "sms");
+        return redirect()->back();
     } 
 
     public function verifyVerificationCode(Request $request) {
         // dd($request->code);
         dd(auth()->user());
-        // $sid = getenv("TWILIO_ACCOUNT_SID");
-        // $token = getenv("TWILIO_AUTH_TOKEN");
-        // $twilio = new Client($sid, $token);
+        $sid = getenv("TWILIO_ACCOUNT_SID");
+        $token = getenv("TWILIO_AUTH_TOKEN");
+        $twilio = new Client($sid, $token);
 
-        // try {
-        //     $verification_check = $twilio->verify->v2->services("VA678c4c11b87e1cd19c25641424aa402a")
-        //     ->verificationChecks
-        //     ->create([
-        //                 "to" => "+639168290756",
-        //                 "code" => $request->code
-        //             ]
-        //     );
+        try {
+            $verification_check = $twilio->verify->v2->services("VA678c4c11b87e1cd19c25641424aa402a")
+            ->verificationChecks
+            ->create([
+                        "to" => "+639168290756",
+                        "code" => $request->code
+                    ]
+            );
                 $user = auth()->user();
                 $user->phone_number_verified = true;
                 $user->update();
 
-        // }
-        // catch(Exception $e) {
-        //     return back()->withErrors(['badVerificationCode' => 'Invalid verification code']);
-        // }
+        }
+        catch(Exception $e) {
+            return back()->withErrors(['badVerificationCode' => 'Invalid verification code']);
+        }
 
     }
 

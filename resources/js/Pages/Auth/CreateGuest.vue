@@ -87,6 +87,7 @@
                                     name="phone_number"
                                     style="width: 100%;"
                                     color="primary"
+                                    class="fadeIn first"
                                     :onlyCountries="['PH']"
                                     defaultCountryCode="PH"
                                     @update="results = $event"

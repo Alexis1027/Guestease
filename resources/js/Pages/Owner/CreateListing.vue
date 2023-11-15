@@ -186,7 +186,7 @@
                 <v-container id="step1">
                     <p class="text-center text-h4 mb-6">What type of place are you renting?</p>
                     <v-row justify="center">
-                        <v-col cols="6" class="mt-5">
+                        <v-col cols="6">
                             <v-list>
                                 <v-list-item value="gueshouse" active-color="blue" @click="form.type = 'Guest house'">
                                     <template v-slot:append>
@@ -205,7 +205,16 @@
                                     </template>
                                     <p class="text-h6"> A room</p>
                                     <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae cudwemque saepe!</p>
-                                    </v-list-item>
+                                </v-list-item>
+                                <!-- <v-list-item value="room" active-color="blue" class="mt-6" @click="form.type = 'Room'">
+                                    <template v-slot:append>
+                                        <v-icon size="50">
+                                            mdi-bed
+                                        </v-icon>
+                                    </template>
+                                    <p class="text-h6"> A guest room</p>
+                                    <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae cudwemque saepe!</p>
+                                </v-list-item> -->
                             </v-list>
                         </v-col>
                     </v-row>

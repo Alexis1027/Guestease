@@ -84,6 +84,7 @@
                                     show-code-on-list
                                     style="width: 100%;"
                                     color="primary"
+                                    class="fadeIn first"
                                     name="phone_number"
                                     :onlyCountries="['PH']"
                                     defaultCountryCode="PH"

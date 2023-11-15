@@ -24,6 +24,7 @@
                 </Link>
             </v-toolbar-title>
             <v-spacer/>
+            <!-- <v-btn variant="text" prepend-icon="mdi-search">Search</v-btn> -->
             <Link href="/">
                 <v-btn :class="[$page.component == 'Guest/Index' ? 'text-blue' : '', 'text-none']">Home</v-btn>
             </Link>

@@ -30,6 +30,7 @@ class ListingController extends Controller
         if($request->file('images') != null) {
             foreach($uploadedFiles as $file) {
                 $houseImages[] = $file->getClientOriginalName();
+                $file->storeAs('public/images/', $file->getClientOriginalName());
             }            
         }
         $form = $request->validate([
