@@ -2,7 +2,6 @@
 
     import {ref, defineProps, onMounted} from 'vue'
     import {Link} from '@inertiajs/vue3'
-    import { VSkeletonLoader } from 'vuetify/lib/labs/components.mjs';
     import getDistance from 'geolib/es/getDistance'
 
     const prop = defineProps({
@@ -22,7 +21,7 @@
         <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters="hover" show-arrows="hover" id="carousel">
             <v-carousel-item v-for="(image, i) in images" :key="i">
                 <Link :href="`/room/${listing.id}`">
-                    <v-img id="carousel" :src="`images/${images[i]}`" cover height="275" width="100%" class="rounded-t-lg">
+                    <v-img id="carousel" :src="`images/uploads/${images[i]}`" cover height="275" width="100%" class="rounded-t-lg">
                         <template v-slot:placeholder>
                             <div class="d-flex align-center justify-center fill-height bg-grey">
                                 <v-progress-circular

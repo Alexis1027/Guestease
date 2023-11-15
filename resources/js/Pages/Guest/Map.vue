@@ -42,7 +42,7 @@
     }
 
     var markerIcon = L.icon({
-        iconUrl: '../images/icons/marker.png',
+        iconUrl: '/images/icons/marker.png',
         iconSize:     [30, 30], // size of the icon
     });
 

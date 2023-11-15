@@ -12,4 +12,9 @@ class Wishlist extends Model
         'user_id',
         'listing_id'
     ];
+
+    // public function listing() {
+    //     return $this->belongsTo(Listing::class);
+    // }
+
 }

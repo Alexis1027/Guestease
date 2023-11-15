@@ -25,7 +25,7 @@
         <div class="custom-snackbar-content">
             <div style="height: 300px;">
                 <v-carousel show-arrows="hover" color="blue-lighten-4" height="100%">
-                    <v-carousel-item height="100%" v-for="image in images" :src="`/images/${image}`" :key="image" cover>
+                    <v-carousel-item height="100%" v-for="image in images" :src="`/images/uploads/${image}`" :key="image" cover>
                     </v-carousel-item>
                     <v-btn @click="emitCloseMapSnackbar()" icon="mdi-close" id="closeBtn" size="small"></v-btn>
                 </v-carousel>

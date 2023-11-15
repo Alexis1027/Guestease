@@ -218,7 +218,8 @@
                                 <v-slide-group-item v-for="(item, i) in photosForm.images" :key="i">
                                     <v-badge class="mt-2" @click="photosForm.images.splice(i, 1)" offset-x="15" color="red" icon="mdi-close" id="badge">
                                         <v-card class="mx-4 " height="230" width="250" elevation="0">
-                                            <v-img :src="`/images/${photosForm.images[i]}`" height="180" cover></v-img>
+                                            <v-img :src="`/images/uploads/${photosForm.images[i]}`" height="180" cover></v-img>
+                                            {{ item }}
                                         </v-card>
                                     </v-badge>
                                 </v-slide-group-item>

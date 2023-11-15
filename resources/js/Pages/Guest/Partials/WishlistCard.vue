@@ -22,7 +22,7 @@
                             
                                 <v-carousel-item v-for="(image, i) in images" :key="i">
                                     <Link :href="`room/${prop.wishlist.listing.id}`">
-                                        <v-img :src="`images/${image}`" cover height="100%"></v-img>
+                                        <v-img :src="`/images/uploads/${image}`" cover height="100%"></v-img>
                                     </Link>
                                 </v-carousel-item>
                             

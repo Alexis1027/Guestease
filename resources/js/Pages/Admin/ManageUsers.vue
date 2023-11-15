@@ -59,7 +59,7 @@
                     <td>{{ user.id }}</td>
                     <td>
                         <v-avatar>
-                            <v-img :src="`../images/profile/${user.profile_pic}`"></v-img>
+                            <v-img :src="`/images/profile/${user.profile_pic}`"></v-img>
                         </v-avatar>
                     </td>
                     <td>{{ user.firstname + ' ' + user.lastname }}</td>

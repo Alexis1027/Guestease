@@ -44,7 +44,7 @@
                 <td>{{ reservation.id }}</td>
                 <td>
                     <v-list-item 
-                    :prepend-avatar="`../../images/${JSON.parse(reservation.listing.images)[0]}`" 
+                    :prepend-avatar="`/images/uploads/${JSON.parse(reservation.listing.images)[0]}`" 
                     :title="reservation.listing.title">
                     </v-list-item>
                 </td>
@@ -73,6 +73,9 @@
                     <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->
                     <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
                 </td>
+            </tr>
+            <tr v-if="reservations.length <= 0">
+                <td colspan="10"> No reservations yet.</td>
             </tr>
         </tbody>
     </v-table>

@@ -29,4 +29,8 @@ class Listing extends Model
         'bldg_permit'
     ];
 
+    // public function ratings() {
+    //     return $this->hasMany(Rating::class);
+    // }
+
 }

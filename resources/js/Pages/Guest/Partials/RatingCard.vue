@@ -11,7 +11,7 @@
                 <v-list class="bg-grey-lighten-4">
                     <Link :href="`/profile/${prop.rating.user.id}`">
                         <v-list-item
-                            :prepend-avatar="`../images/profile/${prop.rating.user.profile_pic}`"
+                            :prepend-avatar="`/images/profile/${prop.rating.user.profile_pic}`"
                             :title="prop.rating.user.firstname + ' ' + prop.rating.user.lastname"
                             :subtitle="format(new Date(prop.rating.created_at), 'MMMM dd, yyyy, hh:mm a')">
                         </v-list-item>

@@ -67,7 +67,7 @@
                         {{ listing.owner.firstname + ' ' + listing.owner.lastname }}
                     </td>
                     <td class="text-red"> 
-                        <v-img cover max-height="80" height="80" class="my-1" :src="`../images/${JSON.parse(listing.images)[0]}`"></v-img>
+                        <v-img cover max-height="80" height="80" class="my-1" :src="`/images/uploads/${JSON.parse(listing.images)[0]}`"></v-img>
                      </td>
                     <td>{{ listing.title }}</td>
                     <td>{{ listing.location }}</td>

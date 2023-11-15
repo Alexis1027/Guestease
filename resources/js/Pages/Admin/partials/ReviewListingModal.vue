@@ -132,7 +132,7 @@
                     </v-col>
                     <v-col cols="6" v-if="listing.bldg_permit">
                         <p class="text-h6">Listing building permit image</p> 
-                        <v-img :src="`../images/${listing.bldg_permit}`" cover height="350"></v-img>
+                        <v-img :src="`/images/uploads/${listing.bldg_permit}`" cover height="350"></v-img>
                     </v-col>
                 </v-row>
             </v-card-item>

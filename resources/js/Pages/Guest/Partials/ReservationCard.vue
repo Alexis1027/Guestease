@@ -19,7 +19,7 @@
         <Link :href="`/room/${reservation.listing.id}`">
             <v-list-item :title="reservation.listing.title" :subtitle="`Guest house in ${reservation.listing.location}`">
                 <template v-slot:append>
-                    <v-img :src="`../images/${images[0]}`" height="130" cover width="150"></v-img>
+                    <v-img :src="`/images/uploads/${images[0]}`" height="130" cover width="150"></v-img>
                 </template>
             </v-list-item>
         </Link>

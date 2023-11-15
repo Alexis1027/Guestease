@@ -68,7 +68,7 @@
     <v-card width="80%" class="border mb-4" title="Profile picture">
         <v-card-item>
             <v-avatar size="100">
-                <v-img src="../images/profile/21.png" ></v-img>
+                <v-img src="/images/profile/21.png" ></v-img>
             </v-avatar>
             <v-btn class="text-none mx-6" color="blue">Upload</v-btn>
             <v-btn class="text-none" variant="text" color="red" prepend-icon="mdi-close">Delete</v-btn>

@@ -102,8 +102,9 @@ Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/forgot-password', [AuthController::class, 'forgot_password']);
 Route::get('/createGuest', [AuthController::class, 'create_guest']);
 Route::get('/createOwner', [AuthController::class, 'create_owner']);
-Route::post('/create/user', [AuthController::class, 'storeUser']);
-Route::post('/create/owner', [AuthController::class, 'storeOwner']);
+Route::post('/validate/user', [AuthController::class, 'validate_credentials']); //storeUser
+Route::post('/create/user', [AuthController::class, 'store_user']); //storeUser
+// Route::post('/create/owner', [AuthController::class, 'validate_credentials']); //storeOwner
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('PreventBackHistory');
 Route::put('/profile/update', [UserController::class, 'update']);
 // Route::get('/about', function() {

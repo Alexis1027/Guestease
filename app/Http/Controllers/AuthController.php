@@ -76,21 +76,30 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    public function storeUser(Request $request) {
+    public function validate_credentials(Request $request) { //storeUser
         $form = $request->validate([
             'firstname' => ['required', 'min:3'],
             'lastname' => ['required', 'min:3'],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'min:6'],
-            'phone_number' => 'required'
+            'phone_number' => ['required', 'unique:users']
         ]);
-        //hash password
+
+        return back();
+
         $form['role'] = 'user';
         $form['password'] = bcrypt($form['password']);
         $user = User::create($form);
         $user->profile_pic = "default_profile.png";
         $user->save();
+        return redirect('/login');
         // auth()->login($user);
+    }
+
+    public function store_user(Request $request) {
+        $user = User::create($request->all());
+        $user->profile_pic = "default_profile.png";
+        $user->save();
         return redirect('/login');
     }
 
@@ -100,7 +109,7 @@ class AuthController extends Controller
             'lastname' => ['required', 'min:3'],
             'email' => ['required', 'email'],
             'password' => ['required', 'min:6'],
-            'phone_number' => 'required'
+            'phone_number' => ['required', 'unique:users']
         ]);
         //hash password
         $form['role'] = 'owner';
@@ -118,7 +127,7 @@ class AuthController extends Controller
             'lastname' => ['required', 'min:3'],
             'email' => ['required', 'email'],
             'password' => ['required', 'min:6'],
-            'phone_number' => 'required'
+            'phone_number' => ['required', 'unique:users']
         ]);
         $admin['role'] = 'owner';
         $admin['profile_pic'] = "default_profile.png";

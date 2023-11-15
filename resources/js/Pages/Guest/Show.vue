@@ -16,7 +16,7 @@
     const rating = ref(0)
     const showReviewModal = ref(false)
     const images = JSON.parse(props.listing.images)
-    const listingImages = images.map(img => '../images/' + img)
+    const listingImages = images.map(img => '/images/uploads/' + img)
     const amenities = JSON.parse(props.listing.amenities)
     const reserveFormAlert = ref(false)
 
@@ -106,7 +106,7 @@
                             <template v-slot:append>
                                 <Link :href="`/profile/${owner.id}`">
                                     <v-avatar size="90" id="avatar">
-                                        <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
+                                        <v-img :src="`/images/profile/${owner.profile_pic}`"></v-img>
                                     </v-avatar>
                                 </Link>
                             </template>

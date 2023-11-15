@@ -16,25 +16,33 @@
         lastname: '',
         email: '',
         password: '',
-        phone_number: ''
+        phone_number: '',
+        role: 'guest'
     })
 
-    const signUp = () => {
+    function sign_up() {
         signupButton.value = true
-        createUserWithEmailAndPassword(auth, form.email, form.password)
-            .then((userCredential) => {
-                sendEmailVerification(auth.currentUser)
-                .then(() => {
-                    alert('Email verification sent!')
-                });
+        form.post('/validate/user', {
+            onSuccess: () => {
                 form.post('/create/user')
-            })
-            .catch((error) => {
+                createUserWithEmailAndPassword(auth, form.email, form.password)
+                .then((userCredential) => {
+                    sendEmailVerification(auth.currentUser)
+                    .then(() => {
+                        alert('Email verification sent!')
+                    });
+                })
+                .catch((error) => {
+                    signupButton.value = false
+                    emailErrMsg.value = "Email is already in use"
+                    console.log(error.message);
+                    // ..
+                })
+            },
+            onError: () => {
                 signupButton.value = false
-                emailErrMsg.value = "Email is already in use"
-                console.log(error.message);
-                // ..
-            })
+            }
+        })
     }
 
 </script>
@@ -93,7 +101,9 @@
                                     @update="results = $event"
                                     :success="results?.isValid"
                                     label="Phone number"
+                                    :error="form.errors.phone_number"
                                 />
+                                <p v-if="form.errors.phone_number" class="text-red text-center" style="font-size: 12px;">{{ form.errors.phone_number }}</p>
                             </v-row>
                             <v-row class="mx-2">
                                 <v-text-field 
@@ -102,7 +112,7 @@
                                     name="email"
                                     v-model="form.email"
                                     variant="outlined" 
-                                    :error-messages="emailErrMsg" 
+                                    :error-messages="emailErrMsg || form.errors.email" 
                                     class="fadeIn second" 
                                     placeholder="johndoe@gmail.com" 
                                     label="Email">
@@ -123,7 +133,7 @@
                                 </v-text-field>
                             </v-row>
                             <!-- <v-text-field color="blue" clearable variant="outlined" class="fadeIn second mx-5" label="Confirm password"></v-text-field> -->
-                            <v-btn block class="fadeIn third" :loading="signupButton" :disabled="signupButton" @click="signUp" type="submit" id="btn-login" color="blue">Register</v-btn>
+                            <v-btn block class="fadeIn third" :loading="signupButton" :disabled="signupButton" @click="sign_up" type="submit" id="btn-login" color="blue">Register</v-btn>
                                 <!-- <v-btn icon="mdi-google" color="blue" size="small" class="mt-2" @click="signUpWithGoogle"></v-btn> -->
                         </v-container>
                         <label class="mt-4 fadeIn third">Already have an account? </label>

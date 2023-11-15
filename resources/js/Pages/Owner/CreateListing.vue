@@ -176,7 +176,7 @@
                                 Lorem ipsum dolor sit amet consectetur.</p>
                         </v-col>
                         <v-col cols="6">
-                            <v-img cover height="100%" width="100%" src="../images/listing/Home-Interior-Design-PNG.png"></v-img>
+                            <v-img cover height="100%" width="100%" src="/images/listing/Home-Interior-Design-PNG.png"></v-img>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -295,7 +295,7 @@
                                 Lorem ipsum dolor sit amet consectetur.</p>
                         </v-col>
                         <v-col cols="6">
-                            <v-img cover height="100%" width="100%" src="../images/listing/Home-Interior-Design-PNG.png"></v-img>
+                            <v-img cover height="100%" width="100%" src="/images/listing/Home-Interior-Design-PNG.png"></v-img>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -430,7 +430,7 @@
                             </v-list-item>
                         </v-col>
                         <v-col cols="5">
-                            <v-img cover height="100%" width="100%" src="../images/listing/Home-Interior-Design-PNG.png"></v-img>
+                            <v-img cover height="100%" width="100%" src="/images/listing/Home-Interior-Design-PNG.png"></v-img>
                         </v-col>
                     </v-row>
                 </v-container>

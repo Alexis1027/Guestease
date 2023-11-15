@@ -24,7 +24,7 @@
                         <v-card width="390" height="250" elevation="0">
                         <v-card-item class="text-center">
                             <v-avatar size="150">
-                            <v-img :src="`../images/Profile/${user.profile_pic}`"></v-img>
+                            <v-img :src="`/images/profile/${user.profile_pic}`"></v-img>
                         </v-avatar>
                         <p class="text-h4">{{ user.firstname + ' ' + user.lastname }}</p>
                         </v-card-item>
