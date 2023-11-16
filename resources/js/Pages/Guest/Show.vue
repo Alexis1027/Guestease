@@ -215,7 +215,9 @@
                                 </template>
                             </v-list-item>
                         </v-list>
-                        <v-btn color="green" @click="submitReservation" :disabled="reserveForm.processing" :loading="reserveForm.processing" class="text-none mb-4" width="100%" size="large">Reserve</v-btn>
+                        <v-btn color="green" v-if="listing.status == 'Available'" @click="submitReservation" :disabled="reserveForm.processing" :loading="reserveForm.processing" class="mb-4" width="100%" size="large">Reserve</v-btn>
+                        <v-btn block v-else disabled size="large"> Reserved </v-btn>
+                        
                     </v-container>
             </v-col>
             <!-- Ratings and reviews section -->

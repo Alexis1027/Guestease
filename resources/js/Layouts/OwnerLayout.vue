@@ -2,7 +2,7 @@
 
     import {router} from '@inertiajs/vue3'
 
-    const logo = '/images/logo/frlogo.png'
+    const logo = '/images/logo/frlogo-transformed.png'
     function logout() {
         router.post('/logout')
         location.href = '/login'
@@ -37,9 +37,9 @@
                     Reservations
                 </v-btn>
             </Link>
-            <Link href="/owner/calendar">
+            <!-- <Link href="/owner/calendar">
                 <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Calendar' ? 'blue' : ''">Calendar</v-btn>
-            </Link>
+            </Link> -->
             
             <v-spacer/>
 

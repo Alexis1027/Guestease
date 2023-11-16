@@ -41,10 +41,15 @@
                     <v-list-item prepend-icon="mdi-account" title="User management" value="manageuser"></v-list-item>
                 </Link>
                 <Link href="/admin/manage-reservations">
-                    <v-list-item prepend-icon="mdi-calendar" title="Reservation management" value="managereservation"></v-list-item>
+                    <v-list-item prepend-icon="mdi-calendar" title="Reservation management" value="managereservation">
+                    </v-list-item>
                 </Link>
                 <Link href="/admin/listing-requests">
-                    <v-list-item prepend-icon="mdi-help-box-multiple" title="Listing requests" value="requests"></v-list-item>
+                    <v-list-item prepend-icon="mdi-help-box-multiple" title="Listing requests" value="requests">
+                        <template v-slot:append>
+                            <v-chip color="red">21</v-chip>
+                        </template>
+                    </v-list-item>
                 </Link>
                 <Link href="/admin/create-admin">
                     <v-list-item prepend-icon="mdi-account-hard-hat" title="Create admin account" value="createadmin"></v-list-item>
@@ -63,7 +68,7 @@
                     </Link>
                 </v-toolbar-title>
                 <v-spacer/>
-                <v-menu min-width="200px" rounded>
+                <!-- <v-menu min-width="200px" rounded>
                     <template v-slot:activator="{ props }">
                         <v-btn class="text-none" icon v-bind="props" >
                             <v-badge content="6" color="error">
@@ -102,7 +107,7 @@
                             </Link>
                         </v-list>
                     </v-card>
-                </v-menu>
+                </v-menu> -->
                 <Link @click="logout" method="post" as="button" class="me-6">
                     <v-btn color="red">Logout</v-btn>
                 </Link>

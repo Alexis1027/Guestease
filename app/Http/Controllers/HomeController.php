@@ -14,7 +14,7 @@ class HomeController extends Controller
 {
     //
     public function index() {
-        $listings = Listing::latest()->where('status', 'Available')->get();
+        $listings = Listing::latest()->get();
 
         foreach($listings as $gh) {
             $ratings = Rating::where('listing_id', $gh->id)->get();

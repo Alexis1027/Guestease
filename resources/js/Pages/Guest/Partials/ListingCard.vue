@@ -9,8 +9,6 @@
         latitude: Number,
         longitude: Number
     })
-    let listingLocation = { latitude: prop.listing.latitude, longitude: prop.listing.longitude }
-    
     const images = JSON.parse(prop.listing.images)
    
 
@@ -52,9 +50,6 @@
                 <span class="text-body-2 truncate-text">
                 <v-icon color="red-lighten-1">mdi-map-marker</v-icon> 
                      {{ listing.location }}
-                     <span class="text-grey-darken-3 text-caption">
-                        {{ latitude && longitude ? ' - ' + Math.floor(getDistance({latitude: 10.250778, longitude: 123.939834}, listingLocation)/1000) + ' km away' : '' }}
-                    </span>
                  </span>
                 
             </p>

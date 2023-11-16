@@ -38,10 +38,11 @@
             <thead>
                 <tr>
                     <th class="text-center">Listing</th>
-                    <th class="text-center">Status</th>
                     <th class="text-center">Property</th>
+                    <th class="text-center">Property type</th>
                     <th class="text-center">Price</th>
                     <th class="text-center">Location</th>
+                    <th class="text-center">Status</th>
                     <th class="text-center">Created at</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -60,7 +61,6 @@
                                 </template>
                         </v-list-item>
                     </td>
-                    <td>{{ listing.status }}</td>
                     <td>
                         <v-menu open-on-hover>
                             <template v-slot:activator="{ props }">
@@ -85,9 +85,14 @@
                             </v-list>
                         </v-menu>
                     </td>
+                    <td>{{ listing.type }}</td>
                     <td>₱{{ parseInt(listing.price).toLocaleString() }}</td>
-                    
                     <td>{{ listing.location }}</td>
+                    <td>
+                        <v-chip>
+                            {{ listing.status }}
+                        </v-chip>
+                    </td>
                     <td>{{ format(new Date(listing.created_at), 'M/d/y') }}</td>
                     <td>
                         
