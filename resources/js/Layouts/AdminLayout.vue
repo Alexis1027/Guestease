@@ -46,9 +46,9 @@
                 </Link>
                 <Link href="/admin/listing-requests">
                     <v-list-item prepend-icon="mdi-help-box-multiple" title="Listing requests" value="requests">
-                        <template v-slot:append>
+                        <!-- <template v-slot:append>
                             <v-chip color="red">21</v-chip>
-                        </template>
+                        </template> -->
                     </v-list-item>
                 </Link>
                 <Link href="/admin/create-admin">
@@ -63,7 +63,7 @@
             <v-app-bar>
                 <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
                 <v-toolbar-title>
-                    <Link class="font-weight-bold" href="/owner/dashboard" >
+                    <Link class="font-weight-bold" href="/admin/dashboard" >
                         <v-img :src="logo" height="55" width="260" cover></v-img>
                     </Link>
                 </v-toolbar-title>

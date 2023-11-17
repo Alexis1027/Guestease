@@ -11,7 +11,7 @@
     
     const deleteListingDialog = ref(false)
     const deleteSnackbar = ref(false)
-    const createSnackbar = ref(false)
+    const updateSnackbar = ref(false)
     const entries = [5, 10, 15, 20, 25]
     const entry = ref()
     const listing = ref({})
@@ -19,6 +19,15 @@
     function deleteListing(gh) {
         listing.value = gh
         deleteListingDialog.value = true
+    }
+
+    function updateListing(listing, status) {
+        console.log(listing.id)
+        router.put(`/admin/update-listing/${listing.id}`, {status}, {
+            onSuccess:() => {
+                updateSnackbar.value = true
+            }
+        })
     }
 
     watch(entry, () => {
@@ -46,29 +55,26 @@
             <tr >
                 <th class="text-center">ID</th>
                 <th class="text-center">Owner</th>
-                <th class="text-center">Image</th>
+                <!-- <th class="text-center">Image</th> -->
                 <th class="text-center">Listing name</th>
                 <th class="text-center">Location</th>
                 <th class="text-center">Type</th>
                 <th class="text-center">Price</th>
                 <th class="text-center">Status</th>
                 <th class="text-center">Created at</th>
-                <th class="text-center">Actions</th>
+                <th class="text-center">Status</th>
             </tr>
         </thead>
         <tbody>
-            <v-slide-x-transition class="py-0" group>
-                <tr v-for="listing in listings.data" :key="listing.id">
+            <v-slide-x-transition group>
+                <tr v-for="listing in listings.data" :key="listing.id" class="pa-4">
                     <td>{{ listing.id }}</td>
-                    <td>
-                        <v-avatar size="50" class="me-2">
-                            <v-img :src="`../images/profile/${listing.owner.profile_pic}`"></v-img>
-                        </v-avatar>
-                        {{ listing.owner.firstname + ' ' + listing.owner.lastname }}
+                    <td class="pa-4 text-start">
+                        <v-list-item :title="listing.owner.firstname + ' ' + listing.owner.lastname" :prepend-avatar="`/images/profile/${listing.owner.profile_pic}`"></v-list-item>
                     </td>
-                    <td class="text-red"> 
+                    <!-- <td class="text-red"> 
                         <v-img cover max-height="80" height="80" class="my-1" :src="`/images/uploads/${JSON.parse(listing.images)[0]}`"></v-img>
-                     </td>
+                     </td> -->
                     <td>{{ listing.title }}</td>
                     <td>{{ listing.location }}</td>
                     <td>{{ listing.type }}</td>
@@ -76,9 +82,22 @@
                     <td>{{ listing.status }}</td>
                     <td>{{ format(new Date(listing.created_at), 'M/d/yyy') }}</td>
                     <td>
-                        <v-btn @click="deleteListing(listing)" size="small" variant="tonal" class="text-none bg-grey-lighten-5 text-red">
-                            Delete
-                        </v-btn>
+                        <v-menu open-on-hover>
+                            <template v-slot:activator="{ props }">
+                                <v-btn color="blue" append-icon="mdi-menu-down" class="text-none" variant="tonal" v-bind="props">
+                                    {{ listing.status }}
+                                </v-btn>
+                            </template>
+
+                            <v-list>
+                                <v-list-item prepend-icon="mdi-check" title="Available" @click="updateListing(listing, 'Available')">
+                                </v-list-item>
+                                <v-list-item prepend-icon="mdi-close" title="Not available" @click="updateListing(listing, 'Not available')">
+                                </v-list-item>
+                                <v-list-item prepend-icon="mdi-delete-outline" title="Delete listing" @click="deleteListing(listing)" base-color="red">
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
                     </td>
                 </tr>
             </v-slide-x-transition>
@@ -103,38 +122,20 @@
 
     <DeleteListingDialog :listing="listing" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteListingDialog" @CloseDialog="deleteListingDialog = false" v-model="deleteListingDialog" />
 
-    <v-snackbar
-      v-model="deleteSnackbar"
-      color="red-lighten-3"
-      timeout="1500"
-    >
-      Deleted successfully
-
-      <template v-slot:actions>
-        <v-btn
-          variant="text"
-          @click="deleteSnackbar = false"
-          icon="mdi-close"
-        >
-        </v-btn>
-      </template>
+    <v-snackbar v-model="deleteSnackbar" color="red-lighten-3" timeout="1500" >
+        Deleted successfully
+        <template v-slot:actions>
+            <v-btn variant="text" @click="deleteSnackbar = false" icon="mdi-close">
+            </v-btn>
+        </template>
     </v-snackbar>
 
-    <v-snackbar
-      v-model="createSnackbar"
-      color="green-lighten-3"
-      timeout="1500"
-    >
-      Created successfully
-
-      <template v-slot:actions>
-        <v-btn
-          variant="text"
-          @click="createSnackbar = false"
-          icon="mdi-close"
-        >
-        </v-btn>
-      </template>
+    <v-snackbar v-model="updateSnackbar" color="blue-lighten-3" timeout="1500">
+        Updated successfully
+        <template v-slot:actions>
+            <v-btn variant="text" @click="updateSnackbar = false" icon="mdi-close">
+            </v-btn>
+        </template>
     </v-snackbar>
 
 </template>

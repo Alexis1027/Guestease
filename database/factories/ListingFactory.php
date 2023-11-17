@@ -17,7 +17,7 @@ class ListingFactory extends Factory
     public function definition(): array
     {
 
-        $imagePath = public_path('images');
+        $imagePath = public_path('images/uploads');
         $images = glob($imagePath . '/*.{jpg,png,gif}', GLOB_BRACE);
         $room_images = [];
 

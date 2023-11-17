@@ -22,13 +22,18 @@ class AdminListingController extends Controller
         return Inertia::render('Admin/ManageListings', ['listings' => $listings]);
     }
 
+    public function update(Listing $listing, Request $request) {
+        $listing->status = $request->status;
+        $listing->update();
+        return back();
+    }
+
     public function manage_listing_entry($entry) {
         return Inertia::render('Admin/ManageListings', ['listings' => Listing::paginate($entry), 'newEntry' => $entry]);
     }
 
     public function destroy(Listing $listing) {
-        $listing->status = 'deleted';
-        $listing->update();
+        $listing->delete();
         // $wishlist = Wishlist::where('listing_id', $listing->id)->get();
         // $wishlist->each->delete();
         // $listing->delete();

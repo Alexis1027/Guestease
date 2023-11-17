@@ -16,14 +16,18 @@ class HomeController extends Controller
     public function index() {
         $listings = Listing::latest()->get();
 
-        foreach($listings as $gh) {
-            $ratings = Rating::where('listing_id', $gh->id)->get();
+        foreach($listings as $ls) {
+            // $is_reserved = Reservation::where('listing_id', $ls->id)->first();
+            // if($is_reserved != null) {
+            //     $ls->reserve = true;
+            // }
+            
+            $ratings = Rating::where('listing_id', $ls->id)->get();
             $totalRatings = count($ratings);
             $sumRatings = $ratings->sum('rating');
             $averageRating = $totalRatings > 0 ? ($sumRatings / $totalRatings) : 0;
-            $gh->averageRating = number_format($averageRating, 2);
+            $ls->averageRating = number_format($averageRating, 2);
         }
-
         return Inertia::render('Guest/Index', [
             'listings' => $listings
         ]);
@@ -31,6 +35,7 @@ class HomeController extends Controller
 
     public function show(Listing $listing) {
 
+        $is_reserved = Reservation::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
         // get all the ratings from the listing
         $ratings = Rating::where('listing_id', $listing->id)
         ->whereIn('user_id', function($query) {
@@ -74,7 +79,8 @@ class HomeController extends Controller
                 'owner' => $owner,
                 'ratings' => $ratings,
                 'averageRating' => $averageRating,
-                'reservedDates' => $reservedDates
+                'reservedDates' => $reservedDates,
+                'is_reserved' => $is_reserved
             ]);
         }
         else {
@@ -84,7 +90,8 @@ class HomeController extends Controller
                 'owner' => $owner,
                 'ratings' => $ratings, 
                 'averageRating' => $averageRating,
-                'reservedDates' => $reservedDates
+                'reservedDates' => $reservedDates,
+                'is_reserved' => $is_reserved
             ]);
         }
     }

@@ -58,13 +58,13 @@
                                     Reservations
                                 </v-btn>
                             </Link>
-                            <Link href="/notifications">
+                            <!-- <Link href="/notifications">
                                 <v-btn block variant="text" class="text-none">
                                     <v-badge offset-x="-6" offset-y="-3" color="red" dot>
                                         Notifications 
                                     </v-badge>
                                 </v-btn>
-                            </Link>
+                            </Link> -->
                             <Link href="/wishlists">
                                 <v-btn block variant="text" class="text-none">
                                     Wishlists 

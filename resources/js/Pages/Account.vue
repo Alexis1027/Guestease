@@ -9,8 +9,8 @@
     defineOptions({layout: Layout})
 
     const props = defineProps(['auth', 'showInputVerificationCodeProp'])
-    const sendVerificationCodeLoading = ref(false)
-    const verificationCode = ref('')
+    // const sendVerificationCodeLoading = ref(false)
+    // const verificationCode = ref('')
     const results = ref()
     const snackbar = ref(false)
     const form = useForm({
@@ -36,24 +36,24 @@
         
     }
 
-    const sendVerificationCodeForm = useForm({
-        phoneNumber: props.auth.user.contact_no
-    })
+    // const sendVerificationCodeForm = useForm({
+    //     phoneNumber: props.auth.user.contact_no
+    // })
 
-    const verifyVerificationCodeForm = useForm({
-        code: null
-    })
+    // const verifyVerificationCodeForm = useForm({
+    //     code: null
+    // })
 
-    function sendVerificationCode() {
-        sendVerificationCodeForm.get('/sendVerificationCode', {
-            preserveState: true,
-            preserveScroll: true
-        })
-    }
+    // function sendVerificationCode() {
+    //     sendVerificationCodeForm.get('/sendVerificationCode', {
+    //         preserveState: true,
+    //         preserveScroll: true
+    //     })
+    // }
 
-    function verifyVerificationCode() {
-        verifyVerificationCodeForm.get('/verifyVerificationCode')
-    }
+    // function verifyVerificationCode() {
+    //     verifyVerificationCodeForm.get('/verifyVerificationCode')
+    // }
 
 </script>
 
@@ -91,12 +91,12 @@
                         :success="results?.isValid"
                     />
                 </v-col>
-                <v-col cols="3" class="mt-2">
+                <!-- <v-col cols="3" class="mt-2">
                     <p class="text-green" v-if="auth.phone_number_verified"><v-icon>mdi-check</v-icon> Verified</p>
                     <v-btn type="submit" v-else color="blue" :loading="sendVerificationCodeLoading" :disabled="sendVerificationCodeLoading" @click="sendVerificationCode">Send SMS code</v-btn>
-                </v-col>
+                </v-col> -->
             </v-row>
-            <v-row v-if="sendVerificationCodeForm.wasSuccessful">
+            <!-- <v-row v-if="sendVerificationCodeForm.wasSuccessful">
                 <v-col cols="5">
                     <div>
                         <v-text-field type="number" placeholder="******" label="Enter verification code" v-model="verifyVerificationCodeForm.code" variant="outlined">
@@ -108,7 +108,7 @@
                         </v-text-field>
                     </div>
                 </v-col>
-            </v-row>
+            </v-row> -->
             <v-text-field class="mt-4" variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
             <v-text-field variant="outlined" clearable :error-messages="form.errors.email" label="Email" color="blue" v-model="form.email"></v-text-field>
         </v-card-item>
@@ -116,7 +116,7 @@
             <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submit" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
         </v-card-actions>
     </v-card>
-
+<!-- 
     <v-card class="border bg-white mt-6" width="80%" title="Change password">
         <v-card-item>
             <span class="text-red">doestn work</span>
@@ -127,7 +127,7 @@
         <v-card-actions class="justify-end d-flex">
             <v-btn rounded="pill" class="text-none" variant="flat" color="blue">Save</v-btn>
         </v-card-actions>
-    </v-card>
+    </v-card> -->
         
 
         <v-snackbar

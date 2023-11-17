@@ -92,22 +92,24 @@
                                     </v-list-item>
                                 </v-list>
                             <v-divider  class="mb-4"/>
-                            <p class="text-h6 mt-4 font-weight-bold">Choose how to pay <span class="text-red font-weight-thin">(doesnt work rn)</span> </p>
+                            <p class="text-h6 mt-4 font-weight-bold">Choose how to pay </p>
                             
                             <v-list>
-                                <v-list-item>
+                                <v-list-item value="gueshouse" active-color="blue">
                                     <template v-slot:append>
-                                        <v-checkbox></v-checkbox>
+
                                     </template>
-                                    <p class="font-weight-bold">Pay in full</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                    <p> Pay through Gcash</p>
+                                    <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae csmque saepe!</p>
                                 </v-list-item>
-                                <v-list-item>
+                                <v-list-item value="room" active-color="blue" class="mt-6">
                                     <template v-slot:append>
-                                        <v-checkbox></v-checkbox>
+                                        <v-icon size="50">
+                                            mdi-door-open
+                                        </v-icon>
                                     </template>
-                                    <p class="font-weight-bold">Pay part now, Pay part later</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                    <p> Pay through Paypal</p>
+                                    <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae cudwemque saepe!</p>
                                 </v-list-item>
                             </v-list>
                             <v-divider/>
@@ -129,7 +131,6 @@
                             required 
                             variant="outlined">
                             </v-select>
-                            
                             <v-btn block color="green" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn>
                         </v-form>
                         <div id="paypal-button-container"></div>

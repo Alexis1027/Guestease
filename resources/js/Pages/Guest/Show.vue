@@ -12,7 +12,7 @@
     
     defineOptions({layout: GuestLayout})
 
-    const props = defineProps(['listing', 'ratings', 'averageRating', 'wishlist', 'auth', 'rated', 'owner', 'reservedDates'])
+    const props = defineProps(['listing', 'ratings', 'averageRating', 'is_reserved', 'wishlist', 'auth', 'rated', 'owner', 'reservedDates'])
     const rating = ref(0)
     const showReviewModal = ref(false)
     const images = JSON.parse(props.listing.images)
@@ -68,7 +68,6 @@
     <Head :title="`${listing.title}`" />
     
     <v-container>
-        <h1>{{ listing.title }}</h1>
         <v-row>
             <!-- ratings and location  -->
             <v-col cols="2"> 
@@ -103,19 +102,19 @@
             <v-col cols="8">
                 <!-- Guest house details -->
                         <v-list-item>
-                            <template v-slot:append>
+                            <!-- <template v-slot:append>
                                 <Link :href="`/profile/${owner.id}`">
                                     <v-avatar size="90" id="avatar">
                                         <v-img :src="`/images/profile/${owner.profile_pic}`"></v-img>
                                     </v-avatar>
                                 </Link>
-                            </template>
-                            <p class="text-h5">{{listing.type}} owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
+                            </template> -->
+                            <p class="text-h5 text-capitalize">{{ listing.title }}</p>
                                 <v-chip v-if="listing.guests > 0">
                                     <p>
                                         <v-icon>mdi-account-multiple</v-icon>
                                          {{ listing.guests }} Guests
-                                        </p>
+                                    </p>
                                 </v-chip>
 
                                 <v-chip v-if="listing.rooms > 0">
@@ -138,12 +137,47 @@
                                 </v-chip>
                         </v-list-item>
 
+                    
                     <v-container>
                         <p class="text-h5 font-weight-medium">About this place </p>
                         <v-divider class="my-2" />
                         {{ listing.description }}
                         <br>
                         Located in - {{ listing.location }}
+                    </v-container>
+                    <v-divider/>
+                    <v-container>
+                        <v-list-item>
+                            <template v-slot:append>
+                                <Link :href="`/profile/${owner.id}`">
+                                    <v-avatar size="80" id="avatar">
+                                        <v-img :src="`/images/profile/${owner.profile_pic}`"></v-img>
+                                    </v-avatar>
+                                </Link>
+                            </template>
+                        <p class="text-h5">{{listing.type}} owned by <span class="text-capitalize">{{ owner.firstname + ' ' + owner.lastname }}</span> </p>
+                        </v-list-item>
+                        <v-divider class="my-2"/>
+                        <v-row>
+                            <v-col cols="6">
+                                <v-list-item prepend-icon="mdi-facebook-messenger" subtitle="Messenger">
+                                    <p class="text-capitalize">{{ owner.firstname + ' ' + owner.lastname }}</p>
+                                </v-list-item>
+                            </v-col>
+                            <v-col cols="6">
+                                <v-list-item prepend-icon="mdi-email-open" subtitle="Email"> {{ owner.email }}
+                                </v-list-item>
+                            </v-col>
+                            <v-col cols="6">
+                                <v-list-item prepend-icon="mdi-phone" class="text-capitalize" subtitle="Contact number" > {{owner.phone_number}}
+                                </v-list-item>
+                            </v-col>
+                            <v-col cols="6">
+                                <v-list-item prepend-icon="mdi-calendar-range" subtitle="Joined at">
+                                    {{ format(new Date(owner.created_at), 'MMMM dd, y') }}
+                                </v-list-item>
+                            </v-col>
+                        </v-row>
                     </v-container>
 
                 <!-- Place offers -->
@@ -215,7 +249,7 @@
                                 </template>
                             </v-list-item>
                         </v-list>
-                        <v-btn color="green" v-if="listing.status == 'Available'" @click="submitReservation" :disabled="reserveForm.processing" :loading="reserveForm.processing" class="mb-4" width="100%" size="large">Reserve</v-btn>
+                        <v-btn color="green" v-if="listing.status == 'Available' && !is_reserved" @click="submitReservation" :disabled="reserveForm.processing" :loading="reserveForm.processing" class="mb-4" width="100%" size="large">Reserve</v-btn>
                         <v-btn block v-else disabled size="large"> Reserved </v-btn>
                         
                     </v-container>

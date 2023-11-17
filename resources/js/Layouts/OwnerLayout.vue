@@ -42,7 +42,6 @@
             </Link> -->
             
             <v-spacer/>
-
             <v-spacer/>
 
             <v-menu min-width="200px" rounded>

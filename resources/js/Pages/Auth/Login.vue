@@ -60,7 +60,7 @@
 
 <template>
     <Head title="Login" />
-    <v-container class="wrapper fadeInDown">
+    <v-container class="wrapper fadeInDown ">
         <!-- <form method="POST" action="/users/authenticate"> -->
         <v-form @submit.prevent>
             <v-row id="formContent">

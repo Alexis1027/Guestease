@@ -26,7 +26,7 @@
                             <v-avatar size="150">
                             <v-img :src="`/images/profile/${user.profile_pic}`"></v-img>
                         </v-avatar>
-                        <p class="text-h4">{{ user.firstname + ' ' + user.lastname }}</p>
+                        <p class="text-h4 text-capitalize">{{ user.firstname + ' ' + user.lastname }}</p>
                         </v-card-item>
                     </v-card>
                 
@@ -37,15 +37,17 @@
                         <v-list height="100%">
                             <v-list-item v-if="user.address" prepend-icon="mdi-home" :title="`Lives in ${user.address}`">
                             </v-list-item>
-                            <v-list-item prepend-icon="mdi-facebook-messenger">
+                            <v-list-item prepend-icon="mdi-facebook-messenger" subtitle="Messenger" class="text-capitalize">
                                 {{ user.firstname + ' ' + user.lastname }}
                             </v-list-item>
-                            <v-list-item prepend-icon="mdi-email-open" subtitle="Email" :title="user.email">
+                            <v-list-item prepend-icon="mdi-email-open" subtitle="Email">
+                                {{ user.email }}
                             </v-list-item>
-                            <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="user.phone_number">
+                            <v-list-item prepend-icon="mdi-phone" subtitle="Contact number">
+                                {{ user.phone_number }}
                             </v-list-item>
-                            <v-list-item prepend-icon="mdi-calendar-range">
-                                Joined {{ format(new Date(user.created_at), 'MMMM dd, y') }}
+                            <v-list-item prepend-icon="mdi-calendar-range" subtitle="Joined at">
+                                 {{ format(new Date(user.created_at), 'MMMM dd, y') }}
                             </v-list-item>
                         </v-list>
                     </v-col>
@@ -58,7 +60,7 @@
                     <v-col cols="4" v-for="listing in listings" :key="listing.id">
                         <Link :href="`/room/${listing.id}`">
                             <v-card>
-                                <v-img :src="`../images/${JSON.parse(listing.images)[0]}`" class="rounded-lg" height="300" cover max-height="300"></v-img>
+                                <v-img :src="`/images/uploads/${JSON.parse(listing.images)[0]}`" class="rounded-lg" height="300" cover max-height="300"></v-img>
                                 <v-card-text>
                                     <strong>{{ listing.title }}</strong>
                                     <p>{{ listing.location }}</p>

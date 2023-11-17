@@ -125,11 +125,11 @@ class AuthController extends Controller
         $admin = $request->validate([
             'firstname' => ['required', 'min:3'],
             'lastname' => ['required', 'min:3'],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'min:6'],
             'phone_number' => ['required', 'unique:users']
         ]);
-        $admin['role'] = 'owner';
+        $admin['role'] = 'admin';
         $admin['profile_pic'] = "default_profile.png";
         User::create($admin);
         return back();

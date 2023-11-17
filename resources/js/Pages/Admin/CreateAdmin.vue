@@ -2,7 +2,10 @@
 
     import AdminLayout from '../../Layouts/AdminLayout.vue'
     import {useForm} from '@inertiajs/vue3'
+    import {ref} from 'vue'
 
+    const createSuccessful = ref(false)
+    const passwordVisible = ref(true)
     const form = useForm({
         firstname: null,
         lastname: null,
@@ -56,7 +59,9 @@
                         @update="results = $event"
                         :success="results?.isValid"
                         label="Phone number"
+                        :error="form.errors.phone_number"
                     />
+                    <p v-if="form.errors.phone_number" class="text-red text-center" style="font-size: 12px;">{{ form.errors.phone_number }}</p>
                 </v-row>
                 <v-row class="mx-2">
                     <v-text-field 
@@ -85,8 +90,15 @@
                         label="Password">
                     </v-text-field>
                 </v-row>
-                <v-btn block class="fadeIn third mt-4" :loading="form.processing" :disabled="form.processing" @click="form.post('/admin/create-admin')" type="submit" id="btn-login" color="blue">Create</v-btn>
+                <v-btn block class="fadeIn third mt-4" :loading="form.processing" :disabled="form.processing" @click="form.post('/admin/create-admin', {onSuccess: () => {createSuccessful = true}})" type="submit" id="btn-login" color="blue">Create</v-btn>
             </v-card-item>
         </v-card>
+        <v-snackbar v-model="createSuccessful" color="blue-lighten-3" timeout="1500">
+            Created successfully
+            <template v-slot:actions>
+                <v-btn variant="text" @click="createSuccessful = false" icon="mdi-close">
+                </v-btn>
+            </template>
+        </v-snackbar>
 </template>
 

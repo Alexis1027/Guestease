@@ -98,8 +98,7 @@ class ListingController extends Controller
 
     public function destroy(Listing $listing) {
         $listing->delete();
-        return redirect('/owner/dashboard');
-
+        return back();
     }
     
 }

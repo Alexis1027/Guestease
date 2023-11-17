@@ -28,7 +28,7 @@
 
     
     function generateMap() {
-        const map = L.map(mapContainer.value).setView([10.252763, 123.949394], 13)
+        const map = L.map(mapContainer.value).setView([10.252763, 123.949394], 15)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
 
         listingsLocation.forEach(place => {
