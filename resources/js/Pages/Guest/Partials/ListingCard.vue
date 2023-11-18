@@ -1,8 +1,7 @@
 <script setup>
 
-    import {ref, defineProps, onMounted} from 'vue'
+    import {defineProps} from 'vue'
     import {Link} from '@inertiajs/vue3'
-    import getDistance from 'geolib/es/getDistance'
 
     const prop = defineProps({
         listing: Object,
@@ -10,7 +9,6 @@
         longitude: Number
     })
     const images = JSON.parse(prop.listing.images)
-   
 
 </script>
 
@@ -86,8 +84,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
-
 
   #listingDetails{
     text-decoration: none;

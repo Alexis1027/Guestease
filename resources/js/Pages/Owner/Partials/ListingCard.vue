@@ -2,6 +2,12 @@
 
     import {Link} from '@inertiajs/vue3'
 
+    const statusColor = new Map([
+        ['For approval', 'text-orange'],
+        ['Available', 'text-green'],
+        ['Not available', 'text-red'],
+    ])
+
     const prop = defineProps({
         listing: Object,
         latitude: Number,
@@ -13,7 +19,7 @@
 
 <template>
     <div id="carousel">
-        <v-card border :id="listing.status == 'For approval' ? 'forapproval' : '' " class="rounded-lg">
+        <v-card border class="rounded-lg">
             <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters show-arrows="hover">
                 <v-carousel-item v-for="(image, i) in images" :key="i">
                     <Link :href="`/owner/edit-listing/${prop.listing.id}`">
@@ -36,16 +42,11 @@
                         </v-icon>
                         {{ prop.listing.averageRating == 0 ? ' New!' : listing.averageRating }} 
                     </template>
-                    <template v-slot:append v-else>
-                        <v-icon color="warning">
-                            mdi-alert-circle
-                        </v-icon>
-                    </template>
                     <strong class="truncate-text-title">{{ prop.listing.title }} </strong>
                 </v-list-item>
 
                 <v-list-item class="truncate-text bg-white" width="100%">
-                    <span :class="listing.status == 'Approved' ? 'text-green' : 'text-error'">{{ listing.status }}</span>
+                    <span :class="statusColor.get(listing.status)">{{ listing.status }}</span>
                 </v-list-item>
         
         </v-card>
@@ -57,11 +58,6 @@
   #carousel:hover{
     cursor: pointer;
   }
-
-  #forapproval {
-    border: 1px solid orange;
-  }
-
   .truncate-text {
       display: -webkit-box;
       -webkit-line-clamp: 1; /* Adjust the number of lines to show */

@@ -130,8 +130,9 @@ class AuthController extends Controller
             'phone_number' => ['required', 'unique:users']
         ]);
         $admin['role'] = 'admin';
-        $admin['profile_pic'] = "default_profile.png";
-        User::create($admin);
+        $user = User::create($admin);
+        $user->profile_pic = "default_profile.png";
+        $user->save();
         return back();
     }
 

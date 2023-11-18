@@ -3,15 +3,29 @@
     import OwnerLayout from '../../Layouts/OwnerLayout.vue'
     import {ref} from 'vue'
     import {format} from 'date-fns'
-    const props = defineProps(['reservations'])
-    defineOptions({
-        layout: OwnerLayout
-    })
+    import {router} from '@inertiajs/vue3'
 
+    const props = defineProps(['reservations'])
     const page = ref(1)
     const entries = [5, 10, 15, 20, 25]
     const entry = ref(5)
 
+    const statusColor = new Map([
+        ['approved', 'green'],
+        ['pending', 'orange'],
+        ['cancelled', 'red'],
+    ])
+
+    function updateReservation(reservation, status) {
+        router.put(`/owner/update-reservation/${reservation.id}`, {
+            status: status,
+            listing_id: reservation.listing_id
+        })
+    }
+
+    defineOptions({
+        layout: OwnerLayout
+    })
 </script>
 
 <template>
@@ -42,12 +56,16 @@
             <tr v-for="reservation in reservations" :key="reservation.id" id="datas" style="font-size: 15px;">
                 <td>{{ reservation.id }}</td>
                 <td>
-                    <v-list-item  class="text-capitalize" :prepend-avatar="`/images/uploads/${JSON.parse(reservation.listing.images)[0]}`">
-                        {{ reservation.listing.title }}
-                    </v-list-item>
+                    <Link :href="`/owner/edit-listing/${reservation.listing.id}`">
+                        <v-list-item id="listing" class="text-capitalize" :prepend-avatar="`/images/uploads/${JSON.parse(reservation.listing.images)[0]}`">
+                            {{ reservation.listing.title }}
+                        </v-list-item>
+                    </Link>
                 </td>
                 <td>
-                    <v-list-item class="text-capitalize"> {{ reservation.user.firstname + ' ' + reservation.user.lastname }}</v-list-item>
+                    <Link :href="`/profile/${reservation.user.id}`">
+                        <v-list-item class="text-capitalize" id="name"> {{ reservation.user.firstname + ' ' + reservation.user.lastname }}</v-list-item>
+                    </Link>
                 </td>
                 <td>
                     <v-list-item>
@@ -67,7 +85,7 @@
                 <td>
                     <v-menu open-on-hover>
                         <template v-slot:activator="{ props }">
-                            <v-btn color="blue" append-icon="mdi-menu-down" class="text-none" variant="tonal" v-bind="props">
+                            <v-btn :color="statusColor.get(reservation.status)" append-icon="mdi-menu-down" class="text-none" variant="tonal" v-bind="props">
                                 {{ reservation.status }}
                             </v-btn>
                         </template>
@@ -112,6 +130,10 @@
 
     #datas td{
         padding: 10px;
+    }
+
+    #name:hover, #listing:hover {
+        text-decoration: underline;
     }
 
 </style>

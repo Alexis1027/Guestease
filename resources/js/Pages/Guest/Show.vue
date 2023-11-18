@@ -211,8 +211,8 @@
             <v-col cols="4" class="mt-3">
                 <!-- Check in checkout and Reserve button section -->
                     <v-container id="reserveBtn" class="border">
-                        <span class="text-h6">₱{{ parseInt(listing.price).toLocaleString() }}</span> daily
-                        <DatePicker @updateDate="updateDate" :reservedDates="reservedDates" />
+                        <span class="text-h6">₱{{ parseInt(listing.price).toLocaleString() }}</span> {{ listing.type == "Guest house" ? "monthly" : "daily" }}
+                        <DatePicker @updateDate="updateDate" :reservedDates="reservedDates"/>
                         <v-alert variant="outlined" type="error" class="mt-5" prominent v-model="reserveFormAlert">
                             <p class="font-weight-bold">Let's try that again</p>
                             <p>Please input your check in and check out dates.</p>

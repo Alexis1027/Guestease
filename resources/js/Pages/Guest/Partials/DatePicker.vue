@@ -20,7 +20,14 @@
   const today = new Date() - 1;
   const disabledDates = []
 
-    // DISABLE ANG DATES NGA NAAY RESERVATION
+//karon nga date
+//   const karon = new Date();
+// // Get the date for next month
+// const nextMonth = new Date();
+// nextMonth.setMonth(nextMonth.getMonth() + 1);
+
+
+    //E DISABLE ANG DATES NGA NAAY RESERVATION
     if(prop.reservedDates) {
         for(let i = 0; i < prop.reservedDates.length; i++) {
             for(let date = new Date(prop.reservedDates[i].checkin); date <= new Date(prop.reservedDates[i].checkout); date.setDate(date.getDate() + 1)) {

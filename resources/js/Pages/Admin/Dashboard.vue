@@ -7,25 +7,42 @@
 
     defineOptions({ layout: AdminLayout })
     
-    const prop = defineProps(['totalUsers', 'totalListings', 'auth'])
+    const prop = defineProps([
+        'total_users',
+        'total_listings',
+        'auth',
+        'approved_listings',
+        'pending_listings',
+        'declined_listings',
+        'not_available_listings', 
+        'available_listings',
+        'guests',
+        'admins',
+        'owners'
+    ])
+
     const myChartRef = ref(null)
+    const listingChart = ref(null)
+    const userChart = ref(null)
 
     onMounted(() => {
 
-        const ctx = myChartRef.value.getContext('2d')
-
-        new Chart(ctx,{
-            type: 'line',
+        const lstChart = listingChart.value.getContext('2d')
+        const usrChart = userChart.value.getContext('2d')
+        new Chart(lstChart,{
+            type: 'bar',
             data: {
-                labels: ['January', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept'],
+                labels: ['approved listings', 'pending listings', 'rejected listings', 'available listings', 'not available listings'],
                 datasets: [
                     {
-                        label: 'Total Users',
-                        data: [2,5,7,34,34,45,67,34,64]
-                    },
-                    {
-                        label: 'Total Reservations',
-                        data: [3,20,29,10,11,32,45,23,55]
+                        label: 'Listings',
+                        data: [
+                            prop.approved_listings,
+                            prop.pending_listings, 
+                            prop.declined_listings, 
+                            prop.available_listings,
+                            prop.not_available_listings
+                        ]
                     }
                 ]
             },
@@ -34,12 +51,36 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Monthly Sales Analytics'
+                        text: 'Listing Statistics'
                     }
                 }
             },
-        }
-    );
+        })
+        new Chart(usrChart,{
+            type: 'pie',
+            data: {
+                labels: ['Number of guests', 'Number of admins', 'Number of owners'],
+                datasets: [
+                    {
+                        label: 'Listings',
+                        data: [
+                            prop.guests,
+                            prop.admins, 
+                            prop.owners,
+                        ]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'User statistics'
+                    }
+                }
+            },
+        })
     })
 
 </script>
@@ -48,43 +89,18 @@
 <template>
 
     <Head title="Dashboard" />
+    <p class="text-h4 mb-1">Admin dashboard</p>
 
     <v-container>
-        <p class="text-h5 mb-1">Admin dashboard</p>
-        <v-row>
-                <DashboardSheet id="sheet1">
-                    <strong class="">Total Users</strong>
-                    <p class="mt-3">
-                        {{prop.totalUsers}}
-                    </p>
-                </DashboardSheet>
-                <DashboardSheet id="sheet1">
-                    <strong class="">Total Listings</strong>
-                    <p class="mt-3">
-                        {{prop.totalListings}}
-                    </p>
-                </DashboardSheet>
-                <DashboardSheet id="sheet1">
-                    <strong class="">Pending Listings</strong>
-                    <p class="mt-3">
-                        0
-                    </p>
-                </DashboardSheet>
-                <DashboardSheet id="sheet1">
-                    <strong class="">Total Sales</strong>
-                    <p class="mt-3">
-                        0
-                    </p>
-                </DashboardSheet>
-        </v-row>
-    </v-container>
-
-    <v-container width="400">
-        <p class="text-h5 mb-1">Monthly Sales Analytics</p>
-        <p class="text-red mb-1"> not working rn</p>
-            <div class="bg-white">
-                <canvas ref="myChartRef"></canvas>
-            </div>
+        <p class="text-h5">Listing statistics</p>
+        <v-card height="400px" width="70%" class="bg-white">
+            <canvas ref="listingChart"></canvas>
+        </v-card>
+        <p class="text-h5">User statistics</p>
+        <v-card height="400px" width="40%">
+                <canvas ref="userChart"></canvas>
+        </v-card>
+        
     </v-container>
 </template>
 

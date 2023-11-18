@@ -7,6 +7,12 @@
     const images = JSON.parse(props.reservation.listing.images)
     const emit = defineEmits(['openCancelReservationDialog'])
 
+    const statusColor = new Map([
+        ['approved', 'green'],
+        ['pending', 'orange'],
+        ['cancelled', 'red'],
+    ])
+
     const openCancelReservationDialog = (reservation) => {
         emit('openCancelReservationDialog', reservation)
     }
@@ -39,7 +45,7 @@
         <v-list-item>
             <p>Reservation status</p>
             <template v-slot:append>
-                <v-chip size="small" :class="reservation.status == 'approved' ? 'text-green' : 'text-orange'">{{reservation.status}}</v-chip>
+                <v-chip size="small" :color="statusColor.get(reservation.status)">{{reservation.status}}</v-chip>
             </template>
          </v-list-item>
          <v-list-item>

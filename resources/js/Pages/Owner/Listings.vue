@@ -15,6 +15,12 @@
         deleteListingDialog.value = true
     }
 
+    const statusColor = new Map([
+        ['For approval', 'orange'],
+        ['Available', 'green'],
+        ['Not available', 'red'],
+    ])
+
     defineOptions({ layout: OwnerLayout })
     defineProps({ listings: Object })
 
@@ -89,7 +95,7 @@
                     <td>₱{{ parseInt(listing.price).toLocaleString() }}</td>
                     <td>{{ listing.location }}</td>
                     <td>
-                        <v-chip>
+                        <v-chip :color="statusColor.get(listing.status)">
                             {{ listing.status }}
                         </v-chip>
                     </td>

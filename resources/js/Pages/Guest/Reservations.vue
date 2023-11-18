@@ -25,9 +25,9 @@
                 <p class="text-h4">Reservations</p>
             </v-col>
             <v-col cols="3">
-                <Link href="/reservation-history">
+                <!-- <Link href="/reservation-history">
                     <v-btn variant="tonal" color="blue">View reservation history</v-btn>
-                </Link>
+                </Link> -->
             </v-col>
         </v-row>
         <v-row>
