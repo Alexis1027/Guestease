@@ -23,7 +23,7 @@
     })
         
     const submit = () => {
-        form.post('/reserve')
+        form.post(`/reserve/${prop.listing.id}`)
     }
 
     onMounted(() => {
@@ -58,7 +58,7 @@
                 , 'eEt-YCYeYc0LoTRxJ').then(() => {
                     alert('Success')
                 })
-                form.post('/reserve')
+                form.post(`/reserve/${prop.listing.id}`)
             });
         },
         onCancel: function(data) {
@@ -95,14 +95,14 @@
                             <p class="text-h6 mt-4 font-weight-bold">Choose how to pay </p>
                             
                             <v-list>
-                                <v-list-item value="gueshouse" active-color="blue">
+                                <v-list-item value="Gcash" active-color="blue" @click="form.payment_process = 'Gcash'">
                                     <template v-slot:append>
 
                                     </template>
                                     <p> Pay through Gcash</p>
                                     <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae csmque saepe!</p>
                                 </v-list-item>
-                                <v-list-item value="room" active-color="blue" class="mt-6">
+                                <v-list-item value="Paypal" active-color="blue" class="mt-6" @click="form.payment_process = 'Paypal'" >
                                     <template v-slot:append>
                                         <v-icon size="50">
                                             mdi-door-open
@@ -112,12 +112,12 @@
                                     <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae cudwemque saepe!</p>
                                 </v-list-item>
                             </v-list>
-                            <v-divider/>
+                            <v-divider class="my-4" />
                             <v-alert variant="outlined" type="warning" prominent v-model="form.hasErrors">
                                 <p class="font-weight-bold">Let's try that again</p>
                                 <p>Please check your payment details.</p>
                             </v-alert>
-                            <p class="text-h6 my-4 font-weight-bold">Pay with</p>
+                            <!-- <p class="text-h6 my-4 font-weight-bold">Pay with</p>
                             <v-select  
                             :items="['Paypal', 'Gcash']"
                             return-object
@@ -130,10 +130,11 @@
                             item-value="details"
                             required 
                             variant="outlined">
-                            </v-select>
-                            <v-btn block color="green" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn>
+                            </v-select> -->
+                            <div id="paypal-button-container" v-show="form.payment_process == 'Paypal'"></div>
+                            <v-btn block color="green" v-show="form.payment_process != 'Paypal'" :disabled="!form.payment_process" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn>
+                        
                         </v-form>
-                        <div id="paypal-button-container"></div>
                     </v-container>
 
                 </v-col>

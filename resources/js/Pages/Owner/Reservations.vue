@@ -35,22 +35,19 @@
                 <th class="text-center">Total cost</th>
                 <th class="text-center">Guests</th>
                 <th class="text-center">Status</th>
-                <th class="text-center">Actions</th>
             </tr>
         </thead>
 
         <tbody>
-            <tr v-for="reservation in reservations" :key="reservation.id" id="datas">
+            <tr v-for="reservation in reservations" :key="reservation.id" id="datas" style="font-size: 15px;">
                 <td>{{ reservation.id }}</td>
                 <td>
-                    <v-list-item 
-                    :prepend-avatar="`/images/uploads/${JSON.parse(reservation.listing.images)[0]}`" 
-                    :title="reservation.listing.title">
+                    <v-list-item  class="text-capitalize" :prepend-avatar="`/images/uploads/${JSON.parse(reservation.listing.images)[0]}`">
+                        {{ reservation.listing.title }}
                     </v-list-item>
                 </td>
                 <td>
-                    <v-list-item :title="reservation.user.firstname + ' ' + reservation.user.lastname" >
-                    </v-list-item>
+                    <v-list-item class="text-capitalize"> {{ reservation.user.firstname + ' ' + reservation.user.lastname }}</v-list-item>
                 </td>
                 <td>
                     <v-list-item>
@@ -67,11 +64,23 @@
                 <td>{{ format(new Date(reservation.created_at), 'y/M/d') }}</td>
                 <td>₱{{ parseInt(reservation.total).toLocaleString() }}</td>
                 <td>{{ reservation.guests }}</td>
-                <td>{{ reservation.status }}</td>
                 <td>
-                    <v-btn size="small" class="text-red text-none" variant="tonal">Button</v-btn>
-                    <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->
-                    <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
+                    <v-menu open-on-hover>
+                        <template v-slot:activator="{ props }">
+                            <v-btn color="blue" append-icon="mdi-menu-down" class="text-none" variant="tonal" v-bind="props">
+                                {{ reservation.status }}
+                            </v-btn>
+                        </template>
+
+                        <v-list>
+                            <v-list-item prepend-icon="mdi-check" title="approve" @click="updateReservation(reservation, 'approved')">
+                            </v-list-item>
+                            <v-list-item prepend-icon="mdi-close" title="pending" @click="updateReservation(reservation, 'pending')">
+                            </v-list-item>
+                            <v-list-item prepend-icon="mdi-delete-outline" title="cancel" @click="updateReservation(reservation, 'cancelled')" base-color="red">
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
                 </td>
             </tr>
             <tr v-if="reservations.length <= 0">

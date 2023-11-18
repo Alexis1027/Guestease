@@ -28,7 +28,7 @@
                 </v-btn>
             </Link>
             <Link href="/owner/listings">
-                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Listing' ? 'blue' : ''">
+                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Listings' ? 'blue' : ''">
                     Listings
                 </v-btn>
             </Link>
@@ -44,7 +44,7 @@
             <v-spacer/>
             <v-spacer/>
 
-            <v-menu min-width="200px" rounded>
+            <!-- <v-menu min-width="200px" rounded>
                 <template v-slot:activator="{ props }">
                     <v-btn class="text-none" icon v-bind="props" >
                         <v-badge content="6" color="error">
@@ -66,14 +66,17 @@
                         </v-list-item>
                     </v-list>
                 </v-card>
-            </v-menu>
-            <v-menu  min-width="200px" rounded>
+            </v-menu> -->
+            <v-menu min-width="200px" rounded v-if="auth">
                 <template v-slot:activator="{ props }">
-                <v-btn icon v-bind="props">
-                    <v-avatar size="small">
-                        <v-img :src="`../images/profile/${auth.user.profile_pic}`"></v-img>
-                    </v-avatar>
-                </v-btn>
+                    <v-btn class="border me-3" size="large" v-bind="props">
+                        <template v-slot:prepend>
+                            <v-avatar color="blue-lighten-3" size="35">
+                                <v-img :src="`../images/profile/${auth.user.profile_pic}`"></v-img>
+                            </v-avatar>
+                        </template>
+                        <v-icon>mdi-menu</v-icon>
+                    </v-btn>
                 </template>
                 <v-card width="250">
                     <div class="mx-auto text-center">

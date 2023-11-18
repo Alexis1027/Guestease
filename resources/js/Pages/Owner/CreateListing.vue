@@ -194,7 +194,7 @@
                                             mdi-home-outline
                                         </v-icon>
                                     </template>
-                                    <p class="text-h6"> A guest house</p>
+                                    <p class="text-h6"> Guest house</p>
                                     <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae csmque saepe!</p>
                                 </v-list-item>
                                 <v-list-item value="room" active-color="blue" class="mt-6" @click="form.type = 'Room'">
@@ -203,7 +203,16 @@
                                             mdi-door-open
                                         </v-icon>
                                     </template>
-                                    <p class="text-h6"> A room</p>
+                                    <p class="text-h6"> Single room</p>
+                                    <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae cudwemque saepe!</p>
+                                </v-list-item>
+                                <v-list-item value="mutiple room" active-color="blue" class="mt-6" @click="form.type = 'Multiple room'">
+                                    <template v-slot:append>
+                                        <v-icon size="50">
+                                            mdi-home-group
+                                        </v-icon>
+                                    </template>
+                                    <p class="text-h6"> Mutiple room</p>
                                     <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae cudwemque saepe!</p>
                                 </v-list-item>
                                 <!-- <v-list-item value="room" active-color="blue" class="mt-6" @click="form.type = 'Room'">

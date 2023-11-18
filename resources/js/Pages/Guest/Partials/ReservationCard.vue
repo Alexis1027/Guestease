@@ -42,6 +42,12 @@
                 <v-chip size="small" :class="reservation.status == 'approved' ? 'text-green' : 'text-orange'">{{reservation.status}}</v-chip>
             </template>
          </v-list-item>
+         <v-list-item>
+            <p>Payment process</p>
+            <template v-slot:append>
+                {{ reservation.payment_process }}
+            </template>
+         </v-list-item>
          <!-- price x days -->
          <v-list-item>
             ₱{{ parseInt(reservation.listing.price).toLocaleString() }} x {{ reservation.days }} days

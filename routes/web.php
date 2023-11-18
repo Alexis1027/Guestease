@@ -29,7 +29,7 @@ use App\Http\Controllers\Guest\ReservationRequestController;
 */
 
 //owner
-Route::middleware(['auth', 'owner'])->group(function () {
+// Route::middleware(['auth', 'owner'])->group(function () {
     Route::get('/owner/dashboard', [OwnerViewController::class, 'dashboard']);
     Route::get('/owner/calendar', [OwnerViewController::class, 'calendar']);
     Route::get('/owner/calendar/{listing}', [OwnerViewController::class, 'calendar']);
@@ -43,10 +43,10 @@ Route::middleware(['auth', 'owner'])->group(function () {
     Route::put('/owner/update-listing/property/{listing}', [ListingController::class, 'update_property']);
     Route::put('/owner/update-listing/pricing/{listing}', [ListingController::class, 'update_pricing']);
     Route::delete('/owner/delete-listing/{listing}', [ListingController::class, 'destroy']);
-});
+// });
 
 //admin
-Route::middleware(['auth', 'admin'])->group(function () {
+// Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/delete-listing/{listing}', [AdminListingController::class, 'destroy']);
     Route::put('/admin/update-listing/{listing}', [AdminListingController::class, 'update']);
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin-dashboard');
@@ -61,12 +61,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/listing-requests', [ListingRequestController::class, 'index']);
     Route::put('/admin/approve-listing/{listing}', [ListingRequestController::class, 'approve']);
     Route::put('/admin/decline-listing/{listing}', [ListingRequestController::class, 'decline']);
-});
+// });
 
 
 //guest
 Route::middleware(['auth'])->group(function () {
-    Route::post('/reserve', [ReservationRequestController::class, 'store']);
+    Route::post('/reserve/{listing}', [GuestReservationController::class, 'store']);
     Route::get('/confirm-reservation/{listing}', [HomeController::class, 'confirm_reservation']);
     Route::get('/reservation-history', [HomeController::class, 'reservation_history']);
     Route::post('/wishlist/save', [WishlistController::class, 'store']);
