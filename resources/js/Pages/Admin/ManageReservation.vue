@@ -8,8 +8,12 @@
     defineOptions({layout: AdminLayout})
 
     const entry = ref()
-    const page = ref(1)
     const entries = [5, 10, 15, 20, 25]
+    const statusColor = new Map([
+        ['pending', 'orange'],
+        ['approved', 'green'],
+        ['cancelled', 'red']
+    ])
     const {reservations} = defineProps({
         reservations: Object
     })
@@ -46,7 +50,7 @@
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="font-size: 14px;">
                 <tr v-if="reservations.length <= 0">
                     <td colspan="8"> No reservations.</td>
                 </tr>
@@ -78,9 +82,19 @@
                 <td>{{ format(new Date(reservation.created_at), 'y/M/d') }}</td>
                 <td>₱{{ parseInt(reservation.total).toLocaleString() }}</td>
                 <td>{{ reservation.guests }}</td>
-                <td>{{ reservation.status }}</td>
                 <td>
-                    <v-btn size="small" class="text-red text-none" variant="tonal">Button</v-btn>
+                    <v-chip :color="statusColor.get(reservation.status)">
+                        {{ reservation.status }}
+                    </v-chip>
+                </td>
+                <td>
+                    
+                    <v-btn size="small" :disabled="reservation.status != 'approved'" class="text-red text-none" variant="tonal" prepend-icon="mdi-bell">Notify
+                        <v-tooltip activator="parent" location="top">
+                            Alert owner and guest: reservation ending soon
+                        </v-tooltip>
+                    </v-btn>
+                    
                     <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->
                     <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
                 </td>

@@ -36,6 +36,7 @@
                     <p class="truncate-text text-body-1 font-weight-medium">
                         {{ listing.title }} 
                     </p>
+                    {{ listing.status }}
                 </v-col>
                 <v-col cols="4">
                     <v-chip color="warning" prepend-icon="mdi-star-outline" text-color="white" size="small" class="ms-4">

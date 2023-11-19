@@ -23,7 +23,7 @@
     <v-card class="mt-3 border" width="100%">
         <!-- title and the image -->
         <Link :href="`/room/${reservation.listing.id}`">
-            <v-list-item :title="reservation.listing.title" :subtitle="`Guest house in ${reservation.listing.location}`">
+            <v-list-item :title="reservation.listing.title" :subtitle="reservation.listing.location">
                 <template v-slot:append>
                     <v-img :src="`/images/uploads/${images[0]}`" height="130" cover width="150"></v-img>
                 </template>
@@ -36,9 +36,6 @@
             {{ format(new Date(reservation.checkin), 'MMMM dd, yyyy') }} 
             <v-icon>mdi-arrow-right-thin</v-icon>
             {{ format(new Date(reservation.checkout), 'MMMM dd, yyyy') }}
-         </v-list-item>
-         <v-list-item prepend-icon="mdi-map-marker"> 
-            {{ reservation.listing.location }}
          </v-list-item>
         <v-divider/>
         <!-- reservation status  -->

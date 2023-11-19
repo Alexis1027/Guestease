@@ -97,16 +97,18 @@
                             <v-list>
                                 <v-list-item value="Gcash" active-color="blue" @click="form.payment_process = 'Gcash'">
                                     <template v-slot:append>
-
+                                        <v-avatar>
+                                            <v-img src="/images/icons/gcash2.png"></v-img>
+                                        </v-avatar>
                                     </template>
                                     <p> Pay through Gcash</p>
                                     <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae csmque saepe!</p>
                                 </v-list-item>
                                 <v-list-item value="Paypal" active-color="blue" class="mt-6" @click="form.payment_process = 'Paypal'" >
                                     <template v-slot:append>
-                                        <v-icon size="50">
-                                            mdi-door-open
-                                        </v-icon>
+                                        <v-avatar>
+                                            <v-img src="/images/icons/paypal2.png"></v-img>
+                                        </v-avatar>
                                     </template>
                                     <p> Pay through Paypal</p>
                                     <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae cudwemque saepe!</p>
@@ -187,11 +189,3 @@
             </v-row>
         </v-container>
 </template>
-
-<style scoped>
-
-    #card {
-        margin-top: 80px;
-    }
-
-</style>
