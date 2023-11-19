@@ -56,7 +56,7 @@
                         <template #title>
                             <p class="text-h6">Photos</p>
                         </template>
-                        <MazCard galleryWidth="100%" :elevation="0" v-for="(item, i) in JSON.parse(listing.images)" zoom :key="i" :images="[`../images/${JSON.parse(listing.images)[i]}`]" style="min-width: 250px;">
+                        <MazCard galleryWidth="100%" :elevation="0" v-for="(item, i) in JSON.parse(listing.images)" zoom :key="i" :images="[`/images/uploads/${JSON.parse(listing.images)[i]}`]" style="min-width: 250px;">
                         </MazCard>
                     </MazCarousel>
                 </div>

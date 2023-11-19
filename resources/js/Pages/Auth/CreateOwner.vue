@@ -135,7 +135,6 @@
                         </v-container>
                         <label class="mt-4 fadeIn third">Already have an account? </label>
                         <Link href="/login" class="text-blue mb-4 fadeIn third"> Log In </Link>
-
                     </v-card-item>
                 </v-card>
             </v-form>

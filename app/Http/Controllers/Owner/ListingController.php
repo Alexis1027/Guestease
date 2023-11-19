@@ -49,6 +49,7 @@ class ListingController extends Controller
             'type' => 'required'
         ]);
         $form['status'] = "For approval";
+        $form['rules'] = json_encode($request->rules);
         $form['images'] = json_encode($houseImages);
         $form['amenities'] = json_encode($form['amenities']);
         try {
@@ -78,6 +79,24 @@ class ListingController extends Controller
         return back();
     }
 
+    public function update_rules(Listing $listing, Request $request) {
+        $rules = json_decode($listing->rules);
+        // check if rules has value
+        if($rules) {
+            array_push($rules, $request->newRule);
+            $listing->rules = json_encode($rules);
+            $listing->update();
+            return back();
+        }
+        else {
+            $arr = [$request->newRule];
+            $listing->rules = json_encode($arr);
+            $listing->update();
+            return back();
+        }
+        
+    }
+
     public function update_property(Listing $listing, Request $request) {
         $listing->guests = $request->guests;
         $listing->beds = $request->beds;
@@ -98,7 +117,7 @@ class ListingController extends Controller
 
     public function destroy(Listing $listing) {
         $listing->delete();
-        return back();
+        return redirect('/owner/dashboard');
     }
     
 }

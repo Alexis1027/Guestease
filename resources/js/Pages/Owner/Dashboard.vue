@@ -19,7 +19,7 @@
     <v-container>
         <v-row class="mt-6">
             <v-col cols="9">
-                <p class="text-h4">Welcome, {{ auth.user.firstname }}!</p>
+                <p class="text-h4 text-capitalize">Welcome, {{ auth.user.firstname }}!</p>
                 Guests can reserve after the administrator publishes your place.
             </v-col>
             <v-col class="justify-end d-flex">

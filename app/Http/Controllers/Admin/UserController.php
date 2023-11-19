@@ -17,12 +17,8 @@ class UserController extends Controller
         return Inertia::render('Auth/Edit');
     }
 
-    public function index() {
-        return Inertia::render('Admin/ManageUsers', ['users' => User::paginate(5)]);
-    }
-
-    public function manage_users_entry($entry) {
-        return Inertia::render('Admin/ManageUsers', ['users' => User::paginate($entry)]);
+    public function index(?string $entry = null) {
+        return Inertia::render('Admin/ManageUsers', ['users' => User::paginate($entry ? $entry : 5)]);
     }
 
     public function destroy(User $user) {

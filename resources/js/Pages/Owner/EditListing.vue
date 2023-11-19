@@ -103,6 +103,10 @@
         images: JSON.parse(props.listing.images)
     })
 
+    const ruleForm = useForm({
+        newRule: null
+    })
+
     const detailsForm = useForm({
         title: props.listing.title,
         description: props.listing.description,
@@ -130,6 +134,17 @@
             onSuccess: () => {
                 showEditDetails.value = true
                 successSnackbar.value = true
+            }
+        })
+    }
+
+    const submitRuleForm = () => {
+        ruleForm.put(`/owner/update-listing/rules/${props.listing.id}`,
+        {
+            onSuccess: () => {
+                showEditDetails.value = true
+                successSnackbar.value = true
+                ruleForm.newRule = null
             }
         })
     }
@@ -234,6 +249,9 @@
                         <span class="text-h6">Listing basics</span>
                         <v-btn :append-icon="showEditDetails ? 'mdi-pencil' : 'mdi-close'" variant="text" @click="showEditDetails = !showEditDetails" class="text-none" color="blue">Edit</v-btn> 
                         <v-list width="100%">
+                            <v-list-item>
+                                    Type : {{ listing.type }}
+                                </v-list-item>
                             <v-form @submit.prevent>
                                 <v-list-item>
                                     Title
@@ -327,21 +345,17 @@
                 </v-window-item>
                 <v-window-item value="option-3">
                     <v-card width="69vw" height="100%">
-                        <v-card-item>
-                                <span class="text-red">not working rn</span>
-                                    <p class="text-h6">Rules and policies</p>
-                                    <p v-for="rule in JSON.parse(listing.rules)" :key="rule">
-                                       <v-icon>mdi-circle-small</v-icon> {{ rule }}
-                                    </p>
-                                
-                            <v-textarea class="mt-3" variant="outlined" color="blue" placeholder="" label="Add new rule">
-                                
-                            </v-textarea>
-                            
-                        </v-card-item>
-                        <v-card-actions class="justify-end d-flex">
-                            <v-btn class="text-none" variant="flat" prepend-icon="mdi-plus" color="blue">Add</v-btn>
-                        </v-card-actions>
+                            <v-card-item>
+                                <p class="text-h6">Rules and policies</p>
+                                <p v-for="rule in JSON.parse(listing.rules)" :key="rule">
+                                    <v-icon>mdi-circle-small</v-icon> {{ rule }}
+                                </p>
+                                <v-textarea class="mt-3" v-model="ruleForm.newRule" variant="outlined" color="blue" placeholder="" label="Add new rule">
+                                </v-textarea>
+                            </v-card-item>
+                            <v-card-actions class="justify-end d-flex">
+                                <v-btn class="text-none" @click="submitRuleForm" type="submit" variant="flat" prepend-icon="mdi-plus" color="blue">Add</v-btn>
+                            </v-card-actions>
                     </v-card>
                     
                 </v-window-item>

@@ -11,9 +11,9 @@ use App\Models\Listing;
 class ListingRequestController extends Controller
 {
     //
-    public function index() {
+    public function index(?string $entry = null) {
 
-        $listingRequests = Listing::all()->where('status', 'For approval');
+        $listingRequests = Listing::where('status', 'For approval')->paginate($entry ? $entry : 5);
         foreach($listingRequests as $r) {
             $r->user = User::find($r->owner_id);
         }

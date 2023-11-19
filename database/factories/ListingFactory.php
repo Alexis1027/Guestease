@@ -17,12 +17,21 @@ class ListingFactory extends Factory
     public function definition(): array
     {
 
+        $listing_type = $this->faker->randomElement(['Room', 'Guest house', 'Multiple room']);
+
         $imagePath = public_path('images/uploads');
         $images = glob($imagePath . '/*.{jpg,png,gif}', GLOB_BRACE);
         $room_images = [];
 
-        for($i = 0; $i < 5; $i++) {
-            $room_images[$i] = $images ? str_replace($imagePath . '/', '', $this->faker->randomElement($images)) : null;
+        if($listing_type == 'Guest house') {
+            for($i = 0; $i < 5; $i++) {
+                $room_images[$i] = $images ? str_replace($imagePath . '/', '', $this->faker->randomElement($images)) : null;
+            }
+        }
+        else {
+            for($i = 0; $i < 1; $i++) {
+                $room_images[$i] = $images ? str_replace($imagePath . '/', '', $this->faker->randomElement($images)) : null;
+            }
         }
 
         return [
@@ -39,7 +48,7 @@ class ListingFactory extends Factory
             'rooms' => $this->faker->numberBetween(1, 10),
             'bathrooms' => $this->faker->numberBetween(1, 5),
             'status' => 'Available',
-            'type' => $this->faker->randomElement(['Room', 'Guest house']),
+            'type' => $listing_type,
             'images' => json_encode($room_images),
             'monthly_discount' => $this->faker->numberBetween(5, 20),
             'rules' =>json_encode([

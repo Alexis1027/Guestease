@@ -60,7 +60,6 @@
                 <th class="text-center">Location</th>
                 <th class="text-center">Type</th>
                 <th class="text-center">Price</th>
-                <th class="text-center">Status</th>
                 <th class="text-center">Created at</th>
                 <th class="text-center">Status</th>
             </tr>
@@ -79,7 +78,6 @@
                     <td>{{ listing.location }}</td>
                     <td>{{ listing.type }}</td>
                     <td> {{ '₱'+parseInt(listing.price).toLocaleString() }} </td>
-                    <td>{{ listing.status }}</td>
                     <td>{{ format(new Date(listing.created_at), 'M/d/yyy') }}</td>
                     <td>
                         <v-menu open-on-hover>

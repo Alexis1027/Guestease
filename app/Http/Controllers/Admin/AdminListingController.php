@@ -14,8 +14,8 @@ class AdminListingController extends Controller
 {
     //
 
-    public function index() {
-        $listings = Listing::paginate(5);
+    public function index(?string $entry = null) {
+        $listings = Listing::paginate($entry ? $entry : 5);
         foreach($listings as $ls) {
             $ls->owner = User::find($ls->owner_id);
         }
@@ -28,9 +28,9 @@ class AdminListingController extends Controller
         return back();
     }
 
-    public function manage_listing_entry($entry) {
-        return Inertia::render('Admin/ManageListings', ['listings' => Listing::paginate($entry), 'newEntry' => $entry]);
-    }
+    // public function manage_listing_entry($entry) {
+    //     return Inertia::render('Admin/ManageListings', ['listings' => Listing::paginate($entry), 'newEntry' => $entry]);
+    // }
 
     public function destroy(Listing $listing) {
         $listing->delete();

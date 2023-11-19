@@ -7,6 +7,7 @@
 
     const {auth} = defineProps(['auth'])
     const step = ref(1)
+    const ruleTextfield = ref(1)
 
     const form = useForm({
         owner_id: auth.user.id,
@@ -23,7 +24,8 @@
         bldg_permit: null,
         price: 2500,
         images: null,
-        type: null
+        type: null,
+        rules: []
     })
     
     const submit = () => {
@@ -255,7 +257,7 @@
                     <v-list>
                         <v-list-item>
                             <template v-slot:append>
-                                <v-btn flat class="mx-1" icon="mdi-minus" @click="form.guests--"></v-btn>
+                                <v-btn flat class="mx-1" icon="mdi-minus" v-if="form.guests > 1" @click="form.guests--"></v-btn>
                                 <span class="text-h6">{{ form.guests }}</span>
                                 <v-btn flat class="mx-1" icon="mdi-plus" @click="form.guests++"></v-btn>
                             </template>
@@ -264,7 +266,7 @@
                         <v-divider></v-divider>
                         <v-list-item v-if="form.type == 'Guest house'">
                             <template v-slot:append>
-                                <v-btn flat class="mx-1" icon="mdi-minus" @click="form.rooms--"></v-btn>
+                                <v-btn flat class="mx-1" icon="mdi-minus" v-if="form.rooms > 1" @click="form.rooms--"></v-btn>
                                 <span class="text-h6">{{ form.rooms }}</span>
                                 <v-btn flat class="mx-1" icon="mdi-plus" @click="form.rooms++"></v-btn>
                             </template>
@@ -273,7 +275,7 @@
                         <v-divider></v-divider>
                         <v-list-item>
                             <template v-slot:append>
-                                <v-btn flat class="mx-1" icon="mdi-minus" @click="form.beds--"></v-btn>
+                                <v-btn flat class="mx-1" icon="mdi-minus" v-if="form.beds > 1" @click="form.beds--"></v-btn>
                                 <span class="text-h6">{{ form.beds }}</span>
                                 <v-btn flat class="mx-1" icon="mdi-plus" @click="form.beds++"></v-btn>
                             </template>
@@ -282,7 +284,7 @@
                         <v-divider></v-divider>
                         <v-list-item>
                             <template v-slot:append>
-                                <v-btn flat class="mx-1" icon="mdi-minus" @click="form.bathrooms--"></v-btn>
+                                <v-btn flat class="mx-1" icon="mdi-minus" v-if="form.bathrooms > 0" @click="form.bathrooms--"></v-btn>
                                 <span class="text-h6">{{form.bathrooms}}</span>
                                 <v-btn flat class="mx-1" icon="mdi-plus" @click="form.bathrooms++"></v-btn>
                             </template>
@@ -418,6 +420,16 @@
             </v-window-item>
 
             <v-window-item :value="12">
+                <v-container id="step1" class="placeoffers">
+                    <p class="text-h4 text-start">Add rules regarding to your place.</p>
+                    <p class="text-h6 mb-6 text-grey-darken-2 text-start"> lorem ipsum skibidi dop dop skibidi yes yes </p>
+                    <v-text-field v-for="n in ruleTextfield" :key="n" v-model="form.rules[n-1]" variant="outlined" label="New rule" color="blue"></v-text-field>
+                    <v-btn variant="tonal" block prepend-icon="mdi-plus" @click="ruleTextfield < 3 ? ruleTextfield++ : ''" color="blue">Add more</v-btn>
+                    <v-btn variant="text" class="mt-2" color="blue" @click="step++">Set up later</v-btn>
+                </v-container>
+            </v-window-item>
+
+            <v-window-item :value="13">
                 <v-container id="step1">
                     <v-alert variant="outlined" type="error" prominent border="top" title="Alert title" v-if="form.hasErrors">
                         Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Suspendisse non nisl sit amet velit hendrerit rutrum. Nullam vel sem. Pellentesque dapibus hendrerit tortor.
@@ -444,18 +456,19 @@
                     </v-row>
                 </v-container>
             </v-window-item>
+
       </v-window>
   
       <div id="action">
         <v-divider></v-divider>
-      <v-progress-linear :model-value="(step/12)*100" color="blue-darken-3"></v-progress-linear>
+      <v-progress-linear :model-value="(step/13)*100" color="blue-darken-3"></v-progress-linear>
   
         <v-card-actions>
             <v-btn v-if="step > 1" variant="text" @click="step--">
                 Back
             </v-btn>
             <v-spacer></v-spacer>
-                <v-btn v-if="step <= 11" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
+                <v-btn v-if="step <= 12" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
                     Next
                 </v-btn>
                 <v-btn v-else type="submit" @click="submit" :disabled="form.processing" :loading="form.processing" color="blue-lighten-3" class="text-none" size="large" variant="flat">

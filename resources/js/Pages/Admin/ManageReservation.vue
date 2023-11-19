@@ -1,18 +1,22 @@
 <script setup>
 
-    import {ref} from 'vue'
+    import {ref, watch} from 'vue'
     import {format} from 'date-fns'
+    import { router } from '@inertiajs/vue3'
     import AdminLayout from '../../Layouts/AdminLayout.vue'
     
     defineOptions({layout: AdminLayout})
 
+    const entry = ref()
+    const page = ref(1)
+    const entries = [5, 10, 15, 20, 25]
     const {reservations} = defineProps({
         reservations: Object
     })
-
-    const page = ref(1)
-    const entries = [5, 10, 15, 20, 25]
-    const entry = ref(5)
+    
+    watch(entry, () => {
+        router.get(`/admin/manage-reservations/${entry.value}`)
+    })
 
 </script>
 <template>
@@ -20,6 +24,7 @@
 
         <v-row justify="space-between">
             <v-col cols="2">
+                {{ entry }}
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
             </v-col>
             <v-col cols="4">
@@ -45,7 +50,7 @@
                 <tr v-if="reservations.length <= 0">
                     <td colspan="8"> No reservations.</td>
                 </tr>
-                <tr v-for="reservation in reservations" :key="reservation.id" v-else>
+                <tr v-for="reservation in reservations.data" :key="reservation.id" v-else>
                     <td>{{ reservation.id }}</td>
                     <td>
                         <p v-if="reservation.listing">{{ reservation.listing.title }}</p>
@@ -82,10 +87,22 @@
                 </tr>
             </tbody>
         </v-table>
-        <v-row  class="mt-2">
+        <!-- <v-row  class="mt-2">
             <v-col class="d-flex justify-end">
                 <v-pagination v-model="page" :length="10" :total-visible="4" rounded="circle">
                 </v-pagination>
+            </v-col>
+        </v-row> -->
+        <v-row  class="mt-2">
+            <v-col class="d-flex justify-end">
+                <Link 
+                    v-for="link in reservations.links" 
+                    :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 
+                    :key="link" 
+                    :href="link.url"
+                    v-html="link.label"
+                    >
+                </Link>
             </v-col>
         </v-row>
 </template>

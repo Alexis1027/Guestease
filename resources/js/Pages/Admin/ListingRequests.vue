@@ -1,7 +1,8 @@
 <script setup>
 
-    import {ref} from 'vue'
+    import {ref, watch} from 'vue'
     import {format} from 'date-fns'
+    import {router} from '@inertiajs/vue3'
     import AdminLayout from '../../Layouts/AdminLayout.vue'
     import ReviewListingModal from './partials/ReviewListingModal.vue'
 
@@ -16,6 +17,11 @@
         currentListing.value = listing
         showListingReviewModal.value = true
     }
+
+    watch(entry, () => {
+        router.get(`/admin/listing-requests/${entry.value}`)
+    })
+
 
     defineProps({
         listingRequests: Object
@@ -69,7 +75,7 @@
             </thead>
             <tbody>
                 <v-slide-x-transition class="py-0" group>
-                    <tr v-for="listing in listingRequests" :key="listing.id">
+                    <tr v-for="listing in listingRequests.data" :key="listing.id">
                         <td>{{ listing.id }}</td>
                         <td>{{ listing.user.firstname + ' ' + listing.user.lastname }}</td>
                         <td>{{ listing.title }}</td>
@@ -77,9 +83,9 @@
                         <td> <v-chip size="small" color="orange">{{ listing.status }}</v-chip> </td>
                         <td>
                             <v-btn prepend-icon="mdi-file-find" @click="showListingReviewModalFunc(listing)" size="small" class="text-green text-none bg-grey-lighten-5" variant="tonal">Review</v-btn>
-                            <v-btn size="small" class="text-red bg-grey-lighten-5 text-none ms-1" variant="tonal"> 
+                            <!-- <v-btn size="small" class="text-red bg-grey-lighten-5 text-none ms-1" variant="tonal"> 
                                 <v-icon>mdi-delete-outline</v-icon> Delete
-                            </v-btn>
+                            </v-btn> -->
                             <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->
                             <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
                         </td>
@@ -90,12 +96,24 @@
                 </v-slide-x-transition>
             </tbody>
         </v-table>
-        <v-row  class="mt-2">
+        <!-- <v-row  class="mt-2">
             <v-col class="d-flex justify-end">
                 <v-pagination v-model="page" :length="10" :total-visible="4" rounded="circle">
                 </v-pagination>
             </v-col>
-        </v-row>
+        </v-row> -->
+        <v-row  class="mt-2">
+        <v-col class="d-flex justify-end">
+            <Link 
+                v-for="link in listingRequests.links" 
+                :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 
+                :key="link" 
+                :href="link.url"
+                v-html="link.label"
+                >
+            </Link>
+        </v-col>
+    </v-row>
     </v-container>
     <ReviewListingModal :show="showListingReviewModal" @approved="snackbar = true" :listing="currentListing" v-if="showListingReviewModal" @closeReviewListingModal="showListingReviewModal = false" />
     <v-snackbar v-model="snackbar">

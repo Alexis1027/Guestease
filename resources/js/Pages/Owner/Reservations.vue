@@ -33,9 +33,6 @@
         <v-col cols="2">
                 <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
         </v-col>
-        <v-col cols="4">
-            <!-- <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field> -->
-        </v-col>
     </v-row>
     <v-table hover class="bg-grey-lighten-5 text-center ma-4">
         <thead>

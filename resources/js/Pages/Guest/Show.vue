@@ -194,9 +194,9 @@
                 </v-container>
 
                 <!-- Rate this place section -->
-                <v-container v-if="auth">
+                <v-container v-if="auth && is_reserved">
                     <p class="text-h5 font-weight-medium">Rate this place </p>
-                    <p>Tell others what you think. <span class="text-red"> still working on how to not show if user hasnt reserved/booked  </span> </p>
+                    <p>Tell others what you think. </p>
                     <v-divider class="my-3" />
                     <div v-if="rated">
                         <RatingCard :rating="rated" />
@@ -219,9 +219,9 @@
                         </v-alert>
                         <v-list-item prepend-icon="mdi-account-multiple" title="Guests">
                             <template v-slot:append>
-                                <v-btn icon="mdi-plus" size="small" variant="text" @click="reserveForm.guests++"></v-btn>
-                                {{ reserveForm.guests }} 
-                                <v-btn icon="mdi-minus" size="small" variant="text" @click="reserveForm.guests--"></v-btn> 
+                                <v-btn icon="mdi-plus" size="small" variant="text" v-if="reserveForm.guests <= listing.guests-1" @click="reserveForm.guests++"></v-btn>
+                                {{ reserveForm.guests }}
+                                <v-btn icon="mdi-minus" size="small" variant="text" v-if="reserveForm.guests >= 2" @click="reserveForm.guests--"></v-btn> 
                             </template>
                         </v-list-item>
                         <v-list v-if="reserveForm.checkin && reserveForm.checkout">
@@ -275,14 +275,9 @@
         <v-container>
             <p class="text-h5 font-weight-medium mb-6">House rules</p>
             <v-divider />
-                <v-list-item prepend-icon="mdi-circle-medium"> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit ipsum repellat eaque. </v-list-item>
-                <v-list-item prepend-icon="mdi-circle-medium">No smoking.</v-list-item>
-                <v-list-item prepend-icon="mdi-circle-medium">No parties/events.</v-list-item>
-                <v-list-item prepend-icon="mdi-circle-medium">No pets allowed.</v-list-item>
-                <v-list-item prepend-icon="mdi-circle-medium"> 
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil aperiam quam,
-                    assumenda optio sed autem dicta quisquam! Repellat illum vitae sint asperiores corporis modi 
-                    eveniet debitis exercitationem magnam dignissimos eius, repellendus, quis officiis nam iure! </v-list-item>
+            <v-list-item prepend-icon="mdi-circle-medium" v-for="rule in JSON.parse(listing.rules)" :key="rule">
+                {{ rule }}
+            </v-list-item>
         </v-container>
         <v-divider class="my-5" />
 

@@ -5,8 +5,8 @@
     const logo = '/images/logo/frlogo-transformed.png'
     function logout() {
         router.post('/logout')
-        location.href = '/login'
-        window.history.replaceState({}, document.title, '/login')
+        location.href = '/'
+        window.history.replaceState({}, document.title, '/')
     }
     defineProps({
         auth: Object

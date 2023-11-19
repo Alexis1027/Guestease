@@ -35,7 +35,6 @@ class HomeController extends Controller
 
     public function show(Listing $listing) {
 
-        $is_reserved = Reservation::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
         // get all the ratings from the listing
         $ratings = Rating::where('listing_id', $listing->id)
         ->whereIn('user_id', function($query) {
@@ -62,6 +61,7 @@ class HomeController extends Controller
         $owner = User::find($listing->owner_id);
 
         if(auth()->user()) {
+            $is_reserved = Reservation::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
 
             // if logged in, check if the user has rated or wishlisted the listing
             $wishlist = Wishlist::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
@@ -91,7 +91,6 @@ class HomeController extends Controller
                 'ratings' => $ratings, 
                 'averageRating' => $averageRating,
                 'reservedDates' => $reservedDates,
-                'is_reserved' => $is_reserved
             ]);
         }
     }
