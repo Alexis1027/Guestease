@@ -4,6 +4,7 @@
     import {format} from 'date-fns'
     import { router } from '@inertiajs/vue3'
     import AdminLayout from '../../Layouts/AdminLayout.vue'
+    import emailjs from '@emailjs/browser'
     
     defineOptions({layout: AdminLayout})
 
@@ -17,6 +18,40 @@
     const {reservations} = defineProps({
         reservations: Object
     })
+
+    function sendNotification(reservation) {
+        console.log(reservation)
+
+        emailjs.send('service_kfsphbh', 'template_xzp03ja', 
+        {
+            sendername: "Guestease team",
+            to: reservation.user.email,
+            subject: "Reminder: Your Reservation Is Ending Soon",
+            replyto: "guestease@team.com",
+            message: `Dear ${reservation.user.firstname},
+
+            This is a friendly reminder that your reservation for ${reservation.listing.title} is ending soon.
+
+            Reservation Details:
+            - Listing: ${reservation.listing.title}
+            - Check-in Date: ${reservation.checkin}
+            - Check-out Date: ${reservation.checkout}
+
+            As your reservation is approaching its end date, please ensure that any necessary arrangements or extensions are made promptly if needed.
+
+            If you have any questions or require assistance, please feel free to contact us.
+
+            Thank you for choosing Guestease for your accommodation needs.
+
+            Best regards,
+            Admin
+            Guestease Team`
+            }
+        , 'eEt-YCYeYc0LoTRxJ').then(() => {
+            alert('Email sent successfully!')
+        })
+    }
+
     
     watch(entry, () => {
         router.get(`/admin/manage-reservations/${entry.value}`)
@@ -26,7 +61,7 @@
 <template>
     <Head title="Reservations" />
 
-        <v-row justify="space-between">
+        <v-row justify="space-between ms-4 mt-4">
             <v-col cols="2">
                 {{ entry }}
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
@@ -35,7 +70,7 @@
                 <!-- <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field> -->
             </v-col>
         </v-row>
-        <v-table hover class="bg-grey-lighten-5 text-center">
+        <v-table hover class="bg-grey-lighten-5 text-center ma-5">
             <thead>
                 <tr>
                     <th class="text-center">ID</th>
@@ -50,7 +85,7 @@
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
-            <tbody style="font-size: 14px;">
+            <tbody>
                 <tr v-if="reservations.length <= 0">
                     <td colspan="8"> No reservations.</td>
                 </tr>
@@ -89,7 +124,7 @@
                 </td>
                 <td>
                     
-                    <v-btn size="small" :disabled="reservation.status != 'approved'" class="text-red text-none" variant="tonal" prepend-icon="mdi-bell">Notify
+                    <v-btn @click="sendNotification(reservation)" size="small" :disabled="reservation.status != 'approved'" class="text-red text-none" variant="tonal" prepend-icon="mdi-bell">Notify
                         <v-tooltip activator="parent" location="top">
                             Alert owner and guest: reservation ending soon
                         </v-tooltip>

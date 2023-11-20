@@ -112,10 +112,8 @@
                     <v-btn color="red">Logout</v-btn>
                 </Link>
             </v-app-bar>
-            <v-container>   
                 <slot>
                 </slot>
-            </v-container>
         </v-main>
     </v-layout>
 

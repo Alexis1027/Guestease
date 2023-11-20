@@ -22,6 +22,15 @@ class AdminListingController extends Controller
         return Inertia::render('Admin/ManageListings', ['listings' => $listings]);
     }
 
+    // public function data_table(?string $entry = null) {
+    //     $listings = Listing::paginate($entry ? $entry : 5);
+    //     // $listings = Listing::all();
+    //     foreach($listings as $ls) {
+    //         $ls->owner = User::find($ls->owner_id);
+    //     }
+    //     return Inertia::render('Admin/DataTable', ['listings' => $listings]);
+    // }
+
     public function update(Listing $listing, Request $request) {
         $listing->status = $request->status;
         $listing->update();

@@ -16,6 +16,7 @@ use App\Http\Controllers\Guest\GuestReservationController;
 use App\Http\Controllers\Owner\OwnerViewController;
 use App\Http\Controllers\Owner\OwnerReservationController;
 use App\Http\Controllers\Guest\ReservationRequestController;
+use App\Models\Listing;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,7 @@ use App\Http\Controllers\Guest\ReservationRequestController;
     Route::put('/admin/decline-listing/{listing}', [ListingRequestController::class, 'decline']);
 // });
 
+// Route::get('/data-table/{entry?}', [AdminListingController::class, 'data_table']);
 
 //guest
 Route::middleware(['auth'])->group(function () {

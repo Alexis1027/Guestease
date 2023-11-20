@@ -31,7 +31,7 @@
 <template>
     <Head title="Manage users" />
     
-    <v-row justify="space-between">
+    <v-row justify="space-between ms-4 mt-4">
         <v-col cols="2">
                 <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
         </v-col>
@@ -39,7 +39,7 @@
         <!-- <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field> -->
     </v-col>
     </v-row>
-    <v-table hover class="bg-grey-lighten-5 text-center">
+    <v-table hover class="bg-grey-lighten-5 text-center ma-5">
         <thead>
             <tr >
                 <th class="text-center">Id</th>

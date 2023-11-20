@@ -6,8 +6,8 @@ import 'maz-ui/css/main.css'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import { VDatePicker } from 'vuetify/labs/VDatePicker'
-import { VuetifyDateAdapter } from 'vuetify/labs/date/adapters/vuetify'
+// import { VDatePicker } from 'vuetify/labs/VDatePicker'
+// import { VuetifyDateAdapter } from 'vuetify/labs/date/adapters/vuetify'
 import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
 import {Link} from '@inertiajs/vue3'
 import {Head} from '@inertiajs/vue3'
@@ -20,9 +20,9 @@ const vuetify = createVuetify({
     // theme: {
     //   defaultTheme: 'dark'
     // }
-    date: {
-      adapter: VuetifyDateAdapter,
-    }
+    // date: {
+    //   adapter: VuetifyDateAdapter,
+    // }
 })
 
 createInertiaApp({
@@ -35,7 +35,6 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .component('Link', Link)
       .component('Head', Head)
-      .component('VDatePicker', VDatePicker)
       .component('MazPhoneNumberInput', MazPhoneNumberInput)
       .use(vue3GoogleLogin, {
         clientId: '778324553177-j9gqho3k6qvotg04m4hvcle26mto0vl5.apps.googleusercontent.com'

@@ -48,28 +48,7 @@
                     <th class="text-center">Owner</th>
                     <th class="text-center">Listing</th>
                     <th class="text-center">Date Requested</th>
-                    <th class="text-center">
-                        <v-menu open-on-hover>
-                            <template v-slot:activator="{ props }">
-                                <v-btn variant="text" append-icon="mdi-menu-down" class="text-none" v-bind="props">
-                                    Status
-                                </v-btn>
-                            </template>
-
-                            <v-list>
-                                <p class="text-red">dont work rn</p>
-                                <v-list-item value="for approval">
-                                    For Approval
-                                </v-list-item>
-                                <v-list-item value="declined">
-                                    Declined
-                                </v-list-item>
-                                <v-list-item value="approved">
-                                    Approved
-                                </v-list-item>
-                            </v-list>
-                        </v-menu>
-                    </th>
+                    <th class="text-center"> Status</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -90,7 +69,7 @@
                             <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
                         </td>
                     </tr>
-                    <tr v-if="listingRequests.length <= 0">
+                    <tr v-if="listingRequests.data.length <= 0">
                         <td colspan="8"> No requests.</td>
                     </tr>
                 </v-slide-x-transition>
