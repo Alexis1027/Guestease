@@ -13,8 +13,9 @@ use Illuminate\Http\Request;
 class OwnerReservationController extends Controller
 {
     //
-    public function index() {
-        $listings = Listing::where('owner_id', auth()->user()->id)->get();
+    public function index(?string $entry = null) {
+        
+        $listings = Listing::where('owner_id', auth()->user()->id)->paginate($entry ? (int) $entry : 5);
         $reservations = [];
         foreach($listings as $ls) {
             //find the rooms of owner and find the rooms in the reservation table,

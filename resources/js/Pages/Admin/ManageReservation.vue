@@ -63,7 +63,6 @@
 
         <v-row justify="space-between ms-4 mt-4">
             <v-col cols="2">
-                {{ entry }}
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
             </v-col>
             <v-col cols="4">
@@ -87,7 +86,7 @@
             </thead>
             <tbody>
                 <tr v-if="reservations.length <= 0">
-                    <td colspan="8"> No reservations.</td>
+                    <td colspan="10"> No reservations.</td>
                 </tr>
                 <tr v-for="reservation in reservations.data" :key="reservation.id" v-else>
                     <td>{{ reservation.id }}</td>

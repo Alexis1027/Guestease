@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'address' => fake()->address(),
             'phone_number' => fake()->phoneNumber(),
             'profile_pic' => $profile_pic ? str_replace($profile_pic_path . '/', '', $this->faker->randomElement($profile_pic)) : null,
-            'role' => 'user',
+            'role' => 'guest',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),

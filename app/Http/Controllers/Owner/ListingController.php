@@ -54,6 +54,7 @@ class ListingController extends Controller
         $form['amenities'] = json_encode($form['amenities']);
         try {
             $form['bldg_permit'] = $request->bldg_permit[0]->getClientOriginalName();
+            $request->bldg_permit[0]->move(public_path('/images/uploads'), $request->bldg_permit[0]->getClientOriginalName());
             Listing::create($form);
         }
         catch(Exception $e) {

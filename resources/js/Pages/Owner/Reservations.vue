@@ -1,7 +1,7 @@
 <script setup>
 
     import OwnerLayout from '../../Layouts/OwnerLayout.vue'
-    import {ref} from 'vue'
+    import {ref, watch} from 'vue'
     import {format} from 'date-fns'
     import {router} from '@inertiajs/vue3'
 
@@ -22,6 +22,10 @@
             listing_id: reservation.listing_id
         })
     }
+
+    watch(entry, () => {
+        router.get(`/owner/reservations/${entries.value}`)
+    })
 
     defineOptions({
         layout: OwnerLayout

@@ -36,7 +36,6 @@
                     <p class="truncate-text text-body-1 font-weight-medium">
                         {{ listing.title }} 
                     </p>
-                    {{ listing.status }}
                 </v-col>
                 <v-col cols="4">
                     <v-chip color="warning" prepend-icon="mdi-star-outline" text-color="white" size="small" class="ms-4">
@@ -57,7 +56,7 @@
                     ₱{{ parseInt(listing.price).toLocaleString() }}
                 </strong> 
                 <span class="text-grey-darken-3">/ {{listing.type == 'Guest house' ? 'monthly' : 'daily'}}</span> 
-                <v-chip v-if="listing.status == 'Not available'" color="red">{{ listing.status   }}</v-chip>
+                <v-chip v-if="listing.status == 'Not available' || listing.status == 'For approval'" color="red">{{ listing.status   }}</v-chip>
             </p>
             <v-chip class="ma-2 text-grey-darken-3" prepend-icon="mdi-bed" size="small" v-if="listing.beds > 0">
                 {{ listing.beds }}  Bed

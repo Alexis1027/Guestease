@@ -24,7 +24,7 @@
         signupButton.value = true
         form.post('/validate/user', {
             onSuccess: () => {
-                form.post('/create/user')
+              form.post('/create/user')
                 createUserWithEmailAndPassword(auth, form.email, form.password)
                 .then((userCredential) => {
                     sendEmailVerification(auth.currentUser)

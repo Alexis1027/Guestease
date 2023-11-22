@@ -35,7 +35,7 @@ use App\Models\Listing;
     Route::get('/owner/calendar', [OwnerViewController::class, 'calendar']);
     Route::get('/owner/calendar/{listing}', [OwnerViewController::class, 'calendar']);
     Route::get('/owner/listings', [ListingController::class, 'index']);
-    Route::get('/owner/reservations', [OwnerReservationController::class, 'index']);
+    Route::get('/owner/reservations/{entry?}', [OwnerReservationController::class, 'index']);
     Route::put('/owner/update-reservation/{reservation}', [OwnerReservationController::class, 'update']);
     Route::get('/owner/create-listing', [ListingController::class, 'create']);
     Route::get('/owner/edit-listing/{listing}', [ListingController::class, 'edit']);

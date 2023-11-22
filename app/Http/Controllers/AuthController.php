@@ -25,6 +25,7 @@ class AuthController extends Controller
     public function login() {
         if(!auth()->user()) {
             return Inertia::render('Auth/Login');
+            // return redirect('/login');
         }
         return back();
     }
@@ -84,43 +85,17 @@ class AuthController extends Controller
             'password' => ['required', 'min:6'],
             'phone_number' => ['required', 'unique:users']
         ]);
-
         return back();
-
-        $form['role'] = 'user';
-        $form['password'] = bcrypt($form['password']);
-        $user = User::create($form);
-        $user->profile_pic = "default_profile.png";
-        $user->save();
-        return redirect('/login');
-        // auth()->login($user);
     }
 
     public function store_user(Request $request) {
         $user = User::create($request->all());
         $user->profile_pic = "default_profile.png";
         $user->save();
-        return redirect('/login');
+        return Inertia::render('Auth/Login');
     }
 
-    public function storeOwner(Request $request) {
-        $form = $request->validate([
-            'firstname' => ['required', 'min:3'],
-            'lastname' => ['required', 'min:3'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'min:6'],
-            'phone_number' => ['required', 'unique:users']
-        ]);
-        //hash password
-        $form['role'] = 'owner';
-        $form['password'] = bcrypt($form['password']);
-        $user = User::create($form);
-        $user->profile_pic = "default_profile.png";
-        $user->save();
-        // auth()->login($user);
-        return redirect('/login');
-    }
-
+   
     public function store_admin(Request $request) {
         $admin = $request->validate([
             'firstname' => ['required', 'min:3'],
@@ -136,43 +111,62 @@ class AuthController extends Controller
         return back();
     }
 
-    public function sendVerificationCode(Request $request) {
-        return redirect()->back();
-        $sid = getenv("TWILIO_ACCOUNT_SID");
-        $token = getenv("TWILIO_AUTH_TOKEN");
+    // public function sendVerificationCode(Request $request) {
+    //     return redirect()->back();
+    //     $sid = getenv("TWILIO_ACCOUNT_SID");
+    //     $token = getenv("TWILIO_AUTH_TOKEN");
 
-        $twilio = new Client($sid, $token);
+    //     $twilio = new Client($sid, $token);
 
-        $verification = $twilio->verify->v2->services("VA678c4c11b87e1cd19c25641424aa402a")
-        ->verifications
-        ->create("+639168290756", "sms");
-        return redirect()->back();
-    } 
+    //     $verification = $twilio->verify->v2->services("VA678c4c11b87e1cd19c25641424aa402a")
+    //     ->verifications
+    //     ->create("+639168290756", "sms");
+    //     return redirect()->back();
+    // } 
 
-    public function verifyVerificationCode(Request $request) {
-        // dd($request->code);
-        dd(auth()->user());
-        $sid = getenv("TWILIO_ACCOUNT_SID");
-        $token = getenv("TWILIO_AUTH_TOKEN");
-        $twilio = new Client($sid, $token);
+    // public function storeOwner(Request $request) {
+    //     $form = $request->validate([
+    //         'firstname' => ['required', 'min:3'],
+    //         'lastname' => ['required', 'min:3'],
+    //         'email' => ['required', 'email'],
+    //         'password' => ['required', 'min:6'],
+    //         'phone_number' => ['required', 'unique:users']
+    //     ]);
+    //     //hash password
+    //     $form['role'] = 'owner';
+    //     $form['password'] = bcrypt($form['password']);
+    //     $user = User::create($form);
+    //     $user->profile_pic = "default_profile.png";
+    //     $user->save();
+    //     // auth()->login($user);
+    //     return redirect('/login');
+    // }
 
-        try {
-            $verification_check = $twilio->verify->v2->services("VA678c4c11b87e1cd19c25641424aa402a")
-            ->verificationChecks
-            ->create([
-                        "to" => "+639168290756",
-                        "code" => $request->code
-                    ]
-            );
-                $user = auth()->user();
-                $user->phone_number_verified = true;
-                $user->update();
 
-        }
-        catch(Exception $e) {
-            return back()->withErrors(['badVerificationCode' => 'Invalid verification code']);
-        }
+    // public function verifyVerificationCode(Request $request) {
+    //     // dd($request->code);
+    //     dd(auth()->user());
+    //     $sid = getenv("TWILIO_ACCOUNT_SID");
+    //     $token = getenv("TWILIO_AUTH_TOKEN");
+    //     $twilio = new Client($sid, $token);
 
-    }
+    //     try {
+    //         $verification_check = $twilio->verify->v2->services("VA678c4c11b87e1cd19c25641424aa402a")
+    //         ->verificationChecks
+    //         ->create([
+    //                     "to" => "+639168290756",
+    //                     "code" => $request->code
+    //                 ]
+    //         );
+    //             $user = auth()->user();
+    //             $user->phone_number_verified = true;
+    //             $user->update();
+
+    //     }
+    //     catch(Exception $e) {
+    //         return back()->withErrors(['badVerificationCode' => 'Invalid verification code']);
+    //     }
+
+    // }
 
 }
