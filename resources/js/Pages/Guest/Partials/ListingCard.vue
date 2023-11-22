@@ -14,16 +14,13 @@
 
 <template>
     <v-card id="carousel" class="rounded-lg border">
-        <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters="hover" show-arrows="hover" id="carousel">
+        <v-carousel :cycle="false" height="100%" hide-delimiter-background hide-delimiters="hover"  :show-arrows="listing.type == 'Guest house' ? 'hover' : false" id="carousel">
             <v-carousel-item v-for="(image, i) in images" :key="i">
                 <Link :href="`/room/${listing.id}`">
                     <v-img id="carousel" :src="`images/uploads/${images[i]}`" cover height="275" width="100%" class="rounded-t-lg">
                         <template v-slot:placeholder>
                             <div class="d-flex align-center justify-center fill-height bg-grey">
-                                <v-progress-circular
-                                color="grey-lighten-4"
-                                indeterminate
-                                ></v-progress-circular>
+                                <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
                             </div>
                         </template>
                     </v-img>

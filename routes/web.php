@@ -81,6 +81,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reservations', [HomeController::class, 'reservations'])->name('reservations');
     Route::get('/notifications', [HomeController::class, 'notifications']);
     Route::get('/account', [HomeController::class, 'account'])->middleware('auth');
+    Route::put('/account/update-profile_pic', [UserController::class, 'update_profile_pic']);
 });
 
 //kung wala ni login ang user

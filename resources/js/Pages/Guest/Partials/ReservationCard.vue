@@ -21,6 +21,8 @@
 
 <template>
     <v-card class="mt-3 border" width="100%">
+        {{ new Date() - new Date(reservation.created_at)  }}
+        {{ format(new Date(reservation.created_at), 'MMMM dd, yyyy') }}
         <!-- title and the image -->
         <Link :href="`/room/${reservation.listing.id}`">
             <v-list-item :title="reservation.listing.title" :subtitle="reservation.listing.location">
@@ -79,7 +81,7 @@
         <v-divider/>
         <!-- cancel reservation and contact owner buttons -->
          <v-card-actions class="justify-end d-flex">
-            <v-btn color="red" variant="tonal" class="text-none me-1" @click="openCancelReservationDialog(reservation.id)">Cancel reservation</v-btn>
+            <v-btn color="red" variant="tonal" v-if="reservation.status != 'cancelled'" class="text-none me-1" @click="openCancelReservationDialog(reservation.id)">Cancel reservation</v-btn>
             <Link :href="`/profile/${reservation.listing.owner_id}`">
                 <v-btn variant="flat" class="text-none" color="blue">Contact owner</v-btn>
             </Link>

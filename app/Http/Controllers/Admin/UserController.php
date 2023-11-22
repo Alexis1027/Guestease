@@ -52,5 +52,9 @@ class UserController extends Controller
  
     }
 
+    public function update_profile_pic(Request $request) {
+        dd($request);
+    }
+
     
 }

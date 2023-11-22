@@ -9,8 +9,8 @@
     defineOptions({layout: Layout})
 
     const props = defineProps(['auth', 'showInputVerificationCodeProp'])
-    // const sendVerificationCodeLoading = ref(false)
-    // const verificationCode = ref('')
+
+    const showFileInput = ref(false)
     const results = ref()
     const snackbar = ref(false)
     const form = useForm({
@@ -19,6 +19,10 @@
         phone_number: props.auth.user.phone_number,
         address: props.auth.user.address,
         email: props.auth.user.email,
+    })
+
+    const profilePicForm = useForm({
+        profile_pic: null
     })
 
     const submit = () => {
@@ -35,6 +39,9 @@
         }
         
     }
+
+    // const sendVerificationCodeLoading = ref(false)
+    // const verificationCode = ref('')
 
     // const sendVerificationCodeForm = useForm({
     //     phoneNumber: props.auth.user.contact_no
@@ -70,8 +77,16 @@
             <v-avatar size="100">
                 <v-img src="/images/profile/21.png" ></v-img>
             </v-avatar>
-            <v-btn class="text-none mx-6" color="blue">Upload</v-btn>
-            <v-btn class="text-none" variant="text" color="red" prepend-icon="mdi-close">Delete</v-btn>
+            <span class="text-red">not working</span>
+            <v-btn class="text-none mx-6" prepend-icon="mdi-pencil" v-if="!showFileInput" @click="showFileInput = true" color="blue">Edit profile picture</v-btn>
+            <v-btn v-else class="text-none mx-6" prepend-icon="mdi-pencil" color="red" @click="showFileInput = false"> Cancel</v-btn>
+            <div v-if="showFileInput">
+                <v-file-input class="mt-2" name="profile_pic" v-model="profilePicForm.profile_pic" variant="outlined" label="File input">
+                    <template v-slot:append>
+                        <v-btn color="green" class="ms-5" @click="profilePicForm.put(`/account/update-profile_pic`)">Save</v-btn>
+                    </template>
+                </v-file-input>
+            </div>
         </v-card-item>
     </v-card>
 

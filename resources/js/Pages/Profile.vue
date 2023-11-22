@@ -2,7 +2,6 @@
     import Layout from '../Layouts/Layout.vue'
     import {format} from 'date-fns'
 
-
     defineOptions({layout: Layout})
     defineProps({
         auth: Object,
