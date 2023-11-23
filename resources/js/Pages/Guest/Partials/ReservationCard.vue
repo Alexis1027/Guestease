@@ -21,8 +21,6 @@
 
 <template>
     <v-card class="mt-3 border" width="100%">
-        {{ new Date() - new Date(reservation.created_at)  }}
-        {{ format(new Date(reservation.created_at), 'MMMM dd, yyyy') }}
         <!-- title and the image -->
         <Link :href="`/room/${reservation.listing.id}`">
             <v-list-item :title="reservation.listing.title" :subtitle="reservation.listing.location">

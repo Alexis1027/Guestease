@@ -2,9 +2,9 @@
 
     import MazPicker from 'maz-ui/components/MazPicker'
     import {ref, defineEmits, watch} from 'vue'
-    
+    import {format} from 'date-fns'
 
-    const prop = defineProps(['reservedDates'])
+    const prop = defineProps(['reservedDates', 'listingType'])
     const emit = defineEmits("updateDate")
     const rangeValues = ref({
         start: undefined,
@@ -12,13 +12,18 @@
     })
 
     watch(rangeValues, () => {
+        if(prop.listingType == 'Guest house') {
+            rangeValues.value.start = rangeValues.value.start
+            const startDate = new Date(rangeValues.value.start)
+            const nextMonth = startDate.setMonth(startDate.getMonth() + 1)
+            rangeValues.value.end = format(new Date(nextMonth), 'yyyy-MM-dd')
+        }
         emit("updateDate", rangeValues)
     })
-
     
 
-  const today = new Date() - 1;
-  const disabledDates = []
+    const today = new Date() - 1;
+    const disabledDates = []
 
 //karon nga date
 //   const karon = new Date();
@@ -57,7 +62,7 @@
         color="primary"
         :disabledDates="disabledDates"
         double
-        shortcut="undefined"
+        noShortcuts
         format="YYYY-MM-DD"
         pickerPosition="right"
     />

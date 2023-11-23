@@ -56,10 +56,23 @@
     }
 
     const updateDate = (date) => {
-        reserveForm.checkin = date.value.start,
-        reserveForm.checkout = date.value.end
-        reserveForm.days = Math.abs((new Date(reserveForm.checkin) - new Date(reserveForm.checkout)) / (1000 * 3600 * 24)) 
+        // if(props.listing.type == 'Guest house') {
+        //     console.log(date.value.start)
+        //     reserveForm.checkin = date.value.start
+        //     const startDate = new Date(date.value.start)
+        //     reserveForm.checkout = startDate.setMonth(startDate.getMonth() + 1)
+        //     reserveForm.days = Math.abs((new Date(reserveForm.checkin) - new Date(reserveForm.checkout)) / (1000 * 3600 * 24)) 
+        // }
+        // else {
+            reserveForm.checkin = date.value.start
+            reserveForm.checkout = date.value.end
+            reserveForm.days = Math.abs((new Date(reserveForm.checkin) - new Date(reserveForm.checkout)) / (1000 * 3600 * 24)) 
+        // }
+        
     }
+
+    console.log(props.listing.type)
+   
 
 </script>
 
@@ -101,42 +114,41 @@
         <v-row>
             <v-col cols="8">
                 <!-- Guest house details -->
-                        <v-list-item>
-                            <!-- <template v-slot:append>
-                                <Link :href="`/profile/${owner.id}`">
-                                    <v-avatar size="90" id="avatar">
-                                        <v-img :src="`/images/profile/${owner.profile_pic}`"></v-img>
-                                    </v-avatar>
-                                </Link>
-                            </template> -->
-                            <p class="text-h5 text-capitalize">{{ listing.title }}</p>
-                                <v-chip v-if="listing.guests > 0">
-                                    <p>
-                                        <v-icon>mdi-account-multiple</v-icon>
-                                         {{ listing.guests }} Guests
-                                    </p>
-                                </v-chip>
+                <v-list-item>
+                    <!-- <template v-slot:append>
+                        <Link :href="`/profile/${owner.id}`">
+                            <v-avatar size="90" id="avatar">
+                                <v-img :src="`/images/profile/${owner.profile_pic}`"></v-img>
+                            </v-avatar>
+                        </Link>
+                    </template> -->
+                    <p class="text-h5 text-capitalize">{{ listing.title }}</p>
+                        <v-chip v-if="listing.guests > 0">
+                            <p>
+                                <v-icon>mdi-account-multiple</v-icon>
+                                    {{ listing.guests }} Guests
+                            </p>
+                        </v-chip>
 
-                                <v-chip v-if="listing.rooms > 0">
-                                    <p>
-                                        <v-icon>mdi-door-open</v-icon>
-                                        {{ listing.rooms }} Rooms
-                                    </p>
-                                </v-chip>
-                                <v-chip v-if="listing.beds > 0">
-                                    <p>
-                                        <v-icon>mdi-bed</v-icon>
-                                        {{ listing.beds }} Beds
-                                    </p>
-                                </v-chip>
-                                <v-chip v-if="listing.bathrooms > 0">
-                                    <p>
-                                        <v-icon>mdi-shower</v-icon>
-                                        {{ listing.bathrooms }} Bathrooms
-                                    </p>
-                                </v-chip>
-                        </v-list-item>
-
+                        <v-chip v-if="listing.rooms > 0">
+                            <p>
+                                <v-icon>mdi-door-open</v-icon>
+                                {{ listing.rooms }} Rooms
+                            </p>
+                        </v-chip>
+                        <v-chip v-if="listing.beds > 0">
+                            <p>
+                                <v-icon>mdi-bed</v-icon>
+                                {{ listing.beds }} Beds
+                            </p>
+                        </v-chip>
+                        <v-chip v-if="listing.bathrooms > 0">
+                            <p>
+                                <v-icon>mdi-shower</v-icon>
+                                {{ listing.bathrooms }} Bathrooms
+                            </p>
+                        </v-chip>
+                </v-list-item>
                     
                     <v-container>
                         <p class="text-h5 font-weight-medium">About this place </p>
@@ -212,14 +224,14 @@
                 <!-- Check in checkout and Reserve button section -->
                     <v-container id="reserveBtn" class="border">
                         <span class="text-h6">₱{{ parseInt(listing.price).toLocaleString() }}</span> {{ listing.type == "Guest house" ? "monthly" : "daily" }}
-                        <DatePicker @updateDate="updateDate" :reservedDates="reservedDates"/>
+                        <DatePicker @updateDate="updateDate" :reservedDates="reservedDates" :listingType="listing.type" />
                         <v-alert variant="outlined" type="error" class="mt-5" prominent v-model="reserveFormAlert">
                             <p class="font-weight-bold">Let's try that again</p>
                             <p>Please input your check in and check out dates.</p>
                         </v-alert>
                         <v-list-item prepend-icon="mdi-account-multiple" title="Guests">
                             <template v-slot:append>
-                                <v-btn icon="mdi-plus" size="small" variant="text" v-if="reserveForm.guests <= listing.guests-1" @click="reserveForm.guests++"></v-btn>
+                                <v-btn icon="mdi-plus" size="small" variant="text" v-if="reserveForm.guests < listing.guests" @click="reserveForm.guests++"></v-btn>
                                 {{ reserveForm.guests }}
                                 <v-btn icon="mdi-minus" size="small" variant="text" v-if="reserveForm.guests >= 2" @click="reserveForm.guests--"></v-btn> 
                             </template>
@@ -280,35 +292,6 @@
             </v-list-item>
         </v-container>
         <v-divider class="my-5" />
-
-        <!-- CONTACT OWNER SECTION -->
-        <!-- <v-container class="bg-white">
-            <v-list-item>
-                <template v-slot:prepend>
-                    <v-avatar size="90" id="avatar">
-                        <v-img :src="`../images/profile/${owner.profile_pic}`"></v-img>
-                    </v-avatar>
-                </template>
-                <p class="text-h5">Guest house owned by {{ owner.firstname + ' ' + owner.lastname }}</p>
-                <p class="text-grey-darken-2">Joined on {{ format(new Date(owner.created_at), 'MMMM dd, yyyy') }}</p>
-            </v-list-item>
-            <v-list height="100%">
-                <v-list-item prepend-icon="mdi-home" :title="`Lives in ${owner.address}`">
-                </v-list-item>
-                
-                <v-list-item prepend-icon="mdi-facebook-messenger">
-                    {{ owner.firstname + ' ' + owner.lastname }}
-                </v-list-item>
-                <v-list-item prepend-icon="mdi-phone" subtitle="Contact number" :title="`${owner.contact_no}`">
-                </v-list-item>
-                <v-list-item>
-                    <Link :href="`/profile/${owner.id}`">
-                        <v-btn class="text-none" color="blue">Contact owner</v-btn>
-                    </Link>
-                </v-list-item>
-            </v-list>
-        </v-container> -->
-                <!-- About this place section -->
         <!-- Components -->
         <RatingDialog :showReviewModal="showReviewModal" :auth="auth" :star="rating" :listing="listing" @closeReviewModal="showReviewModal = false" />
     </v-container>

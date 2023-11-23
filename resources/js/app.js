@@ -17,9 +17,9 @@ import {auth} from './firebase.js'
 const vuetify = createVuetify({
     components,
     directives,
-    // theme: {
-    //   defaultTheme: 'dark'
-    // }
+    theme: {
+      defaultTheme: 'light'
+    }
     // date: {
     //   adapter: VuetifyDateAdapter,
     // }
