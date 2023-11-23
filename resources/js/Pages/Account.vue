@@ -4,7 +4,6 @@
     import {useForm} from '@inertiajs/vue3'
     import Layout from '../Layouts/Layout.vue'
     import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
-    import {router} from '@inertiajs/vue3'
 
     defineOptions({layout: Layout})
 
@@ -18,7 +17,6 @@
         lastname: props.auth.user.lastname,
         phone_number: props.auth.user.phone_number,
         address: props.auth.user.address,
-        email: props.auth.user.email,
     })
 
     const profilePicForm = useForm({
@@ -104,7 +102,9 @@
                         defaultCountryCode="PH"
                         @update="results = $event"
                         :success="results?.isValid"
+                        :error="form.errors.phone_number"
                     />
+                    <p class="text-error">{{ form.errors.phone_number }}</p>
                 </v-col>
                 <!-- <v-col cols="3" class="mt-2">
                     <p class="text-green" v-if="auth.phone_number_verified"><v-icon>mdi-check</v-icon> Verified</p>
@@ -125,7 +125,7 @@
                 </v-col>
             </v-row> -->
             <v-text-field class="mt-4" variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
-            <v-text-field variant="outlined" clearable :error-messages="form.errors.email" label="Email" color="blue" v-model="form.email"></v-text-field>
+            <!-- <v-text-field variant="outlined" clearable :error-messages="form.errors.email" label="Email" color="blue" v-model="form.email"></v-text-field> -->
         </v-card-item>
         <v-card-actions class="justify-end d-flex">
             <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submit" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
@@ -149,8 +149,8 @@
       v-model="snackbar"
       multi-line
       color="blue"
-      class="text-end"
-      location="bottom right"
+      class="text-center"
+      location="bottom center"
       timeout="1200"
     >
       Update Sucessful.

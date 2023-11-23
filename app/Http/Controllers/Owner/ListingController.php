@@ -15,8 +15,8 @@ class ListingController extends Controller
         return Inertia::render('Owner/CreateListing');
     }
 
-    public function index() {
-        return Inertia::render('Owner/Listings', ['listings' => Listing::all()->where('owner_id', auth()->user()->id)]);
+    public function index(?string $entry = null) {
+        return Inertia::render('Owner/Listings', ['listings' => Listing::where('owner_id', auth()->user()->id)->paginate($entry ? $entry : 5)]);
     }
 
     public function edit(Listing $listing) {

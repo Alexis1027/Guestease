@@ -7,7 +7,7 @@
     const message = new Map([
         ['approve', 'Do you want to approve this reservation?'],
         ['pending', 'Do you want to mark this reservation as pending?'],
-        ['cancel', 'Are you sure, you want to cancel this reservation?'],
+        ['cancel', 'Are you sure, you want to cancel this reservation?  This process cannot be undone.'],
         ['test', 'test lang po ito']
     ])
 
@@ -52,7 +52,7 @@
                 <v-btn class="text-none me-4"  rounded variant="flat" width="90" @click="emit('closeEditReservationStatusDialog')" color="grey">
                     No
                 </v-btn>
-                <v-btn class="text-none" rounded variant="flat" width="90" color="red" @click="updateReservation" type="submit" >
+                <v-btn class="text-none" rounded variant="flat" width="90" color="blue" @click="updateReservation" type="submit" >
                     Yes
                 </v-btn>
             </div>

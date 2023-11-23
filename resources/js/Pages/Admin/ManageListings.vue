@@ -90,8 +90,8 @@
                                 </v-list-item>
                                 <v-list-item prepend-icon="mdi-close" title="Not available" @click="updateListing(listing, 'Not available')">
                                 </v-list-item>
-                                <v-list-item prepend-icon="mdi-delete-outline" title="Delete listing" @click="deleteListing(listing)" base-color="red">
-                                </v-list-item>
+                                <!-- <v-list-item prepend-icon="mdi-delete-outline" title="Delete listing" @click="deleteListing(listing)" base-color="red">
+                                </v-list-item> -->
                             </v-list>
                         </v-menu>
                     </td>

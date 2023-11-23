@@ -32,7 +32,7 @@
         new Chart(lstChart,{
             type: 'bar',
             data: {
-                labels: ['approved listings', 'pending listings', 'rejected listings', 'available listings', 'not available listings'],
+                labels: ['Approved', 'Pending', 'Rejected', 'Available', 'Not available'],
                 datasets: [
                     {
                         label: 'Listings',
@@ -62,7 +62,7 @@
                 labels: ['Number of guests', 'Number of admins', 'Number of owners'],
                 datasets: [
                     {
-                        label: 'Listings',
+                        label: 'Users',
                         data: [
                             prop.guests,
                             prop.admins, 
@@ -89,8 +89,7 @@
 <template>
 
     <Head title="Dashboard" />
-    <p class="text-h4 mb-1">Admin dashboard</p>
-
+    <p class="text-h4 text-center my-5 mb-1">Admin dashboard</p>
     <v-container>
         <p class="text-h5">Listing statistics</p>
         <v-card height="400px" width="70%" class="bg-white">

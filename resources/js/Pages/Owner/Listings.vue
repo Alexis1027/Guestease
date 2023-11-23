@@ -1,8 +1,9 @@
 <script setup>
 
     import OwnerLayout from '../../Layouts/OwnerLayout.vue'
-    import {ref} from 'vue'
+    import {ref, watch} from 'vue'
     import {format} from 'date-fns'
+    import {router} from '@inertiajs/vue3'
     import DeleteListingDialog from './Partials/DeleteListingDialog.vue'
 
     const page = ref(1)
@@ -15,6 +16,10 @@
         deleteListingDialog.value = true
     }
 
+    watch(entry, () => {
+        router.get(`/owner/listings/${entry.value}`)
+    })
+
     const statusColor = new Map([
         ['For approval', 'orange'],
         ['Available', 'green'],
@@ -22,7 +27,8 @@
     ])
 
     defineOptions({ layout: OwnerLayout })
-    defineProps({ listings: Object })
+    const {listings} = defineProps({ listings: Object })
+    console.log(listings)
 
 </script>
 
@@ -57,7 +63,7 @@
                 <tr v-if="listings.length <= 0">
                     <td colspan="8">No listings found.</td>
                 </tr>
-                <tr v-for="listing in listings" :key="listing.id">
+                <tr v-for="listing in listings.data" :key="listing.id">
                     <td>
                         <v-list-item :title="listing.title">
                                 <template v-slot:prepend>
@@ -101,9 +107,10 @@
                     </td>
                     <td>{{ format(new Date(listing.created_at), 'M/d/y') }}</td>
                     <td>
-                        
-                        <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
-                        <v-menu open-on-hover>
+                        <Link :href="`/owner/edit-listing/${listing.id}`">
+                            <v-btn prepend-icon="mdi-pencil" variant="tonal" color="blue" size="small">Edit</v-btn>
+                        </Link>
+                        <!-- <v-menu open-on-hover>
                             <template v-slot:activator="{ props }">
                                 <v-btn color="grey-darken-2" icon="mdi-cog" class="text-none" variant="text" v-bind="props">
                                 </v-btn>
@@ -118,27 +125,27 @@
                                 </v-list-item>
                                 
                             </v-list>
-                        </v-menu>
+                        </v-menu> -->
                     </td>
                 </tr>
             </tbody>
         </v-table>
         <v-row  class="mt-2">
             <v-col class="d-flex justify-end">
-                <!-- <Link 
-                    v-for="link in prop.users.links" 
+                <Link 
+                    v-for="link in listings.links" 
                     :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 
                     :key="link" 
                     :href="link.url"
                     v-html="link.label"
                     >
-                </Link> -->
-                <v-pagination
+                </Link>
+                <!-- <v-pagination
                 v-model="page"
                 :length="10"
                 :total-visible="4"
                 rounded="circle"
-                ></v-pagination>
+                ></v-pagination> -->
             </v-col>
         </v-row>
     </v-container>

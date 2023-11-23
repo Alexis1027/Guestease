@@ -20,11 +20,11 @@
         <v-row class="mt-6">
             <v-col cols="9">
                 <p class="text-h4 text-capitalize">Welcome, {{ auth.user.firstname }}!</p>
-                Guests can reserve after the administrator publishes your place.
+                Guests can reserve after the administrator publishes your listing.
             </v-col>
             <v-col class="justify-end d-flex">
                 <Link href="/owner/create-listing">
-                    <v-btn class="mt-2 text-none" variant="outlined" prepend-icon="mdi-plus" color="blue">Create new listing</v-btn>
+                    <v-btn class="mt-2 text-none" variant="flat" prepend-icon="mdi-plus" color="blue">Create new listing</v-btn>
                 </Link>
             </v-col>
         </v-row>

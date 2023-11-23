@@ -129,7 +129,7 @@
                 <td>
                     <v-menu open-on-hover>
                         <template v-slot:activator="{ props }">
-                            <v-btn :color="statusColor.get(reservation.status)" append-icon="mdi-menu-down" class="text-none" variant="tonal" v-bind="props">
+                            <v-btn :disabled="reservation.status == 'cancelled'" :color="statusColor.get(reservation.status)" append-icon="mdi-menu-down" class="text-none" variant="tonal" v-bind="props">
                                 {{ reservation.status }}
                             </v-btn>
                         </template>
@@ -147,7 +147,7 @@
                 <td>
                     <v-btn @click="sendNotification(reservation)" size="small" :disabled="reservation.status != 'approved'" class="text-red text-none" variant="tonal" prepend-icon="mdi-bell">Notify
                         <v-tooltip activator="parent" location="top">
-                            Notify guest reservation ending soon
+                            Notify guest: reservation ending soon
                         </v-tooltip>
                     </v-btn>
                 </td>

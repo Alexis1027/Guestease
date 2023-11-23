@@ -54,6 +54,8 @@ class HomeController extends Controller
 
         // get all the reserved dates from the listing
         $reservedDates = Reservation::where('listing_id', $listing->id)
+            ->where('status', 'approved')
+            ->where('status', 'pending')
             ->select('checkin', 'checkout')
             ->get();
 
@@ -61,8 +63,7 @@ class HomeController extends Controller
         $owner = User::find($listing->owner_id);
 
         if(auth()->user()) {
-            $is_reserved = Reservation::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
-
+            $is_reserved = Reservation::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->get();
             // if logged in, check if the user has rated or wishlisted the listing
             $wishlist = Wishlist::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
             $rating = Rating::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();

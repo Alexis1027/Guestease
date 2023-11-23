@@ -49,7 +49,7 @@
                 <th class="text-center">Phone number</th>
                 <th class="text-center">Role</th>
                 <th class="text-center">Joined at</th>
-                <th class="text-center">Actions</th>
+                <!-- <th class="text-center">Actions</th> -->
             </tr>
         </thead>
         <tbody>
@@ -66,12 +66,12 @@
                     <td>{{ user.phone_number }}</td>
                     <td> {{ user.role }} </td>
                     <td> {{ format(new Date(user.created_at), 'M/dd/yyyy') }} </td>
-                    <td>
+                    <!-- <td>
                         <v-btn @click="deleteUser(user)" size="small" variant="tonal" class="text-none bg-grey-lighten-5 text-red">
                             <v-icon>mdi-delete-outline</v-icon> Delete
                         </v-btn>
                         
-                    </td>
+                    </td> -->
                 </tr>
             </v-slide-x-transition>
         </tbody>

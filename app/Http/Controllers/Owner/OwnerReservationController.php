@@ -30,11 +30,18 @@ class OwnerReservationController extends Controller
     }
 
     public function update(Reservation $reservation, Request $request) {
+        
         $listing = Listing::find($request->listing_id);
         if(($listing->type == "Room" || $listing->type == "Guest house") && $request->status == "approved") {
             $listing->status = "Not available";
             $listing->update();
         }
+
+        if(($listing->type == "Room" || $listing->type == "Guest house") && $request->status == "cancelled") {
+            $listing->status = "Available";
+            $listing->update();
+        }
+
         $reservation->status = $request->status;
         $reservation->update();
         return back();

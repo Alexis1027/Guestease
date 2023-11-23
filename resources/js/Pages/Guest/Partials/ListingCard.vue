@@ -53,7 +53,7 @@
                     ₱{{ parseInt(listing.price).toLocaleString() }}
                 </strong> 
                 <span class="text-grey-darken-3">/ {{listing.type == 'Guest house' ? 'monthly' : 'daily'}}</span> 
-                <v-chip class="ms-5" prepend-icon="mdi-alert" v-if="listing.status == 'Not available' || listing.status == 'For approval'" color="red">{{ listing.status   }}</v-chip>
+                <v-chip class="ms-2" prepend-icon="mdi-alert" v-if="listing.status == 'Not available' || listing.status == 'For approval'" color="red">{{ listing.status   }}</v-chip>
             </p>
             <v-chip class="ma-2 text-grey-darken-3" prepend-icon="mdi-bed" size="small" v-if="listing.beds > 0">
                 {{ listing.beds }}  Bed

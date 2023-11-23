@@ -21,7 +21,7 @@ class AdminDashboardController extends Controller
             'declined_listings' => Listing::where('status', 'Declined')->count(),
             'available_listings' => Listing::where('status', 'Available')->count(),
             'not_available_listings' => Listing::where('status', 'Not available')->count(),
-            'guests' => User::where('role', 'user')->count(),
+            'guests' => User::where('role', 'guest')->count(),
             'owners' => User::where('role', 'owner')->count(),
             'admins' => User::where('role', 'admin')->count(),
         ]);

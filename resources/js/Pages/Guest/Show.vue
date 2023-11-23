@@ -261,8 +261,53 @@
                                 </template>
                             </v-list-item>
                         </v-list>
-                        <v-btn color="green" v-if="listing.status == 'Available' && !is_reserved" @click="submitReservation" :disabled="reserveForm.processing" :loading="reserveForm.processing" class="mb-4" width="100%" size="large">Reserve</v-btn>
-                        <v-btn block v-else disabled size="large"> Reserved </v-btn>
+                        
+                        <div v-if="auth">
+                            <div v-if="is_reserved.length >= 1">
+                                <v-btn 
+                                    v-if=" is_reserved[is_reserved.length-1].status == 'cancelled'"
+                                    @click="submitReservation" 
+                                    :disabled="reserveForm.processing" 
+                                    :loading="reserveForm.processing" 
+                                    class="mb-4" 
+                                    width="100%" 
+                                    size="large"
+                                    >
+                                    Reserve
+                                </v-btn>
+                                <v-btn block v-else disabled size="large"> Reserved </v-btn>
+                            </div>
+                            <div v-else>
+                                <v-btn 
+                                    color="green" 
+                                    v-if="listing.status == 'Available' && is_reserved.length <= 0" 
+                                    @click="submitReservation" 
+                                    :disabled="reserveForm.processing" 
+                                    :loading="reserveForm.processing" 
+                                    class="mb-4" 
+                                    width="100%" 
+                                    size="large"
+                                    >
+                                    Reserve
+                                </v-btn>
+                                <v-btn block v-else disabled size="large"> Reserved </v-btn>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <v-btn 
+                                color="green" 
+                                v-if="listing.status == 'Available'" 
+                                @click="submitReservation" 
+                                :disabled="reserveForm.processing" 
+                                :loading="reserveForm.processing" 
+                                class="mb-4"
+                                width="100%"
+                                size="large"
+                                >
+                                Reserve
+                            </v-btn>
+                            <v-btn block v-else disabled size="large"> Reserved </v-btn>
+                        </div>
                         
                     </v-container>
             </v-col>

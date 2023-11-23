@@ -231,10 +231,9 @@
                         <div style="width: 100vw;">
                             <v-slide-group v-model="model" class="pa-4" show-arrows >
                                 <v-slide-group-item v-for="(item, i) in photosForm.images" :key="i">
-                                    <v-badge class="mt-2" @click="photosForm.images.splice(i, 1)" offset-x="15" color="red" icon="mdi-close" id="badge">
+                                    <v-badge id="badge" class="mt-2" @click="photosForm.images.splice(i, 1)" offset-x="15" color="red" icon="mdi-close">
                                         <v-card class="mx-4 " height="230" width="250" elevation="0">
                                             <v-img :src="`/images/uploads/${photosForm.images[i]}`" height="180" cover></v-img>
-                                            {{ item }}
                                         </v-card>
                                     </v-badge>
                                 </v-slide-group-item>
@@ -280,7 +279,7 @@
                                     <template v-slot:append>
                                         <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.guests++" v-show="!showEditProperties"></v-btn>
                                         {{ propertyForm.guests }}
-                                        <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.guests--" v-show="!showEditProperties"></v-btn>
+                                        <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.guests--" v-show="!showEditProperties && propertyForm.guests >= 2"></v-btn>
                                     </template>
                                 </v-list-item>
                                 <v-list-item>
@@ -288,15 +287,15 @@
                                     <template v-slot:append>
                                         <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.beds++" v-show="!showEditProperties"></v-btn>
                                         {{ propertyForm.beds }}
-                                        <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.beds--" v-show="!showEditProperties"></v-btn>
+                                        <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.beds--" v-show="!showEditProperties && propertyForm.beds >= 1"></v-btn>
                                     </template>
                                 </v-list-item>
-                                <v-list-item v-if="listing.type != 'Room'">
+                                <v-list-item v-if="listing.type == 'Guest house'">
                                     Number of rooms
                                     <template v-slot:append>
                                         <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.rooms++" v-show="!showEditProperties"></v-btn>
                                         {{ propertyForm.rooms }}
-                                        <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.rooms--" v-show="!showEditProperties"></v-btn>
+                                        <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.rooms--" v-show="!showEditProperties && propertyForm.rooms >= 2"></v-btn>
                                     </template>
                                 </v-list-item>
                                 <v-list-item>
@@ -304,7 +303,7 @@
                                     <template v-slot:append>
                                         <v-btn icon="mdi-plus" flat size="small" @click="propertyForm.bathrooms++" v-show="!showEditProperties"></v-btn>
                                         {{ propertyForm.bathrooms }}
-                                        <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.bathrooms--" v-show="!showEditProperties"></v-btn>
+                                        <v-btn icon="mdi-minus" flat size="small" @click="propertyForm.bathrooms--" v-show="!showEditProperties && propertyForm.bathrooms >= 1"></v-btn>
                                     </template>
                                 </v-list-item>
                             </v-list>
