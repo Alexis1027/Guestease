@@ -71,9 +71,6 @@
         
     }
 
-    console.log(props.listing.type)
-   
-
 </script>
 
 
@@ -110,7 +107,7 @@
                 </v-form>
             </v-col>
         </v-row>
-            <MazGallery :images="listingImages" :height="400" class="mt-1" />
+            <MazGallery :images="listingImages" :height="450" class="mt-1" />
         <v-row>
             <v-col cols="8">
                 <!-- Guest house details -->
@@ -267,11 +264,12 @@
                                 <v-btn 
                                     v-if=" is_reserved[is_reserved.length-1].status == 'cancelled'"
                                     @click="submitReservation" 
-                                    :disabled="reserveForm.processing" 
+                                    :disabled="owner.id == auth.user.id" 
                                     :loading="reserveForm.processing" 
                                     class="mb-4" 
                                     width="100%" 
                                     size="large"
+                                    color="green"
                                     >
                                     Reserve
                                 </v-btn>

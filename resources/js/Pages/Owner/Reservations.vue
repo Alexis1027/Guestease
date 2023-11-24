@@ -86,7 +86,7 @@
                 <th class="text-center">ID</th>
                 <th class="text-center">Listing</th>
                 <th class="text-center">Guest</th>
-                <th class="text-center">Guest info</th>
+                <!-- <th class="text-center">Guest info</th> -->
                 <th class="text-center">Check-in/Check-out</th>
                 <th class="text-center">Reserved at</th>
                 <th class="text-center">Total cost</th>
@@ -111,13 +111,13 @@
                         <v-list-item class="text-capitalize" id="name"> {{ reservation.user.firstname + ' ' + reservation.user.lastname }}</v-list-item>
                     </Link>
                 </td>
-                <td>
+                <!-- <td>
                     <v-list-item>
                         {{ reservation.user.phone_number }}
                         <v-divider/>
                         {{ reservation.user.email }}
                     </v-list-item>
-                </td>
+                </td> -->
                 <td>
                     {{ format(new Date(reservation.checkin), 'MMM dd') + ' - ' + format(new Date(reservation.checkout), 'MMM dd')  }}
                     <v-divider/>

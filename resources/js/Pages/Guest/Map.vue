@@ -51,14 +51,28 @@
 <template>
     <Head title="Map" />
     <MapSidebar :mapSnackbar="mapSnackbar" :listing="currentlisting" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
-        <div class="leaflet-container" ref="mapContainer"></div>
+        <v-row>
+            <v-col cols="6">
+                <p>Explore Now!</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>Cordova Cebu</p>
+                <Link href="/">
+                    <v-btn>LEARN MORE!</v-btn>
+                </Link>
+            </v-col>
+            <v-col cols="6">
+         <div class="leaflet-container" ref="mapContainer"></div>
+            </v-col>
+        </v-row>
 </template>
 
 <style scoped>
 
     .leaflet-container {
         height: 100vh;
-        width: 100vw;
+        width: 50vw;
+        right: 0;
+        position: absolute;
     }
 
 </style>

@@ -8,7 +8,6 @@
     defineOptions({layout: Layout})
 
     const props = defineProps(['auth', 'showInputVerificationCodeProp'])
-
     const showFileInput = ref(false)
     const results = ref()
     const snackbar = ref(false)
@@ -75,7 +74,7 @@
             <v-avatar size="100">
                 <v-img src="/images/profile/21.png" ></v-img>
             </v-avatar>
-            <span class="text-red">not working</span>
+            <!-- <span class="text-red">not working</span> -->
             <v-btn class="text-none mx-6" prepend-icon="mdi-pencil" v-if="!showFileInput" @click="showFileInput = true" color="blue">Edit profile picture</v-btn>
             <v-btn v-else class="text-none mx-6" prepend-icon="mdi-pencil" color="red" @click="showFileInput = false"> Cancel</v-btn>
             <div v-if="showFileInput">

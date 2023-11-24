@@ -29,7 +29,7 @@
             </v-text-field> -->
             <v-spacer/>
             <Link href="/" v-if="!auth">
-                <p>Homee</p>
+                <p>Home</p>
             </Link>
             <Link href="/" class="ms-4" v-if="!auth">
                 <p>About</p>

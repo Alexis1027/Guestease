@@ -131,7 +131,7 @@ class HomeController extends Controller
     }
 
     public function about() {
-        return Inertia::render('About');
+        return Inertia::render('About', ['listing' => Listing::find(9)]);
     }
 
     public function notifications() {
@@ -163,4 +163,23 @@ class HomeController extends Controller
         return Inertia::render('Guest/ReservationHistory');
     }
 
+    public function example() {
+        return Inertia::render('Guest/Example');
+    }
+
+    public function alexis(){
+        return Inertia::render('Guest/alexis');
+    }
+    public function fiel(){
+        return Inertia::render('Guest/fiel');
+    }
+    public function tepen(){
+        return Inertia::render('Guest/tepen');
+    }
+    public function joyce(){
+        return Inertia::render('Guest/joyce');
+    }
+    public function joren() {
+        return Inertia::render('Guest/joren', ['listings' => Listing::all()]);
+    }
 }

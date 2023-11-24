@@ -95,7 +95,6 @@ class AuthController extends Controller
         return Inertia::render('Auth/Login');
     }
 
-   
     public function store_admin(Request $request) {
         $admin = $request->validate([
             'firstname' => ['required', 'min:3'],

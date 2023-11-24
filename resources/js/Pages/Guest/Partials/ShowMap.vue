@@ -11,7 +11,7 @@
     })
 
     function generateMap() {
-        const map = L.map(mapContainer.value).setView([props.latitude, props.longitude], 13)
+        const map = L.map(mapContainer.value).setView([props.latitude, props.longitude], 15)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
         const marker = L.marker([props.latitude, props.longitude], {icon: markerIcon}).addTo(map)
         marker.bindPopup(`<b> This is where you'll be! </b>`)

@@ -80,7 +80,7 @@
                     <td>
                         <v-menu open-on-hover>
                             <template v-slot:activator="{ props }">
-                                <v-btn color="blue" append-icon="mdi-menu-down" class="text-none" variant="tonal" v-bind="props">
+                                <v-btn color="blue" :disabled="listing.status == 'For approval'" append-icon="mdi-menu-down" class="text-none" variant="tonal" v-bind="props">
                                     {{ listing.status }}
                                 </v-btn>
                             </template>
