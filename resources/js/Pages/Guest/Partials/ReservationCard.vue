@@ -30,6 +30,7 @@
             </v-list-item>
         </Link>
         <v-divider/>
+        <div class="bg-red-lighten-3 pa-5 text-center" v-if="reservation.listing.status == 'Deleted'">Listing was deleted.</div>
         <v-list-item prepend-icon="mdi-account-multiple-outline"> {{ reservation.guests }} guest</v-list-item>
         <!-- reservation checkin and checkout dates -->
         <v-list-item prepend-icon="mdi-calendar-blank"> 

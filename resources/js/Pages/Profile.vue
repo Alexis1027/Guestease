@@ -34,7 +34,8 @@
                     <v-col cols="7">
                         <!-- About section -->
                         <v-list height="100%">
-                            <v-list-item v-if="user.address" prepend-icon="mdi-home" :title="`Lives in ${user.address}`">
+                            <v-list-item v-if="user.address" prepend-icon="mdi-home" :subtitle="`Lives in`">
+                                {{ user.address }}
                             </v-list-item>
                             <v-list-item prepend-icon="mdi-facebook-messenger" subtitle="Messenger" class="text-capitalize">
                                 {{ user.firstname + ' ' + user.lastname }}

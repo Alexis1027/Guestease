@@ -6,6 +6,7 @@
         ['For approval', 'text-orange'],
         ['Available', 'text-green'],
         ['Not available', 'text-red'],
+        ['Rejected', 'text-red'],
     ])
 
     const prop = defineProps({

@@ -12,11 +12,18 @@ use App\Http\Controllers\Controller;
 class WishlistController extends Controller
 {
     //
+    // $reservations = $reservations->reject(function ($r) {
+    //     $listing = Listing::where('status', '!=', 'Deleted')->find($r->listing_id);
+    //     return $listing == null;
+    // });
     public function index() {
         $wishlists = Wishlist::where('user_id', auth()->user()->id)->get();
-
+        $wishlists = $wishlists->reject(function ($w) {
+            $listing = Listing::where('status', '!=', 'Deleted')->find($w->listing_id);
+            return $listing == null;
+        });
         foreach($wishlists as $wishlist) {
-            $wishlist->listing = Listing::find($wishlist->listing_id);
+            $wishlist->listing = Listing::where('status', '!=', 'Deleted')->find($wishlist->listing_id);
             $wishlist->rating = Rating::find($wishlist->listing_id);
             $ratings = Rating::where('listing_id', $wishlist->listing_id)->get();
             $totalRatings = count($ratings);

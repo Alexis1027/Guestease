@@ -16,7 +16,7 @@ class ListingController extends Controller
     }
 
     public function index(?string $entry = null) {
-        return Inertia::render('Owner/Listings', ['listings' => Listing::where('owner_id', auth()->user()->id)->paginate($entry ? $entry : 5)]);
+        return Inertia::render('Owner/Listings', ['listings' => Listing::where('owner_id', auth()->user()->id)->where('status', '!=', 'Deleted')->paginate($entry ? $entry : 5)]);
     }
 
     public function edit(Listing $listing) {
@@ -117,7 +117,8 @@ class ListingController extends Controller
     }
 
     public function destroy(Listing $listing) {
-        $listing->delete();
+        $listing->status = "Deleted";
+        $listing->update();
         return redirect('/owner/dashboard');
     }
     

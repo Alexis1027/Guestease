@@ -13,9 +13,7 @@ use App\Models\Reservation;
 class UserController extends Controller
 {
     //
-    public function edit() {
-        return Inertia::render('Auth/Edit');
-    }
+ 
 
     public function index(?string $entry = null) {
         return Inertia::render('Admin/ManageUsers', ['users' => User::paginate($entry ? $entry : 5)]);
@@ -31,28 +29,7 @@ class UserController extends Controller
         return back();
     }
 
-    public function update(Request $request) {
-        
-        $request->validate([
-            'firstname' => ['required', 'min:3'],
-            'lastname' => ['required', 'min:3'],
-            'phone_number' => ['required', 'min:3'],
-            'address' => ['required', 'min:3'],
-        ]);
-
-        $user = auth()->user();
-        $user->firstname = $request->input('firstname');
-        $user->lastname = $request->input('lastname');
-        $user->phone_number = $request->input('phone_number');
-        $user->address = $request->input('address');
-        $user->update();
-        return back();
- 
-    }
-
-    public function update_profile_pic(Request $request) {
-        dd($request);
-    }
+    
 
     
 }

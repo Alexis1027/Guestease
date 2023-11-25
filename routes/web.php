@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -30,6 +31,7 @@ use App\Http\Controllers\Owner\OwnerReservationController;
 
 
 Route::middleware(['auth'])->group(function () {
+
     //owner
     // Route::middleware(['owner'])->group(function () {
         Route::get('/owner/dashboard', [OwnerViewController::class, 'dashboard']);
@@ -62,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/manage-reservations/{entry?}', [AdminReservationController::class, 'index']);
         Route::get('/admin/listing-requests/{entry?}', [ListingRequestController::class, 'index']);
         Route::put('/admin/approve-listing/{listing}', [ListingRequestController::class, 'approve']);
-        Route::put('/admin/decline-listing/{listing}', [ListingRequestController::class, 'decline']);
+        Route::put('/admin/reject-listing/{listing}', [ListingRequestController::class, 'reject']);
     // });
 
     //guest
@@ -74,21 +76,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/wishlists', [WishlistController::class, 'index']);
         Route::post('/rate-listing/{listing_id}', [RatingController::class, 'store']);
         Route::put('/reservations/cancel/{reservation}', [GuestReservationController::class, 'cancel']);
-        Route::get('/reservations', [HomeController::class, 'reservations'])->name('reservations');
+        Route::get('/reservations', [GuestReservationController::class, 'index'])->name('reservations');
     // });
 
-    Route::get('/account', [HomeController::class, 'account'])->middleware('auth');
-    Route::put('/account/update-profile_pic', [UserController::class, 'update_profile_pic']);
+    Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
+    Route::post('/account/update-profile_pic', [AccountController::class, 'update_profile_pic']);
+    Route::put('/account/update', [AccountController::class, 'update']);
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('PreventBackHistory');
 
 });
-
-Route::get('/joyce',[HomeController::class, 'joyce']);
-Route::get('/example',[HomeController::class, 'example']);
-Route::get('/alexis',[HomeController::class, 'alexis'] );
-Route::get('/fiel',[HomeController::class, 'fiel'] );
-Route::get('/tepen',[HomeController::class, 'tepen'] );
-
-Route::get('joren', [HomeController::class, 'joren']);
 
 //kung wala ni login ang user
 Route::get('/room/{listing}', [HomeController::class, 'show']);
@@ -107,9 +103,14 @@ Route::get('/createGuest', [AuthController::class, 'create_guest']);
 Route::get('/createOwner', [AuthController::class, 'create_owner']);
 Route::post('/validate/user', [AuthController::class, 'validate_credentials']); 
 Route::post('/create/user', [AuthController::class, 'store_user']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('PreventBackHistory');
-Route::put('/profile/update', [UserController::class, 'update']);
+
+
 // Route::post('/create/owner', [AuthController::class, 'validate_credentials']); //storeOwner
 // Route::get('/about', function() {
 //     return Inertia::render('About');
 // });
+// Route::get('/joyce',[HomeController::class, 'joyce']);
+// Route::get('/example',[HomeController::class, 'example']);
+// Route::get('/alexis',[HomeController::class, 'alexis'] );
+// Route::get('/fiel',[HomeController::class, 'fiel'] );
+// Route::get('/tepen',[HomeController::class, 'tepen'] );

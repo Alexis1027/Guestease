@@ -16,7 +16,6 @@
     <v-container>
         <p class="text-h4">Wishlists</p>
         <p class="mt-3 ms-3" v-if="wishlists.length <= 0">No wishlists found.</p>
-
         <template v-for="wishlist in wishlists" :key="wishlist.id">
                 <WishlistCard v-if="wishlist.listing" :wishlist="wishlist"/>
         </template>

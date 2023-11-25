@@ -24,6 +24,7 @@
         ['For approval', 'orange'],
         ['Available', 'green'],
         ['Not available', 'red'],
+        ['Rejected', 'red'],
     ])
 
     defineOptions({ layout: OwnerLayout })

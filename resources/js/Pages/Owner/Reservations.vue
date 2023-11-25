@@ -100,7 +100,8 @@
             <tr v-for="reservation in reservations" :key="reservation.id" id="datas" style="font-size: 15px;">
                 <td>{{ reservation.id }}</td>
                 <td>
-                    <Link :href="`/owner/edit-listing/${reservation.listing.id}`">
+                    <p v-if="reservation.listing.status == 'Deleted'" class="text-red">Listing deleted</p>
+                    <Link v-else :href="`/owner/edit-listing/${reservation.listing.id}`">
                         <v-list-item id="listing" class="text-capitalize" :prepend-avatar="`/images/uploads/${JSON.parse(reservation.listing.images)[0]}`">
                             {{ reservation.listing.title }}
                         </v-list-item>
@@ -167,12 +168,12 @@
                 v-html="link.label"
                 >
             </Link> -->
-            <v-pagination
+            <!-- <v-pagination
             v-model="page"
             :length="10"
             :total-visible="4"
             rounded="circle"
-            ></v-pagination>
+            ></v-pagination> -->
         </v-col>
     </v-row>
 

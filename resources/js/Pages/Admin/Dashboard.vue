@@ -16,6 +16,7 @@
         'declined_listings',
         'not_available_listings', 
         'available_listings',
+        'deleted_listings',
         'guests',
         'admins',
         'owners'
@@ -32,7 +33,7 @@
         new Chart(lstChart,{
             type: 'bar',
             data: {
-                labels: ['Approved', 'Pending', 'Rejected', 'Available', 'Not available'],
+                labels: ['Approved', 'Pending', 'Rejected', 'Available', 'Not available', 'Deleted'],
                 datasets: [
                     {
                         label: 'Listings',
@@ -41,7 +42,8 @@
                             prop.pending_listings, 
                             prop.declined_listings, 
                             prop.available_listings,
-                            prop.not_available_listings
+                            prop.not_available_listings,
+                            prop.deleted_listings
                         ]
                     }
                 ]

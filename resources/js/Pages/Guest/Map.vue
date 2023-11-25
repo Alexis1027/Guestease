@@ -52,15 +52,19 @@
     <Head title="Map" />
     <MapSidebar :mapSnackbar="mapSnackbar" :listing="currentlisting" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
         <v-row>
-            <v-col cols="6">
-                <p>Explore Now!</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Cordova Cebu</p>
-                <Link href="/">
-                    <v-btn>LEARN MORE!</v-btn>
-                </Link>
+            <v-col cols="4">
+                <v-container class="text-center mt-6">
+                    <p class="text-h4">Explore Now!</p>
+                    <v-divider class="mt-3"/>    
+                    <p class="my-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <v-divider class="my-3"/>
+                    <p class="text-h4">Cordova Cebu</p>
+                    <Link href="/">
+                        <v-btn class="mt-6" color="blue">LEARN MORE!</v-btn>
+                    </Link>
+                </v-container>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="8">
          <div class="leaflet-container" ref="mapContainer"></div>
             </v-col>
         </v-row>
@@ -70,7 +74,7 @@
 
     .leaflet-container {
         height: 100vh;
-        width: 50vw;
+        width: 65%;
         right: 0;
         position: absolute;
     }

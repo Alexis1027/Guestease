@@ -25,7 +25,7 @@
             </v-toolbar-title>
             <v-spacer/>
             <!-- <v-btn variant="text" prepend-icon="mdi-search">Search</v-btn> -->
-            <Link href="/joyce">
+            <!-- <Link href="/joyce">
                 <v-btn :class="[$page.component == 'Guest/Index' ? 'text-blue' : '', 'text-none']">wako kahibaw</v-btn>
             </Link>
             <Link href="/tepen">
@@ -36,7 +36,7 @@
             </Link>
             <Link href="/alexis">
                 <v-btn :class="[$page.component == 'Guest/Index' ? 'text-blue' : '', 'text-none']">alexis</v-btn>
-            </Link>
+            </Link> -->
             <Link href="/">
                 <v-btn :class="[$page.component == 'Guest/Index' ? 'text-blue' : '', 'text-none']">Home</v-btn>
             </Link>

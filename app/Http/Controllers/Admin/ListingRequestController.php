@@ -26,8 +26,8 @@ class ListingRequestController extends Controller
         return back();
     }
 
-    public function decline(Listing $listing) {
-        $listing->status = 'Declined';
+    public function reject(Listing $listing) {
+        $listing->status = 'Rejected';
         $listing->update();
         return back();
     }

@@ -60,7 +60,6 @@
 </script>
 <template>
     <Head title="Reservations" />
-
         <v-row justify="space-between ms-4 mt-4">
             <v-col cols="2">
                     <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
@@ -72,10 +71,9 @@
         <v-table hover class="bg-grey-lighten-5 text-center ma-5">
             <thead>
                 <tr>
-                    <th class="text-center">ID</th>
                     <th class="text-center">Listing</th>
                     <th class="text-center">Guest</th>
-                    <th class="text-center">Guest info</th>
+                    <!-- <th class="text-center">Guest info</th> -->
                     <th class="text-center">Check-in/Check-out</th>
                     <th class="text-center">Reserved at</th>
                     <th class="text-center">Total cost</th>
@@ -89,49 +87,42 @@
                     <td colspan="10"> No reservations.</td>
                 </tr>
                 <tr v-for="reservation in reservations.data" :key="reservation.id" v-else>
-                    <td>{{ reservation.id }}</td>
                     <td>
-                        <p v-if="reservation.listing">{{ reservation.listing.title }}</p>
-                        <p v-else class="text-red">Guest house not found</p>
+                        <p v-if="reservation.listing.status == 'Deleted'"  class="text-red">Listing deleted</p>
+                        <p v-else>{{ reservation.listing.title }}</p>
                     </td>
                     <td>
-                        <v-list-item
-                        v-if="reservation.user"
-                        :title="reservation.user.firstname + ' ' + reservation.user.lastname"
-                        ></v-list-item>
-                        <p v-else class="text-red">User not found</p>
+                        <Link :href="`/profile/${reservation.user.id}`" id="hover">
+                            <v-list-item :title="reservation.user.firstname + ' ' + reservation.user.lastname"></v-list-item>
+                        </Link>
                     </td>
+                    <!-- <td>
+                        <v-list-item>
+                            {{ reservation.user.phone_number }}
+                            <v-divider/>
+                            {{ reservation.user.email }}
+                        </v-list-item>
+                    </td> -->
                     <td>
-                    <v-list-item>
-                        {{ reservation.user.phone_number }}
+                        {{ format(new Date(reservation.checkin), 'MMM dd') + ' - ' + format(new Date(reservation.checkout), 'MMM dd')  }}
                         <v-divider/>
-                        {{ reservation.user.email }}
-                    </v-list-item>
-                </td>
-                <td>
-                    {{ format(new Date(reservation.checkin), 'MMM dd') + ' - ' + format(new Date(reservation.checkout), 'MMM dd')  }}
-                    <v-divider/>
-                    Length: {{ reservation.days }} days
-                </td>
-                <td>{{ format(new Date(reservation.created_at), 'y/M/d') }}</td>
-                <td>₱{{ parseInt(reservation.total).toLocaleString() }}</td>
-                <td>{{ reservation.guests }}</td>
-                <td>
-                    <v-chip :color="statusColor.get(reservation.status)">
-                        {{ reservation.status }}
-                    </v-chip>
-                </td>
-                <td>
-                    
+                        Length: {{ reservation.days }} days
+                    </td>
+                    <td>{{ format(new Date(reservation.created_at), 'y/M/d') }}</td>
+                    <td>₱{{ parseInt(reservation.total).toLocaleString() }}</td>
+                    <td>{{ reservation.guests }}</td>
+                    <td>
+                        <v-chip :color="statusColor.get(reservation.status)">
+                            {{ reservation.status }}
+                        </v-chip>
+                    </td>
+                    <td>
                     <v-btn @click="sendNotification(reservation)" size="small" :disabled="reservation.status != 'approved'" class="text-red text-none" variant="tonal" prepend-icon="mdi-bell">Notify
                         <v-tooltip activator="parent" location="top">
                             Alert owner and guest: reservation ending soon
                         </v-tooltip>
                     </v-btn>
-                    
-                    <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->
-                    <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
-                </td>
+                    </td>
                 </tr>
             </tbody>
         </v-table>
@@ -154,3 +145,11 @@
             </v-col>
         </v-row>
 </template>
+
+<style scoped>
+
+    #hover:hover {
+        text-decoration: underline;
+    }
+
+</style>

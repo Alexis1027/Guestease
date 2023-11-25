@@ -19,7 +19,7 @@
     <v-layout>
         <v-app-bar scroll-behavior="elevate" scroll-threshold="438">
             <v-toolbar-title>
-                <Link href="/" class="font-weight-bold">
+                <Link href="" class="font-weight-bold">
                     <v-img :src="logo" height="55" width="260" cover></v-img>
                 </Link>
             </v-toolbar-title>
@@ -41,37 +41,35 @@
             </Link>
             <v-menu min-width="200px" rounded v-if="auth">
                 <template v-slot:activator="{ props }">
-                    <v-btn icon v-bind="props" style="margin-right: 6%;">
-                        <v-avatar color="blue-lighten-3" size="35">
-                            <v-icon>mdi-account</v-icon>
-                        </v-avatar>
+                    <v-btn class="border me-3" size="large" v-bind="props">
+                        <template v-slot:prepend>
+                            <v-avatar color="blue-lighten-3" size="35">
+                                <v-img :src="`../images/profile/${auth.user.profile_pic}`"></v-img>
+                            </v-avatar>
+                        </template>
+                        <v-icon>mdi-menu</v-icon>
                     </v-btn>
                 </template>
-                <v-card width="250" >
-                    
-                    <v-card-item v-if="auth">
-                        <div class="mx-auto">
-                            <Link :href="`/profile/${auth.user.id}`">
-                                <v-btn block variant="text" class="text-none">
-                                    Profile
-                                </v-btn>
-                            </Link>
-                        </div>
-                        <div class="mx-auto">
-                            <Link href="/account">
-                                <v-btn block variant="text" class="text-none">
-                                    Account
-                                </v-btn>
-                            </Link>
-                        </div>
-                        <div class="mx-auto">
-                            <Link @click="logout" method="post">
-                                <v-btn block variant="text" class="text-none">
-                                    Logout
-                                </v-btn>
-                            </Link>
-                        </div>
-                    </v-card-item>
+                <v-card width="250">
+                    <div class="mx-auto text-center">
+                        <Link :href="`/profile/${auth.user.id}`">
+                            <v-btn variant="text" block class="text-none">
+                                Profile
+                            </v-btn>
+                        </Link>
+                        <Link href="/account">
+                            <v-btn  variant="text" block class="text-none">
+                                Account
+                            </v-btn>
+                        </Link>
+                        
+                        <v-divider/>
+                        <Link @click="logout" method="post">
+                            <v-btn variant="text" color="red" block class="text-none">
+                                Logout
+                            </v-btn>
+                        </Link>
+                    </div>
                 </v-card>
             </v-menu>
         </v-app-bar>

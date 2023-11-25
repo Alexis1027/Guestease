@@ -14,7 +14,7 @@ class HomeController extends Controller
 {
     //
     public function index() {
-        $listings = Listing::latest()->get();
+        $listings = Listing::latest()->where('status', '!=', 'Deleted')->where('status', '!=', 'Rejected')->get();
 
         foreach($listings as $ls) {
             // $is_reserved = Reservation::where('listing_id', $ls->id)->first();
@@ -131,7 +131,7 @@ class HomeController extends Controller
     }
 
     public function about() {
-        return Inertia::render('About', ['listing' => Listing::find(9)]);
+        return Inertia::render('About');
     }
 
     public function notifications() {
@@ -143,43 +143,33 @@ class HomeController extends Controller
     }
 
     public function profile(User $user) {
-        $listings =  Listing::where('owner_id', $user->id)->select(['id', 'images', 'title', 'location'])->get();
+        $listings =  Listing::where('owner_id', $user->id)->where('status', '!=', 'Deleted')->select(['id', 'images', 'title', 'location'])->get();
         return Inertia::render('Profile', ['user' => $user, 'listings' => $listings]);
     }
 
-    public function reservations() {
-        $reservations = Reservation::where('user_id', auth()->user()->id)->get();
-        foreach($reservations as $r) {
-            $r->listing = Listing::find($r->listing_id);
-        }
-        return Inertia::render('Guest/Reservations', ['reservations' => $reservations]);
-    }
+    
 
     public function map() {
-        return Inertia::render('Guest/Map', ['listings' => Listing::all()]);
+        return Inertia::render('Guest/Map', ['listings' => Listing::where('status', '!=', 'Deleted')->get()]);
     }
 
     public function reservation_history() {
         return Inertia::render('Guest/ReservationHistory');
     }
 
-    public function example() {
-        return Inertia::render('Guest/Example');
-    }
-
-    public function alexis(){
-        return Inertia::render('Guest/alexis');
-    }
-    public function fiel(){
-        return Inertia::render('Guest/fiel');
-    }
-    public function tepen(){
-        return Inertia::render('Guest/tepen');
-    }
-    public function joyce(){
-        return Inertia::render('Guest/joyce');
-    }
-    public function joren() {
-        return Inertia::render('Guest/joren', ['listings' => Listing::all()]);
-    }
+    // public function example() {
+    //     return Inertia::render('Guest/Example');
+    // }
+    // public function alexis(){
+    //     return Inertia::render('Guest/alexis');
+    // }
+    // public function fiel(){
+    //     return Inertia::render('Guest/fiel');
+    // }
+    // public function tepen(){
+    //     return Inertia::render('Guest/tepen');
+    // }
+    // public function joyce(){
+    //     return Inertia::render('Guest/joyce');
+    // }
 }

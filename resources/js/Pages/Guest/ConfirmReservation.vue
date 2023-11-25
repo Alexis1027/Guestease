@@ -24,6 +24,8 @@
         
     const submit = () => {
         form.post(`/reserve/${prop.listing.id}`)
+        location.href = '/reservations'
+        window.history.replaceState({}, document.title, '/')
     }
 
     onMounted(() => {

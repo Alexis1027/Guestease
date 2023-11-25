@@ -37,42 +37,15 @@
                     Reservations
                 </v-btn>
             </Link>
-            <!-- <Link href="/owner/calendar">
-                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Calendar' ? 'blue' : ''">Calendar</v-btn>
-            </Link> -->
             
             <v-spacer/>
             <v-spacer/>
-
-            <!-- <v-menu min-width="200px" rounded>
-                <template v-slot:activator="{ props }">
-                    <v-btn class="text-none" icon v-bind="props" >
-                        <v-badge content="6" color="error">
-                            <v-icon>mdi-bell-outline</v-icon>
-                        </v-badge>
-                    </v-btn>
-                </template>
-                <v-card width="450">
-                    <v-toolbar>
-                        <v-toolbar-title>Notifications</v-toolbar-title>
-                    </v-toolbar>
-                    <v-list>
-                        <p class="text-red ms-5">doestn work</p>
-                        <v-list-item :value="n" v-for="n in 6" :key="n"
-                            class="py-2"
-                            prepend-avatar="../images/profile/21.png" 
-                            title="John Doe reserved at your place."
-                            :subtitle="`${n+1} hours ago`">
-                        </v-list-item>
-                    </v-list>
-                </v-card>
-            </v-menu> -->
             <v-menu min-width="200px" rounded v-if="auth">
                 <template v-slot:activator="{ props }">
                     <v-btn class="border me-3" size="large" v-bind="props">
                         <template v-slot:prepend>
                             <v-avatar color="blue-lighten-3" size="35">
-                                <v-img :src="`../images/profile/${auth.user.profile_pic}`"></v-img>
+                                <v-img :src="`/images/profile/${auth.user.profile_pic}`"></v-img>
                             </v-avatar>
                         </template>
                         <v-icon>mdi-menu</v-icon>
@@ -102,8 +75,8 @@
             </v-menu>
         </v-app-bar>
         <v-main>
-                <slot>
-                </slot>
+            <slot>
+            </slot>
         </v-main>
     </v-layout>
 </template>

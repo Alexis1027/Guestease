@@ -15,7 +15,7 @@ class AdminListingController extends Controller
     //
 
     public function index(?string $entry = null) {
-        $listings = Listing::paginate($entry ? $entry : 5);
+        $listings = Listing::where('status', '!=', 'Deleted')->where('status', '!=', 'For approval')->paginate($entry ? $entry : 5);
         foreach($listings as $ls) {
             $ls->owner = User::find($ls->owner_id);
         }
@@ -42,7 +42,8 @@ class AdminListingController extends Controller
     // }
 
     public function destroy(Listing $listing) {
-        $listing->delete();
+        $listing->status = "Deleted";
+        $listing->update();
         // $wishlist = Wishlist::where('listing_id', $listing->id)->get();
         // $wishlist->each->delete();
         // $listing->delete();

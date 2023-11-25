@@ -21,7 +21,7 @@ class OwnerReservationController extends Controller
             //find the rooms of owner and find the rooms in the reservation table,
             $res = Reservation::where('listing_id', $ls->id)->get();
             foreach($res as $r) {
-                $r->listing = Listing::select(['title', 'images', 'id'])->find($r->listing_id);
+                $r->listing = Listing::select(['title', 'images', 'id', 'status'])->find($r->listing_id);
                 $r->user = User::select(['firstname', 'lastname', 'profile_pic', 'email', 'phone_number', 'id'])->find($r->user_id);
                 array_push($reservations, $r);
             }

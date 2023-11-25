@@ -25,7 +25,7 @@
     const submit = () => {
         if(results.value.isValid) {
             console.log('bruh')
-            form.put('/profile/update', {
+            form.put('/account/update', {
                 onSuccess: () => {
                     snackbar.value = true
                 }
@@ -72,7 +72,7 @@
     <v-card width="80%" class="border mb-4" title="Profile picture">
         <v-card-item>
             <v-avatar size="100">
-                <v-img src="/images/profile/21.png" ></v-img>
+                <v-img :src="`/images/profile/${auth.user.profile_pic}`" ></v-img>
             </v-avatar>
             <!-- <span class="text-red">not working</span> -->
             <v-btn class="text-none mx-6" prepend-icon="mdi-pencil" v-if="!showFileInput" @click="showFileInput = true" color="blue">Edit profile picture</v-btn>
@@ -80,7 +80,7 @@
             <div v-if="showFileInput">
                 <v-file-input class="mt-2" name="profile_pic" v-model="profilePicForm.profile_pic" variant="outlined" label="File input">
                     <template v-slot:append>
-                        <v-btn color="green" class="ms-5" @click="profilePicForm.put(`/account/update-profile_pic`)">Save</v-btn>
+                        <v-btn color="green" class="ms-5" @click="profilePicForm.post(`/account/update-profile_pic`)">Save</v-btn>
                     </template>
                 </v-file-input>
             </div>

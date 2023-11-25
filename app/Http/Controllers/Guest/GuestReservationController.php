@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Guest;
 
+use Inertia\Inertia;
 use App\Models\Listing;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -14,6 +15,20 @@ class GuestReservationController extends Controller
         $reservation->status = 'cancelled';
         $reservation->update();
         return back();
+    }
+
+    public function index() {
+        $reservations = Reservation::where('user_id', auth()->user()->id)->latest()->get();
+        // $reservations = $reservations->reject(function ($r) {
+        //     $listing = Listing::where('status', '!=', 'Deleted')->find($r->listing_id);
+        //     return $listing == null;
+        // });
+        
+        foreach ($reservations as $r) {
+            $listing = Listing::find($r->listing_id);
+            $r->listing = $listing;
+        }
+        return Inertia::render('Guest/Reservations', ['reservations' => $reservations]);
     }
 
     public function store(Listing $listing, Request $request) {
