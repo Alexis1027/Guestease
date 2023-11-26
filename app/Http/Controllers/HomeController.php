@@ -8,20 +8,39 @@ use App\Models\Rating;
 use App\Models\Wishlist;
 use App\Models\Listing;
 use App\Models\Reservation;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     //
+    public function rules() {
+        return Inertia::render('Admin/RulesAndRegulations');
+    }
+
+    public function wishlist() {
+        return Inertia::render('Wishlist');
+    }
+
+    public function about() {
+        return Inertia::render('About');
+    }
+
+    public function contact_us() {
+        return Inertia::render('ContactUs');
+    }
+
+    public function profile(User $user) {
+        $listings =  Listing::where('owner_id', $user->id)->where('status', '!=', 'Deleted')->select(['id', 'images', 'title', 'location'])->get();
+        return Inertia::render('Profile', ['user' => $user, 'listings' => $listings]);
+    }
+
+    public function map() {
+        return Inertia::render('Guest/Map', ['listings' => Listing::where('status', '!=', 'Deleted')->get()]);
+    }
+
     public function index() {
         $listings = Listing::latest()->where('status', '!=', 'Deleted')->where('status', '!=', 'Rejected')->get();
 
         foreach($listings as $ls) {
-            // $is_reserved = Reservation::where('listing_id', $ls->id)->first();
-            // if($is_reserved != null) {
-            //     $ls->reserve = true;
-            // }
-            
             $ratings = Rating::where('listing_id', $ls->id)->get();
             $totalRatings = count($ratings);
             $sumRatings = $ratings->sum('rating');
@@ -96,80 +115,6 @@ class HomeController extends Controller
         }
     }
 
-    public function confirm_reservation(Listing $listing, Request $request) {
-
-        $request->validate([
-            'guests' => 'required',
-            'checkin' => 'required',
-            'checkout' => 'required',
-            'days' => 'required',
-        ]);
-
-        return Inertia::render('Guest/ConfirmReservation', [
-            'listing' => $listing, 
-            'guests' => $request->query('guests'),
-            'checkin' => $request->query('checkin'),
-            'checkout' => $request->query('checkout'),
-            'days' => $request->query('days')
-        ]);
-    }
-
-    public function account() {
-        return Inertia::render('Account');
-    }
-
-    public function guidelines() {
-        return Inertia::render('Guidelines');
-    }
-
-    public function rules() {
-        return Inertia::render('Admin/RulesAndRegulations');
-    }
-
-    public function wishlist() {
-        return Inertia::render('Wishlist');
-    }
-
-    public function about() {
-        return Inertia::render('About');
-    }
-
-    public function notifications() {
-        return Inertia::render('Guest/Notifications');
-    }
-
-    public function contact_us() {
-        return Inertia::render('ContactUs');
-    }
-
-    public function profile(User $user) {
-        $listings =  Listing::where('owner_id', $user->id)->where('status', '!=', 'Deleted')->select(['id', 'images', 'title', 'location'])->get();
-        return Inertia::render('Profile', ['user' => $user, 'listings' => $listings]);
-    }
-
     
-
-    public function map() {
-        return Inertia::render('Guest/Map', ['listings' => Listing::where('status', '!=', 'Deleted')->get()]);
-    }
-
-    public function reservation_history() {
-        return Inertia::render('Guest/ReservationHistory');
-    }
-
-    // public function example() {
-    //     return Inertia::render('Guest/Example');
-    // }
-    // public function alexis(){
-    //     return Inertia::render('Guest/alexis');
-    // }
-    // public function fiel(){
-    //     return Inertia::render('Guest/fiel');
-    // }
-    // public function tepen(){
-    //     return Inertia::render('Guest/tepen');
-    // }
-    // public function joyce(){
-    //     return Inertia::render('Guest/joyce');
-    // }
+    
 }

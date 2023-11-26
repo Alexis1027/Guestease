@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('checkin');
             $table->date('checkout');
             $table->integer('days');
+            $table->integer('discount')->nullable();
             $table->integer('total');
             $table->integer('guests');
             $table->timestamps();

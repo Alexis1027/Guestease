@@ -59,18 +59,17 @@
                 ₱{{ (reservation.listing.price * ( reservation.days)).toLocaleString() }}
             </template>
          </v-list-item>
-         <!-- if 30 days ipakita ni  -->
-         <v-list-item v-if="reservation.days >= 30">
+         <v-list-item v-if="reservation.discount > 0">
             Monthly stay discount
             <template v-slot:append>
-                ₱{{  (( reservation.listing.price * reservation.days) * (reservation.listing.monthly_discount / 100)).toLocaleString()  }}
+                ₱{{  (( reservation.listing.price * reservation.days) * (reservation.discount / 100)).toLocaleString()  }}
             </template>
          </v-list-item>
          <!-- total cost -->
          <v-list-item class="font-weight-bold">
             <p >Total cost</p>
             <template v-slot:append v-if="reservation.days >= 30">
-                {{ `₱${((reservation.listing.price * reservation.days) - ( reservation.listing.price * reservation.days) * (reservation.listing.monthly_discount / 100)).toLocaleString()}` }}
+                {{ `₱${((reservation.listing.price * reservation.days) - (( reservation.listing.price * reservation.days) * (reservation.discount / 100))).toLocaleString()}` }}
             </template>
             <template v-slot:append v-else>
                 ₱{{ (reservation.listing.price * (reservation.days)).toLocaleString() }}

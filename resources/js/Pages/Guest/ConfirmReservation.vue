@@ -19,7 +19,8 @@
         checkout: format(new Date(prop.checkout), 'yyyy-MM-dd'),
         guests: prop.guests,
         total: parseInt(prop.listing.price) * parseInt(prop.days),
-        days: prop.days
+        days: prop.days,
+        discount: prop.listing.monthly_discount
     })
         
     const submit = () => {

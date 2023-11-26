@@ -80,7 +80,7 @@
             <div v-if="showFileInput">
                 <v-file-input class="mt-2" name="profile_pic" v-model="profilePicForm.profile_pic" variant="outlined" label="File input">
                     <template v-slot:append>
-                        <v-btn color="green" class="ms-5" @click="profilePicForm.post(`/account/update-profile_pic`)">Save</v-btn>
+                        <v-btn color="green" class="ms-5" @click="profilePicForm.post(`/account/update-profile_pic`, {onSuccess: () => {showFileInput = false}})">Save</v-btn>
                     </template>
                 </v-file-input>
             </div>

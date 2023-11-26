@@ -7,9 +7,12 @@
     const {auth} = defineProps(['auth'])
 
     function logout() {
-        router.post('/logout')
-        location.href = '/'
-        window.history.replaceState({}, document.title, '/')
+        router.post('/logout', [], {
+            onSuccess: () => {
+                location.href = '/'
+                window.history.replaceState({}, document.title, '/')
+            }
+        })
     }
     
 

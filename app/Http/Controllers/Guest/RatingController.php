@@ -16,7 +16,6 @@ class RatingController extends Controller
             'rating' => 'required'
         ]);
         Rating::create($request->all());
-        // return back()->with('message', 'Ratings and review added.');
             $rating = Rating::where('user_id', $request->user_id)
             ->where('listing_id', $request->listing_id)
             ->first();

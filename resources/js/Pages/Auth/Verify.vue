@@ -2,6 +2,7 @@
 
     import Layout from '../../Layouts/AuthLayout.vue'
     defineOptions({layout: Layout})
+    defineProps({auth: Object})
 
 </script>
 

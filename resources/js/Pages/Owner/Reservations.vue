@@ -125,7 +125,13 @@
                     Length: {{ reservation.days }} days
                 </td>
                 <td>{{ format(new Date(reservation.created_at), 'y/M/d') }}</td>
-                <td>₱{{ parseInt(reservation.total).toLocaleString() }}</td>
+                <td v-if="reservation.discount > 0">
+                {{ `₱${(reservation.total - parseInt(reservation.total) * (reservation.discount / 100)).toLocaleString()}` }}
+
+                </td>
+                <td v-else>
+                    ₱{{ parseInt(reservation.total).toLocaleString() }}
+                </td>
                 <td>{{ reservation.guests }}</td>
                 <td>
                     <v-menu open-on-hover>

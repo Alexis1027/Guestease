@@ -8,7 +8,7 @@ use App\Models\Listing;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ListingController extends Controller
+class OwnerListingController extends Controller
 {
     //
     public function create() {

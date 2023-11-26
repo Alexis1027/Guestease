@@ -61,7 +61,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-if="listings.length <= 0">
+                <tr v-if="listings.data.length <= 0">
                     <td colspan="8">No listings found.</td>
                 </tr>
                 <tr v-for="listing in listings.data" :key="listing.id">

@@ -227,7 +227,7 @@
                                 Edit
                             </v-btn> 
                             <v-file-input label="Add new photos" chips color="blue" multiple v-model="addPhoto" variant="outlined" v-if="!showEditPhotos && listing.type == 'Guest house'"></v-file-input>
-                            <v-file-input label="Add new photos" chips color="blue" v-model="addPhoto" variant="outlined" v-if="!showEditPhotos && listing.type == 'Room'"></v-file-input>
+                            <v-file-input label="Add new photos" chips color="blue" v-model="addPhoto" variant="outlined" v-if="!showEditPhotos && (listing.type == 'Room' || listing.type == 'Multiple room')"></v-file-input>
                         <div style="width: 100vw;">
                             <v-slide-group v-model="model" class="pa-4" show-arrows >
                                 <v-slide-group-item v-for="(item, i) in photosForm.images" :key="i">
@@ -333,8 +333,8 @@
                     <v-card flat>
                         <v-card-item>
                             <v-text-field type="number" color="blue" v-model="pricingForm.price" variant="outlined" label="Price" class="mt-2"></v-text-field>
-                            <v-text-field type="number" color="blue" v-model="pricingForm.monthly_discount" variant="outlined" label="Add discount"></v-text-field>
-                            <v-select label="Availability" :disabled="pricingForm.status == 'For approval' ? true : false" color="blue" v-model="pricingForm.status" variant="outlined" :items="['Available', 'Not available']">
+                            <v-text-field type="number" v-if="listing.type == 'Guest house'" color="blue" v-model="pricingForm.monthly_discount" variant="outlined" label="Add discount"></v-text-field>
+                            <v-select label="Availability" :disabled="pricingForm.status == 'For approval' || pricingForm.status == 'Rejected' ? true : false" color="blue" v-model="pricingForm.status" variant="outlined" :items="['Available', 'Not available']">
                             </v-select>
                         </v-card-item>
                         <v-card-actions class="d-flex justify-end">

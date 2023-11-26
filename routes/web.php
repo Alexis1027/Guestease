@@ -1,13 +1,12 @@
 <?php
 
 use App\Http\Controllers\AccountController;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Guest\RatingController;
-use App\Http\Controllers\Owner\ListingController;
+use App\Http\Controllers\Owner\OwnerListingController;
 use App\Http\Controllers\Guest\WishlistController;
 use App\Http\Controllers\Admin\AdminListingController;
 use App\Http\Controllers\Admin\AdminReservationController;
@@ -28,31 +27,27 @@ use App\Http\Controllers\Owner\OwnerReservationController;
 |
 */
 
-
-
 Route::middleware(['auth'])->group(function () {
 
     //owner
-    // Route::middleware(['owner'])->group(function () {
+    Route::middleware(['owner'])->group(function () {
         Route::get('/owner/dashboard', [OwnerViewController::class, 'dashboard']);
-        Route::get('/owner/calendar', [OwnerViewController::class, 'calendar']);
-        Route::get('/owner/calendar/{listing}', [OwnerViewController::class, 'calendar']);
-        Route::get('/owner/listings/{entry?}', [ListingController::class, 'index']);
+        Route::get('/owner/listings/{entry?}', [OwnerListingController::class, 'index']);
         Route::get('/owner/reservations/{entry?}', [OwnerReservationController::class, 'index']);
         Route::put('/owner/update-reservation/{reservation}', [OwnerReservationController::class, 'update']);
-        Route::get('/owner/create-listing', [ListingController::class, 'create']);
-        Route::get('/owner/edit-listing/{listing}', [ListingController::class, 'edit']);
-        Route::post('/owner/createListing', [ListingController::class, 'store']);
-        Route::put('/owner/update-listing/details/{listing}', [ListingController::class, 'update_details']);
-        Route::put('/owner/update-listing/photos/{listing}', [ListingController::class, 'update_photos']);
-        Route::put('/owner/update-listing/property/{listing}', [ListingController::class, 'update_property']);
-        Route::put('/owner/update-listing/pricing/{listing}', [ListingController::class, 'update_pricing']);
-        Route::put('/owner/update-listing/rules/{listing}', [ListingController::class, 'update_rules']);
-        Route::delete('/owner/delete-listing/{listing}', [ListingController::class, 'destroy']);
-    // });
+        Route::get('/owner/create-listing', [OwnerListingController::class, 'create']);
+        Route::get('/owner/edit-listing/{listing}', [OwnerListingController::class, 'edit']);
+        Route::post('/owner/createListing', [OwnerListingController::class, 'store']);
+        Route::put('/owner/update-listing/details/{listing}', [OwnerListingController::class, 'update_details']);
+        Route::put('/owner/update-listing/photos/{listing}', [OwnerListingController::class, 'update_photos']);
+        Route::put('/owner/update-listing/property/{listing}', [OwnerListingController::class, 'update_property']);
+        Route::put('/owner/update-listing/pricing/{listing}', [OwnerListingController::class, 'update_pricing']);
+        Route::put('/owner/update-listing/rules/{listing}', [OwnerListingController::class, 'update_rules']);
+        Route::delete('/owner/delete-listing/{listing}', [OwnerListingController::class, 'destroy']);
+    });
 
     //admin
-    // Route::middleware(['admin'])->group(function () {
+    Route::middleware(['admin'])->group(function () {
         Route::delete('/admin/delete-listing/{listing}', [AdminListingController::class, 'destroy']);
         Route::put('/admin/update-listing/{listing}', [AdminListingController::class, 'update']);
         Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin-dashboard');
@@ -65,19 +60,19 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/listing-requests/{entry?}', [ListingRequestController::class, 'index']);
         Route::put('/admin/approve-listing/{listing}', [ListingRequestController::class, 'approve']);
         Route::put('/admin/reject-listing/{listing}', [ListingRequestController::class, 'reject']);
-    // });
+    });
 
     //guest
-    // Route::middleware(['guest'])->group(function () {
+    Route::middleware(['guest'])->group(function () {
         Route::post('/reserve/{listing}', [GuestReservationController::class, 'store']);
-        Route::get('/confirm-reservation/{listing}', [HomeController::class, 'confirm_reservation']);
+        Route::get('/confirm-reservation/{listing}', [GuestReservationController::class, 'confirm_reservation']);
         Route::post('/wishlist/save', [WishlistController::class, 'store']);
         Route::delete('/wishlist/unsave',[WishlistController::class, 'destroy']);
         Route::get('/wishlists', [WishlistController::class, 'index']);
         Route::post('/rate-listing/{listing_id}', [RatingController::class, 'store']);
         Route::put('/reservations/cancel/{reservation}', [GuestReservationController::class, 'cancel']);
         Route::get('/reservations', [GuestReservationController::class, 'index'])->name('reservations');
-    // });
+    });
 
     Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
     Route::post('/account/update-profile_pic', [AccountController::class, 'update_profile_pic']);
@@ -103,14 +98,3 @@ Route::get('/createGuest', [AuthController::class, 'create_guest']);
 Route::get('/createOwner', [AuthController::class, 'create_owner']);
 Route::post('/validate/user', [AuthController::class, 'validate_credentials']); 
 Route::post('/create/user', [AuthController::class, 'store_user']);
-
-
-// Route::post('/create/owner', [AuthController::class, 'validate_credentials']); //storeOwner
-// Route::get('/about', function() {
-//     return Inertia::render('About');
-// });
-// Route::get('/joyce',[HomeController::class, 'joyce']);
-// Route::get('/example',[HomeController::class, 'example']);
-// Route::get('/alexis',[HomeController::class, 'alexis'] );
-// Route::get('/fiel',[HomeController::class, 'fiel'] );
-// Route::get('/tepen',[HomeController::class, 'tepen'] );

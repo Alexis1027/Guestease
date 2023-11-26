@@ -203,7 +203,7 @@
                 </v-container>
 
                 <!-- Rate this place section -->
-                <v-container v-if="auth && is_reserved">
+                <v-container v-if="auth && is_reserved.length > 0">
                     <p class="text-h5 font-weight-medium">Rate this place </p>
                     <p>Tell others what you think. </p>
                     <v-divider class="my-3" />
@@ -264,7 +264,7 @@
                                 <v-btn 
                                     v-if=" is_reserved[is_reserved.length-1].status == 'cancelled'"
                                     @click="submitReservation" 
-                                    :disabled="owner.id == auth.user.id" 
+                                    :disabled="owner.id == auth.user.id || reserveForm.processing" 
                                     :loading="reserveForm.processing" 
                                     class="mb-4" 
                                     width="100%" 
@@ -280,7 +280,7 @@
                                     color="green" 
                                     v-if="listing.status == 'Available' && is_reserved.length <= 0" 
                                     @click="submitReservation" 
-                                    :disabled="reserveForm.processing" 
+                                    :disabled="reserveForm.processing || owner.id == auth.user.id" 
                                     :loading="reserveForm.processing" 
                                     class="mb-4" 
                                     width="100%" 
@@ -302,7 +302,7 @@
                                 width="100%"
                                 size="large"
                                 >
-                                Reserve
+                                Reserve 
                             </v-btn>
                             <v-btn block v-else disabled size="large"> Reserved </v-btn>
                         </div>
@@ -311,7 +311,7 @@
             </v-col>
             <!-- Ratings and reviews section -->
             <v-container class="mb-5">
-                <p class="text-h5 font-weight-medium">Ratings and reviews</p>
+                <p class="text-h5 font-weight-medium">Ratings and reviews </p>
                 <v-divider class="mt-3" />
                 <v-row>
                     <v-col cols="6" class="mt-3" v-for="rating in ratings" :key="rating.id">

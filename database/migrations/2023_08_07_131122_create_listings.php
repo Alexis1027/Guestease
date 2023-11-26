@@ -29,7 +29,7 @@ return new class extends Migration
             $table->json('rules')->nullable();
             $table->string('status');
             $table->string('type');
-            $table->decimal('monthly_discount', 8, 2)->nullable();
+            $table->integer('monthly_discount')->default(0);
             $table->string('bldg_permit')->nullable();
             $table->timestamps();
         });

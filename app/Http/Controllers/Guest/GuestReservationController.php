@@ -17,12 +17,26 @@ class GuestReservationController extends Controller
         return back();
     }
 
+    public function confirm_reservation(Listing $listing, Request $request) {
+
+        $request->validate([
+            'guests' => 'required',
+            'checkin' => 'required',
+            'checkout' => 'required',
+            'days' => 'required',
+        ]);
+
+        return Inertia::render('Guest/ConfirmReservation', [
+            'listing' => $listing, 
+            'guests' => $request->query('guests'),
+            'checkin' => $request->query('checkin'),
+            'checkout' => $request->query('checkout'),
+            'days' => $request->query('days')
+        ]);
+    }
+
     public function index() {
         $reservations = Reservation::where('user_id', auth()->user()->id)->latest()->get();
-        // $reservations = $reservations->reject(function ($r) {
-        //     $listing = Listing::where('status', '!=', 'Deleted')->find($r->listing_id);
-        //     return $listing == null;
-        // });
         
         foreach ($reservations as $r) {
             $listing = Listing::find($r->listing_id);
@@ -44,6 +58,7 @@ class GuestReservationController extends Controller
         $form['user_id'] = $request->user_id;
         $form['listing_id'] = $request->listing_id;
         $form['status'] = $request->status;
+        $form['discount'] = $request->discount;
         $form['checkin'] = $request->checkin;
         $form['checkout'] = $request->checkout;
         $form['guests'] = $request->guests;
