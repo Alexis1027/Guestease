@@ -6,7 +6,6 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Listing;
 use App\Models\Reservation;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class AdminReservationController extends Controller

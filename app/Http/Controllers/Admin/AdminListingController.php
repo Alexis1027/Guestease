@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Inertia\Inertia;
-use App\Models\Rating;
-use App\Models\Wishlist;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\User;

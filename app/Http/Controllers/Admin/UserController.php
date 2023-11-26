@@ -5,16 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Listing;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
 
 class UserController extends Controller
 {
     //
- 
-
     public function index(?string $entry = null) {
         return Inertia::render('Admin/ManageUsers', ['users' => User::paginate($entry ? $entry : 5)]);
     }

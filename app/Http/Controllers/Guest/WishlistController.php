@@ -12,10 +12,7 @@ use App\Http\Controllers\Controller;
 class WishlistController extends Controller
 {
     //
-    // $reservations = $reservations->reject(function ($r) {
-    //     $listing = Listing::where('status', '!=', 'Deleted')->find($r->listing_id);
-    //     return $listing == null;
-    // });
+    
     public function index() {
         $wishlists = Wishlist::where('user_id', auth()->user()->id)->get();
         $wishlists = $wishlists->reject(function ($w) {

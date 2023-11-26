@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Exception;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
