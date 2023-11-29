@@ -47,7 +47,7 @@
                 <v-btn :class="[$page.component == 'About' ? 'text-blue' : '', 'text-none']">About</v-btn>
             </Link>
             <Link href="/contact-us">
-                <v-btn :class="[$page.component == 'ContactUs' ? 'text-blue' : '', 'text-none']">Contact us</v-btn>
+                <v-btn :class="[$page.component == 'ContactUs' ? 'text-blue' : '', 'text-none']">Contact Us</v-btn>
             </Link>
             <Link href="/login" v-if="!auth">
                 <v-btn class="text-none" color="blue" variant="flat">
