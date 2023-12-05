@@ -95,18 +95,10 @@ class AuthController extends Controller
     }
 
     public function store_admin(Request $request) {
-        $admin = $request->validate([
-            'firstname' => ['required', 'min:3'],
-            'lastname' => ['required', 'min:3'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:6'],
-            'phone_number' => ['required', 'unique:users']
-        ]);
-        $admin['role'] = 'admin';
-        $user = User::create($admin);
-        $user->profile_pic = "default_profile.png";
-        $user->save();
-        return back();
+            $user = User::create($request->all());
+            $user->profile_pic = "default_profile.png";
+            $user->save();
+            return back();
     }
 
     // public function sendVerificationCode(Request $request) {

@@ -3,16 +3,47 @@
     import AdminLayout from '../../Layouts/AdminLayout.vue'
     import {useForm} from '@inertiajs/vue3'
     import {ref} from 'vue'
+    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification  } from "firebase/auth";
+    const auth = getAuth()
+
 
     const createSuccessful = ref(false)
     const passwordVisible = ref(true)
+    const signupButton = ref(false)
     const form = useForm({
         firstname: null,
         lastname: null,
         email: null,
         password: null,
-        phone_number: null
+        phone_number: null,
+        role: 'admin'
     })
+
+    function sign_up() {
+        signupButton.value = true
+        form.post('/validate/user', {
+            onSuccess: () => {
+                form.post('/admin/create-admin')
+
+                createUserWithEmailAndPassword(auth, form.email, form.password)
+                .then((userCredential) => {
+                    sendEmailVerification(auth.currentUser)
+                    .then(() => {
+                        alert('Email verification sent!')
+                    });
+                })
+                .catch((error) => {
+                    signupButton.value = false
+                    emailErrMsg.value = "Email is already in use"
+                    console.log(error.message);
+                    // ..
+                })
+            },
+            onError: () => {
+                signupButton.value = false
+            }
+        })
+    }
 
     defineOptions({layout: AdminLayout})
 
@@ -90,7 +121,7 @@
                         label="Password">
                     </v-text-field>
                 </v-row>
-                <v-btn block class="fadeIn third mt-4" :loading="form.processing" :disabled="form.processing" @click="form.post('/admin/create-admin', {onSuccess: () => {createSuccessful = true}})" type="submit" id="btn-login" color="blue">Create</v-btn>
+                <v-btn block class="fadeIn third mt-4" :loading="form.processing" :disabled="form.processing" @click="sign_up" type="submit" id="btn-login" color="blue">Create</v-btn>
             </v-card-item>
         </v-card>
         <v-snackbar v-model="createSuccessful" color="blue-lighten-3" timeout="1500">
