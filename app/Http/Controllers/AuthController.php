@@ -95,10 +95,10 @@ class AuthController extends Controller
     }
 
     public function store_admin(Request $request) {
-            $user = User::create($request->all());
-            $user->profile_pic = "default_profile.png";
-            $user->save();
-            return back();
+        $user = User::create($request->all());
+        $user->profile_pic = "default_profile.png";
+        $user->save();
+        return back();
     }
 
     // public function sendVerificationCode(Request $request) {
