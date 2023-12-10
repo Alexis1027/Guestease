@@ -1,11 +1,11 @@
 <script setup>
 
+    defineOptions({layout: AdminLayout})
     import AdminLayout from '../../Layouts/AdminLayout.vue'
     import {useForm} from '@inertiajs/vue3'
     import {ref} from 'vue'
     import { getAuth, createUserWithEmailAndPassword, sendEmailVerification  } from "firebase/auth";
     const auth = getAuth()
-
 
     const createSuccessful = ref(false)
     const passwordVisible = ref(true)
@@ -45,7 +45,6 @@
         })
     }
 
-    defineOptions({layout: AdminLayout})
 
 </script>
 

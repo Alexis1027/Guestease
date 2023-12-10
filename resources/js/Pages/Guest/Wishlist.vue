@@ -1,13 +1,10 @@
 <script setup>
 
+    defineOptions({layout: GuestLayout})
+    defineProps({ wishlists: Object })
     import {defineProps} from 'vue'
     import GuestLayout from '../../Layouts/GuestLayout.vue'
     import WishlistCard from './Partials/WishlistCard.vue'
-    
-    defineOptions({layout: GuestLayout})
-    defineProps({
-        wishlists: Object
-    })
 
 </script>
 

@@ -1,12 +1,11 @@
 <script setup>
 
+    defineOptions({layout: GuestLayout})
+    const props = defineProps(['listings'])
     import GuestHouseCard from './Partials/ListingCard.vue';
     import GuestLayout from '../../Layouts/GuestLayout.vue';
     import {defineProps, ref} from 'vue'
-
-    defineOptions({layout: GuestLayout})
-    const props = defineProps(['listings'])
-    //TOMorrow !
+    
     const latitude = ref()
     const longitude = ref()
     navigator.geolocation.getCurrentPosition((pos) => {

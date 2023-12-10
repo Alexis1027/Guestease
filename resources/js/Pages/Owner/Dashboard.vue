@@ -15,7 +15,7 @@
 </script>
 
 <template>
-
+    <Head title="Dashboard"></Head>
     <v-container>
         <v-row class="mt-6">
             <v-col cols="9">

@@ -1,14 +1,9 @@
 <script setup>
-    import Layout from '../Layouts/Layout.vue'
-    import {format} from 'date-fns'
 
     defineOptions({layout: Layout})
-    defineProps({
-        auth: Object,
-        user: Object,
-        listings: Object
-    })
-
+    defineProps({ auth: Object, user: Object, listings: Object })
+    import Layout from '../Layouts/Layout.vue'
+    import {format} from 'date-fns'
 
 </script>
 

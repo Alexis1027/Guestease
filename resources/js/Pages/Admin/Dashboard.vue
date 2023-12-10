@@ -6,7 +6,6 @@
     import { onMounted, ref, defineProps } from 'vue';
 
     defineOptions({ layout: AdminLayout })
-    
     const prop = defineProps([
         'total_users',
         'total_listings',

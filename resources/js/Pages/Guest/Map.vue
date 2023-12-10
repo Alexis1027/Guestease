@@ -1,16 +1,13 @@
 <script setup>
 
+    defineOptions({ layout: GuestLayout })
+    const prop = defineProps(['listings'])
     import {ref, onMounted, defineProps} from 'vue'
     import L from 'leaflet'
     import 'leaflet/dist/leaflet.css'
     import GuestLayout from '../../Layouts/GuestLayout.vue';
     import MapSidebar from './partials/MapSidebar.vue';
-    defineOptions({ layout: GuestLayout })
-    // const lat = ref('')
-    // const lon = ref('')
-    // const dataLoaded = ref(false)
-    const prop = defineProps(['listings'])
-    // const search = ref('')
+ 
     const mapContainer = ref(null)
     const mapSnackbar = ref(false)
     const currentlisting = ref(null)

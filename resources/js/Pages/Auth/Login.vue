@@ -1,11 +1,11 @@
 <script setup>
 
+    defineOptions({layout: Layout})
     import {ref} from 'vue'
     import {useForm, router} from '@inertiajs/vue3'
     import Layout from '../../Layouts/AuthLayout.vue'
     import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
     
-    defineOptions({layout: Layout})
 
     const passwordVisible = ref(true)
     const loadingLoginButton = ref(false)
@@ -31,6 +31,7 @@
             }
         })
         .catch((error) => {
+            console.log(error)
             loadingLoginButton.value = false
             errorMssg.value = "auth/invalid-login-credentials"
         })
@@ -58,20 +59,20 @@
 
 <template>
     <Head title="Login"/>
-    <v-container class="wrapper fadeInDown " >
+    <v-container class="wrapper fadeInDown " style="height: 100vh">
         <!-- <form method="POST" action="/users/authenticate"> -->
         <v-form @submit.prevent>
             <v-row id="formContent">
-                <v-col cols="7" xxl="7" xl="7" lg="7" md="7">
-                    <v-card height="100%" elevation="0">
+                <v-col cols="12" xxl="7" xl="7" lg="7" md="7" sm="12">
+                    <v-card height="100%" elevation="0" width="auto">
                         <v-card-item class="fill-height">
                             <v-img src="../images/logo/frlogo-transformed.png"  class=" fadeIn second"></v-img>
                         </v-card-item>
                     </v-card>
                 </v-col>
                 <v-divider vertical/>
-                <v-col cols="5" xxl="5" xl="5" lg="5" md="5">
-                    <v-card elevation="0">
+                <v-col cols="12" xxl="5" xl="5" lg="5" md="5" sm="12">
+                    <v-card elevation="0" width="auto">
                         <p class="fadeIn first text-h5 font-weight-bold">LOGIN</p>
                         <label class="mt-4 fadeIn third">Don't have an account? </label>
                         <Link href="/createGuest" class="text-blue fadeIn third"> Sign up</Link>

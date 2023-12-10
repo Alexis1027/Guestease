@@ -1,11 +1,12 @@
 <script setup>
 
+    defineOptions({ layout: Layout })
+
     import {ref} from 'vue'
     import { useForm } from '@inertiajs/vue3';
     import { getAuth, createUserWithEmailAndPassword, sendEmailVerification  } from "firebase/auth";
     import Layout from '../../Layouts/AuthLayout.vue'
 
-    defineOptions({layout: Layout})
 
     const passwordVisible = ref(true)
     const auth = getAuth()

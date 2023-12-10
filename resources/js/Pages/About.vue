@@ -1,8 +1,8 @@
 <script setup>
 
+    defineOptions({ layout: GuestLayout })
     import GuestLayout from '../Layouts/GuestLayout.vue'
     import Footer from '../Layouts/Footer.vue'
-    defineOptions({layout: GuestLayout})
 
 </script>
 

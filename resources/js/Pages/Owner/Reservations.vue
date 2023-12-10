@@ -75,6 +75,7 @@
 </script>
 
 <template>
+    <Head title="Reservations"/>
     <v-row justify="space-between" class="pa-4">
         <v-col cols="2">
                 <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>

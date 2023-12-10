@@ -13,6 +13,11 @@ class GuestReservationController extends Controller
     //
     public function cancel(Reservation $reservation, Request $request) {
         $reservation->status = 'cancelled';
+        $listing = Listing::find($request->listing_id);
+        if($listing->type != 'Multiple room') {
+            $listing->status = 'Available';
+            $listing->update();
+        }
         $reservation->update();
         return back();
     }

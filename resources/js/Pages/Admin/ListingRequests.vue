@@ -1,5 +1,7 @@
 <script setup>
 
+    defineProps({ listingRequests: Object })
+    defineOptions({ layout: AdminLayout })
     import {ref, watch} from 'vue'
     import {format} from 'date-fns'
     import {router} from '@inertiajs/vue3'
@@ -23,12 +25,6 @@
     })
 
 
-    defineProps({
-        listingRequests: Object
-    })
-    defineOptions({
-        layout: AdminLayout
-    })
 </script>
 <template>
     <Head title="Listing requests"></Head>

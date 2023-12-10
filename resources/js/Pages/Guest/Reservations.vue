@@ -1,11 +1,11 @@
 <script setup>
 
+    defineOptions({layout: GuestLayout})
+    defineProps({reservations: Object, auth: Object})
     import GuestLayout from '../../Layouts/GuestLayout.vue'
     import ReservationCard from './Partials/ReservationCard.vue'
     import {ref} from 'vue'
 
-    defineOptions({layout: GuestLayout})
-    defineProps({reservations: Object, auth: Object})
     const cancelReservationDialog = ref(false)
     const reservationToCancel = ref(null)
     const cancelReservation = (reservation) => {
@@ -32,7 +32,7 @@
         </v-row>
         <v-row>
             <v-col cols="6" v-for="reservation in reservations" :key="reservation.id">
-                <ReservationCard :reservation="reservation" @openCancelReservationDialog="cancelReservation" />
+                <ReservationCard :reservation="reservation" @openCancelReservationDialog="cancelReservation(reservation)" />
             </v-col>
         </v-row>
         <p class="ms-6 mt-6" v-if="reservations.length == 0">No reservations found.</p>
@@ -48,7 +48,7 @@
             </v-card-text>
             <v-card-actions class="justify-end">
                 <v-btn @click="cancelReservationDialog = false">No</v-btn>
-                <Link :href="`/reservations/cancel/${reservationToCancel}`" method="PUT" :data="{reservation_id: reservationToCancel}">
+                <Link :href="`/reservations/cancel/${reservationToCancel.id}`" method="PUT" :data="{listing_id: reservationToCancel.listing_id}">
                     <v-btn color="error" @click="cancelReservationDialog = false">Yes</v-btn>
                 </Link>
             </v-card-actions>

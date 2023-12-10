@@ -34,6 +34,8 @@
 </script>
 
 <template>
+    <Head title="Listings"/>
+
     <v-container class="bg-white">
         
         <v-row justify="space-between">

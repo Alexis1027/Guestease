@@ -1,12 +1,11 @@
 <script setup>
 
+    defineOptions({ layout: AdminLayout })
     import {ref, defineProps, watch} from 'vue'
     import { router } from '@inertiajs/vue3'
     import AdminLayout from '../../Layouts/AdminLayout.vue'
     import DeleteUserDialog from './partials/DeleteUserDialog.vue'
     import {format} from 'date-fns'
-    
-    defineOptions({layout: AdminLayout})
 
     const prop = defineProps(['users'])
     const entries = [5, 10, 15, 20, 25]
@@ -16,10 +15,10 @@
     const deleteSnackbar = ref(false)
     const user = ref({})
 
-    function deleteUser(usr) {
-        user.value = usr
-        deleteUserDialog.value = true
-    }
+    // function deleteUser(usr) {
+    //     user.value = usr
+    //     deleteUserDialog.value = true
+    // }
 
     watch(entry, () => {
         router.get(`/admin/manage-users/${entry.value}`)
@@ -36,7 +35,6 @@
                 <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
         </v-col>
         <v-col cols="4">
-        <!-- <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field> -->
     </v-col>
     </v-row>
     <v-table hover class="bg-grey-lighten-5 text-center ma-5">

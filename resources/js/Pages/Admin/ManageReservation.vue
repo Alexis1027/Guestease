@@ -1,12 +1,13 @@
 <script setup>
 
+    const {reservations} = defineProps({ reservations: Object })
+    defineOptions({layout: AdminLayout})
     import {ref, watch} from 'vue'
     import {format} from 'date-fns'
     import { router } from '@inertiajs/vue3'
     import AdminLayout from '../../Layouts/AdminLayout.vue'
     import emailjs from '@emailjs/browser'
     
-    defineOptions({layout: AdminLayout})
 
     const entry = ref()
     const entries = [5, 10, 15, 20, 25]
@@ -15,9 +16,6 @@
         ['approved', 'green'],
         ['cancelled', 'red']
     ])
-    const {reservations} = defineProps({
-        reservations: Object
-    })
 
     function sendNotification(reservation) {
         console.log(reservation)
@@ -83,8 +81,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-if="reservations.length <= 0">
-                    <td colspan="10"> No reservations.</td>
+                <tr v-if="reservations.data.length <= 0">
+                    <td colspan="10" class="text-grey-darken-2"> No reservations yet.</td>
                 </tr>
                 <tr v-for="reservation in reservations.data" :key="reservation.id" v-else>
                     <td>

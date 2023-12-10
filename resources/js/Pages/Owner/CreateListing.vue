@@ -384,7 +384,7 @@
                     </div>
                     <div v-else>
                         <p class="text-h5 text-start">Upload one photo of the room.</p>
-                        <p class="text-h6 mb-2 text-grey-darken-1 ms-3">You can add more or make changes later.</p>
+                        <p class="text-h6 mb-2 text-grey-darken-1 ms-3"> Lorem ipsum skibidi gyatt neque porro quisquam est qui dolorem </p>
                         <v-file-input 
                                 label="Room photo" 
                                 chips

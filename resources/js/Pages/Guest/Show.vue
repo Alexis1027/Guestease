@@ -1,5 +1,7 @@
 <script setup>
 
+    defineOptions({layout: GuestLayout})
+    const props = defineProps(['listing', 'ratings', 'averageRating', 'is_reserved', 'wishlist', 'auth', 'rated', 'owner', 'reservedDates'])
     import GuestLayout from '../../Layouts/GuestLayout.vue'
     import {defineProps, ref} from 'vue'
     import { useForm } from '@inertiajs/vue3'
@@ -9,10 +11,7 @@
     import {format} from 'date-fns'
     import MazGallery from 'maz-ui/components/MazGallery'
     import DatePicker from './Partials/DatePicker.vue'
-    
-    defineOptions({layout: GuestLayout})
 
-    const props = defineProps(['listing', 'ratings', 'averageRating', 'is_reserved', 'wishlist', 'auth', 'rated', 'owner', 'reservedDates'])
     const rating = ref(0)
     const showReviewModal = ref(false)
     const images = JSON.parse(props.listing.images)
@@ -262,7 +261,7 @@
                         <div v-if="auth">
                             <div v-if="is_reserved.length >= 1">
                                 <v-btn 
-                                    v-if=" is_reserved[is_reserved.length-1].status == 'cancelled'"
+                                    v-if=" is_reserved[is_reserved.length-1].status == 'cancelled' && listing.status == 'Available' "
                                     @click="submitReservation" 
                                     :disabled="owner.id == auth.user.id || reserveForm.processing" 
                                     :loading="reserveForm.processing" 

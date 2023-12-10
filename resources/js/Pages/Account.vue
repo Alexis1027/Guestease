@@ -1,13 +1,12 @@
 <script setup>
 
+    defineOptions({ layout: Layout })
+    const props = defineProps(['auth', 'showInputVerificationCodeProp'])
     import {ref} from 'vue'
     import {useForm} from '@inertiajs/vue3'
     import Layout from '../Layouts/Layout.vue'
     import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
 
-    defineOptions({layout: Layout})
-
-    const props = defineProps(['auth', 'showInputVerificationCodeProp'])
     const showFileInput = ref(false)
     const results = ref()
     const snackbar = ref(false)
@@ -37,28 +36,6 @@
         
     }
 
-    // const sendVerificationCodeLoading = ref(false)
-    // const verificationCode = ref('')
-
-    // const sendVerificationCodeForm = useForm({
-    //     phoneNumber: props.auth.user.contact_no
-    // })
-
-    // const verifyVerificationCodeForm = useForm({
-    //     code: null
-    // })
-
-    // function sendVerificationCode() {
-    //     sendVerificationCodeForm.get('/sendVerificationCode', {
-    //         preserveState: true,
-    //         preserveScroll: true
-    //     })
-    // }
-
-    // function verifyVerificationCode() {
-    //     verifyVerificationCodeForm.get('/verifyVerificationCode')
-    // }
-
 </script>
 
 
@@ -74,7 +51,6 @@
             <v-avatar size="100">
                 <v-img :src="`/images/profile/${auth.user.profile_pic}`" ></v-img>
             </v-avatar>
-            <!-- <span class="text-red">not working</span> -->
             <v-btn class="text-none mx-6" prepend-icon="mdi-pencil" v-if="!showFileInput" @click="showFileInput = true" color="blue">Edit profile picture</v-btn>
             <v-btn v-else class="text-none mx-6" prepend-icon="mdi-pencil" color="red" @click="showFileInput = false"> Cancel</v-btn>
             <div v-if="showFileInput">
@@ -105,53 +81,23 @@
                     />
                     <p class="text-error">{{ form.errors.phone_number }}</p>
                 </v-col>
-                <!-- <v-col cols="3" class="mt-2">
-                    <p class="text-green" v-if="auth.phone_number_verified"><v-icon>mdi-check</v-icon> Verified</p>
-                    <v-btn type="submit" v-else color="blue" :loading="sendVerificationCodeLoading" :disabled="sendVerificationCodeLoading" @click="sendVerificationCode">Send SMS code</v-btn>
-                </v-col> -->
             </v-row>
-            <!-- <v-row v-if="sendVerificationCodeForm.wasSuccessful">
-                <v-col cols="5">
-                    <div>
-                        <v-text-field type="number" placeholder="******" label="Enter verification code" v-model="verifyVerificationCodeForm.code" variant="outlined">
-                            <template v-slot:append>
-                                <v-btn color="blue" @click="verifyVerificationCode">
-                                    Verify
-                                </v-btn>
-                            </template>
-                        </v-text-field>
-                    </div>
-                </v-col>
-            </v-row> -->
+           
             <v-text-field class="mt-4" variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
-            <!-- <v-text-field variant="outlined" clearable :error-messages="form.errors.email" label="Email" color="blue" v-model="form.email"></v-text-field> -->
         </v-card-item>
         <v-card-actions class="justify-end d-flex">
             <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submit" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
         </v-card-actions>
     </v-card>
-<!-- 
-    <v-card class="border bg-white mt-6" width="80%" title="Change password">
-        <v-card-item>
-            <span class="text-red">doestn work</span>
-            <v-text-field variant="outlined" label="Current password" color="blue"></v-text-field>
-            <v-text-field variant="outlined" label="New password" color="blue" ></v-text-field>
-            <v-text-field variant="outlined" label="Confirm new password" color="blue"></v-text-field>
-        </v-card-item>
-        <v-card-actions class="justify-end d-flex">
-            <v-btn rounded="pill" class="text-none" variant="flat" color="blue">Save</v-btn>
-        </v-card-actions>
-    </v-card> -->
-        
 
         <v-snackbar
-      v-model="snackbar"
-      multi-line
-      color="blue"
-      class="text-center"
-      location="bottom center"
-      timeout="1200"
-    >
+            v-model="snackbar"
+            multi-line
+            color="blue"
+            class="text-center"
+            location="bottom center"
+            timeout="1200"
+        >
       Update Sucessful.
       <template v-slot:actions>
         <v-btn

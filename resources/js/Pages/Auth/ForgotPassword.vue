@@ -1,10 +1,10 @@
 <script setup>
 
+    defineOptions({layout: Layout})
     import {ref} from 'vue'
     import Layout from '../../Layouts/AuthLayout.vue'
     import { getAuth, sendPasswordResetEmail } from "firebase/auth"
     
-    defineOptions({layout: Layout})
 
     const sendButton = ref(false)
     const email = ref('')
