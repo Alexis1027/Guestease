@@ -9,13 +9,9 @@
     import {format} from 'date-fns'
     import MazGallery from 'maz-ui/components/MazGallery'
 
-    
-    
     const deleteListingDialog = ref(false)
     const deleteSnackbar = ref(false)
     const updateSnackbar = ref(false)
-    const entries = [5, 10, 15, 20, 25]
-    const entry = ref()
     const listing = ref({})
     const viewListingDialog = ref(false)
     const updateStatusDialog = ref(false)
@@ -47,9 +43,6 @@
         // })
     }
 
-    watch(entry, () => {
-        router.get(`/admin/manage-listings/${entry.value}`)
-    })
 
     function showViewListingDialog(listing) {
         selectedListing.value = listing
@@ -68,75 +61,49 @@
         updateStatusDialog.value = true
     }
 
+    const headers = [
+        { title: 'ID', align: 'start', sortable: false, key: 'id', value: "id" },
+        { title: 'Title', align: 'start', key: 'title', value: "title" },
+        { title: 'Location', align: 'start', key: 'location', value: "location" },
+        { title: 'Price', align: 'start', key: 'price', value: "price" },
+        { title: 'Type', align: 'start', key: 'type', value: "type" },
+        { title: 'Status', align: 'start', key: 'status', value: "status" },
+        { title: 'Actions', align: 'start', key: 'actions', value: "actions" },
+    ]
+
 </script>
 
 
 <template>
     <Head title="Manage Listings" />
-        <v-row justify="space-between ms-3 mt-4">
-            <v-col cols="2">
-                    <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
-            </v-col>
-            <v-col cols="4">
-        </v-col>
-        </v-row>
-        <v-table hover class="bg-grey-lighten-5 text-center ma-4">
-        <thead>
-            <tr >
-                <th class="text-center">ID</th>
-                <th class="text-center">Listing name</th>
-                <th class="text-center">Location</th>
-                <th class="text-center">Type</th>
-                <th class="text-center">Price</th>
-                <th class="text-center">Created at</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <v-slide-x-transition group>
-                <tr v-for="listing in listings.data" :key="listing.id" class="pa-4">
-                    <td>{{ listing.id }}</td>
-                    <td>{{ listing.title }}</td>
-                    <td>{{ listing.location }}</td>
-                    <td>{{ listing.type }}</td>
-                    <td> {{ '₱'+parseInt(listing.price).toLocaleString() }} </td>
-                    <td>{{ format(new Date(listing.created_at), 'M/d/yyy') }}</td>
-                    <td>{{ listing.status }}</td>
+    <v-container>
+        <v-data-table :items="listings" :headers="headers">
+            <template v-slot:item="{ item }">
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.location }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.status }}</td>
                     <td>
-                        <v-btn prepend-icon="mdi-eye-outline" @click="showViewListingDialog(listing)" size="small" color="green" class="text-none me-2">View</v-btn>
-                        <v-btn class="text-none" size="small" @click="showUpdateStatusDialog(listing)" prepend-icon="mdi-square-edit-outline" color="blue">Update status</v-btn>
+                        <v-btn prepend-icon="mdi-eye-outline" @click="showViewListingDialog(item)" size="small" color="green" class="text-none me-2">View</v-btn>
+                        <v-btn class="text-none" size="small" @click="showUpdateStatusDialog(item)" prepend-icon="mdi-square-edit-outline" color="blue">Update</v-btn>
                     </td>
                 </tr>
-            </v-slide-x-transition>
-            <tr v-if="listings.data.length <= 0">
-                <td class="text-h6" colspan="6">No listing found.</td>
-            </tr>
-        </tbody>
-    </v-table>
-    <v-row  class="mt-2">
-        <v-col class="d-flex justify-end">
-            <Link 
-                v-for="link in listings.links" 
-                :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 
-                :key="link" 
-                :href="link.url"
-                v-html="link.label"
-                >
-            </Link>
-        </v-col>
-    </v-row>
-    
+            </template>
+        </v-data-table>
+    </v-container>
 
-    <DeleteListingDialog :listing="listing" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteListingDialog" @CloseDialog="deleteListingDialog = false" v-model="deleteListingDialog" />
+    <!-- <DeleteListingDialog :listing="listing" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteListingDialog" @CloseDialog="deleteListingDialog = false" v-model="deleteListingDialog" /> -->
 
-    <v-snackbar v-model="deleteSnackbar" color="red-lighten-3" timeout="1500" >
+    <!-- <v-snackbar v-model="deleteSnackbar" color="red-lighten-3" timeout="1500" >
         Deleted successfully
         <template v-slot:actions>
             <v-btn variant="text" @click="deleteSnackbar = false" icon="mdi-close">
             </v-btn>
         </template>
-    </v-snackbar>
+    </v-snackbar> -->
 
     <v-snackbar v-model="updateSnackbar" color="blue-lighten-3" timeout="1500">
         Updated successfully

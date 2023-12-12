@@ -24,20 +24,36 @@
         router.get(`/admin/listing-requests/${entry.value}`)
     })
 
+    const headers = [
+        { title: 'ID', align: 'start', key: 'id', value: "id" },
+        { title: 'Owner', align: 'start', key: 'title', value: "title" },
+        { title: 'Listing', align: 'start', key: 'location', value: "location" },
+        { title: 'Date requested', align: 'start', key: 'price', value: "price" },
+        { title: 'Status', align: 'start', key: 'type', value: "type" },
+        { title: 'Actions', align: 'start', key: 'actions', value: "actions" },
+    ]
 
 </script>
 <template>
     <Head title="Listing requests"></Head>
     <v-container class="bg-white">
-        <v-row justify="space-between">
-            <v-col cols="2">
-                    <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
-            </v-col>
-            <v-col cols="4">
-            <!-- <v-text-field label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field> -->
-        </v-col>
-        </v-row>
-        <v-table hover class="bg-grey-lighten-5 text-center">
+        <v-data-table :items="listingRequests" :headers="headers">
+            <template v-slot:item="{ item }">
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.user.firstname + " " + item.user.lastname }}</td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ format(new Date(item.created_at), 'MMM dd, yyyy') }}</td>
+                    <td>
+                        <v-chip size="small" color="orange">{{ item.status }}</v-chip>
+                    </td>
+                    <td>
+                        <v-btn prepend-icon="mdi-file-find" @click="showListingReviewModalFunc(item)" size="small" class="text-green text-none bg-grey-lighten-5" variant="tonal">Review</v-btn>
+                    </td>
+                </tr>
+            </template>
+        </v-data-table>
+        <!-- <v-table hover class="bg-grey-lighten-5 text-center">
             <thead >
                 <tr >
                     <th class="text-center">ID</th>
@@ -58,11 +74,6 @@
                         <td> <v-chip size="small" color="orange">{{ listing.status }}</v-chip> </td>
                         <td>
                             <v-btn prepend-icon="mdi-file-find" @click="showListingReviewModalFunc(listing)" size="small" class="text-green text-none bg-grey-lighten-5" variant="tonal">Review</v-btn>
-                            <!-- <v-btn size="small" class="text-red bg-grey-lighten-5 text-none ms-1" variant="tonal"> 
-                                <v-icon>mdi-delete-outline</v-icon> Delete
-                            </v-btn> -->
-                            <!-- <v-btn icon="mdi-close" size="small" class="text-blue" flat></v-btn> -->
-                            <!-- <v-btn icon="mdi-check" size="small" class="text-green" flat></v-btn> -->
                         </td>
                     </tr>
                     <tr v-if="listingRequests.data.length <= 0">
@@ -70,14 +81,14 @@
                     </tr>
                 </v-slide-x-transition>
             </tbody>
-        </v-table>
+        </v-table> -->
         <!-- <v-row  class="mt-2">
             <v-col class="d-flex justify-end">
                 <v-pagination v-model="page" :length="10" :total-visible="4" rounded="circle">
                 </v-pagination>
             </v-col>
         </v-row> -->
-        <v-row  class="mt-2">
+        <!-- <v-row  class="mt-2">
         <v-col class="d-flex justify-end">
             <Link 
                 v-for="link in listingRequests.links" 
@@ -88,7 +99,7 @@
                 >
             </Link>
         </v-col>
-    </v-row>
+    </v-row> -->
     </v-container>
     <ReviewListingModal :show="showListingReviewModal" @approved="snackbar = true" :listing="currentListing" v-if="showListingReviewModal" @closeReviewListingModal="showListingReviewModal = false" />
     <v-snackbar v-model="snackbar">

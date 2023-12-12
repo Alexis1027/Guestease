@@ -1,19 +1,20 @@
 <?php
 
-use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Guest\RatingController;
-use App\Http\Controllers\Owner\OwnerListingController;
 use App\Http\Controllers\Guest\WishlistController;
+use App\Http\Controllers\Owner\OwnerViewController;
 use App\Http\Controllers\Admin\AdminListingController;
-use App\Http\Controllers\Admin\AdminReservationController;
+use App\Http\Controllers\Owner\OwnerListingController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ListingRequestController;
+use App\Http\Controllers\Admin\AdminReservationController;
 use App\Http\Controllers\Guest\GuestReservationController;
-use App\Http\Controllers\Owner\OwnerViewController;
 use App\Http\Controllers\Owner\OwnerReservationController;
 
 /*
@@ -54,12 +55,13 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/admin/delete-user/{user}', [UserController::class, 'destroy']);
         Route::get('/admin/create-admin', [AuthController::class, 'create_admin']);
         Route::post('/admin/create-admin', [AuthController::class, 'store_admin']);
-        Route::get('/admin/manage-users/{entry?}', [UserController::class, 'index'])->name('manage_users');
-        Route::get('/admin/manage-listings/{entry?}', [AdminListingController::class, 'index'])->name('manage_listing');
-        Route::get('/admin/manage-reservations/{entry?}', [AdminReservationController::class, 'index']);
-        Route::get('/admin/listing-requests/{entry?}', [ListingRequestController::class, 'index']);
+        Route::get('/admin/manage-users', [UserController::class, 'index'])->name('manage_users');
+        Route::get('/admin/manage-listings', [AdminListingController::class, 'index'])->name('manage_listing');
+        Route::get('/admin/manage-reservations', [AdminReservationController::class, 'index']);
+        Route::get('/admin/listing-requests', [ListingRequestController::class, 'index']);
         Route::put('/admin/approve-listing/{listing}', [ListingRequestController::class, 'approve']);
         Route::put('/admin/reject-listing/{listing}', [ListingRequestController::class, 'reject']);
+        Route::get('/admin/reports', [ReportController::class, 'index']);
     });
 
     //guest

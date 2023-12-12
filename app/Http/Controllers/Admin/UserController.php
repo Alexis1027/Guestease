@@ -11,8 +11,8 @@ use App\Models\Reservation;
 class UserController extends Controller
 {
     //
-    public function index(?string $entry = null) {
-        return Inertia::render('Admin/ManageUsers', ['users' => User::paginate($entry ? $entry : 5)]);
+    public function index() {
+        return Inertia::render('Admin/ManageUsers', ['users' => User::select('id', 'firstname', 'lastname', 'email', 'address', 'phone_number', 'role')->get()]);
     }
 
     public function destroy(User $user) {

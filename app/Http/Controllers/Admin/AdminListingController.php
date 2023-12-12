@@ -12,8 +12,8 @@ class AdminListingController extends Controller
 {
     //
 
-    public function index(?string $entry = null) {
-        $listings = Listing::where('status', '!=', 'Deleted')->where('status', '!=', 'For approval')->paginate($entry ? $entry : 5);
+    public function index() {
+        $listings = Listing::where('status', '!=', 'Deleted')->where('status', '!=', 'For approval')->get();
         foreach($listings as $ls) {
             $ls->owner = User::find($ls->owner_id);
         }

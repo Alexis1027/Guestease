@@ -51,97 +51,50 @@
     }
 
     
-    watch(entry, () => {
-        router.get(`/admin/manage-reservations/${entry.value}`)
-    })
+    // watch(entry, () => {
+    //     router.get(`/admin/manage-reservations/${entry.value}`)
+    // })
+
+    const headers = [
+        { title: 'ID', align: 'start', key: 'id', value: "id" },
+        { title: 'Listing', align: 'start', key: 'title', value: "title" },
+        { title: 'Guest', align: 'start', key: 'location', value: "location" },
+        { title: 'Check-in/Check-out', align: 'start', key: 'price', value: "price" },
+        { title: 'Total', align: 'start', key: 'type', value: "type" },
+        { title: 'Guests', align: 'start', key: 'status', value: "status" },
+        { title: 'Status', align: 'start', key: 'actions', value: "actions" },
+        { title: 'Actions', align: 'start', key: 'actions', value: "actions" },
+    ]
 
 </script>
 <template>
     <Head title="Reservations" />
-        <v-row justify="space-between ms-4 mt-4">
-            <v-col cols="2">
-                    <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
-            </v-col>
-            <v-col cols="4">
-                <!-- <v-text-field  label="Search..." clearable variant="solo-filled" flat :loading="false" rounded></v-text-field> -->
-            </v-col>
-        </v-row>
-        <v-table hover class="bg-grey-lighten-5 text-center ma-5">
-            <thead>
-                <tr>
-                    <th class="text-center">Listing</th>
-                    <th class="text-center">Guest</th>
-                    <!-- <th class="text-center">Guest info</th> -->
-                    <th class="text-center">Check-in/Check-out</th>
-                    <th class="text-center">Reserved at</th>
-                    <th class="text-center">Total cost</th>
-                    <th class="text-center">Guests</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-if="reservations.data.length <= 0">
-                    <td colspan="10" class="text-grey-darken-2"> No reservations yet.</td>
-                </tr>
-                <tr v-for="reservation in reservations.data" :key="reservation.id" v-else>
-                    <td>
-                        <p v-if="reservation.listing.status == 'Deleted'"  class="text-red">Listing deleted</p>
-                        <p v-else>{{ reservation.listing.title }}</p>
-                    </td>
-                    <td>
-                        <Link :href="`/profile/${reservation.user.id}`" id="hover">
-                            <v-list-item :title="reservation.user.firstname + ' ' + reservation.user.lastname"></v-list-item>
-                        </Link>
-                    </td>
-                    <!-- <td>
-                        <v-list-item>
-                            {{ reservation.user.phone_number }}
-                            <v-divider/>
-                            {{ reservation.user.email }}
-                        </v-list-item>
-                    </td> -->
-                    <td>
-                        {{ format(new Date(reservation.checkin), 'MMM dd') + ' - ' + format(new Date(reservation.checkout), 'MMM dd')  }}
-                        <v-divider/>
-                        Length: {{ reservation.days }} days
-                    </td>
-                    <td>{{ format(new Date(reservation.created_at), 'y/M/d') }}</td>
-                    <td>₱{{ parseInt(reservation.total).toLocaleString() }}</td>
-                    <td>{{ reservation.guests }}</td>
-                    <td>
-                        <v-chip :color="statusColor.get(reservation.status)">
-                            {{ reservation.status }}
-                        </v-chip>
-                    </td>
-                    <td>
-                    <v-btn @click="sendNotification(reservation)" size="small" :disabled="reservation.status != 'approved'" class="text-red text-none" variant="tonal" prepend-icon="mdi-bell">Notify
-                        <v-tooltip activator="parent" location="top">
-                            Alert owner and guest: reservation ending soon
-                        </v-tooltip>
-                    </v-btn>
-                    </td>
-                </tr>
-            </tbody>
-        </v-table>
-        <!-- <v-row  class="mt-2">
-            <v-col class="d-flex justify-end">
-                <v-pagination v-model="page" :length="10" :total-visible="4" rounded="circle">
-                </v-pagination>
-            </v-col>
-        </v-row> -->
-        <v-row  class="mt-2">
-            <v-col class="d-flex justify-end">
-                <Link 
-                    v-for="link in reservations.links" 
-                    :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 
-                    :key="link" 
-                    :href="link.url"
-                    v-html="link.label"
-                    >
-                </Link>
-            </v-col>
-        </v-row>
+        <v-container>
+            <v-data-table :items="reservations" :headers="headers">
+                <template v-slot:item="{ item }">
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.listing.title }}</td>
+                        <td>{{ item.user.firstname + " " + item.user.lastname }}</td>
+                        <td>{{ format(new Date(item.checkin), 'MMM dd') + ' - ' + format(new Date(item.checkout), 'MMM dd')  }}</td>
+                        <td>{{ item.total }}</td>
+                        <td>{{ item.guests }}</td>
+                        <td>
+                            <v-chip :color="statusColor.get(item.status)">
+                                {{ item.status }}
+                            </v-chip>
+                        </td>
+                        <td>
+                            <v-btn @click="sendNotification(item)" size="small" :disabled="item.status != 'approved'" class="text-red text-none" variant="tonal" prepend-icon="mdi-bell">Notify
+                                <v-tooltip activator="parent" location="top">
+                                    Alert owner and guest: reservation ending soon
+                                </v-tooltip>
+                            </v-btn>
+                        </td>
+                    </tr>
+                </template>
+            </v-data-table>
+        </v-container>
 </template>
 
 <style scoped>

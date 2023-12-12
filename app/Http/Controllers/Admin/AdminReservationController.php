@@ -11,8 +11,8 @@ use App\Http\Controllers\Controller;
 class AdminReservationController extends Controller
 {
     //
-    public function index(?string $entry = null) {
-        $reservations = Reservation::paginate($entry ? $entry : 5);
+    public function index() {
+        $reservations = Reservation::all();
         
         foreach($reservations as $rs) {
             $rs->user = User::find($rs->user_id);
