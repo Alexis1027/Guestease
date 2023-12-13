@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Report;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,7 +11,15 @@ class ReportController extends Controller
 {
     //
     public function index() {
-        return Inertia::render('Admin/Reports', ['reports' => Report::all()]);
+
+        $reports = Report::all();
+
+        foreach($reports as $r) {
+            $r->guest = User::find($r->user_id);
+            $r->owner = User::find($r->owner_id);
+        }
+
+        return Inertia::render('Admin/ReportedGuests', ['reports' => $reports]);
     }
 
     public function store(Request $request) {
@@ -24,6 +33,11 @@ class ReportController extends Controller
         Report::create($data);
         return back();
 
+    }
+
+    public function destroy(Report $report) {
+        $report->delete();
+        return back();
     }
 
 }

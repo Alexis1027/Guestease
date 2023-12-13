@@ -36,70 +36,25 @@
 </script>
 <template>
     <Head title="Listing requests"></Head>
-    <v-container class="bg-white">
-        <v-data-table :items="listingRequests" :headers="headers">
-            <template v-slot:item="{ item }">
-                <tr>
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.user.firstname + " " + item.user.lastname }}</td>
-                    <td>{{ item.title }}</td>
-                    <td>{{ format(new Date(item.created_at), 'MMM dd, yyyy') }}</td>
-                    <td>
-                        <v-chip size="small" color="orange">{{ item.status }}</v-chip>
-                    </td>
-                    <td>
-                        <v-btn prepend-icon="mdi-file-find" @click="showListingReviewModalFunc(item)" size="small" class="text-green text-none bg-grey-lighten-5" variant="tonal">Review</v-btn>
-                    </td>
-                </tr>
-            </template>
-        </v-data-table>
-        <!-- <v-table hover class="bg-grey-lighten-5 text-center">
-            <thead >
-                <tr >
-                    <th class="text-center">ID</th>
-                    <th class="text-center">Owner</th>
-                    <th class="text-center">Listing</th>
-                    <th class="text-center">Date Requested</th>
-                    <th class="text-center"> Status</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <v-slide-x-transition class="py-0" group>
-                    <tr v-for="listing in listingRequests.data" :key="listing.id">
-                        <td>{{ listing.id }}</td>
-                        <td>{{ listing.user.firstname + ' ' + listing.user.lastname }}</td>
-                        <td>{{ listing.title }}</td>
-                        <td>{{ format(new Date(listing.created_at), 'MMM dd, yyyy') }}  </td>
-                        <td> <v-chip size="small" color="orange">{{ listing.status }}</v-chip> </td>
+    <v-container>
+        <v-card>
+            <v-data-table :items="listingRequests" :headers="headers">
+                <template v-slot:item="{ item }">
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.user.firstname + " " + item.user.lastname }}</td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ format(new Date(item.created_at), 'MMM dd, yyyy') }}</td>
                         <td>
-                            <v-btn prepend-icon="mdi-file-find" @click="showListingReviewModalFunc(listing)" size="small" class="text-green text-none bg-grey-lighten-5" variant="tonal">Review</v-btn>
+                            <v-chip size="small" color="orange">{{ item.status }}</v-chip>
+                        </td>
+                        <td>
+                            <v-btn prepend-icon="mdi-file-find" @click="showListingReviewModalFunc(item)" size="small" class="text-green text-none bg-grey-lighten-5" variant="tonal">Review</v-btn>
                         </td>
                     </tr>
-                    <tr v-if="listingRequests.data.length <= 0">
-                        <td colspan="8"> No requests.</td>
-                    </tr>
-                </v-slide-x-transition>
-            </tbody>
-        </v-table> -->
-        <!-- <v-row  class="mt-2">
-            <v-col class="d-flex justify-end">
-                <v-pagination v-model="page" :length="10" :total-visible="4" rounded="circle">
-                </v-pagination>
-            </v-col>
-        </v-row> -->
-        <!-- <v-row  class="mt-2">
-        <v-col class="d-flex justify-end">
-            <Link 
-                v-for="link in listingRequests.links" 
-                :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 
-                :key="link" 
-                :href="link.url"
-                v-html="link.label"
-                >
-            </Link>
-        </v-col>
-    </v-row> -->
+                </template>
+            </v-data-table>
+        </v-card>
     </v-container>
     <ReviewListingModal :show="showListingReviewModal" @approved="snackbar = true" :listing="currentListing" v-if="showListingReviewModal" @closeReviewListingModal="showListingReviewModal = false" />
     <v-snackbar v-model="snackbar">

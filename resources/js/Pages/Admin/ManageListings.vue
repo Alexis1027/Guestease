@@ -62,13 +62,12 @@
     }
 
     const headers = [
-        { title: 'ID', align: 'start', sortable: false, key: 'id', value: "id" },
         { title: 'Title', align: 'start', key: 'title', value: "title" },
         { title: 'Location', align: 'start', key: 'location', value: "location" },
         { title: 'Price', align: 'start', key: 'price', value: "price" },
         { title: 'Type', align: 'start', key: 'type', value: "type" },
         { title: 'Status', align: 'start', key: 'status', value: "status" },
-        { title: 'Actions', align: 'start', key: 'actions', value: "actions" },
+        { title: 'Actions', align: 'start', sortable: false, key: 'actions', value: "actions" },
     ]
 
 </script>
@@ -77,22 +76,27 @@
 <template>
     <Head title="Manage Listings" />
     <v-container>
-        <v-data-table :items="listings" :headers="headers">
-            <template v-slot:item="{ item }">
-                <tr>
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.title }}</td>
-                    <td>{{ item.location }}</td>
-                    <td>{{ item.price }}</td>
-                    <td>{{ item.type }}</td>
-                    <td>{{ item.status }}</td>
-                    <td>
-                        <v-btn prepend-icon="mdi-eye-outline" @click="showViewListingDialog(item)" size="small" color="green" class="text-none me-2">View</v-btn>
-                        <v-btn class="text-none" size="small" @click="showUpdateStatusDialog(item)" prepend-icon="mdi-square-edit-outline" color="blue">Update</v-btn>
-                    </td>
-                </tr>
-            </template>
-        </v-data-table>
+        <v-card>
+            <v-data-table :items="listings" :headers="headers">
+                <template v-slot:item="{ item }">
+                    <tr>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.location }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.type }}</td>
+                        <td>{{ item.status }}</td>
+                        <td>
+                            <v-btn prepend-icon="mdi-eye-outline" @click="showViewListingDialog(item)" size="small" color="green" class="text-none me-2">View</v-btn>
+                            <v-tooltip text="Edit status" location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-btn class="text-none" v-bind="props" size="small" @click="showUpdateStatusDialog(item)" prepend-icon="mdi-square-edit-outline" color="blue">Edit status</v-btn>
+                                </template>
+                            </v-tooltip>
+                        </td>
+                    </tr>
+                </template>
+            </v-data-table>
+        </v-card>
     </v-container>
 
     <!-- <DeleteListingDialog :listing="listing" @showDeleteSuccessfulSnackbar="deleteSnackbar = true" :show="deleteListingDialog" @CloseDialog="deleteListingDialog = false" v-model="deleteListingDialog" /> -->
@@ -212,9 +216,6 @@
 
 <style scoped>
 
-    .v-table, th, td {
-        border: 1px solid rgb(238,238,238);
-    }
 
     #owner:hover {
         text-decoration: underline;

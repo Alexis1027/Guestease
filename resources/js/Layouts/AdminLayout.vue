@@ -58,12 +58,12 @@
                 <Link href="/admin/create-admin">
                     <v-list-item prepend-icon="mdi-account-hard-hat" title="Create admin account" value="createadmin"></v-list-item>
                 </Link>
-                <Link href="/admin/reports">
+                <Link href="/admin/reported-guests">
                     <v-list-item prepend-icon="mdi-account-alert" title="Reported guests" value="reports"></v-list-item>
                 </Link>
             </v-list>
         </v-navigation-drawer>
-        <v-main>
+        <v-main class="bg-grey-lighten-3" style="height: 100vh;">
             <v-app-bar>
                 <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
                 <v-toolbar-title>

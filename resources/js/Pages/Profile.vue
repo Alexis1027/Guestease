@@ -20,7 +20,7 @@
                             <v-avatar size="150">
                             <v-img :src="`/images/profile/${user.profile_pic}`"></v-img>
                         </v-avatar>
-                        <p class="text-h4 text-capitalize">{{ user.firstname + ' ' + user.lastname }}</p>
+                        <p class="text-h4 text-capitalize">{{ user.firstname + ' ' + user.lastname }} <span v-if="user.role == 'guest'" class="text-h6">({{ user.role }})</span> </p>
                         </v-card-item>
                     </v-card>
                 
@@ -50,7 +50,8 @@
 
                 <v-divider class="my-5"/>
                 <!-- Owner's Guest houses section -->
-                <p class="text-h5 mb-4"> {{ user.firstname }}'s listings </p> 
+                <div v-if="user.role == 'owner'">
+                    <p class="text-h5 mb-4"> {{ user.firstname }}'s listings </p> 
                 <v-row v-if="listings.length > 0">
                     <v-col cols="4" v-for="listing in listings" :key="listing.id">
                         <Link :href="`/room/${listing.id}`">
@@ -67,6 +68,7 @@
                 <p v-else>
                     This user does not have a listing yet.
                 </p>
+                </div>
 
             </v-container>
         </v-col>

@@ -69,7 +69,8 @@
 </script>
 <template>
     <Head title="Reservations" />
-        <v-container>
+    <v-container>
+        <v-card>
             <v-data-table :items="reservations" :headers="headers">
                 <template v-slot:item="{ item }">
                     <tr>
@@ -93,8 +94,9 @@
                         </td>
                     </tr>
                 </template>
-            </v-data-table>
-        </v-container>
+            </v-data-table> 
+        </v-card>
+    </v-container>
 </template>
 
 <style scoped>

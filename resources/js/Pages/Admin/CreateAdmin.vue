@@ -50,8 +50,9 @@
 
 
 <template>
-        <Head title="Create admin" />
-        <v-card elevation="0" title="Create admin" width="50%">
+    <Head title="Create admin" />
+    <v-container>
+        <v-card title="Create admin" width="50%" style="margin: auto">
             <v-card-item>
                 <v-row class="mx-2 mt-2">
                         <v-text-field 
@@ -120,9 +121,10 @@
                         label="Password">
                     </v-text-field>
                 </v-row>
-                <v-btn block class="fadeIn third mt-4" :loading="form.processing" :disabled="form.processing" @click="sign_up" type="submit" id="btn-login" color="blue">Create</v-btn>
+                <v-btn block class="fadeIn third my-2" :loading="form.processing" :disabled="form.processing" @click="sign_up" type="submit" id="btn-login" color="blue">Create</v-btn>
             </v-card-item>
         </v-card>
+    </v-container>
         <v-snackbar v-model="createSuccessful" color="blue-lighten-3" timeout="1500">
             Created successfully
             <template v-slot:actions>

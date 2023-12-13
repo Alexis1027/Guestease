@@ -31,7 +31,7 @@
     function submitReportUserForm() {
         reportUserForm.post('/owner/report-user', {
             onSuccess: () => {
-                message.value = "Updated successfully"
+                message.value = "The guest has been reported."
                 snackbar.value = true
                 reportUserDialog.value = false
                 reportUserForm.reset()
@@ -107,7 +107,7 @@
                     <td>{{ item.user.firstname + " " + item.user.lastname }} 
                         <v-tooltip text="Report user" location="top">
                             <template v-slot:activator="{ props }">
-                                <v-btn size="small" @click="showReportUserDialog(item.user)" v-bind="props" color="red" variant="tonal" icon="mdi-flag-variant"></v-btn> 
+                                <v-btn size="small" @click="showReportUserDialog(item.user)" v-bind="props" color="red" variant="text" icon="mdi-flag-variant"></v-btn> 
                             </template>
                         </v-tooltip>
                     </td>
@@ -162,7 +162,6 @@
                         </v-avatar>
                     </template>
                 </v-list-item>
-                {{ reportUserForm }}
                 <v-textarea label="Reason" v-model="reportUserForm.reason" :error-messages="reportUserForm.errors.reason" class="mt-2"></v-textarea>
             </v-card-text>
             <v-card-actions>
