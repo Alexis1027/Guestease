@@ -15,8 +15,8 @@ class OwnerListingController extends Controller
         return Inertia::render('Owner/CreateListing');
     }
 
-    public function index(?string $entry = null) {
-        return Inertia::render('Owner/Listings', ['listings' => Listing::where('owner_id', auth()->user()->id)->where('status', '!=', 'Deleted')->paginate($entry ? $entry : 5)]);
+    public function index() {
+        return Inertia::render('Owner/Listings', ['listings' => Listing::where('owner_id', auth()->user()->id)->where('status', '!=', 'Deleted')->get()]);
     }
 
     public function edit(Listing $listing) {
@@ -111,6 +111,12 @@ class OwnerListingController extends Controller
     public function update_pricing(Listing $listing, Request $request) {
         $listing->price = $request->price;
         $listing->monthly_discount = intval($request->monthly_discount, 10);
+        $listing->status = $request->status;
+        $listing->update();
+        return back();
+    }
+
+    public function update_status(Listing $listing, Request $request) {
         $listing->status = $request->status;
         $listing->update();
         return back();

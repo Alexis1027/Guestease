@@ -4,32 +4,26 @@
     defineOptions({ layout: AdminLayout })
     defineProps({ reports: Object })
 
-    // const headers = [
-    //     { title: 'ID', align: 'start', key: 'id', value: "id" },
-    //     { title: 'Guest', align: 'start', key: 'title', value: "title" },
-    //     { title: 'Owner', align: 'start', key: 'location', value: "location" },
-    //     { title: 'Check-in/Check-out', align: 'start', key: 'price', value: "price" },
-    //     { title: 'Total', align: 'start', key: 'type', value: "type" },
-    //     { title: 'Guests', align: 'start', key: 'status', value: "status" },
-    //     { title: 'Status', align: 'start', key: 'actions', value: "actions" },
-    //     { title: 'Actions', align: 'start', key: 'actions', value: "actions" },
-    // ]
+    const headers = [
+        { title: 'ID', align: 'start', key: 'id', value: "id" },
+        { title: 'Guest', align: 'start', key: 'title', value: "title" },
+        { title: 'Warnings', align: 'start', key: 'actions', value: "actions" },
+        { title: 'Actions', align: 'start', key: 'actions', value: "actions" },
+    ]
 
 </script>
 
 <template>
 
     <v-container>
-    <v-data-table :items="plants" :headers="headers">
+    <v-data-table :items="reports" :headers="headers">
         <template v-slot:item="{ item }">
             <tr>
-                <td>{{ item.name }}</td>
-                <td>{{ item.light }}</td>
-                <td>{{ item.height }}</td>
-                <td>{{ item.petFriendly }}</td>
-                <td>{{ item.price }}</td>
+                <td>{{ item.id }}</td>
+                <td>{{ item.guest.firstname + " " + item.guest.lastname }}</td>
+                <td>{{ item.warnings }}</td>
                 <td>
-                <v-btn @click="handleButtonClick(item)">Action</v-btn>
+                    <v-btn @click="handleButtonClick(item)">Action</v-btn>
                 </td>
             </tr>
         </template>

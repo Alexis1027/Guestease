@@ -2,7 +2,7 @@
 
     import {router} from '@inertiajs/vue3'
     const props = defineProps(['show', 'selectedReservation', 'selectedStatus'])
-    const emit = defineEmits(['closeEditReservationStatusDialog'])
+    const emit = defineEmits(['closeEditReservationStatusDialog', 'updateSuccessful'])
 
     const message = new Map([
         ['approve', 'Do you want to approve this reservation?'],
@@ -35,6 +35,10 @@
         router.put(`/owner/update-reservation/${props.selectedReservation.id}`, {
             status: status.get(props.selectedStatus),
             listing_id: props.selectedReservation.listing_id
+        }, {
+            onSuccess: () => {
+                emit('updateSuccessful')
+            }
         })
     }
 

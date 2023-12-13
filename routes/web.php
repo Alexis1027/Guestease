@@ -44,7 +44,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/owner/update-listing/property/{listing}', [OwnerListingController::class, 'update_property']);
         Route::put('/owner/update-listing/pricing/{listing}', [OwnerListingController::class, 'update_pricing']);
         Route::put('/owner/update-listing/rules/{listing}', [OwnerListingController::class, 'update_rules']);
+        Route::put('/owner/update-listing/status/{listing}', [OwnerListingController::class, 'update_status']);
         Route::delete('/owner/delete-listing/{listing}', [OwnerListingController::class, 'destroy']);
+        Route::post('/owner/report-user', [ReportController::class, 'store']);
     });
 
     //admin

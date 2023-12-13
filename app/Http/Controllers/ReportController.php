@@ -15,13 +15,12 @@ class ReportController extends Controller
 
     public function store(Request $request) {
         $data = $request->validate([
+            'user_id' => 'required',
             'reason' => 'required'
         ]);
 
-        $data['user_id'] = $request->user_id;
         $data['owner_id'] = auth()->user()->id;
         $data['status'] = 'reported';
-
         Report::create($data);
         return back();
 

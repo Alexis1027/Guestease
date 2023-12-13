@@ -1,19 +1,21 @@
 <script setup>
 
     import OwnerLayout from '../../Layouts/OwnerLayout.vue'
-    import {ref, watch} from 'vue'
+    import {ref} from 'vue'
     import {format} from 'date-fns'
-    import {router} from '@inertiajs/vue3'
+    import { useForm } from '@inertiajs/vue3'
     import emailjs from '@emailjs/browser'
     import EditReservationStatusDialog from './Partials/EditReservationStatusDialog.vue'
+    defineOptions({ layout: OwnerLayout })
 
     const props = defineProps(['reservations', 'auth'])
-    const page = ref(1)
-    const entries = [5, 10, 15, 20, 25]
-    const entry = ref(5)
     const showEditReservationStatusDialog = ref(false)
     const selectedReservation = ref(null)
     const selectedStatus = ref(null)
+    const snackbar = ref(false)
+    const reportUserDialog = ref(false)
+    const message = ref('')
+    const selectedUser = ref(null)
 
     const statusColor = new Map([
         ['approved', 'green'],
@@ -21,11 +23,26 @@
         ['cancelled', 'red'],
     ])
 
-    function updateReservation(reservation, status) {
-        router.put(`/owner/update-reservation/${reservation.id}`, {
-            status: status,
-            listing_id: reservation.listing_id
+    const reportUserForm = useForm({
+        user_id: null,
+        reason: null,
+    })
+
+    function submitReportUserForm() {
+        reportUserForm.post('/owner/report-user', {
+            onSuccess: () => {
+                message.value = "Updated successfully"
+                snackbar.value = true
+                reportUserDialog.value = false
+                reportUserForm.reset()
+            }
         })
+    }
+
+    function showReportUserDialog(user) {
+        selectedUser.value = user
+        reportUserForm.user_id = user.id
+        reportUserDialog.value = true
     }
 
     function showEditReservationStatusDialogFn(reservation, status) {
@@ -33,6 +50,8 @@
         selectedReservation.value = reservation
         selectedStatus.value = status
     }
+
+    
 
     function sendNotification(reservation) {
         console.log(reservation)
@@ -65,126 +84,96 @@
         })
     }
 
-    watch(entry, () => {
-        router.get(`/owner/reservations/${entries.value}`)
-    })
+    const headers = [
+        { title: 'Listing', align: 'start', key: 'title', value: "title" },
+        { title: 'Guest', align: 'start', key: 'location', value: "location" },
+        { title: 'Check-in/Check-out', align: 'start', key: 'price', value: "price" },
+        { title: 'Reserved at', align: 'start', key: 'Reserved', value: "type" },
+        { title: 'Total', align: 'start', key: 'Total', value: "type" },
+        { title: 'Guests', align: 'start', key: 'Guests', value: "type" },
+        { title: 'Status', align: 'start', key: 'status', value: "status" },
+        { title: 'Actions', align: 'start', key: 'actions', value: "actions",sortable: false },
+    ]
 
-    defineOptions({
-        layout: OwnerLayout
-    })
 </script>
 
 <template>
     <Head title="Reservations"/>
-    <v-row justify="space-between" class="pa-4">
-        <v-col cols="2">
-                <v-select flat variant="solo-filled" v-model="entry" :items="entries" label="No. of entries"></v-select>
-        </v-col>
-    </v-row>
-    <v-table hover class="bg-grey-lighten-5 text-center ma-4">
-        <thead>
-            <tr>
-                <th class="text-center">ID</th>
-                <th class="text-center">Listing</th>
-                <th class="text-center">Guest</th>
-                <!-- <th class="text-center">Guest info</th> -->
-                <th class="text-center">Check-in/Check-out</th>
-                <th class="text-center">Reserved at</th>
-                <th class="text-center">Total cost</th>
-                <th class="text-center">Guests</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Actions</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr v-for="reservation in reservations" :key="reservation.id" id="datas" style="font-size: 15px;">
-                <td>{{ reservation.id }}</td>
-                <td>
-                    <p v-if="reservation.listing.status == 'Deleted'" class="text-red">Listing deleted</p>
-                    <Link v-else :href="`/owner/edit-listing/${reservation.listing.id}`">
-                        <v-list-item id="listing" class="text-capitalize" :prepend-avatar="`/images/uploads/${JSON.parse(reservation.listing.images)[0]}`">
-                            {{ reservation.listing.title }}
-                        </v-list-item>
-                    </Link>
-                </td>
-                <td>
-                    <Link :href="`/profile/${reservation.user.id}`">
-                        <v-list-item class="text-capitalize" id="name"> {{ reservation.user.firstname + ' ' + reservation.user.lastname }}</v-list-item>
-                    </Link>
-                </td>
-                <!-- <td>
-                    <v-list-item>
-                        {{ reservation.user.phone_number }}
-                        <v-divider/>
-                        {{ reservation.user.email }}
-                    </v-list-item>
-                </td> -->
-                <td>
-                    {{ format(new Date(reservation.checkin), 'MMM dd') + ' - ' + format(new Date(reservation.checkout), 'MMM dd')  }}
-                    <v-divider/>
-                    Length: {{ reservation.days }} days
-                </td>
-                <td>{{ format(new Date(reservation.created_at), 'y/M/d') }}</td>
-                <td v-if="reservation.discount > 0">
-                {{ `₱${(reservation.total - parseInt(reservation.total) * (reservation.discount / 100)).toLocaleString()}` }}
-
-                </td>
-                <td v-else>
-                    ₱{{ parseInt(reservation.total).toLocaleString() }}
-                </td>
-                <td>{{ reservation.guests }}</td>
-                <td>
-                    <v-menu open-on-hover>
-                        <template v-slot:activator="{ props }">
-                            <v-btn :disabled="reservation.status == 'cancelled'" :color="statusColor.get(reservation.status)" append-icon="mdi-menu-down" class="text-none" variant="tonal" v-bind="props">
-                                {{ reservation.status }}
-                            </v-btn>
-                        </template>
-
-                        <v-list>
-                            <v-list-item prepend-icon="mdi-check" title="approve" @click="showEditReservationStatusDialogFn(reservation, 'approve')">
-                            </v-list-item>
-                            <v-list-item prepend-icon="mdi-close" title="pending" @click="showEditReservationStatusDialogFn(reservation, 'pending')">
-                            </v-list-item>
-                            <v-list-item prepend-icon="mdi-delete-outline" title="cancel" @click="showEditReservationStatusDialogFn(reservation, 'cancel')" base-color="red">
-                            </v-list-item>
-                        </v-list>
-                    </v-menu>
-                </td>
-                <td>
-                    <v-btn @click="sendNotification(reservation)" size="small" :disabled="reservation.status != 'approved'" class="text-red text-none" variant="tonal" prepend-icon="mdi-bell">Notify
-                        <v-tooltip activator="parent" location="top">
-                            Notify guest: reservation ending soon
+    <v-container>
+        <v-data-table :items="reservations" :headers="headers">
+            <template v-slot:item="{ item }">
+                <tr>
+                    <td>{{ item.listing.title }}</td>
+                    <td>{{ item.user.firstname + " " + item.user.lastname }} 
+                        <v-tooltip text="Report user" location="top">
+                            <template v-slot:activator="{ props }">
+                                <v-btn size="small" @click="showReportUserDialog(item.user)" v-bind="props" color="red" variant="tonal" icon="mdi-flag-variant"></v-btn> 
+                            </template>
                         </v-tooltip>
-                    </v-btn>
-                </td>
-            </tr>
-            <tr v-if="reservations.length <= 0">
-                <td colspan="10"> No reservations yet.</td>
-            </tr>
-        </tbody>
-    </v-table>
-    <v-row  class="mt-2">
-        <v-col class="d-flex justify-end">
-            <!-- <Link 
-                v-for="link in prop.users.links" 
-                :class="{ 'font-weight-bold' : link.active, 'mx-3' : link.url }" 
-                :key="link" 
-                :href="link.url"
-                v-html="link.label"
-                >
-            </Link> -->
-            <!-- <v-pagination
-            v-model="page"
-            :length="10"
-            :total-visible="4"
-            rounded="circle"
-            ></v-pagination> -->
-        </v-col>
-    </v-row>
+                    </td>
+                    <td>{{ format(new Date(item.checkin), 'MMM dd') + ' - ' + format(new Date(item.checkout), 'MMM dd') }}</td>
+                    <td>{{ format(new Date(item.created_at), 'PP') }}</td>
+                    <td>₱{{ parseInt(item.total).toLocaleString() }}</td>
+                    <td>{{ item.guests }}</td>
+                    <td>
+                        <v-chip :color="statusColor.get(item.status)">
+                            {{ item.status }}
+                        </v-chip>
+                    </td>
+                    <td>
+                        <v-menu>
+                            <template v-slot:activator="{ props }">
+                                <v-btn v-bind="props" append-icon="mdi-menu-down" size="small" class="me-2 text-none text-white" color="orange">Edit status</v-btn>
+                            </template>
+                            <v-list>
+                                <v-btn variant="flat" @click="showEditReservationStatusDialogFn(item, 'approve')" block>Appove</v-btn>
+                                <v-btn variant="flat" @click="showEditReservationStatusDialogFn(item, 'pending')" block>Set as pending</v-btn>
+                                <v-btn variant="flat" @click="showEditReservationStatusDialogFn(item, 'cancel')" block>Cancel</v-btn>
+                            </v-list>
+                        </v-menu>
+                        <v-btn @click="sendNotification(item)" size="small" :disabled="item.status != 'approved'" color="pink" class="text-none" prepend-icon="mdi-bell">
+                            Notify
+                            <v-tooltip activator="parent" location="top">
+                                Notify guest: reservation ending soon
+                            </v-tooltip>
+                        </v-btn>
+                    </td>
+                </tr>
+            </template>
+        </v-data-table>
+    </v-container>
+    
+    <v-snackbar v-model="snackbar" color="blue-lighten-3" timeout="1500">
+        {{ message }}
+        <template v-slot:actions>
+            <v-btn variant="text" @click="snackbar = false" icon="mdi-close">
+            </v-btn>
+        </template>
+    </v-snackbar>
 
-    <EditReservationStatusDialog :show="showEditReservationStatusDialog" @closeEditReservationStatusDialog="showEditReservationStatusDialog = false" :selectedReservation="selectedReservation" :selectedStatus="selectedStatus"  />
+    <v-dialog v-model="reportUserDialog" width="69%">
+        <v-card title="Report guest">
+            <v-divider class="mt-2" />
+            <v-card-text>
+                <v-list-item :title="selectedUser.firstname + ' ' + selectedUser.lastname" :subtitle="selectedUser.email">
+                    <template v-slot:prepend>
+                        <v-avatar size="60">
+                            <v-img cover :src="`/images/profile/${selectedUser.profile_pic}`"></v-img>
+                        </v-avatar>
+                    </template>
+                </v-list-item>
+                {{ reportUserForm }}
+                <v-textarea label="Reason" v-model="reportUserForm.reason" :error-messages="reportUserForm.errors.reason" class="mt-2"></v-textarea>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn @click="reportUserDialog = false">Close</v-btn>
+                <v-btn color="red" @click="submitReportUserForm" :loading="reportUserForm.processing">Submit</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+    
+    <EditReservationStatusDialog :show="showEditReservationStatusDialog" @updateSuccessful="() => { message = 'Updated successfully' ; snackbar = true }" @closeEditReservationStatusDialog="showEditReservationStatusDialog = false" :selectedReservation="selectedReservation" :selectedStatus="selectedStatus"  />
 
 </template>
 
