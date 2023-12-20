@@ -125,7 +125,7 @@ class OwnerListingController extends Controller
     public function destroy(Listing $listing) {
         $listing->status = "Deleted";
         $listing->update();
-        return redirect('/owner/dashboard');
+        return back();
     }
     
 }

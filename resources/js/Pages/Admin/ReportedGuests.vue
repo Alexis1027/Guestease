@@ -96,7 +96,7 @@
         </v-card>
     </v-dialog>
 
-    <v-dialog v-model="deleteReportDialog">
+    <v-dialog v-model="deleteReportDialog" width="50%">
         <v-card title="Delete report">
             <v-card-text>
                 Are you sure you want to delete this report?

@@ -20,9 +20,9 @@
     <v-layout>
         <v-app-bar scroll-threshold="438">
             <v-toolbar-title>
-                <Link class="font-weight-bold">
+                <!-- <Link class="font-weight-bold">
                     <v-img :src="logo" height="55" width="260" cover></v-img>
-                </Link>
+                </Link> -->
             </v-toolbar-title>
             <v-divider vertical />
             <Link href="/owner/dashboard">
@@ -43,41 +43,69 @@
             
             <v-spacer/>
             <v-spacer/>
-            <v-menu min-width="200px" rounded v-if="auth">
+            <!-- <v-menu min-width="200px" rounded v-if="auth">
                 <template v-slot:activator="{ props }">
-                    <v-btn class="border me-3" size="large" v-bind="props">
-                        <template v-slot:prepend>
-                            <v-avatar color="blue-lighten-3" size="35">
-                                <v-img :src="`/images/profile/${auth.user.profile_pic}`"></v-img>
-                            </v-avatar>
-                        </template>
-                        <v-icon>mdi-menu</v-icon>
+                    <v-btn icon="mdi-bell-ring-outline" size="large" v-bind="props">
                     </v-btn>
                 </template>
-                <v-card width="250">
-                    <div class="mx-auto text-center">
-                        <Link :href="`/profile/${auth.user.id}`">
-                            <v-btn variant="text" block class="text-none">
-                                Profile
-                            </v-btn>
-                        </Link>
-                        <Link href="/account">
-                            <v-btn  variant="text" block class="text-none">
-                                Account
-                            </v-btn>
-                        </Link>
-                        
-                        <v-divider/>
-                        <Link @click="logout" method="post">
-                            <v-btn variant="text" color="red" block class="text-none">
-                                Logout
-                            </v-btn>
-                        </Link>
+                <v-card width="500">
+                    <div class="mx-auto text-start my-2">
+                        <v-list-item>
+                            <p class="text-h6">Notifications</p>
+                        </v-list-item>
+                        <v-divider class="mt-2" />
+                        <v-list class="mb-2">
+                            <v-list-item v-for="n in 4" :key="n"  :value="n" :subtitle="`${n+1} days ago`" prepend-avatar="https://static1.cbrimages.com/wordpress/wp-content/uploads/2022/04/Nacho-Varga---Better-Call-Saul.jpg" value="profile">
+                                <template v-slot:append>
+                                    <v-btn icon="mdi-trash-can-outline" color="red" variant="text"></v-btn>
+                                </template>
+                                <template v-slot:title>
+                                    Nacho varga reserved at your place.
+                                </template>
+                            </v-list-item>
+                        </v-list>
+                    </div>
+                </v-card>
+            </v-menu> -->
+            <v-menu min-width="200px" rounded v-if="auth">
+                <template v-slot:activator="{ props }">
+                    <v-btn icon size="large" v-bind="props">
+                        <v-avatar color="blue-lighten-3" size="40">
+                            <v-img :src="`/images/profile/${auth.user.profile_pic}`"></v-img>
+                        </v-avatar>
+                    </v-btn>
+                </template>
+                <v-card width="235">
+                    <div class="mx-auto text-start">
+                        <v-list>
+                            <v-list-item
+                                :prepend-avatar="`/images/profile/${auth.user.profile_pic}`"
+                                :title="auth.user.firstname + ' ' + auth.user.lastname"
+                                subtitle="owner"
+                                >
+                                </v-list-item>
+                            <v-divider class="my-2" />
+                            <Link :href="`/profile/${auth.user.id}`">
+                                <v-list-item prepend-icon="mdi-account-outline" value="profile">
+                                    Profile
+                                </v-list-item>
+                            </Link>
+                            <Link href="/account">
+                                <v-list-item prepend-icon="mdi-account-edit-outline" value="account">
+                                    Account
+                                </v-list-item>
+                            </Link>
+                            <Link @click="logout" method="post">
+                                <v-list-item prepend-icon="mdi-logout" value="logout" color="red" class="text-red">
+                                    Logout
+                                </v-list-item>
+                            </Link>
+                        </v-list>
                     </div>
                 </v-card>
             </v-menu>
         </v-app-bar>
-        <v-main>
+        <v-main class="bg-grey-lighten-3" style="height: 100vh;">
             <slot>
             </slot>
         </v-main>

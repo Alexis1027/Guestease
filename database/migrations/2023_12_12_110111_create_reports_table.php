@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('owner_id');
-            $table->string('reason');
+            $table->text('reason');
             $table->string('status');
             $table->timestamps();
         });

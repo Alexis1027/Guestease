@@ -10,11 +10,19 @@
     const showFileInput = ref(false)
     const results = ref()
     const snackbar = ref(false)
+    const message = ref('')
+
     const form = useForm({
         firstname: props.auth.user.firstname,
         lastname: props.auth.user.lastname,
         phone_number: props.auth.user.phone_number,
         address: props.auth.user.address,
+    })
+
+    const changePasswordForm = useForm({
+        currentPassword: null,
+        new_password: null,
+        new_password_confirmation: null
     })
 
     const profilePicForm = useForm({
@@ -27,13 +35,34 @@
             form.put('/account/update', {
                 onSuccess: () => {
                     snackbar.value = true
+                    message.value = "Account successfully updated."
                 }
             })
         }
         else {
             alert('Fill in contact no')
         }
-        
+    }
+
+    function submitChangePasswordForm() {
+        changePasswordForm.put(`/account/change-password/${props.auth.user.id}`, {
+            onSuccess: () => {
+                snackbar.value = true
+                message.value = "Successfully changed password."
+                changePasswordForm.reset()
+            },
+            preserveScroll: true            
+        })
+    }
+
+    function submitProfilePicForm() {
+        profilePicForm.post(`/account/update-profile_pic`, {
+            onSuccess: () => {
+                showFileInput.value = false
+                snackbar.value = true
+                message.value = "Profile picture successfully updated."
+            }
+        })
     }
 
 </script>
@@ -56,7 +85,7 @@
             <div v-if="showFileInput">
                 <v-file-input class="mt-2" name="profile_pic" v-model="profilePicForm.profile_pic" variant="outlined" label="File input">
                     <template v-slot:append>
-                        <v-btn color="green" class="ms-5" @click="profilePicForm.post(`/account/update-profile_pic`, {onSuccess: () => {showFileInput = false}})">Save</v-btn>
+                        <v-btn color="green" class="ms-5" @click="submitProfilePicForm" :loading="profilePicForm.processing">Save</v-btn>
                     </template>
                 </v-file-input>
             </div>
@@ -82,7 +111,6 @@
                     <p class="text-error">{{ form.errors.phone_number }}</p>
                 </v-col>
             </v-row>
-           
             <v-text-field class="mt-4" variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
         </v-card-item>
         <v-card-actions class="justify-end d-flex">
@@ -90,24 +118,20 @@
         </v-card-actions>
     </v-card>
 
-        <v-snackbar
-            v-model="snackbar"
-            multi-line
-            color="blue"
-            class="text-center"
-            location="bottom center"
-            timeout="1200"
-        >
-      Update Sucessful.
-      <template v-slot:actions>
-        <v-btn
-          color="white"
-          variant="text"
-          @click="snackbar = false"
-          icon="mdi-close"
-        >
-        </v-btn>
-      </template>
+    <v-card title="Change password (mugana gamay)" width="80%" class="border mb-4">
+        <!-- {{ changePasswordForm }} -->
+        <v-card-item>
+            <v-text-field variant="outlined" :error-messages="changePasswordForm.errors.currentPassword" v-model="changePasswordForm.currentPassword" clearable type="password" class="mt-2" label="Current password"></v-text-field>
+            <v-text-field variant="outlined" :error-messages="changePasswordForm.errors.new_password" name="new_password" v-model="changePasswordForm.new_password" clearable type="password" label="New password"></v-text-field>
+            <v-text-field variant="outlined" name="new_password_confirmation" v-model="changePasswordForm.new_password_confirmation" clearable type="password" label="Confirm password"></v-text-field>
+        </v-card-item>
+        <v-card-actions class="justify-end d-flex">
+            <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submitChangePasswordForm" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
+        </v-card-actions>
+    </v-card>
+
+    <v-snackbar v-model="snackbar" multi-line color="blue" class="text-center" location="bottom center" timeout="1200">
+        {{ message }}
     </v-snackbar>
 
 </template>

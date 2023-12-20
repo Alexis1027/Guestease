@@ -62,7 +62,7 @@
                 </v-container>
             </v-col>
             <v-col cols="8">
-         <div class="leaflet-container" ref="mapContainer"></div>
+                <div class="leaflet-container" ref="mapContainer"></div>
             </v-col>
         </v-row>
 </template>

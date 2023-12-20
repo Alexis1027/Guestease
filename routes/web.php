@@ -82,6 +82,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
     Route::post('/account/update-profile_pic', [AccountController::class, 'update_profile_pic']);
     Route::put('/account/update', [AccountController::class, 'update']);
+    Route::put('/account/change-password/{user}', [AccountController::class, 'change_password']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('PreventBackHistory');
 
 });

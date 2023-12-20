@@ -61,7 +61,24 @@
                 <Link href="/admin/reported-guests">
                     <v-list-item prepend-icon="mdi-account-alert" title="Reported guests" value="reports"></v-list-item>
                 </Link>
+                
             </v-list>
+            
+                <template v-slot:append>
+                    <div class="ma-1">
+                        <v-list-item
+                        :prepend-avatar="`/images/profile/${auth.user.profile_pic}`" 
+                        :title="`${auth.user.firstname} ${auth.user.lastname}`" 
+                        subtitle="Admin"
+                        >
+                            <template v-slot:append>
+                                <Link @click="logout" method="post" class="me-6">
+                                    <v-btn icon="mdi-logout" variant="text"></v-btn>
+                                </Link>
+                            </template>
+                        </v-list-item>
+                    </div>
+                </template>
         </v-navigation-drawer>
         <v-main class="bg-grey-lighten-3" style="height: 100vh;">
             <v-app-bar>

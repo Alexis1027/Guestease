@@ -384,7 +384,7 @@
                     </div>
                     <div v-else>
                         <p class="text-h5 text-start">Upload one photo of the room.</p>
-                        <p class="text-h6 mb-2 text-grey-darken-1 ms-3"> Lorem ipsum skibidi gyatt neque porro quisquam est qui dolorem </p>
+                        <p class="text-h6 mb-2 text-grey-darken-1 ms-3"> Lorem ipsum lores eos qui ratione voluptatem seq neque porro quisquam est qui dolorem </p>
                         <v-file-input 
                                 label="Room photo" 
                                 chips
@@ -422,7 +422,7 @@
             <v-window-item :value="12">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 text-start">Add rules regarding to your place.</p>
-                    <p class="text-h6 mb-6 text-grey-darken-2 text-start"> lorem ipsum skibidi dop dop skibidi yes yes </p>
+                    <p class="text-h6 mb-6 text-grey-darken-2 text-start"> Lorem ipsum quia consequ untur magratione volu nesciunt. Neque porro quisquam </p>
                     <v-text-field v-for="n in ruleTextfield" :key="n" v-model="form.rules[n-1]" variant="outlined" label="New rule" color="blue"></v-text-field>
                     <v-btn variant="tonal" block prepend-icon="mdi-plus" @click="ruleTextfield < 3 ? ruleTextfield++ : ''" color="blue">Add more</v-btn>
                     <v-btn variant="text" class="mt-2" color="blue" @click="step++">Set up later</v-btn>

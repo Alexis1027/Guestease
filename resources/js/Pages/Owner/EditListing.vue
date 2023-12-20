@@ -200,20 +200,20 @@
 
         <div class="d-flex flex-row">
             <v-tabs v-model="tab" direction="vertical" color="blue">
-                <v-tab value="option-1" class="text-none">
+                <v-tab value="option-1" class="text-none bg-white">
                     <v-icon start>mdi-home-edit</v-icon>
                     Listing details
                 </v-tab>
-                <v-tab value="option-2" class="text-none">
+                <v-tab value="option-2" class="text-none bg-white">
                     <v-icon start>mdi-cash</v-icon>
                     Pricing and availability
                     </v-tab>
-                <v-tab value="option-3" class="text-none">
+                <v-tab value="option-3" class="text-none bg-white">
                     <v-icon start> mdi-shield-edit</v-icon>
                     Policies and rules
                 </v-tab>
                 
-                <v-tab value="option-4" color="red" class="text-none text-red">
+                <v-tab value="option-4" color="red" class="text-none text-red bg-white">
                     <v-icon start> mdi-delete-outline</v-icon>
                     Delete listing
                 </v-tab>
@@ -231,11 +231,14 @@
                         <div style="width: 100vw;">
                             <v-slide-group v-model="model" class="pa-4" show-arrows >
                                 <v-slide-group-item v-for="(item, i) in photosForm.images" :key="i">
-                                    <v-badge id="badge" class="mt-2" @click="photosForm.images.splice(i, 1)" offset-x="15" color="red" icon="mdi-close">
+                                    <!-- <v-badge id="badge" class="mt-2" @click="photosForm.images.splice(i, 1)" offset-x="15" color="red" icon="mdi-close">
                                         <v-card class="mx-4 " height="230" width="250" elevation="0">
                                             <v-img :src="`/images/uploads/${photosForm.images[i]}`" height="180" cover></v-img>
                                         </v-card>
-                                    </v-badge>
+                                    </v-badge> -->
+                                    <v-card class="mx-4 " height="230" width="250" elevation="0">
+                                            <v-img :src="`/images/uploads/${photosForm.images[i]}`" height="180" cover></v-img>
+                                        </v-card>
                                 </v-slide-group-item>
                             </v-slide-group>
                         </div>

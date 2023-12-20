@@ -43,7 +43,7 @@
             }
         }
     }
-
+    console.log(prop.reservedDates)
     // E DISABLE ANG DATES SA MGA NE-AGING ADLAW
     for (let date = new Date('2023-01-01'); date < today; date.setDate(date.getDate() + 1)) {
         const year = date.getFullYear();

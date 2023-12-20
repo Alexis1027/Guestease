@@ -16,6 +16,7 @@
     const reportUserDialog = ref(false)
     const message = ref('')
     const selectedUser = ref(null)
+    const deleteReservationDialog = ref(false)
 
     const statusColor = new Map([
         ['approved', 'green'],
@@ -99,7 +100,12 @@
 
 <template>
     <Head title="Reservations"/>
-    <v-container>
+    <v-row justify="start" class="ma-2">
+        <v-col>
+            <p class="text-h4 ">Manage Reservations</p>
+        </v-col>
+    </v-row>
+    <v-card class="ma-2">
         <v-data-table :items="reservations" :headers="headers">
             <template v-slot:item="{ item }">
                 <tr>
@@ -111,7 +117,7 @@
                             </template>
                         </v-tooltip>
                     </td>
-                    <td>{{ format(new Date(item.checkin), 'MMM dd') + ' - ' + format(new Date(item.checkout), 'MMM dd') }}</td>
+                    <td>{{ format(new Date(item.checkin), 'PP') + ' - ' + format(new Date(item.checkout), 'PP') }}</td>
                     <td>{{ format(new Date(item.created_at), 'PP') }}</td>
                     <td>₱{{ parseInt(item.total).toLocaleString() }}</td>
                     <td>{{ item.guests }}</td>
@@ -131,8 +137,14 @@
                                 <v-btn variant="flat" @click="showEditReservationStatusDialogFn(item, 'cancel')" block>Cancel</v-btn>
                             </v-list>
                         </v-menu>
-                        <v-btn @click="sendNotification(item)" size="small" :disabled="item.status != 'approved'" color="pink" class="text-none" prepend-icon="mdi-bell">
+                        <v-btn @click="sendNotification(item)" size="small" v-if="item.status != 'cancelled'" :disabled="item.status != 'approved'" color="pink" class="text-none" prepend-icon="mdi-bell">
                             Notify
+                            <v-tooltip activator="parent" location="top">
+                                Notify guest: reservation ending soon
+                            </v-tooltip>
+                        </v-btn>
+                        <v-btn @click="deleteReservationDialog = true" v-if="item.status == 'cancelled'" size="small" color="red" class="text-none" prepend-icon="mdi-delete-empty-outline">
+                            Delete
                             <v-tooltip activator="parent" location="top">
                                 Notify guest: reservation ending soon
                             </v-tooltip>
@@ -141,7 +153,7 @@
                 </tr>
             </template>
         </v-data-table>
-    </v-container>
+    </v-card>
     
     <v-snackbar v-model="snackbar" color="blue-lighten-3" timeout="1500">
         {{ message }}
@@ -150,6 +162,16 @@
             </v-btn>
         </template>
     </v-snackbar>
+
+    <v-dialog v-model="deleteReservationDialog" width="50%">
+        <v-card title="Delete reservation">
+            <v-card-actions>
+                <v-spacer/>
+                <v-btn @click="deleteReservationDialog = false">Cancel</v-btn>
+                <v-btn color="red">Delete</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 
     <v-dialog v-model="reportUserDialog" width="69%">
         <v-card title="Report guest">

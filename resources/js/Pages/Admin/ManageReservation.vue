@@ -57,12 +57,12 @@
 
     const headers = [
         { title: 'ID', align: 'start', key: 'id', value: "id" },
-        { title: 'Listing', align: 'start', key: 'title', value: "title" },
-        { title: 'Guest', align: 'start', key: 'location', value: "location" },
+        { title: 'Listing', align: 'start', key: 'listing.title', value: "listing.title" },
+        { title: 'Guest', align: 'start', key: 'user.firstname', value: "user.firstname" },
         { title: 'Check-in/Check-out', align: 'start', key: 'price', value: "price" },
-        { title: 'Total', align: 'start', key: 'type', value: "type" },
-        { title: 'Guests', align: 'start', key: 'status', value: "status" },
-        { title: 'Status', align: 'start', key: 'actions', value: "actions" },
+        { title: 'Total', align: 'start', key: 'total', value: "total" },
+        { title: 'Guests', align: 'start', key: 'guests', value: "guests" },
+        { title: 'Status', align: 'start', key: 'status', value: "status" },
         { title: 'Actions', align: 'start', key: 'actions', value: "actions" },
     ]
 

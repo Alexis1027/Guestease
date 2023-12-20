@@ -74,9 +74,7 @@
                                         label="First name">
                                     </v-text-field>
                             </v-row>
-
                             <v-row class="mx-2">
-
                                     <v-text-field 
                                         color="blue" 
                                         clearable 

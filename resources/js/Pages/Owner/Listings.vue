@@ -2,7 +2,7 @@
 
     import OwnerLayout from '../../Layouts/OwnerLayout.vue'
     import {ref} from 'vue'
-    import {useForm} from '@inertiajs/vue3'
+    import {useForm, router} from '@inertiajs/vue3'
     import {format} from 'date-fns'
     import MazGallery from 'maz-ui/components/MazGallery'
     import DeleteListingDialog from './Partials/DeleteListingDialog.vue'
@@ -16,6 +16,7 @@
     const updateStatusDialog = ref(false)
     const listingImages = ref(null)
     const selectedListing = ref(null)
+    const message = ref('')
 
     const updateListingStatusForm = useForm({
         id: null,
@@ -27,8 +28,19 @@
     function updateListing() {
         updateListingStatusForm.put(`/owner/update-listing/status/${updateListingStatusForm.id}`, {
             onSuccess: () => {
-                updateSnackbar.value = true
+                snackbar.value = true
+                message.value = "Successfully updated status."
                 updateStatusDialog.value = false
+            }
+        })
+    }
+
+    const deleteListing = () => {
+        router.delete(`/owner/delete-listing/${selectedListing.value.id}`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                snackbar.value = true
+                message.value = "Listing deleted successfully."
             }
         })
     }
@@ -48,6 +60,11 @@
         updateListingStatusForm.status = listing.status
         updateListingStatusForm.title = listing.title
         updateStatusDialog.value = true
+    }
+
+    function showDeleteListingDialog(listing) {
+        selectedListing.value = listing
+        deleteListingDialog.value = true
     }
 
     const statusColor = new Map([
@@ -70,8 +87,17 @@
 
 <template>
     <Head title="Listings"/>
-    <v-container class="bg-white">
-
+    <v-row justify="space-between" class="ma-2">
+        <v-col>
+            <p class="text-h4 ">Manage Listings</p>
+        </v-col>
+        <v-col class="justify-end d-flex">
+            <Link href="/owner/create-listing">
+                <v-btn class="text-none" variant="flat" prepend-icon="mdi-plus" color="blue">Add new listing</v-btn>
+            </Link>
+        </v-col>
+    </v-row>
+    <v-card class="ma-2">
         <v-data-table :items="listings" :headers="headers">
             <template v-slot:item="{ item }">
                 <tr>
@@ -85,21 +111,42 @@
                         </v-chip>
                     </td>
                     <td>
-                        <v-btn prepend-icon="mdi-eye-outline" @click="showViewListingDialog(item)" size="small" color="green" class="text-none me-2">View</v-btn>
-                        <v-btn class="text-none text-white" size="small" @click="showUpdateStatusDialog(item)" prepend-icon="mdi-square-edit-outline" color="orange"> Status</v-btn>
+                        <v-menu>
+                            <template v-slot:activator="{ props }">
+                                <v-btn icon="mdi-dots-vertical" size="small" v-bind="props"></v-btn>
+                            </template>
+
+                            <v-list>
+                                <v-list-item  @click="showViewListingDialog(item)">
+                                        <v-icon class="me-2">mdi-eye-outline</v-icon> View details
+                                </v-list-item>
+                                <v-list-item  @click="showUpdateStatusDialog(item)">
+                                        <v-icon class="me-2">mdi-square-edit-outline</v-icon> Edit status
+                                </v-list-item>
+                                <Link :href="`/owner/edit-listing/${item.id}`">
+                                    <v-list-item>
+                                            <v-icon class="me-2">mdi-home-edit-outline</v-icon> Edit listing
+                                    </v-list-item>
+                                </Link>
+                                <v-list-item  @click="showDeleteListingDialog(item)">
+                                        <v-icon class="me-2" color="red">mdi-delete-empty-outline</v-icon> Delete listing
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
+                        <!-- <v-btn class="text-none text-white" size="small"  prepend-icon="mdi-square-edit-outline" color="orange"> Status</v-btn>
                         <Link :href="`/owner/edit-listing/${item.id}`">
                             <v-btn class="text-none ms-2" size="small" prepend-icon="mdi-home-edit-outline" color="blue">Edit</v-btn>
-                        </Link>
+                        </Link> -->
                     </td>
                 </tr>
             </template>
         </v-data-table>
-    </v-container>
+    </v-card>
         
-    <v-snackbar v-model="updateSnackbar" color="blue-lighten-3" timeout="1500">
-        Updated successfully
+    <v-snackbar v-model="snackbar" color="blue-lighten-3" timeout="1500">
+        {{ message }}
         <template v-slot:actions>
-            <v-btn variant="text" @click="updateSnackbar = false" icon="mdi-close">
+            <v-btn variant="text" @click="snackbar = false" icon="mdi-close">
             </v-btn>
         </template>
     </v-snackbar>
@@ -118,7 +165,7 @@
                 </v-row>
                 <MazGallery :images="listingImages" :height="300" class="mt-1" />
                 
-                <v-row class="mt-2">
+                <v-row class="my-4">
                     <v-col cols="8">
                         <v-list-item subtitle="Description" prepend-icon="mdi-information">
                             {{ selectedListing.description }}
@@ -189,13 +236,39 @@
                 Edit <strong>{{ updateListingStatusForm.title }}</strong>'s status
             </v-card-title>
             <v-card-text>
-                <v-select :items="['Not available', 'Available']" v-model="updateListingStatusForm.status" label="Status"></v-select>
+                <v-select :disabled="updateListingStatusForm.status == 'For approval'" :items="['Not available', 'Available']" v-model="updateListingStatusForm.status" label="Status"></v-select>
             </v-card-text>
             <v-card-actions>
                 <v-spacer/>
                 <v-btn @click="updateStatusDialog = false">Close</v-btn>
-                <v-btn color="blue"  @click="updateListing()" :loading="updateListingStatusForm.processing">Update</v-btn>
+                <v-btn color="blue"  @click="updateListing()" :loading="updateListingStatusForm.processing">Update status</v-btn>
             </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+    <!-- DELETE LISTING MODAL -->
+    <v-dialog v-model="deleteListingDialog" width="auto">
+        <v-card class="justify-center" width="600" title="Delete listing">
+            <v-form @submit.prevent>
+                <v-sheet rounded="lg" class="pa-4 text-center mx-auto">
+                    <v-alert icon="mdi-alert" color="red-lighten-4" elevation="2" class="text-start text-error">
+                        
+                        After you delete a listing, it's permanently deleted. Listings can't be undeleted.
+                    </v-alert>
+                    <p class="ma-4  text-body-2 text-start">
+                        Listing <br>
+                         <strong class="text-h6">{{ selectedListing.title }}</strong>
+                    </p>
+                    <div class="text-end">
+                        <v-btn class="text-none me-4" @click="deleteListingDialog = false" variant="text" width="90">
+                            Cancel
+                        </v-btn>
+                        <v-btn class="text-none" color="red" type="submit" @click="deleteListing"  variant="flat" width="90">
+                            Delete
+                        </v-btn>
+                    </div>
+                </v-sheet>
+            </v-form>
         </v-card>
     </v-dialog>
         

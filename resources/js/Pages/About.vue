@@ -27,14 +27,14 @@
 
     <p class="text-h4 text-center my-3">Founders</p>
     <v-row class="mx-5">
-        <v-col cols="3">
+        <v-col cols="12" sm="6" md="4" lg="3">
             <v-card elevation="0">
                 <v-img src="images/Profile/21.png" cover height="300"></v-img>
                 <v-card-title>21 Savage</v-card-title>
                 <v-card-text>Lorem ipsum dolor sit.</v-card-text>
             </v-card>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="12" sm="6" md="4" lg="3">
             <v-card elevation="0">
                 <v-img src="https://assets.vogue.com/photos/63d7d0e493244f4c6f672dec/master/w_2560%2Cc_limit/image00011.jpeg" cover height="300"></v-img>
                 <v-card-title>Ice</v-card-title>
@@ -42,14 +42,14 @@
             </v-card>
         </v-col>
         
-        <v-col cols="3">
+        <v-col cols="12" sm="6" md="4" lg="3">
             <v-card elevation="0">
                 <v-img src="https://media.gq.com.mx/photos/6271a368d02f450ef6d64cd6/1:1/w_2092,h_2092,c_limit/nacho%20varga.jpg" cover height="300"></v-img>
                 <v-card-title>Nacho</v-card-title>
                 <v-card-text>Lorem ipsum dolor sit.</v-card-text>
             </v-card>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="12" sm="6" md="4" lg="3">
             <v-card elevation="0">
                 <v-img src="https://assets.teenvogue.com/photos/641caf88cc857e1ab2e31f28/16:9/w_2560%2Cc_limit/1412528224" cover height="300"></v-img>
                 <v-card-title>Chae</v-card-title>

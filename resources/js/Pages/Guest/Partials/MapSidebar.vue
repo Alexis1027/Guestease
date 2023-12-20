@@ -16,30 +16,36 @@
 </script>
 
 <template>
-    <v-snackbar v-model="props.mapSnackbar" location="right" transition="scroll-x-reverse-transition" color="white">
-    <Link :href="`/room/${props.listing ? props.listing.id : ''}`">
-        <v-btn rounded color="blue" id="reserveBtn" width="50%">
-            See more
-        </v-btn>
-    </Link>
+    <v-snackbar v-model="props.mapSnackbar" location="top right" transition="scroll-x-reverse-transition" color="white" style="margin-top: 5%;">
+        <!-- <Link :href="`/room/${props.listing ? props.listing.id : ''}`">
+            <v-btn rounded color="blue" id="reserveBtn" width="50%">
+                See more
+            </v-btn>
+        </Link> -->
         <div class="custom-snackbar-content">
-            <div style="height: 300px;">
-                <v-carousel show-arrows="hover" color="blue-lighten-4" height="100%">
-                    <v-carousel-item height="100%" v-for="image in images" :src="`/images/uploads/${image}`" :key="image" cover>
-                    </v-carousel-item>
-                    <v-btn @click="emitCloseMapSnackbar()" icon="mdi-close" id="closeBtn" size="small"></v-btn>
-                </v-carousel>
-            </div>
+            <!-- <div style="height: 200px;">
+                
+            </div> -->
             <v-card>
-                <v-card-title>
-                    <h3>
-                        {{ props.listing ? props.listing.title : '' }}
-                    </h3>
-                    {{ listing.location }}
-                </v-card-title>
+                <v-carousel show-arrows="hover" color="blue-lighten-4" height="100%">
+                    <v-carousel-item height="200" v-for="image in images" :src="`/images/uploads/${image}`" :key="image" cover>
+                    </v-carousel-item>
+                    <v-btn @click="emitCloseMapSnackbar()" variant="text" class="text-white" icon="mdi-close" id="closeBtn" size="small"></v-btn>
+                </v-carousel>
                 <v-card-text>
-                    
+                    <h4>
+                        {{ props.listing ? props.listing.title : '' }}
+                    </h4>
+                    {{ listing.location }}
                 </v-card-text>
+                <v-card-actions>
+                    <v-spacer/>
+                    <Link :href="`/room/${props.listing ? props.listing.id : ''}`">
+                        <v-btn rounded color="blue" id="reserveBtn" width="50%">
+                            See more
+                        </v-btn>
+                    </Link>
+                </v-card-actions>
             </v-card>
         </div>
     </v-snackbar>
@@ -49,15 +55,15 @@
 
     #closeBtn {
         right: 0;
-        margin-right: 10px;
+        /* margin-right: 10px; */
         margin-top: 10px;
         position: absolute;
     }
 
     .custom-snackbar-content {
         width: 35vw;
-        max-width: 35vw; /* Set your desired max width */
-        max-height: 80vh; /* Set your desired max height */
+        max-width: 20vw; /* Set your desired max width */
+        max-height: 50vh; /* Set your desired max height */
         overflow-y: auto; /* Add scrollbar when content overflows */
     }
 

@@ -51,14 +51,16 @@ class GuestReservationController extends Controller
     }
 
     public function store(Listing $listing, Request $request) {
-        if(($listing->type == "Room" || $listing->type == "Guest house") && $request->status == "approved") {
-            // $listing->status = "Not available"
-            $listing->status = 'Not available';
-            $listing->update();
-        }
         $form = $request->validate([
             'payment_process' => 'required'
         ]);
+        
+        // if(($listing->type == "Room" || $listing->type == "Guest house") && $request->status == "approved") {
+        //     // $listing->status = "Not available"
+        //     $listing->status = 'Not available';
+        //     $listing->update();
+        // }
+        
         $form['days'] = $request->days;
         $form['user_id'] = $request->user_id;
         $form['listing_id'] = $request->listing_id;

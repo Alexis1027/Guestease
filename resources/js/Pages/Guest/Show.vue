@@ -216,7 +216,7 @@
                 </v-container>
                 
             </v-col> 
-            <v-col cols="4" class="mt-3">
+            <v-col cols="12" sm="12" md="4" lg="4" class="mt-3">
                 <!-- Check in checkout and Reserve button section -->
                     <v-container id="reserveBtn" class="border">
                         <span class="text-h6">₱{{ parseInt(listing.price).toLocaleString() }}</span> {{ listing.type == "Guest house" ? "monthly" : "daily" }}
@@ -258,7 +258,7 @@
                             </v-list-item>
                         </v-list>
                         
-                        <div v-if="auth">
+                        <!-- <div v-if="auth">
                             <div v-if="is_reserved.length >= 1">
                                 <v-btn 
                                     v-if=" is_reserved[is_reserved.length-1].status == 'cancelled' && listing.status == 'Available' "
@@ -304,8 +304,20 @@
                                 Reserve 
                             </v-btn>
                             <v-btn block v-else disabled size="large"> Reserved </v-btn>
-                        </div>
-                        
+                        </div> -->
+                        <v-btn 
+                            color="green" 
+                            @click="submitReservation" 
+                            v-if="listing.status == 'Available'"
+                            :disabled="reserveForm.processing" 
+                            :loading="reserveForm.processing" 
+                            class="mb-4"
+                            width="100%"
+                            size="large"
+                            >
+                            Reserve 
+                        </v-btn>
+                        <v-btn block v-else disabled size="large"> Reserved </v-btn>
                     </v-container>
             </v-col>
             <!-- Ratings and reviews section -->
@@ -331,7 +343,7 @@
             <v-divider />
             <v-list-item prepend-icon="mdi-circle-medium" v-for="rule in JSON.parse(listing.rules)" :key="rule">
                 {{ rule }}
-            </v-list-item>
+            </v-list-item> 
         </v-container>
         <v-divider class="my-5" />
         <!-- Components -->

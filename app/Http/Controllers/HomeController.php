@@ -74,10 +74,8 @@ class HomeController extends Controller
         // get all the reserved dates from the listing
         $reservedDates = Reservation::where('listing_id', $listing->id)
             ->where('status', 'approved')
-            ->where('status', 'pending')
             ->select('checkin', 'checkout')
             ->get();
-
         // get the owner of the listing
         $owner = User::find($listing->owner_id);
 
