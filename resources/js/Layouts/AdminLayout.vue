@@ -2,8 +2,10 @@
 
     import {ref} from 'vue'
     import { router } from '@inertiajs/vue3';
+    // import { useInertia } from '@inertiajs/inertia-vue3';
 
-    const sidebar = ref(false)
+    const inertia = useInertia()
+    const sidebar = ref(true)
     const logo = '/images/logo/frlogo-transformed.png'
 
     function logout() {
@@ -13,8 +15,12 @@
                 window.history.replaceState({}, document.title, '/')
             }
         })
-        
     }
+
+    // const logout = async () => {
+    //     await inertia.post('/logout');
+    //     window.location.replace('/');
+    // }
 
     defineProps({
         auth: Object
@@ -24,14 +30,15 @@
 
 <template>
     <v-layout>
-        <v-navigation-drawer v-model="sidebar" :permanent="true" location="left" temporary>
+        <v-navigation-drawer style="z-index: 10;" v-model="sidebar" :permanent="true" location="left" temporary>
             <v-sheet class="pa-2 border-0">
-                <v-list-item
+                <v-img :src="logo" height="50" width="260" cover></v-img>
+                <!-- <v-list-item
                 :prepend-avatar="`/images/profile/${auth.user.profile_pic}`" 
                 :title="`${auth.user.firstname} ${auth.user.lastname}`" 
                 subtitle="Admin"
                 >
-            </v-list-item>
+            </v-list-item> -->
             </v-sheet>
             <v-divider></v-divider>
             <v-list density="compact" nav>
@@ -73,7 +80,7 @@
                         >
                             <template v-slot:append>
                                 <Link @click="logout" method="post" class="me-6">
-                                    <v-btn icon="mdi-logout" variant="text"></v-btn>
+                                    <v-btn icon="mdi-logout" color="red" variant="text"></v-btn>
                                 </Link>
                             </template>
                         </v-list-item>
@@ -81,7 +88,7 @@
                 </template>
         </v-navigation-drawer>
         <v-main class="bg-grey-lighten-3" style="height: 100vh;">
-            <v-app-bar>
+            <!-- <v-app-bar>
                 <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
                 <v-toolbar-title>
                     <Link class="font-weight-bold" href="/admin/dashboard" >
@@ -92,7 +99,7 @@
                 <Link @click="logout" method="post" as="button" class="me-6">
                     <v-btn color="red">Logout</v-btn>
                 </Link>
-            </v-app-bar>
+            </v-app-bar> -->
                 <slot>
                 </slot>
         </v-main>

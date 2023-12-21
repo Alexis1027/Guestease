@@ -63,6 +63,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/listing-requests', [ListingRequestController::class, 'index']);
         Route::put('/admin/approve-listing/{listing}', [ListingRequestController::class, 'approve']);
         Route::put('/admin/reject-listing/{listing}', [ListingRequestController::class, 'reject']);
+        Route::put('/admin/ban-user/{user}', [UserController::class, 'ban']);
+        Route::put('/admin/unban-user/{user}', [UserController::class, 'unban']);
         Route::get('/admin/reported-guests', [ReportController::class, 'index']);
         Route::delete('/admin/delete-report/{report}', [ReportController::class, 'destroy']);
     });

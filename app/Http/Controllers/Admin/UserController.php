@@ -12,7 +12,8 @@ class UserController extends Controller
 {
     //
     public function index() {
-        return Inertia::render('Admin/ManageUsers', ['users' => User::select('id', 'firstname', 'lastname', 'email', 'address', 'phone_number', 'role')->get()]);
+        $users = User::where('role', '!=', 'admin')->select('id', 'firstname', 'lastname', 'email', 'address', 'phone_number', 'is_banned', 'role')->get();
+        return Inertia::render('Admin/ManageUsers', ['users' => $users]);
     }
 
     public function destroy(User $user) {
@@ -22,6 +23,18 @@ class UserController extends Controller
             $ls->delete();
         }
         $user->delete();
+        return back();
+    }
+
+    public function ban(User $user) {
+        $user->is_banned = true;
+        $user->update();
+        return back();
+    }
+
+    public function unban(User $user) {
+        $user->is_banned = false;
+        $user->update();
         return back();
     }
 

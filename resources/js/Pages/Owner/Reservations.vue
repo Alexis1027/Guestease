@@ -93,11 +93,11 @@
 
     const headers = [
         { title: 'Listing', align: 'start', key: 'title', value: "title" },
-        { title: 'Guest', align: 'start', key: 'location', value: "location" },
-        { title: 'Check-in/Check-out', align: 'start', key: 'price', value: "price" },
+        { title: 'Guest', align: 'start', key: 'user.firstname', value: "user.firstname" },
+        { title: 'Check-in/Check-out', align: 'start', key: 'checkin', value: "checkin" },
         { title: 'Reserved at', align: 'start', key: 'Reserved', value: "type" },
-        { title: 'Total', align: 'start', key: 'Total', value: "type" },
-        { title: 'Guests', align: 'start', key: 'Guests', value: "type" },
+        { title: 'Total', align: 'start', key: 'total', value: "total" },
+        { title: 'Guests', align: 'start', key: 'guests', value: "guests" },
         { title: 'Status', align: 'start', key: 'status', value: "status" },
         { title: 'Actions', align: 'start', key: 'actions', value: "actions",sortable: false },
     ]
@@ -157,14 +157,14 @@
 
                         <v-tooltip location="bottom" v-if="item.status == 'cancelled'">
                             <template v-slot:activator="{ props }">
-                                <v-btn icon="mdi-delete-empty-outline" color="red" class="me-2" size="small" @click="deleteReservationDialog = true" v-bind="props"></v-btn>
+                                <v-btn icon="mdi-delete-empty-outline" variant="tonal" color="red" class="me-2" size="small" @click="deleteReservationDialog = true" v-bind="props"></v-btn>
                             </template>
                             <span>Delete reservation</span>
                         </v-tooltip>
 
                         <v-tooltip location="bottom" v-if="item.status == 'approved'">
                             <template v-slot:activator="{ props }">
-                                <v-btn icon="mdi-bell" class="me-2" size="small" @click="openFileInput(i)" v-bind="props"></v-btn>
+                                <v-btn icon="mdi-bell-outline" color="pink" variant="tonal" class="me-2" size="small" @click="openFileInput(i)" v-bind="props"></v-btn>
                             </template>
                             <span>Remind guest reservation ending soon via email</span>
                         </v-tooltip>
@@ -220,6 +220,7 @@
         <v-card title="Reservation details">
             <v-card-text>
                 {{ selectedReservation }}
+                <v-img :src="`/images/payment_screenshots/${selectedReservation.payment_screenshot}`"></v-img>
             </v-card-text>
             <v-card-actions>
                 <v-spacer/>
