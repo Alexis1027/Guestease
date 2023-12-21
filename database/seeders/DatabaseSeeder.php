@@ -33,8 +33,8 @@ class DatabaseSeeder extends Seeder
         //     'role' => 'admin',
         //     'password' => 'asdasd'
         // ]);
-        Listing::factory(15)->create();
-        Rating::factory(15)->create();
-        User::factory(10)->create();
+        // Listing::factory(15)->create();
+        // Rating::factory(15)->create();
+        // User::factory(10)->create();
     }
 }

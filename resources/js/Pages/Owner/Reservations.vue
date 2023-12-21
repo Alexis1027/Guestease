@@ -17,6 +17,7 @@
     const message = ref('')
     const selectedUser = ref(null)
     const deleteReservationDialog = ref(false)
+    const reservationDetailsDialog = ref(false)
 
     const statusColor = new Map([
         ['approved', 'green'],
@@ -50,6 +51,11 @@
         showEditReservationStatusDialog.value = true
         selectedReservation.value = reservation
         selectedStatus.value = status
+    }
+
+    function showReservationDetailsDialog(reservation) {
+        selectedReservation.value = reservation
+        reservationDetailsDialog.value = true
     }
 
     
@@ -106,7 +112,7 @@
         </v-col>
     </v-row>
     <v-card class="ma-2">
-        <v-data-table :items="reservations" :headers="headers">
+        <v-data-table :items="reservations" :headers="headers" hover>
             <template v-slot:item="{ item }">
                 <tr>
                     <td>{{ item.listing.title }}</td>
@@ -127,7 +133,44 @@
                         </v-chip>
                     </td>
                     <td>
-                        <v-menu>
+
+                        <v-tooltip location="bottom">
+                            <template v-slot:activator="{ props }">
+                                <v-btn icon="mdi-eye-outline" variant="tonal" color="blue" class="me-2" size="small" @click="showReservationDetailsDialog(item)" v-bind="props"></v-btn>
+                            </template>
+                            <span>View reservation details</span>
+                        </v-tooltip>
+
+                        <v-tooltip location="bottom" v-if="item.status == 'pending'">
+                            <template v-slot:activator="{ props }">
+                                <v-btn icon="mdi-check" color="green" variant="tonal" class="me-2" size="small" @click="showEditReservationStatusDialogFn(item, 'approve')" v-bind="props"></v-btn>
+                            </template>
+                            <span>Approve reservation</span>
+                        </v-tooltip>
+                        
+                        <v-tooltip location="bottom" v-if="item.status == 'pending'">
+                            <template v-slot:activator="{ props }">
+                                <v-btn icon="mdi-close" class="me-2" variant="tonal" color="red" size="small" @click="showEditReservationStatusDialogFn(item, 'cancel')" v-bind="props"></v-btn>
+                            </template>
+                            <span>Cancel reservation</span>
+                        </v-tooltip>
+
+                        <v-tooltip location="bottom" v-if="item.status == 'cancelled'">
+                            <template v-slot:activator="{ props }">
+                                <v-btn icon="mdi-delete-empty-outline" color="red" class="me-2" size="small" @click="deleteReservationDialog = true" v-bind="props"></v-btn>
+                            </template>
+                            <span>Delete reservation</span>
+                        </v-tooltip>
+
+                        <v-tooltip location="bottom" v-if="item.status == 'approved'">
+                            <template v-slot:activator="{ props }">
+                                <v-btn icon="mdi-bell" class="me-2" size="small" @click="openFileInput(i)" v-bind="props"></v-btn>
+                            </template>
+                            <span>Remind guest reservation ending soon via email</span>
+                        </v-tooltip>
+
+
+                        <!-- <v-menu>
                             <template v-slot:activator="{ props }">
                                 <v-btn v-bind="props" append-icon="mdi-menu-down" size="small" class="me-2 text-none text-white" color="orange">Edit status</v-btn>
                             </template>
@@ -148,7 +191,7 @@
                             <v-tooltip activator="parent" location="top">
                                 Notify guest: reservation ending soon
                             </v-tooltip>
-                        </v-btn>
+                        </v-btn> -->
                     </td>
                 </tr>
             </template>
@@ -169,6 +212,18 @@
                 <v-spacer/>
                 <v-btn @click="deleteReservationDialog = false">Cancel</v-btn>
                 <v-btn color="red">Delete</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="reservationDetailsDialog" width="69%">
+        <v-card title="Reservation details">
+            <v-card-text>
+                {{ selectedReservation }}
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer/>
+                <v-btn @click="reservationDetailsDialog = false">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>

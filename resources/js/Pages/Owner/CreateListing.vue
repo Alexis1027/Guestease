@@ -25,7 +25,8 @@
         price: 2500,
         images: null,
         type: null,
-        rules: []
+        rules: [],
+        qr_code: null
     })
     
     const submit = () => {
@@ -421,6 +422,13 @@
 
             <v-window-item :value="12">
                 <v-container id="step1" class="placeoffers">
+                    <p class="text-h4 text-start">Attach your QR Code</p>
+                    <v-file-input v-model="form.qr_code"></v-file-input>
+                </v-container>
+            </v-window-item>
+
+            <v-window-item :value="13">
+                <v-container id="step1" class="placeoffers">
                     <p class="text-h4 text-start">Add rules regarding to your place.</p>
                     <p class="text-h6 mb-6 text-grey-darken-2 text-start"> Lorem ipsum quia consequ untur magratione volu nesciunt. Neque porro quisquam </p>
                     <v-text-field v-for="n in ruleTextfield" :key="n" v-model="form.rules[n-1]" variant="outlined" label="New rule" color="blue"></v-text-field>
@@ -429,10 +437,10 @@
                 </v-container>
             </v-window-item>
 
-            <v-window-item :value="13">
+            <v-window-item :value="14">
                 <v-container id="step1">
                     <v-alert variant="outlined" type="error" prominent border="top" title="Alert title" v-if="form.hasErrors">
-                        Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Suspendisse non nisl sit amet velit hendrerit rutrum. Nullam vel sem. Pellentesque dapibus hendrerit tortor.
+                        It seems that you may have not filled up the required fields.
                     </v-alert>
                     <v-row>
                         <v-col cols="7" class="mt-6">
@@ -444,7 +452,6 @@
                                     <v-icon size="50" color="red">mdi-file-clock-outline</v-icon>
                                 </template>
                                 <p>Your listing won't be published until the admin  accepts your request.</p>
-
                                 <v-list-item-subtitle>
                                     Lorem ipsum dolor sit, amet consectetur adipisicing
                                 </v-list-item-subtitle>
@@ -461,14 +468,14 @@
   
       <div id="action">
         <v-divider></v-divider>
-      <v-progress-linear :model-value="(step/13)*100" color="blue-darken-3"></v-progress-linear>
+      <v-progress-linear :model-value="(step/14)*100" color="blue-darken-3"></v-progress-linear>
   
         <v-card-actions>
             <v-btn v-if="step > 1" variant="text" @click="step--">
                 Back
             </v-btn>
             <v-spacer></v-spacer>
-                <v-btn v-if="step <= 12" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
+                <v-btn v-if="step <= 13" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
                     Next
                 </v-btn>
                 <v-btn v-else type="submit" @click="submit" :disabled="form.processing" :loading="form.processing" color="blue-lighten-3" class="text-none" size="large" variant="flat">

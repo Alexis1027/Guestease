@@ -46,7 +46,7 @@ class AccountController extends Controller
     public function change_password(User $user, Request $request) {
         $data = $request->validate([
             'currentPassword' => 'required',
-            'new_password' => ['required', 'confirmed']
+            'new_password' => ['required', 'confirmed', 'min:6']
         ]);
         $auth = Auth::user();
 

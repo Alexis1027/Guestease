@@ -12,10 +12,10 @@
     ])
 
     const statusColor = new Map([
-        ['approve', 'text-green'],
-        ['pending', 'text-orange'],
-        ['cancel', 'text-red'],
-        ['test', 'text-blue']
+        ['approve', 'green'],
+        ['pending', 'orange'],
+        ['cancel', 'red'],
+        ['test', 'blue']
     ])
 
     const icon = new Map([
@@ -46,17 +46,17 @@
 <template>
     <v-dialog v-model="props.show" width="auto">
         <v-sheet elevation="12" rounded="lg"  width="500" class="pa-4 text-center mx-auto">
-            <p :class="['text-h5 text-center text-capitalize', statusColor.get(selectedStatus)]">{{selectedStatus}} reservation</p>
-            <v-icon :class="['mb-5', statusColor.get(selectedStatus)]" :icon="icon.get(selectedStatus)" size="112"></v-icon>
+            <p :class="['text-h5 text-center text-capitalize', `text-${statusColor.get(selectedStatus)}`]">{{selectedStatus}} reservation</p>
+            <v-icon :class="['mb-5', `text-${statusColor.get(selectedStatus)}`]" :icon="icon.get(selectedStatus)" size="112"></v-icon>
             <p class="mb-4 text-medium-emphasis text-body-2">
                 {{ message.get(selectedStatus) }}
             </p>
             <v-divider class="mb-4"></v-divider>
             <div class="text-end">
-                <v-btn class="text-none me-4"  rounded variant="flat" width="90" @click="emit('closeEditReservationStatusDialog')" color="grey">
+                <v-btn class="text-none me-4"  variant="text" width="90" @click="emit('closeEditReservationStatusDialog')" >
                     No
                 </v-btn>
-                <v-btn class="text-none" rounded variant="flat" width="90" color="blue" @click="updateReservation" type="submit" >
+                <v-btn class="text-none"  variant="flat" width="90" :color="statusColor.get(selectedStatus)" @click="updateReservation" type="submit" >
                     Yes
                 </v-btn>
             </div>

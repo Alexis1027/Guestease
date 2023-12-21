@@ -20,7 +20,7 @@
 <template>
     <Head title="Home" />
     <!-- <div class="page-container"> -->
-        <p class="text-h4 my-5 text-center" v-if="listings.length <= 0">No listings found.</p>
+        <p class="text-h6 my-5 text-center" v-if="listings.length <= 0">No listings found.</p>
         <v-row class="ma-2">
             <v-col cols="12" sm="6" md="4" lg="3" v-for="listing in props.listings" :key="listing.id">
                 <GuestHouseCard :listing="listing" :latitude="latitude" :longitude="longitude" />

@@ -29,6 +29,7 @@ return new class extends Migration
             $table->json('rules')->nullable();
             $table->string('status');
             $table->string('type');
+            $table->string('qr_code');
             $table->integer('monthly_discount')->default(0);
             $table->string('bldg_permit')->nullable();
             $table->timestamps();

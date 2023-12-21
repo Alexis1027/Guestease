@@ -12,6 +12,7 @@
     const showDeleteModal = ref(false)
     const successSnackbar = ref(false)
     const addPhoto = ref(null)
+    const fileInputRef = ref(null)
 
     const placeOffers = [
         {
@@ -92,14 +93,14 @@
         },
     ]
 
-    watch(addPhoto, () => {
-        console.log(addPhoto.value[0].name)
-        addPhoto.value.forEach(element => {
-            photosForm.images.push(element.name)
-        })
-    })
+    // watch(addPhoto, () => {
+    //     addPhoto.value.forEach(element => {
+    //         photosForm.images.push(element.name)
+    //     })
+    // })
 
     const photosForm = useForm({
+        new_image: [],
         images: JSON.parse(props.listing.images)
     })
 
@@ -187,6 +188,28 @@
         propertyForm.amenities.push(item); // Push the item to propertyForm.amenities
     };
 
+    const photoIndex = ref(null)
+    function openFileInput(index) {
+        photoIndex.value = index
+        const inputElement = fileInputRef.value.$el.querySelector('input');
+        if (inputElement !== null) {
+            inputElement.click();
+        }
+    }
+
+    // const newPhoto = ref(null)
+    // function openNewPhotoInput() {
+    //     const inputElement = fileInputRef.value.$el.querySelector('input');
+
+    // }
+
+    watch(addPhoto, () => {
+        console.log(photosForm.images)
+        console.log(addPhoto.value[0].name)
+        console.log(photosForm.images[photoIndex.value])
+        photosForm.images[photoIndex.value] = addPhoto.value[0].name
+    })
+
     defineOptions({
         layout: OwnerLayout
     })
@@ -197,7 +220,6 @@
         <v-toolbar>
             <v-toolbar-title>Edit listing( {{ listing.title }} )</v-toolbar-title>
         </v-toolbar>
-
         <div class="d-flex flex-row">
             <v-tabs v-model="tab" direction="vertical" color="blue">
                 <v-tab value="option-1" class="text-none bg-white">
@@ -213,40 +235,65 @@
                     Policies and rules
                 </v-tab>
                 
-                <v-tab value="option-4" color="red" class="text-none text-red bg-white">
+                <!-- <v-tab value="option-4" color="red" class="text-none text-red bg-white">
                     <v-icon start> mdi-delete-outline</v-icon>
                     Delete listing
-                </v-tab>
+                </v-tab> -->
                 
             </v-tabs>
             <v-window v-model="tab">
                 <v-window-item value="option-1">
+                    
                     <v-card flat border class="pa-2" width="100%">
-                        <span class="text-h6"> Photos </span> 
-                            <v-btn :append-icon="showEditPhotos ? 'mdi-pencil' : 'mdi-close'" variant="text" color="blue" class="text-none" @click="showEditPhotos = !showEditPhotos">
-                                Edit
-                            </v-btn> 
-                            <v-file-input label="Add new photos" chips color="blue" multiple v-model="addPhoto" variant="outlined" v-if="!showEditPhotos && listing.type == 'Guest house'"></v-file-input>
-                            <v-file-input label="Add new photos" chips color="blue" v-model="addPhoto" variant="outlined" v-if="!showEditPhotos && (listing.type == 'Room' || listing.type == 'Multiple room')"></v-file-input>
-                        <div style="width: 100vw;">
-                            <v-slide-group v-model="model" class="pa-4" show-arrows >
-                                <v-slide-group-item v-for="(item, i) in photosForm.images" :key="i">
-                                    <!-- <v-badge id="badge" class="mt-2" @click="photosForm.images.splice(i, 1)" offset-x="15" color="red" icon="mdi-close">
+                        <v-form @submit.prevent enctype="multipart/form-data">
+                            <span class="text-h6"> Photos </span> 
+                                <v-btn :append-icon="showEditPhotos ? 'mdi-pencil' : 'mdi-close'" variant="text" color="blue" class="text-none" @click="showEditPhotos = !showEditPhotos">
+                                    Edit
+                                </v-btn> 
+                                <v-file-input style="position: relative; overflow: hidden; width: 0; height: 0;" ref="fileInputRef" label="Add new photos"  chips color="blue" multiple v-model="addPhoto" variant="outlined" ></v-file-input>
+                                <!-- <v-file-input ref="fileInputRef" label="Add new photos"  chips color="blue" multiple v-model="addPhoto" variant="outlined" v-if="!showEditPhotos && listing.type == 'Guest house'"></v-file-input> -->
+                                <v-file-input label="Add new photos" chips color="blue" v-model="addPhoto" variant="outlined" v-if="!showEditPhotos && (listing.type == 'Room' || listing.type == 'Multiple room')"></v-file-input>
+                            <div>
+                                <v-slide-group v-model="model" class="pa-4" show-arrows >
+                                    <v-slide-group-item v-for="(item, i) in photosForm.images" :key="i">
+                                        <!-- <v-badge id="badge" class="mt-2" @click="photosForm.images.splice(i, 1)" offset-x="15" color="red" icon="mdi-close">
+                                            <v-card class="mx-4 " height="230" width="250" elevation="0">
+                                                <v-img :src="`/images/uploads/${photosForm.images[i]}`" height="180" cover></v-img>
+                                            </v-card>
+                                        </v-badge> -->
                                         <v-card class="mx-4 " height="230" width="250" elevation="0">
                                             <v-img :src="`/images/uploads/${photosForm.images[i]}`" height="180" cover></v-img>
+                                            <v-card-actions v-show="!showEditPhotos">
+                                                <v-tooltip location="bottom">
+                                                    <template v-slot:activator="{ props }">
+                                                        <v-btn icon="mdi-image-edit-outline" @click="openFileInput(i)" v-bind="props"></v-btn>
+                                                    </template>
+                                                    <span>Change image</span>
+                                                </v-tooltip>
+                                                <!-- <v-tooltip location="bottom">
+                                                    <template v-slot:activator="{ props }">
+                                                        <v-btn icon="mdi-image-remove-outline" v-bind="props"></v-btn>
+                                                    </template>
+                                                    <span>Remove image</span>
+                                                </v-tooltip> -->
+                                            </v-card-actions>
                                         </v-card>
-                                    </v-badge> -->
-                                    <v-card class="mx-4 " height="230" width="250" elevation="0">
-                                            <v-img :src="`/images/uploads/${photosForm.images[i]}`" height="180" cover></v-img>
+                                    </v-slide-group-item>
+                                    <!-- <v-slide-group-item>
+                                        <v-card class="mx-4 text-center text-green" @click="openNewPhotoInput" height="180" width="200" color="grey-lighten-3" elevation="0">
+                                            <v-icon  size="100">mdi-plus</v-icon>
+                                            <br>
+                                            Add new photo
                                         </v-card>
-                                </v-slide-group-item>
-                            </v-slide-group>
-                        </div>
-                        <v-row class="justify-end d-flex mb-1 me-4">
-                            <v-col cols="1">
-                                <v-btn color="blue" type="submit" class="rounded-pill text-none" :loading="photosForm.processing" @click="submitPhotosForm" v-show="!showEditPhotos">Save</v-btn>
-                            </v-col>
-                        </v-row>
+                                    </v-slide-group-item> -->
+                                </v-slide-group>
+                            </div>
+                            <v-row class="justify-end d-flex mb-1 me-4">
+                                <v-col cols="1">
+                                    <v-btn color="blue" type="submit" class="rounded-pill text-none" :loading="photosForm.processing" @click="submitPhotosForm" v-show="!showEditPhotos">Save</v-btn>
+                                </v-col>
+                            </v-row>
+                        </v-form>
                         <v-divider/>
                         <span class="text-h6">Listing basics</span>
                         <v-btn :append-icon="showEditDetails ? 'mdi-pencil' : 'mdi-close'" variant="text" @click="showEditDetails = !showEditDetails" class="text-none" color="blue">Edit</v-btn> 
@@ -361,18 +408,18 @@
                     </v-card>
                     
                 </v-window-item>
-                <v-window-item value="option-4">
+                <!-- <v-window-item value="option-4">
                     <v-card flat>
                         <v-card-text>
                             <v-btn class="text-none" color="red" @click="showDeleteModal = true">Delete listing</v-btn>
                         </v-card-text>
                     </v-card>
-                </v-window-item>
+                </v-window-item> -->
             </v-window>
         </div>
     </v-container>
     <!-- DELETE LISTING MODAL -->
-    <v-dialog v-model="showDeleteModal" width="auto">
+    <!-- <v-dialog v-model="showDeleteModal" width="auto">
         <v-card class="justify-center" width="600">
             <v-form @submit.prevent>
                 <v-sheet elevation="12" rounded="lg" class="pa-4 text-center mx-auto">
@@ -394,7 +441,7 @@
                 </v-sheet>
             </v-form>
         </v-card>
-    </v-dialog>
+    </v-dialog> -->
     <!-- UPDATE SUCCESSFUL SNACKBAR -->
     <v-snackbar v-model="successSnackbar" color="green">
         Updated Successfully

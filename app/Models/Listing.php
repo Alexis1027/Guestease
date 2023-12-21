@@ -26,7 +26,8 @@ class Listing extends Model
         'type',
         'rules',
         'monthly_discount',
-        'bldg_permit'
+        'bldg_permit',
+        'qr_code'
     ];
 
     // public function ratings() {

@@ -11,7 +11,7 @@
     defineProps({ listings: Object, auth: Object })
 
     const deleteListingDialog = ref(false)
-    const updateSnackbar = ref(false)
+    const snackbar = ref(false)
     const viewListingDialog = ref(false)
     const updateStatusDialog = ref(false)
     const listingImages = ref(null)
@@ -40,6 +40,7 @@
             preserveScroll: true,
             onSuccess: () => {
                 snackbar.value = true
+                deleteListingDialog.value = false
                 message.value = "Listing deleted successfully."
             }
         })
@@ -98,7 +99,7 @@
         </v-col>
     </v-row>
     <v-card class="ma-2">
-        <v-data-table :items="listings" :headers="headers">
+        <v-data-table :items="listings" :headers="headers" hover>
             <template v-slot:item="{ item }">
                 <tr>
                     <td>{{ item.title }}</td>
@@ -151,7 +152,7 @@
         </template>
     </v-snackbar>
 
-    <v-dialog v-model="viewListingDialog" width="90%" z-index="50" persistent class="mt-15">
+    <v-dialog v-model="viewListingDialog" width="90%" style="z-index: 20;" persistent class="mt-15">
         <v-card>
             <v-card-text>
                 <v-row>
@@ -163,7 +164,7 @@
 
                     </v-col>
                 </v-row>
-                <MazGallery :images="listingImages" :height="300" class="mt-1" />
+                <MazGallery :images="listingImages" :height="300" class="mt-1" style="z-index: 50;" />
                 
                 <v-row class="my-4">
                     <v-col cols="8">
@@ -233,15 +234,19 @@
     <v-dialog v-model="updateStatusDialog" width="50%" persistent>
         <v-card>
             <v-card-title>
-                Edit <strong>{{ updateListingStatusForm.title }}</strong>'s status
+                Edit status
             </v-card-title>
             <v-card-text>
                 <v-select :disabled="updateListingStatusForm.status == 'For approval'" :items="['Not available', 'Available']" v-model="updateListingStatusForm.status" label="Status"></v-select>
+                <p class="ma-4  text-body-2 text-start">
+                    Listing <br>
+                    <strong class="text-h6">{{ updateListingStatusForm.title }}</strong>
+                </p>
             </v-card-text>
             <v-card-actions>
                 <v-spacer/>
-                <v-btn @click="updateStatusDialog = false">Close</v-btn>
-                <v-btn color="blue"  @click="updateListing()" :loading="updateListingStatusForm.processing">Update status</v-btn>
+                <v-btn @click="updateStatusDialog = false" class="text-none">Close</v-btn>
+                <v-btn color="blue" variant="flat" class="text-none" @click="updateListing()" :loading="updateListingStatusForm.processing">Update status</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>

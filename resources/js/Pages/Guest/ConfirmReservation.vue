@@ -4,11 +4,13 @@
     import { useForm } from '@inertiajs/vue3';
     import {format} from 'date-fns'
     import emailjs from '@emailjs/browser'
+    import {ref} from 'vue'
 
     const prop = defineProps(['listing', 'auth', 'guests', 'checkin', 'checkout', 'days'])
     const images = JSON.parse(prop.listing.images)
     const checkinDate = format(new Date(prop.checkin), 'MMM d')
     const checkoutDate = format(new Date(prop.checkout), 'MMM d')
+    const showQRCode = ref(false)
 
     const form = useForm({
         listing_id: prop.listing.id,
@@ -20,15 +22,15 @@
         guests: prop.guests,
         total: parseInt(prop.listing.price) * parseInt(prop.days),
         days: prop.days,
-        discount: prop.listing.monthly_discount
+        discount: prop.listing.monthly_discount,
+        payment_screenshot: null
     })
         
     const submit = () => {
         form.post(`/reserve/${prop.listing.id}`)
-        location.href = '/reservations'
-        window.history.replaceState({}, document.title, '/')
     }
-
+// location.href = '/reservations'
+        // window.history.replaceState({}, document.title, '/')
     onMounted(() => {
         paypal.Buttons({
         style: {
@@ -69,6 +71,13 @@
         }
         }).render('#paypal-button-container');
     })
+
+    const screenshotRule = [
+        value => {
+            if (value.length == 1)  return true
+            return  "You must input a screenshot of the payment"
+        }
+    ]
 
 </script>
 
@@ -137,7 +146,8 @@
                             variant="outlined">
                             </v-select> -->
                             <div id="paypal-button-container" v-show="form.payment_process == 'Paypal'"></div>
-                            <v-btn block color="green" v-show="form.payment_process != 'Paypal'" :disabled="!form.payment_process" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn>
+                            <!-- <v-btn block color="green" v-show="form.payment_process != 'Paypal'" :disabled="!form.payment_process" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn> -->
+                            <v-btn block color="green" v-show="form.payment_process != 'Paypal'" :disabled="!form.payment_process" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="showQRCode = true" type="submit">Confirm</v-btn>
                         
                         </v-form>
                     </v-container>
@@ -191,4 +201,29 @@
                 </v-col>
             </v-row>
         </v-container>
+
+        <v-dialog v-model="showQRCode" width="50%">
+            <v-form @submit.prevent fast-fail>
+                <v-card title="Pay through GCash">
+                    <v-card-text style="margin: auto">
+                        <v-img
+                        :width="300"
+                        cover
+                        :src="`/images/qrcode/${listing.qr_code}`"
+                        ></v-img>
+                    </v-card-text>
+                    <v-card-text>
+                        Attach a screenshot
+                        <v-file-input label="Screenshot" v-model="form.payment_screenshot" :rules="screenshotRule"></v-file-input>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer/>
+                        <v-btn color="primary" @click="showQRCode = false" class="text-none">Cancel</v-btn>
+                        <v-btn color="blue" type="submit" class="text-none"  variant="flat" :loading="form.processing" @click="submit">Confirm</v-btn>
+                            <!-- <v-btn block color="green" v-show="form.payment_process != 'Paypal'" :disabled="!form.payment_process" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn> -->
+                    </v-card-actions>
+                </v-card>
+            </v-form>
+        </v-dialog>
+
 </template>

@@ -60,6 +60,11 @@ class GuestReservationController extends Controller
         //     $listing->status = 'Not available';
         //     $listing->update();
         // }
+
+        if($request->payment_process == 'Gcash') {
+            $request->payment_screenshot[0]->move(public_path('/images/payment_screenshots'), $request->payment_screenshot[0]->getClientOriginalName());
+            $form['payment_screenshot'] = $request->payment_screenshot[0]->getClientOriginalName();
+        }
         
         $form['days'] = $request->days;
         $form['user_id'] = $request->user_id;

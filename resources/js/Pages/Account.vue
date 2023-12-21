@@ -2,10 +2,21 @@
 
     defineOptions({ layout: Layout })
     const props = defineProps(['auth', 'showInputVerificationCodeProp'])
-    import {ref} from 'vue'
+    import {ref, onMounted} from 'vue'
     import {useForm} from '@inertiajs/vue3'
     import Layout from '../Layouts/Layout.vue'
     import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
+    import { getAuth, updatePassword, onAuthStateChanged  } from 'firebase/auth'
+
+    
+    const currentUser = ref(null)
+    onMounted(async () => {
+        const authFromFirebase = getAuth();
+        onAuthStateChanged(authFromFirebase, (user) => {
+            console.log(user)
+            currentUser.value = user
+        })
+    })
 
     const showFileInput = ref(false)
     const results = ref()
@@ -47,6 +58,13 @@
     function submitChangePasswordForm() {
         changePasswordForm.put(`/account/change-password/${props.auth.user.id}`, {
             onSuccess: () => {
+                updatePassword(currentUser.value, changePasswordForm.new_password).then(() => {
+                    console.log("success")
+                }).catch((error) => {
+                    // An error ocurred
+                    // ...
+                    console.log(error)
+                })
                 snackbar.value = true
                 message.value = "Successfully changed password."
                 changePasswordForm.reset()
@@ -69,7 +87,7 @@
 
 
 <template>
-    <Head title="Account" />
+    <Head title="Account" /> {{ user }}
     <v-breadcrumbs :items="[{title: 'Account', disabled: false}, {title: 'Personal info', disabled: false}]">
         <template v-slot:divider>
             <v-icon icon="mdi-chevron-right"></v-icon>
@@ -118,8 +136,9 @@
         </v-card-actions>
     </v-card>
 
-    <v-card title="Change password (mugana gamay)" width="80%" class="border mb-4">
+    <v-card title="Change password" width="80%" class="border mb-4">
         <!-- {{ changePasswordForm }} -->
+        {{ user }}
         <v-card-item>
             <v-text-field variant="outlined" :error-messages="changePasswordForm.errors.currentPassword" v-model="changePasswordForm.currentPassword" clearable type="password" class="mt-2" label="Current password"></v-text-field>
             <v-text-field variant="outlined" :error-messages="changePasswordForm.errors.new_password" name="new_password" v-model="changePasswordForm.new_password" clearable type="password" label="New password"></v-text-field>
