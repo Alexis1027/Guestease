@@ -132,9 +132,9 @@
                                             <v-icon class="me-2">mdi-home-edit-outline</v-icon> Edit listing
                                     </v-list-item>
                                 </Link>
-                                <v-list-item  @click="showDeleteListingDialog(item)">
+                                <!-- <v-list-item  @click="showDeleteListingDialog(item)">
                                         <v-icon class="me-2" color="red">mdi-delete-empty-outline</v-icon> Delete listing
-                                </v-list-item>
+                                </v-list-item> -->
                             </v-list>
                         </v-menu>
                         <!-- <v-btn class="text-none text-white" size="small"  prepend-icon="mdi-square-edit-outline" color="orange"> Status</v-btn>

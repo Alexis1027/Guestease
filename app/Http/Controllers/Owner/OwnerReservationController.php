@@ -26,8 +26,20 @@ class OwnerReservationController extends Controller
                 array_push($reservations, $r);
             }
         }
+        foreach ($reservations as $r) {
+            if ($r->checkout < now()) {
+                $this->updateReservationStatus($r->id);
+ // Save the individual reservation
+            }
+        }
         return Inertia::render('Owner/Reservations', ['reservations' => $reservations]);
     }
+
+    public function updateReservationStatus($id) {
+        $reservation = Reservation::find($id);
+        $reservation->status = "completed";
+        $reservation->update();
+    } 
 
     public function update(Reservation $reservation, Request $request) {
         

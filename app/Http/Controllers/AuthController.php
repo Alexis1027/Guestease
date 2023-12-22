@@ -58,6 +58,13 @@ class AuthController extends Controller
         $user = User::where('email',$request->email)->first();
         if($user) {
             auth()->login($user);
+            if(auth()->user()->is_banned) {
+                auth()->logout();
+                $request->session()->invalidate();
+                $request->session()->regenerate();
+                return redirect()->back()->withErrors(['loginError' => 'Your account has been banned. If you believe this is a mistake, please contact support.']);
+
+            }
         }
         else {
             return back()->withErrors(['loginError' => 'Invalid creadentials']);

@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Wishlist;
 
 class OwnerListingController extends Controller
 {
@@ -126,6 +127,10 @@ class OwnerListingController extends Controller
     }
 
     public function destroy(Listing $listing) {
+
+        $wishlists = Wishlist::where('listing_id', $listing->id)->delete();
+        dd($wishlists);
+
         $listing->status = "Deleted";
         $listing->update();
         return back();

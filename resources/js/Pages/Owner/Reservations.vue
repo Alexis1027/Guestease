@@ -163,7 +163,7 @@
                             <span>Cancel reservation</span>
                         </v-tooltip>
 
-                        <v-tooltip location="bottom" v-if="item.status == 'cancelled'">
+                        <v-tooltip location="bottom" v-if="item.status == 'cancelled' || item.status == 'completed'">
                             <template v-slot:activator="{ props }">
                                 <v-btn icon="mdi-delete-empty-outline" variant="tonal" color="red" class="me-2" size="small" @click="showDeleteReservationDialog(item)" v-bind="props"></v-btn>
                             </template>
