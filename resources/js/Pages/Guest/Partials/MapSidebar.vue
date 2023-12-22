@@ -17,16 +17,8 @@
 
 <template>
     <v-snackbar v-model="props.mapSnackbar" location="top right" transition="scroll-x-reverse-transition" color="white" style="margin-top: 5%;">
-        <!-- <Link :href="`/room/${props.listing ? props.listing.id : ''}`">
-            <v-btn rounded color="blue" id="reserveBtn" width="50%">
-                See more
-            </v-btn>
-        </Link> -->
-        <div class="custom-snackbar-content">
-            <!-- <div style="height: 200px;">
-                
-            </div> -->
-            <v-card>
+        <div class="custom-snackbar-content" >
+            <v-card width="100%" elevation="0">
                 <v-carousel show-arrows="hover" color="blue-lighten-4" height="100%">
                     <v-carousel-item height="200" v-for="image in images" :src="`/images/uploads/${image}`" :key="image" cover>
                     </v-carousel-item>
@@ -58,13 +50,6 @@
         /* margin-right: 10px; */
         margin-top: 10px;
         position: absolute;
-    }
-
-    .custom-snackbar-content {
-        width: 35vw;
-        max-width: 20vw; /* Set your desired max width */
-        max-height: 50vh; /* Set your desired max height */
-        overflow-y: auto; /* Add scrollbar when content overflows */
     }
 
     #reserveBtn {

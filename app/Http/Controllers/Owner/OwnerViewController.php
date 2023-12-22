@@ -7,11 +7,20 @@ use Inertia\Inertia;
 use App\Models\Rating;
 use App\Models\Listing;
 use App\Http\Controllers\Controller;
+use App\Models\Reservation;
 
 class OwnerViewController extends Controller
 {
     //
     public function dashboard() {
+
+        $total_listings = Listing::where('owner_id', auth()->user()->id)->count();
+        $pending_listings = Listing::where('owner_id', auth()->user()->id)->where('status', 'For approval')->count();
+        $approved_listings = Listing::where('owner_id', auth()->user()->id)->where('status', 'Available')->count();
+        $total_reservations = Reservation::count();
+        $pending_reservations = Reservation::where('status', 'pending')->count();
+
+
         $listings = Listing::where('owner_id', auth()->user()->id)->where('status', '!=', 'Deleted')->latest()->get();
 
         foreach($listings as $ls) {
@@ -23,7 +32,12 @@ class OwnerViewController extends Controller
         }
 
         return Inertia::render('Owner/Dashboard', [
-            'listings' => $listings
+            'listings' => $listings,
+            'total_listings' => $total_listings,
+            'pending_listings' => $pending_listings,
+            'approved_listings' => $approved_listings,
+            'total_reservations' => $total_reservations,
+            'pending_reservations' => $pending_reservations
         ]);
     }
 

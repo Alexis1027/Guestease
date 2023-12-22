@@ -88,23 +88,26 @@
 
 <template>
     <Head title="Listings"/>
-    <v-row justify="space-between" class="ma-2">
-        <v-col>
-            <p class="text-h4 ">Manage Listings</p>
-        </v-col>
-        <v-col class="justify-end d-flex">
-            <Link href="/owner/create-listing">
-                <v-btn class="text-none" variant="flat" prepend-icon="mdi-plus" color="blue">Add new listing</v-btn>
-            </Link>
-        </v-col>
-    </v-row>
+    
     <v-card class="ma-2">
+        <template v-slot:title>
+            <v-row justify="space-between">
+            <v-col>
+                <p>Manage Listings</p>
+            </v-col>
+            <v-col class="justify-end d-flex">
+                <Link href="/owner/create-listing">
+                    <v-btn class="text-none" variant="flat" prepend-icon="mdi-plus" color="blue">Add new listing</v-btn>
+                </Link>
+            </v-col>
+        </v-row>
+        </template>
         <v-data-table :items="listings" :headers="headers" hover>
             <template v-slot:item="{ item }">
                 <tr>
                     <td>{{ item.title }}</td>
                     <td>{{ item.location }}</td>
-                    <td>{{ item.price }}</td>
+                    <td>₱{{ parseInt(item.price).toLocaleString() }}</td>
                     <td>{{ item.type }}</td>
                     <td>
                         <v-chip :color="statusColor.get(item.status)">
@@ -257,7 +260,6 @@
             <v-form @submit.prevent>
                 <v-sheet rounded="lg" class="pa-4 text-center mx-auto">
                     <v-alert icon="mdi-alert" color="red-lighten-4" elevation="2" class="text-start text-error">
-                        
                         After you delete a listing, it's permanently deleted. Listings can't be undeleted.
                     </v-alert>
                     <p class="ma-4  text-body-2 text-start">

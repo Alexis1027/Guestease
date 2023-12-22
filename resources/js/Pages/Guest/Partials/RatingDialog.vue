@@ -33,7 +33,7 @@
 
 </script>
 <template>
-      <v-dialog v-model="props.showReviewModal" width="40vw" transition="scroll-x-transition">
+      <v-dialog v-model="props.showReviewModal" width="auto" transition="scroll-x-transition">
         <v-form @submit.prevent>
             <v-card>
                 <v-card-title>

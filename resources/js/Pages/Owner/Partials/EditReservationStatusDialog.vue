@@ -45,7 +45,7 @@
 </script>
 <template>
     <v-dialog v-model="props.show" width="auto">
-        <v-sheet elevation="12" rounded="lg"  width="500" class="pa-4 text-center mx-auto">
+        <v-sheet elevation="12" rounded="lg"  class="pa-4 text-center mx-auto">
             <p :class="['text-h5 text-center text-capitalize', `text-${statusColor.get(selectedStatus)}`]">{{selectedStatus}} reservation</p>
             <v-icon :class="['mb-5', `text-${statusColor.get(selectedStatus)}`]" :icon="icon.get(selectedStatus)" size="112"></v-icon>
             <p class="mb-4 text-medium-emphasis text-body-2">

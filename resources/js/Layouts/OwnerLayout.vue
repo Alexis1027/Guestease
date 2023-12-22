@@ -25,21 +25,22 @@
                 </Link> -->
             </v-toolbar-title>
             <v-divider vertical />
-            <Link href="/owner/dashboard">
-                <v-btn class="text-none rounded-pill ms-2" :color="$page.component == 'Owner/Dashboard' ? 'blue' : ''">
-                    Dashboard
-                </v-btn>
-            </Link>
-            <Link href="/owner/listings">
-                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Listings' ? 'blue' : ''">
-                    Listings
-                </v-btn>
-            </Link>
-            <Link href="/owner/reservations">
-                <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Reservations' ? 'blue' : ''">
-                    Reservations
-                </v-btn>
-            </Link>
+            
+                <Link href="/owner/dashboard">
+                    <v-btn class="text-none rounded-pill ms-2" :color="$page.component == 'Owner/Dashboard' ? 'blue' : ''">
+                        Dashboard
+                    </v-btn>
+                </Link>
+                <Link href="/owner/listings">
+                    <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Listings' ? 'blue' : ''">
+                        Listings
+                    </v-btn>
+                </Link>
+                <Link href="/owner/reservations">
+                    <v-btn class="text-none rounded-pill" :color="$page.component == 'Owner/Reservations' ? 'blue' : ''">
+                        Reservations
+                    </v-btn>
+                </Link>
             
             <v-spacer/>
             <v-spacer/>

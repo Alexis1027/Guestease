@@ -49,21 +49,21 @@
     <Head title="Map" />
     <MapSidebar :mapSnackbar="mapSnackbar" :listing="currentlisting" @closeMapSnackbar="mapSnackbar = false" ></MapSidebar>
         <v-row>
-            <v-col cols="4">
+            <v-col cols="12" sm="12" md="12" lg="12" xl="4" xxl="4" id="info" class="bg-white">
                 <v-container class="text-center mt-6">
                     <p class="text-h4">Explore Now!</p>
-                    <v-divider class="mt-3"/>    
-                    <p class="my-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p class="my-5">Lorem ipsum dolor sit amet, consectetur adipiscing elint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                     <v-divider class="my-3"/>
                     <p class="text-h4">Cordova Cebu</p>
                     <Link href="/">
-                        <v-btn class="mt-6" color="blue">LEARN MORE!</v-btn>
+                        <v-btn class="mt-6 text-none" color="blue">Learn more</v-btn>
                     </Link>
                 </v-container>
             </v-col>
-            <v-col cols="8">
+            <v-col cols="12" sm="12" md="12" lg="12" xl="8" xxl="8">
                 <div class="leaflet-container" ref="mapContainer"></div>
             </v-col>
+            
         </v-row>
 </template>
 
@@ -71,9 +71,7 @@
 
     .leaflet-container {
         height: 100vh;
-        width: 65%;
-        right: 0;
-        position: absolute;
+        width: 100%;
     }
 
 </style>

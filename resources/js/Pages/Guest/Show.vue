@@ -1,7 +1,7 @@
 <script setup>
 
     defineOptions({layout: GuestLayout})
-    const props = defineProps(['listing', 'ratings', 'averageRating', 'is_reserved', 'wishlist', 'auth', 'rated', 'owner', 'reservedDates'])
+    const props = defineProps(['listing', 'ratings', 'averageRating', 'is_reserved', 'can_review', 'wishlist', 'auth', 'rated', 'owner', 'reservedDates'])
     import GuestLayout from '../../Layouts/GuestLayout.vue'
     import {defineProps, ref} from 'vue'
     import { useForm } from '@inertiajs/vue3'
@@ -79,14 +79,13 @@
     <v-container>
         <v-row>
             <!-- ratings and location  -->
-            <v-col cols="2"> 
+            <v-col cols="2" id="starRating"> 
                 <v-icon color="orange-lighten-2">mdi-star</v-icon> {{ averageRating }} - ({{ ratings.length }} reviews) 
             </v-col>
-            <v-col cols="8"> 
+            <v-col cols="8" id="topLocation"> 
                 <v-icon color="red">mdi-map-marker</v-icon> {{ listing.location }}
             </v-col>
-            <v-spacer></v-spacer>
-            <v-col class="text-end">
+            <v-col class="text-end" cols="2">
                 <!-- Save guest house button -->
                 <v-form @submit.prevent="submitSaveWishlistForm">
                     <v-btn 
@@ -108,16 +107,9 @@
         </v-row>
             <MazGallery :images="listingImages" :height="450" class="mt-1" />
         <v-row>
-            <v-col cols="8">
+            <v-col cols="12" md="8" sm="12" lg="8">
                 <!-- Guest house details -->
                 <v-list-item>
-                    <!-- <template v-slot:append>
-                        <Link :href="`/profile/${owner.id}`">
-                            <v-avatar size="90" id="avatar">
-                                <v-img :src="`/images/profile/${owner.profile_pic}`"></v-img>
-                            </v-avatar>
-                        </Link>
-                    </template> -->
                     <p class="text-h5 text-capitalize">{{ listing.title }}</p>
                         <v-chip v-if="listing.guests > 0">
                             <p>
@@ -167,20 +159,20 @@
                         </v-list-item>
                         <v-divider class="my-2"/>
                         <v-row>
-                            <v-col cols="6">
+                            <v-col cols="12" md="6" lg="6" xl="6" xxl="6" sm="12">
                                 <v-list-item prepend-icon="mdi-facebook-messenger" subtitle="Messenger">
                                     <p class="text-capitalize">{{ owner.firstname + ' ' + owner.lastname }}</p>
                                 </v-list-item>
                             </v-col>
-                            <v-col cols="6">
+                            <v-col cols="12" md="6" lg="6" xl="6" xxl="6" sm="12">
                                 <v-list-item prepend-icon="mdi-email-open" subtitle="Email"> {{ owner.email }}
                                 </v-list-item>
                             </v-col>
-                            <v-col cols="6">
+                            <v-col cols="12" md="6" lg="6" xl="6" xxl="6" sm="12">
                                 <v-list-item prepend-icon="mdi-phone" class="text-capitalize" subtitle="Contact number" > {{owner.phone_number}}
                                 </v-list-item>
                             </v-col>
-                            <v-col cols="6">
+                            <v-col cols="12" md="6" lg="6" xl="6" xxl="6" sm="12">
                                 <v-list-item prepend-icon="mdi-calendar-range" subtitle="Joined at">
                                     {{ format(new Date(owner.created_at), 'MMMM dd, y') }}
                                 </v-list-item>
@@ -202,7 +194,8 @@
                 </v-container>
 
                 <!-- Rate this place section -->
-                <v-container v-if="auth && is_reserved.length > 0">
+                <v-container v-if="auth && can_review">
+                    {{can_review}}
                     <p class="text-h5 font-weight-medium">Rate this place </p>
                     <p>Tell others what you think. </p>
                     <v-divider class="my-3" />
@@ -221,9 +214,12 @@
                     <v-container id="reserveBtn" class="border">
                         <span class="text-h6">₱{{ parseInt(listing.price).toLocaleString() }}</span> {{ listing.type == "Guest house" ? "monthly" : "daily" }}
                         <DatePicker @updateDate="updateDate" :reservedDates="reservedDates" :listingType="listing.type" />
-                        <v-alert variant="outlined" type="error" class="mt-5" prominent v-model="reserveFormAlert">
+                        <!-- <v-alert variant="outlined" type="error" class="mt-5" prominent v-model="reserveFormAlert">
                             <p class="font-weight-bold">Let's try that again</p>
                             <p>Please input your check in and check out dates.</p>
+                        </v-alert> -->
+                        <v-alert title="Let's try that again" class="text-error my-3" v-model="reserveFormAlert" border="start" border-color="error" elevation="2" icon="mdi-alert">
+                            Please input your check in and check out dates.
                         </v-alert>
                         <v-list-item prepend-icon="mdi-account-multiple" title="Guests">
                             <template v-slot:append>
@@ -257,55 +253,24 @@
                                 </template>
                             </v-list-item>
                         </v-list>
-                        
-                        <!-- <div v-if="auth">
-                            <div v-if="is_reserved.length >= 1">
-                                <v-btn 
-                                    v-if=" is_reserved[is_reserved.length-1].status == 'cancelled' && listing.status == 'Available' "
-                                    @click="submitReservation" 
-                                    :disabled="owner.id == auth.user.id || reserveForm.processing" 
-                                    :loading="reserveForm.processing" 
-                                    class="mb-4" 
-                                    width="100%" 
-                                    size="large"
-                                    color="green"
-                                    >
-                                    Reserve
-                                </v-btn>
-                                <v-btn block v-else disabled size="large"> Reserved </v-btn>
-                            </div>
-                            <div v-else>
-                                <v-btn 
-                                    color="green" 
-                                    v-if="listing.status == 'Available' && is_reserved.length <= 0" 
-                                    @click="submitReservation" 
-                                    :disabled="reserveForm.processing || owner.id == auth.user.id" 
-                                    :loading="reserveForm.processing" 
-                                    class="mb-4" 
-                                    width="100%" 
-                                    size="large"
-                                    >
-                                    Reserve
-                                </v-btn>
-                                <v-btn block v-else disabled size="large"> Reserved </v-btn>
-                            </div>
-                        </div>
-                        <div v-else>
+                        <div v-if="auth">
                             <v-btn 
-                                color="green" 
-                                v-if="listing.status == 'Available'" 
-                                @click="submitReservation" 
-                                :disabled="reserveForm.processing" 
-                                :loading="reserveForm.processing" 
-                                class="mb-4"
-                                width="100%"
-                                size="large"
-                                >
+                            color="green" 
+                            @click="submitReservation" 
+                            v-if="listing.status == 'Available' && is_reserved.length == 0 "
+                            :disabled="reserveForm.processing" 
+                            :loading="reserveForm.processing" 
+                            class="mb-4"
+                            width="100%"
+                            size="large"
+                            >
                                 Reserve 
                             </v-btn>
                             <v-btn block v-else disabled size="large"> Reserved </v-btn>
-                        </div> -->
-                        <v-btn 
+                        </div>
+
+                        <div v-else>
+                            <v-btn 
                             color="green" 
                             @click="submitReservation" 
                             v-if="listing.status == 'Available'"
@@ -315,9 +280,11 @@
                             width="100%"
                             size="large"
                             >
-                            Reserve 
-                        </v-btn>
-                        <v-btn block v-else disabled size="large"> Reserved </v-btn>
+                                Reserve 
+                            </v-btn>
+                            <v-btn block v-else disabled size="large"> Reserved </v-btn>
+                        </div>
+
                     </v-container>
             </v-col>
             <!-- Ratings and reviews section -->
@@ -325,7 +292,7 @@
                 <p class="text-h5 font-weight-medium">Ratings and reviews </p>
                 <v-divider class="mt-3" />
                 <v-row>
-                    <v-col cols="6" class="mt-3" v-for="rating in ratings" :key="rating.id">
+                    <v-col cols="12" md="6" sm="6" lg="6" xl="6" xxl="6" class="mt-3" v-for="rating in ratings" :key="rating.id">
                         <RatingCard :rating="rating" />
                     </v-col>
                         <p class="ms-6 my-5" v-if="ratings.length <= 0">No reviews found.</p>
@@ -340,12 +307,12 @@
         <!-- HOUSE RULES -->
         <v-container>
             <p class="text-h5 font-weight-medium mb-6">House rules</p>
+            <p v-if="listing.rules == 'null'">No rules found</p>
             <v-divider />
             <v-list-item prepend-icon="mdi-circle-medium" v-for="rule in JSON.parse(listing.rules)" :key="rule">
                 {{ rule }}
             </v-list-item> 
         </v-container>
-        <v-divider class="my-5" />
         <!-- Components -->
         <RatingDialog :showReviewModal="showReviewModal" :auth="auth" :star="rating" :listing="listing" @closeReviewModal="showReviewModal = false" />
     </v-container>
@@ -371,6 +338,16 @@
 
     .v-chip {
         margin: 6px;
+    }
+
+    @media (max-width: 600px) {
+        #starRating {
+            display: none;
+        }
+        #topLocation {
+            display: none;
+        }
+       
     }
 
 </style>

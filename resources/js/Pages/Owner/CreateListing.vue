@@ -171,14 +171,14 @@
             <v-window-item :value="1">
                 <v-container id="step1">
                     <v-row>
-                        <v-col cols="6" class="mt-6">
+                        <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="mt-6">
                             <p class="text-h5">Step 1 </p>
                             <p class="text-h3 my-2 mx-2">Tell us about your place</p>
                             <p>Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet, 
                                 consectetur adipisicing elit. Corporis, sequi. adipisicing. 
                                 Lorem ipsum dolor sit amet consectetur.</p>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6">
                             <v-img cover height="100%" width="100%" src="/images/listing/Home-Interior-Design-PNG.png"></v-img>
                         </v-col>
                     </v-row>
@@ -189,7 +189,7 @@
                 <v-container id="step1">
                     <p class="text-center text-h4 mb-6">What type of place are you renting?</p>
                     <v-row justify="center">
-                        <v-col cols="6">
+                        <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6">
                             <v-list>
                                 <v-list-item value="gueshouse" active-color="blue" @click="form.type = 'Guest house'">
                                     <template v-slot:append>
@@ -237,7 +237,7 @@
                 <v-container id="step1">
                     <p class="text-center text-h4 mb-6">Where's the {{form.type}} located?</p>
                     <v-row justify="center">
-                        <v-col cols="6" class="mt-5">
+                        <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="mt-5">
                             <v-text-field variant="solo" :error-messages="form.errors.location" v-model="form.location" :loading="loadingGetCoord" color="blue" label="Location" @keydown.enter="getCoord()" rounded="pill"></v-text-field>
                             <p class="text-end text-blue-darken-4" id="location" @click="getLocation()">Use my current location</p>
                         </v-col>
@@ -299,14 +299,14 @@
             <v-window-item :value="6">
                 <v-container id="step1">
                     <v-row>
-                        <v-col cols="6" class="mt-6">
+                        <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="mt-6">
                             <p class="text-h5">Step 2</p>
                             <p class="text-h3 my-2 mx-2">Make your place stand out</p>
                             <p class="text-h6">Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet, 
                                 consectetur adipisicing elit. Corporis, sequi. adipisicing. 
                                 Lorem ipsum dolor sit amet consectetur.</p>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6">
                             <v-img cover height="100%" width="100%" src="/images/listing/Home-Interior-Design-PNG.png"></v-img>
                         </v-col>
                     </v-row>
@@ -321,7 +321,7 @@
                         <v-container>
                             <p class="text-red" v-if="form.errors.amenities">Choose at least 1 amenity.</p>
                             <v-row>
-                                <v-col v-for="item in placeOffers" :key="item" cols="12" md="3" @click="form.amenities.push(item)">
+                                <v-col v-for="item in placeOffers" :key="item" cols="12" sm="6" md="3" lg="3" xl="3" xxl="3" @click="form.amenities.push(item)">
                                     <v-item v-slot="{ isSelected, toggle }" >
                                         <v-card :color="isSelected ? 'blue-lighten-4' : ''" class="d-flex align-center border" dark height="50" @click="toggle">
                                             <div class=" flex-grow-1 text-center">
@@ -443,7 +443,7 @@
                         It seems that you may have not filled up the required fields.
                     </v-alert>
                     <v-row>
-                        <v-col cols="7" class="mt-6">
+                        <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="mt-6">
                             <p class="text-h5">Step 3</p>
                             <p class="text-h3 my-2 mx-2">Finish up and publish</p>
                             
@@ -457,7 +457,7 @@
                                 </v-list-item-subtitle>
                             </v-list-item>
                         </v-col>
-                        <v-col cols="5">
+                        <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6">
                             <v-img cover height="100%" width="100%" src="/images/listing/Home-Interior-Design-PNG.png"></v-img>
                         </v-col>
                     </v-row>

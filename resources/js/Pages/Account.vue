@@ -47,7 +47,8 @@
                 onSuccess: () => {
                     snackbar.value = true
                     message.value = "Account successfully updated."
-                }
+                },
+                preserveScroll: true
             })
         }
         else {
@@ -93,7 +94,7 @@
             <v-icon icon="mdi-chevron-right"></v-icon>
         </template>
     </v-breadcrumbs>
-    <v-card width="80%" class="border mb-4" title="Profile picture">
+    <v-card width="100%" class="border mb-4" title="Profile picture">
         <v-card-item>
             <v-avatar size="100">
                 <v-img :src="`/images/profile/${auth.user.profile_pic}`" ></v-img>
@@ -110,12 +111,12 @@
         </v-card-item>
     </v-card>
 
-    <v-card width="80%" class="border mb-4" title="Personal details">
-        <v-card-item>
-            <v-text-field class="mt-3" variant="outlined" clearable :error-messages="form.errors.firstname" label="First name" color="blue" v-model="form.firstname"></v-text-field>
-            <v-text-field variant="outlined" clearable :error-messages="form.errors.lastname" label="Last name" color="blue" v-model="form.lastname"></v-text-field>
-            <v-row>
-                <v-col cols="5">
+    <v-row>
+        <v-col cols="12" md="6" sm="12" lg="6" xl="6" xxl="6">
+            <v-card width="100%" class="border mb-4" title="Personal details">
+                <v-card-item>
+                    <v-text-field class="mt-3" variant="outlined" clearable :error-messages="form.errors.firstname" label="First name" color="blue" v-model="form.firstname"></v-text-field>
+                    <v-text-field variant="outlined" clearable :error-messages="form.errors.lastname" label="Last name" color="blue" v-model="form.lastname"></v-text-field>
                     <MazPhoneNumberInput
                         v-model="form.phone_number"
                         show-code-on-list
@@ -127,27 +128,28 @@
                         :error="form.errors.phone_number"
                     />
                     <p class="text-error">{{ form.errors.phone_number }}</p>
-                </v-col>
-            </v-row>
-            <v-text-field class="mt-4" variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
-        </v-card-item>
-        <v-card-actions class="justify-end d-flex">
-            <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submit" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
-        </v-card-actions>
-    </v-card>
-
-    <v-card title="Change password" width="80%" class="border mb-4">
-        <!-- {{ changePasswordForm }} -->
-        {{ user }}
-        <v-card-item>
-            <v-text-field variant="outlined" :error-messages="changePasswordForm.errors.currentPassword" v-model="changePasswordForm.currentPassword" clearable type="password" class="mt-2" label="Current password"></v-text-field>
-            <v-text-field variant="outlined" :error-messages="changePasswordForm.errors.new_password" name="new_password" v-model="changePasswordForm.new_password" clearable type="password" label="New password"></v-text-field>
-            <v-text-field variant="outlined" name="new_password_confirmation" v-model="changePasswordForm.new_password_confirmation" clearable type="password" label="Confirm password"></v-text-field>
-        </v-card-item>
-        <v-card-actions class="justify-end d-flex">
-            <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submitChangePasswordForm" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
-        </v-card-actions>
-    </v-card>
+                    <v-text-field class="mt-4" variant="outlined" clearable :error-messages="form.errors.address" label="Address" color="blue" v-model="form.address"></v-text-field>
+                </v-card-item>
+                <v-card-actions class="justify-end d-flex">
+                    <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submit" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-col>
+        <v-col cols="12" md="6" sm="12" lg="6" xl="6" xxl="6">
+            <v-card title="Change password" width="100%" class="border mb-4">
+                <!-- {{ changePasswordForm }} -->
+                {{ user }}
+                <v-card-item>
+                    <v-text-field variant="outlined" :error-messages="changePasswordForm.errors.currentPassword" v-model="changePasswordForm.currentPassword" clearable type="password" class="mt-2" label="Current password"></v-text-field>
+                    <v-text-field variant="outlined" :error-messages="changePasswordForm.errors.new_password" name="new_password" v-model="changePasswordForm.new_password" clearable type="password" label="New password"></v-text-field>
+                    <v-text-field variant="outlined" name="new_password_confirmation" v-model="changePasswordForm.new_password_confirmation" clearable type="password" label="Confirm password"></v-text-field>
+                </v-card-item>
+                <v-card-actions class="justify-end d-flex">
+                    <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submitChangePasswordForm" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-col>
+    </v-row>
 
     <v-snackbar v-model="snackbar" multi-line color="blue" class="text-center" location="bottom center" timeout="1200">
         {{ message }}

@@ -81,7 +81,22 @@ class HomeController extends Controller
         $owner = User::find($listing->owner_id);
 
         if(auth()->user()) {
-            $is_reserved = Reservation::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->get();
+            $reservationForReview = Reservation::where('user_id', auth()->user()->id)
+                ->where('listing_id', $listing->id)
+                ->whereIn('status', ['approved', 'completed'])
+                ->get();
+            $can_review = false;
+            if ($reservationForReview->count() > 0 && $reservationForReview[0]->checkin <= now()) {
+                $can_review = true;
+            }
+
+            $is_reserved = Reservation::where('user_id', auth()->user()->id)
+            ->where('listing_id', $listing->id)
+            ->where(function ($query) {
+                $query->where('status', 'approved')
+                    ->orWhere('status', 'pending');
+            })
+            ->get();
             // if logged in, check if the user has rated or wishlisted the listing
             $wishlist = Wishlist::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
             $rating = Rating::where('user_id', auth()->user()->id)->where('listing_id', $listing->id)->first();
@@ -99,7 +114,8 @@ class HomeController extends Controller
                 'ratings' => $ratings,
                 'averageRating' => $averageRating,
                 'reservedDates' => $reservedDates,
-                'is_reserved' => $is_reserved
+                'is_reserved' => $is_reserved,
+                'can_review' => $can_review
             ]);
         }
         else {

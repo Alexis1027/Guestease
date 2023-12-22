@@ -34,9 +34,9 @@
         <v-list-item prepend-icon="mdi-account-multiple-outline"> {{ reservation.guests }} guest</v-list-item>
         <!-- reservation checkin and checkout dates -->
         <v-list-item prepend-icon="mdi-calendar-blank"> 
-            {{ format(new Date(reservation.checkin), 'MMMM dd, yyyy') }} 
+            {{ format(new Date(reservation.checkin), 'PPP') }} 
             <v-icon>mdi-arrow-right-thin</v-icon>
-            {{ format(new Date(reservation.checkout), 'MMMM dd, yyyy') }}
+            {{ format(new Date(reservation.checkout), 'PPP') }}
          </v-list-item>
         <v-divider/>
         <!-- reservation status  -->
@@ -79,7 +79,7 @@
         <v-divider/>
         <!-- cancel reservation and contact owner buttons -->
          <v-card-actions class="justify-end d-flex">
-            <v-btn color="red" variant="tonal" v-if="reservation.status != 'cancelled'" class="text-none me-1" @click="openCancelReservationDialog(reservation.id)">Cancel reservation</v-btn>
+            <v-btn color="red" variant="tonal" v-if="reservation.status == 'pending' " class="text-none me-1" @click="openCancelReservationDialog(reservation.id)">Cancel reservation</v-btn>
             <Link :href="`/profile/${reservation.listing.owner_id}`">
                 <v-btn variant="flat" class="text-none" color="blue">Contact owner</v-btn>
             </Link>

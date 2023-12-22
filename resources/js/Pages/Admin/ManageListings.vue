@@ -2,15 +2,13 @@
 
     defineOptions({ layout: AdminLayout })
     defineProps({ listings: Object, newEntry: Object })
-    import {ref, defineProps, watch} from 'vue'
-    import {router, useForm} from '@inertiajs/vue3'
+    import {ref, defineProps} from 'vue'
+    import { useForm } from '@inertiajs/vue3'
     import AdminLayout from '../../Layouts/AdminLayout.vue'
-    import DeleteListingDialog from './partials/DeleteListingDialog.vue'
     import {format} from 'date-fns'
     import MazGallery from 'maz-ui/components/MazGallery'
 
     const deleteListingDialog = ref(false)
-    const deleteSnackbar = ref(false)
     const updateSnackbar = ref(false)
     const listing = ref({})
     const viewListingDialog = ref(false)
@@ -24,11 +22,6 @@
         title: null
     })
 
-    function deleteListing(gh) {
-        listing.value = gh
-        deleteListingDialog.value = true
-    }
-
     function updateListing() {
         updateListingStatusForm.put(`/admin/update-listing/${updateListingStatusForm.id}`, {
             onSuccess: () => {
@@ -36,11 +29,6 @@
                 updateStatusDialog.value = false
             }
         })
-        // router.put(`/admin/update-listing/${listing.id}`, {status}, {
-        //     onSuccess:() => {
-        //         updateSnackbar.value = true
-        //     }
-        // })
     }
 
 
@@ -76,7 +64,7 @@
 <template>
     <Head title="Manage Listings" />
     <v-container>
-        <v-card>
+        <v-card title="Manage listings">
             <v-data-table :items="listings" :headers="headers">
                 <template v-slot:item="{ item }">
                     <tr>

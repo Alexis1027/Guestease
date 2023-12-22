@@ -31,7 +31,7 @@
             </v-col>
         </v-row>
         <v-row>
-            <v-col cols="6" v-for="reservation in reservations" :key="reservation.id">
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" v-for="reservation in reservations" :key="reservation.id">
                 <ReservationCard :reservation="reservation" @openCancelReservationDialog="cancelReservation(reservation)" />
             </v-col>
         </v-row>

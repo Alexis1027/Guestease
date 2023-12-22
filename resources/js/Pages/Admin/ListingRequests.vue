@@ -37,7 +37,7 @@
 <template>
     <Head title="Listing requests"></Head>
     <v-container>
-        <v-card>
+        <v-card title="Listing requests">
             <v-data-table :items="listingRequests" :headers="headers">
                 <template v-slot:item="{ item }">
                     <tr>
@@ -56,7 +56,9 @@
             </v-data-table>
         </v-card>
     </v-container>
+
     <ReviewListingModal :show="showListingReviewModal" @approved="snackbar = true" :listing="currentListing" v-if="showListingReviewModal" @closeReviewListingModal="showListingReviewModal = false" />
+   
     <v-snackbar v-model="snackbar">
         Listing approved 
         <template v-slot:actions>

@@ -18,7 +18,7 @@ class AuthController extends Controller
         // return back()->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
         // ->header('Cache-Control', 'post-check=0, pre-check=0')
         // ->header('Pragma', 'no-cache');
-        return redirect('/');
+        return back()->header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
     }
 
     public function login() {
@@ -26,7 +26,7 @@ class AuthController extends Controller
             return Inertia::render('Auth/Login');
             // return redirect('/login');
         }
-        return back();
+        return redirect()->back();
     }
 
     public function create_guest() {

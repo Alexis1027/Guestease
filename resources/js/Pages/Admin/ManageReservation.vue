@@ -2,15 +2,14 @@
 
     const {reservations} = defineProps({ reservations: Object })
     defineOptions({layout: AdminLayout})
-    import {ref, watch} from 'vue'
+    import {ref} from 'vue'
     import {format} from 'date-fns'
-    import { router } from '@inertiajs/vue3'
     import AdminLayout from '../../Layouts/AdminLayout.vue'
     import emailjs from '@emailjs/browser'
     
+    const snackbar = ref(false)
+    const notifyBtnLoading = ref(false)
 
-    const entry = ref()
-    const entries = [5, 10, 15, 20, 25]
     const statusColor = new Map([
         ['pending', 'orange'],
         ['approved', 'green'],
@@ -19,7 +18,7 @@
 
     function sendNotification(reservation) {
         console.log(reservation)
-
+        notifyBtnLoading.value = true
         emailjs.send('service_kfsphbh', 'template_xzp03ja', 
         {
             sendername: "Guestease team",
@@ -46,14 +45,10 @@
             Guestease Team`
             }
         , 'eEt-YCYeYc0LoTRxJ').then(() => {
-            alert('Email sent successfully!')
+            snackbar.value = true
+            notifyBtnLoading.value = false
         })
     }
-
-    
-    // watch(entry, () => {
-    //     router.get(`/admin/manage-reservations/${entry.value}`)
-    // })
 
     const headers = [
         { title: 'ID', align: 'start', key: 'id', value: "id" },
@@ -70,7 +65,7 @@
 <template>
     <Head title="Reservations" />
     <v-container>
-        <v-card>
+        <v-card title="Manage reservations">
             <v-data-table :items="reservations" :headers="headers">
                 <template v-slot:item="{ item }">
                     <tr>
@@ -78,7 +73,7 @@
                         <td>{{ item.listing.title }}</td>
                         <td>{{ item.user.firstname + " " + item.user.lastname }}</td>
                         <td>{{ format(new Date(item.checkin), 'MMM dd') + ' - ' + format(new Date(item.checkout), 'MMM dd')  }}</td>
-                        <td>{{ item.total }}</td>
+                        <td>₱{{ parseInt(item.total).toLocaleString() }}</td>
                         <td>{{ item.guests }}</td>
                         <td>
                             <v-chip :color="statusColor.get(item.status)">
@@ -88,7 +83,7 @@
                         <td>
                             <v-btn @click="sendNotification(item)" size="small" :disabled="item.status != 'approved'" class="text-red text-none" variant="tonal" prepend-icon="mdi-bell">Notify
                                 <v-tooltip activator="parent" location="top">
-                                    Alert owner and guest: reservation ending soon
+                                    Alert guest: reservation ending soon
                                 </v-tooltip>
                             </v-btn>
                         </td>
@@ -97,6 +92,11 @@
             </v-data-table> 
         </v-card>
     </v-container>
+
+    <v-snackbar v-model="snackbar">
+        Email was sent successfully!
+    </v-snackbar>
+
 </template>
 
 <style scoped>

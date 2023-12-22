@@ -60,7 +60,7 @@
 <template>
     <Head title="Manage users" />
     <v-container>
-        <v-card>
+        <v-card title="Manage users">
             <v-data-table :items="users" :headers="headers">
                 <template v-slot:item="{item}">
                     <tr>

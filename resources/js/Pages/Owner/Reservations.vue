@@ -3,7 +3,7 @@
     import OwnerLayout from '../../Layouts/OwnerLayout.vue'
     import {ref} from 'vue'
     import {format} from 'date-fns'
-    import { useForm } from '@inertiajs/vue3'
+    import { useForm, router } from '@inertiajs/vue3'
     import emailjs from '@emailjs/browser'
     import EditReservationStatusDialog from './Partials/EditReservationStatusDialog.vue'
     defineOptions({ layout: OwnerLayout })
@@ -41,6 +41,16 @@
         })
     }
 
+    function deleteReservation() {
+        router.delete(`/owner/delete-reservation/${selectedReservation.value.id}`, {
+            onSuccess: () => {
+                deleteReservationDialog.value = false
+                snackbar.value = true
+                message.value = 'Reservation deleted successfully'
+            }
+        })
+    }
+
     function showReportUserDialog(user) {
         selectedUser.value = user
         reportUserForm.user_id = user.id
@@ -58,7 +68,10 @@
         reservationDetailsDialog.value = true
     }
 
-    
+    function showDeleteReservationDialog(reservation) {
+        selectedReservation.value = reservation
+        deleteReservationDialog.value = true
+    }
 
     function sendNotification(reservation) {
         console.log(reservation)
@@ -86,8 +99,8 @@
             ${props.auth.user.firstname} ${props.auth.user.lastname}`
             }
         , 'eEt-YCYeYc0LoTRxJ').then(() => {
-
-            alert('Email sent successfully!')
+            snackbar.value = true
+            message.value = 'Email sent successfully!'
         })
     }
 
@@ -99,19 +112,14 @@
         { title: 'Total', align: 'start', key: 'total', value: "total" },
         { title: 'Guests', align: 'start', key: 'guests', value: "guests" },
         { title: 'Status', align: 'start', key: 'status', value: "status" },
-        { title: 'Actions', align: 'start', key: 'actions', value: "actions",sortable: false },
+        { title: 'Actions', align: 'start', key: 'actions', value: "actions", sortable: false },
     ]
 
 </script>
 
 <template>
     <Head title="Reservations"/>
-    <v-row justify="start" class="ma-2">
-        <v-col>
-            <p class="text-h4 ">Manage Reservations</p>
-        </v-col>
-    </v-row>
-    <v-card class="ma-2">
+    <v-card class="ma-2" title="Manage reservations">
         <v-data-table :items="reservations" :headers="headers" hover>
             <template v-slot:item="{ item }">
                 <tr>
@@ -157,14 +165,14 @@
 
                         <v-tooltip location="bottom" v-if="item.status == 'cancelled'">
                             <template v-slot:activator="{ props }">
-                                <v-btn icon="mdi-delete-empty-outline" variant="tonal" color="red" class="me-2" size="small" @click="deleteReservationDialog = true" v-bind="props"></v-btn>
+                                <v-btn icon="mdi-delete-empty-outline" variant="tonal" color="red" class="me-2" size="small" @click="showDeleteReservationDialog(item)" v-bind="props"></v-btn>
                             </template>
                             <span>Delete reservation</span>
                         </v-tooltip>
 
                         <v-tooltip location="bottom" v-if="item.status == 'approved'">
                             <template v-slot:activator="{ props }">
-                                <v-btn icon="mdi-bell-outline" color="pink" variant="tonal" class="me-2" size="small" @click="openFileInput(i)" v-bind="props"></v-btn>
+                                <v-btn icon="mdi-bell-outline" color="pink" variant="tonal" class="me-2" size="small" @click="sendNotification(item)" v-bind="props"></v-btn>
                             </template>
                             <span>Remind guest reservation ending soon via email</span>
                         </v-tooltip>
@@ -208,20 +216,70 @@
 
     <v-dialog v-model="deleteReservationDialog" width="50%">
         <v-card title="Delete reservation">
+            <v-card-item>
+                <v-alert icon="mdi-alert" color="red-lighten-4" elevation="2" class="text-start text-error">
+                        After you delete a reservation, it's permanently deleted. Reservations can't be undeleted.
+                    </v-alert>
+            </v-card-item>
+            <v-row>
+                <v-col cols="6">
+                    <p class="ma-4  text-body-2 text-start">
+                        Listing <br>
+                        <strong class="text-h6">{{ selectedReservation.listing.title }}</strong>
+                    </p>    
+                </v-col>
+                <v-col cols="6">
+                    <p class="ma-4  text-body-2 text-start">
+                        Guest <br>
+                        <strong class="text-h6">{{ selectedReservation.user.firstname + ' ' + selectedReservation.user.lastname }}</strong>
+                    </p>
+                </v-col>
+            </v-row>
+            <p class="mx-4 text-body-2 text-start">
+                Check-in / Check-out <br>
+                <strong class="text-h6">{{ format(new Date(selectedReservation.checkin), 'PPP') + ' - ' + format(new Date(selectedReservation.checkout), 'PPP') }}</strong>
+            </p>
+            <p class="ma-4 text-body-2 text-start">
+                Status <br>
+                <strong class="text-h6 text-capitalize">{{ selectedReservation.status }}</strong>
+            </p>
             <v-card-actions>
                 <v-spacer/>
-                <v-btn @click="deleteReservationDialog = false">Cancel</v-btn>
-                <v-btn color="red">Delete</v-btn>
+                <v-btn @click="deleteReservationDialog = false" class="text-none">Cancel</v-btn>
+                <v-btn color="red" variant="flat" class="text-none" @click="deleteReservation">Delete</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
 
     <v-dialog v-model="reservationDetailsDialog" width="69%">
         <v-card title="Reservation details">
-            <v-card-text>
-                {{ selectedReservation }}
-                <v-img :src="`/images/payment_screenshots/${selectedReservation.payment_screenshot}`"></v-img>
-            </v-card-text>
+            <v-row>
+                <v-col cols="6">
+                    <p class="ma-4  text-body-2 text-start">
+                        Listing <br>
+                        <strong class="text-h6">{{ selectedReservation.listing.title }}</strong>
+                    </p>    
+                </v-col>
+                <v-col cols="6">
+                    <p class="ma-4  text-body-2 text-start">
+                        Guest <br>
+                        <strong class="text-h6">{{ selectedReservation.user.firstname + ' ' + selectedReservation.user.lastname }}</strong>
+                    </p>
+                </v-col>
+            </v-row>
+            <p class="mx-4 text-body-2 text-start">
+                Check-in / Check-out <br>
+                <strong class="text-h6">{{ format(new Date(selectedReservation.checkin), 'PPP') + ' - ' + format(new Date(selectedReservation.checkout), 'PPP') }}</strong>
+            </p>
+            <p class="ma-4 text-body-2 text-start">
+                Status <br>
+                <strong class="text-h6 text-capitalize">{{ selectedReservation.status }}</strong>
+            </p>
+                <p class="mx-4 text-body-2 text-start">
+                    Payment details <br>
+                    <strong class="text-h6 text-capitalize">{{ selectedReservation.payment_process }}</strong>
+                </p>
+                <v-img v-if="selectedReservation.payment_process == 'Gcash'" :src="`/images/payment_screenshots/${selectedReservation.payment_screenshot}`" cover height="369" width="369" style="margin: auto"></v-img>
             <v-card-actions>
                 <v-spacer/>
                 <v-btn @click="reservationDetailsDialog = false">Close</v-btn>

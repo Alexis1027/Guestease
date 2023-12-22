@@ -47,4 +47,9 @@ class OwnerReservationController extends Controller
         return back();
     }
 
+    public function destroy(Reservation $reservation) {
+        $reservation->delete();
+        return back();
+    }
+
 }

@@ -8,8 +8,8 @@
 
     const prop = defineProps(['listing', 'auth', 'guests', 'checkin', 'checkout', 'days'])
     const images = JSON.parse(prop.listing.images)
-    const checkinDate = format(new Date(prop.checkin), 'MMM d')
-    const checkoutDate = format(new Date(prop.checkout), 'MMM d')
+    const checkinDate = format(new Date(prop.checkin), 'PPP')
+    const checkoutDate = format(new Date(prop.checkout), 'PPP')
     const showQRCode = ref(false)
 
     const form = useForm({
@@ -27,10 +27,13 @@
     })
         
     const submit = () => {
-        form.post(`/reserve/${prop.listing.id}`)
+        form.post(`/reserve/${prop.listing.id}`, {
+            onSuccess: () => {
+                
+            }
+        })
     }
-// location.href = '/reservations'
-        // window.history.replaceState({}, document.title, '/')
+
     onMounted(() => {
         paypal.Buttons({
         style: {
@@ -85,7 +88,7 @@
         <Head title="Confirm Reservation" />
         <v-container>
             <v-row>
-                <v-col cols="7">
+                <v-col cols="12" md="7" sm="12" lg="7" xl="7" xxl="7">
                     <v-container>
                         <v-form @submit.prevent>
                             <Link :href="`/room/${prop.listing.id}`">
@@ -131,22 +134,7 @@
                                 <p class="font-weight-bold">Let's try that again</p>
                                 <p>Please check your payment details.</p>
                             </v-alert>
-                            <!-- <p class="text-h6 my-4 font-weight-bold">Pay with</p>
-                            <v-select  
-                            :items="['Paypal', 'Gcash']"
-                            return-object
-                            single-line 
-                            :error-messages="form.errors.payment_process" 
-                            label="Payment process" 
-                            v-model="form.payment_process" 
-                            clearable
-                            item-title="name"
-                            item-value="details"
-                            required 
-                            variant="outlined">
-                            </v-select> -->
                             <div id="paypal-button-container" v-show="form.payment_process == 'Paypal'"></div>
-                            <!-- <v-btn block color="green" v-show="form.payment_process != 'Paypal'" :disabled="!form.payment_process" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="submit" type="submit">Confirm</v-btn> -->
                             <v-btn block color="green" v-show="form.payment_process != 'Paypal'" :disabled="!form.payment_process" class="mb-4 text-none rounded-pill" :loading="form.processing" @click="showQRCode = true" type="submit">Confirm</v-btn>
                         
                         </v-form>
@@ -154,8 +142,7 @@
 
                 </v-col>
                 <v-divider vertical></v-divider>
-                <v-col cols="5">
-
+                <v-col cols="12" md="5" lg="5" xl="5" xxl="5" sm="12">
                     <v-card class="justify-center" id="card">
                         <v-card width="400" max-height="300" class="mt-4" style="margin-left: 8%;">
                             <v-img :src="`/images/uploads/${images[0]}`" cover></v-img>
@@ -202,7 +189,7 @@
             </v-row>
         </v-container>
 
-        <v-dialog v-model="showQRCode" width="50%">
+        <v-dialog v-model="showQRCode" width="100%">
             <v-form @submit.prevent fast-fail>
                 <v-card title="Pay through GCash">
                     <v-card-text style="margin: auto">

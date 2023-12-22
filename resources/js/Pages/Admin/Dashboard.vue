@@ -59,36 +59,40 @@
     <p class="text-h4 text-center my-5 mb-1">Admin dashboard</p>
     <v-container>
         <v-row>
-            <v-col cols="3">
+            <v-col cols="11" lg="3" md="3" sm="6" xl="3">
                 <v-alert border="start" title="Total users" class="bg-white" border-color="blue" elevation="2">
                     {{total_users}}
                 </v-alert>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="11" lg="3" md="3" sm="6" xl="3">
                 <v-alert border="start" title="Total listings" class="bg-white" border-color="blue" elevation="2">
                     {{total_listings}}
                 </v-alert>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="11" lg="3" md="3" sm="6" xl="3">
                 <v-alert border="start" title="Pending listings" class="bg-white" border-color="blue" elevation="2">
                     {{pending_listings}}
                 </v-alert>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="11" lg="3" md="3" sm="6" xl="3">
                 <v-alert border="start" title="Total reservations" class="bg-white" border-color="blue" elevation="2">
                     {{total_reservations}}
                 </v-alert>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="11" lg="3" md="3" sm="6" xl="3">
                 <v-alert border="start" title="Pending reservations" class="bg-white" border-color="blue" elevation="2">
                     {{pending_reservations}}
                 </v-alert>
             </v-col>
         </v-row>
         <p class="text-h5">User statistics</p>
-        <v-card height="400px" width="40%">
-            <canvas ref="userChart"></canvas>
-        </v-card>
+        <v-row>
+            <v-col cols="12" lg="6" md="6" sm="12" xl="6">
+                <v-card height="400px" width="100%">
+                    <canvas ref="userChart"></canvas>
+                </v-card>
+            </v-col>
+        </v-row>
         
     </v-container>
 </template>
