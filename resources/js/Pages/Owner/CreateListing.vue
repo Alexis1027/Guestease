@@ -174,9 +174,7 @@
                         <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="mt-6">
                             <p class="text-h5">Step 1 </p>
                             <p class="text-h3 my-2 mx-2">Tell us about your place</p>
-                            <p>Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet, 
-                                consectetur adipisicing elit. Corporis, sequi. adipisicing. 
-                                Lorem ipsum dolor sit amet consectetur.</p>
+                            <p>Share details about your venue or location to help us better understand your space.</p>
                         </v-col>
                         <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6">
                             <v-img cover height="100%" width="100%" src="/images/listing/Home-Interior-Design-PNG.png"></v-img>
@@ -198,7 +196,7 @@
                                         </v-icon>
                                     </template>
                                     <p class="text-h6"> Guest house</p>
-                                    <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae csmque saepe!</p>
+                                    <p class="text-none text-grey">A cozy and private guest house for your guests' comfort.</p>
                                 </v-list-item>
                                 <v-list-item value="room" active-color="blue" class="mt-6" @click="form.type = 'Room'">
                                     <template v-slot:append>
@@ -207,7 +205,7 @@
                                         </v-icon>
                                     </template>
                                     <p class="text-h6"> Single room</p>
-                                    <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae cudwemque saepe!</p>
+                                    <p class="text-none text-grey">A comfortable single room with all the amenities you need.</p>
                                 </v-list-item>
                                 <v-list-item value="mutiple room" active-color="blue" class="mt-6" @click="form.type = 'Multiple room'">
                                     <template v-slot:append>
@@ -216,7 +214,7 @@
                                         </v-icon>
                                     </template>
                                     <p class="text-h6"> Mutiple room</p>
-                                    <p class="text-none text-grey">Lorem ipsum dolor sit amet ndae cudwemque saepe!</p>
+                                    <p class="text-none text-grey">A spacious place with multiple rooms.</p>
                                 </v-list-item>
                                 <!-- <v-list-item value="room" active-color="blue" class="mt-6" @click="form.type = 'Room'">
                                     <template v-slot:append>
@@ -302,9 +300,9 @@
                         <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="mt-6">
                             <p class="text-h5">Step 2</p>
                             <p class="text-h3 my-2 mx-2">Make your place stand out</p>
-                            <p class="text-h6">Lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet, 
-                                consectetur adipisicing elit. Corporis, sequi. adipisicing. 
-                                Lorem ipsum dolor sit amet consectetur.</p>
+                            <p class="text-h6">Highlight the unique features and amenities that make your place special. 
+        Whether it's breathtaking views, stylish decor, or outstanding service, 
+        let potential guests know what sets your place apart from the rest.</p>
                         </v-col>
                         <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6">
                             <v-img cover height="100%" width="100%" src="/images/listing/Home-Interior-Design-PNG.png"></v-img>
@@ -385,7 +383,7 @@
                     </div>
                     <div v-else>
                         <p class="text-h5 text-start">Upload one photo of the room.</p>
-                        <p class="text-h6 mb-2 text-grey-darken-1 ms-3"> Lorem ipsum lores eos qui ratione voluptatem seq neque porro quisquam est qui dolorem </p>
+                        <p class="text-h6 mb-2 text-grey-darken-1 ms-3"> Share the charm of your place by uploading a photo of the room.  </p>
                         <v-file-input 
                                 label="Room photo" 
                                 chips
@@ -430,7 +428,7 @@
             <v-window-item :value="13">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 text-start">Add rules regarding to your place.</p>
-                    <p class="text-h6 mb-6 text-grey-darken-2 text-start"> Lorem ipsum quia consequ untur magratione volu nesciunt. Neque porro quisquam </p>
+                    <p class="text-h6 mb-6 text-grey-darken-2 text-start"> Help us ensure a smooth and enjoyable experience for everyone. Please review and adhere to the following rules regarding your place: </p>
                     <v-text-field v-for="n in ruleTextfield" :key="n" v-model="form.rules[n-1]" variant="outlined" label="New rule" color="blue"></v-text-field>
                     <v-btn variant="tonal" block prepend-icon="mdi-plus" @click="ruleTextfield < 3 ? ruleTextfield++ : ''" color="blue">Add more</v-btn>
                     <v-btn variant="text" class="mt-2" color="blue" @click="step++">Set up later</v-btn>
@@ -452,9 +450,7 @@
                                     <v-icon size="50" color="red">mdi-file-clock-outline</v-icon>
                                 </template>
                                 <p>Your listing won't be published until the admin  accepts your request.</p>
-                                <v-list-item-subtitle>
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing
-                                </v-list-item-subtitle>
+                          
                             </v-list-item>
                         </v-col>
                         <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6">

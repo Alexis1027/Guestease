@@ -80,6 +80,7 @@ class OwnerListingController extends Controller
 
     public function update_photos(Listing $listing, Request $request) {
         $listing->images = json_encode($request->images);
+
         $listing->update();
         return back();
     }
@@ -128,10 +129,7 @@ class OwnerListingController extends Controller
 
     public function destroy(Listing $listing) {
 
-        $wishlists = Wishlist::where('listing_id', $listing->id)->delete();
-        
-        dd($wishlists);
-
+        Wishlist::where('listing_id', $listing->id)->delete();
         $listing->status = "Deleted";
         $listing->update();
         return back();

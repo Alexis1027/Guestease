@@ -11,7 +11,7 @@
     <v-row style="margin-top: 3%;" class="mb-6">
         <v-col  cols="12" sm="12" md="6" lg="6" class="ps-5" style="margin: auto;">
             <p class="text-h3 text-blue">Contact us</p>
-            <p class="text-h6 pa-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet. Minima, hic!</p>
+            <p class="text-h6 pa-5">Connect with us on our facebook page for updates and conversations.</p>
             <v-list-item subtitle="Call us" prepend-icon="mdi-phone">(+63)9123456789</v-list-item>
             <v-list-item subtitle="Location" prepend-icon="mdi-map-marker">Purok lorem ipsum, Barangay Lorem Ipsum, Cordova, Cebu</v-list-item>
             <!-- <v-list-item subtitle="Call us" prepend-icon="mdi-phone">(+63)9123456789</v-list-item> -->
