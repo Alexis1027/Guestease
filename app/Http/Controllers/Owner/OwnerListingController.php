@@ -129,6 +129,7 @@ class OwnerListingController extends Controller
     public function destroy(Listing $listing) {
 
         $wishlists = Wishlist::where('listing_id', $listing->id)->delete();
+        
         dd($wishlists);
 
         $listing->status = "Deleted";
