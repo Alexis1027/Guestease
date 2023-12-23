@@ -14,7 +14,8 @@
         'auth',
         'guests',
         'admins',
-        'owners'
+        'owners',
+        'total_earnings'
     ])
 
     const userChart = ref(null)
@@ -82,6 +83,11 @@
             <v-col cols="11" lg="3" md="3" sm="6" xl="3">
                 <v-alert border="start" title="Pending reservations" class="bg-white" border-color="blue" elevation="2">
                     {{pending_reservations}}
+                </v-alert>
+            </v-col>
+            <v-col cols="11" lg="3" md="3" sm="6" xl="3">
+                <v-alert border="start" title="Total earnings" class="bg-white" border-color="blue" elevation="2">
+                    ₱{{ parseInt(total_earnings).toLocaleString() }}
                 </v-alert>
             </v-col>
         </v-row>

@@ -13,6 +13,9 @@ class AdminDashboardController extends Controller
     //
     public function dashboard() {
 
+        $total_earnings = Reservation::where('status', 'approved')->orWhere('status', 'completed')->sum('total');
+        $total = $total_earnings * 0.10;
+
         return Inertia::render('Admin/Dashboard', [
             'total_users' => User::count(),
             'total_listings' => Listing::count(),
@@ -22,6 +25,7 @@ class AdminDashboardController extends Controller
             'guests' => User::where('role', 'guest')->count(),
             'owners' => User::where('role', 'owner')->count(),
             'admins' => User::where('role', 'admin')->count(),
+            'total_earnings' => $total
         ]);
     }
 }

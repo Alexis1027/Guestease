@@ -61,6 +61,7 @@
                         <v-text-field 
                             color="blue"
                             clearable
+                            class="mt-2"
                             name="firstname"
                             v-model="form.firstname"
                             variant="outlined"

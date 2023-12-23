@@ -62,6 +62,7 @@
                             clearable
                             name="firstname"
                             v-model="form.firstname"
+                            class="mt-2"
                             variant="outlined"
                             :error-messages="form.errors.firstname" 
                             label="First name">

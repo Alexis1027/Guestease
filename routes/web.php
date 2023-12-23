@@ -14,6 +14,7 @@ use App\Http\Controllers\Owner\OwnerListingController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ListingRequestController;
 use App\Http\Controllers\Admin\AdminReservationController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Guest\GuestReservationController;
 use App\Http\Controllers\Owner\OwnerReservationController;
 
@@ -68,6 +69,8 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/admin/unban-user/{user}', [UserController::class, 'unban']);
         Route::get('/admin/reported-guests', [ReportController::class, 'index']);
         Route::delete('/admin/delete-report/{report}', [ReportController::class, 'destroy']);
+        Route::get('/admin/contact-form-submissions', [ContactController::class, 'index']);
+        Route::delete('/admin/delete-message/{message}', [ContactController::class, 'destroy']);
     });
 
     //guest
@@ -107,3 +110,5 @@ Route::get('/createGuest', [AuthController::class, 'create_guest']);
 Route::get('/createOwner', [AuthController::class, 'create_owner']);
 Route::post('/validate/user', [AuthController::class, 'validate_credentials']); 
 Route::post('/create/user', [AuthController::class, 'store_user']);
+Route::post('/send-message', [ContactController::class, 'store']);
+

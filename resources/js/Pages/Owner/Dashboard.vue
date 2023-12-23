@@ -11,6 +11,7 @@
         approved_listings: Number,
         total_reservations: Number,
         pending_reservations: Number,
+        total_earnings: Number
     })
 
     defineOptions({
@@ -56,11 +57,11 @@
                     {{ pending_reservations }}
                 </v-alert>
             </v-col>
-            <!-- <v-col cols="12" lg="3" md="3" sm="6" xl="3">
-                <v-alert border="start" title="Upcoming reservations" class="bg-white" border-color="blue" elevation="2">
-                    n
+            <v-col cols="12" lg="3" md="3" sm="6" xl="3">
+                <v-alert border="start" title="Total earnings" class="bg-white" border-color="blue" elevation="2">
+                    ₱{{ parseInt(total_earnings).toLocaleString() }}
                 </v-alert>
-            </v-col> -->
+            </v-col>
         </v-row>
 
         <v-row>

@@ -13,11 +13,6 @@ class GuestReservationController extends Controller
     //
     public function cancel(Reservation $reservation, Request $request) {
         $reservation->status = 'cancelled';
-        $listing = Listing::find($request->listing_id);
-        if($listing->type != 'Multiple room') {
-            $listing->status = 'Available';
-            $listing->update();
-        }
         $reservation->update();
         return back();
     }
@@ -55,12 +50,6 @@ class GuestReservationController extends Controller
             'payment_process' => 'required'
         ]);
         
-        // if(($listing->type == "Room" || $listing->type == "Guest house") && $request->status == "approved") {
-        //     // $listing->status = "Not available"
-        //     $listing->status = 'Not available';
-        //     $listing->update();
-        // }
-
         if($request->payment_process == 'Gcash') {
             $request->payment_screenshot[0]->move(public_path('/images/payment_screenshots'), $request->payment_screenshot[0]->getClientOriginalName());
             $form['payment_screenshot'] = $request->payment_screenshot[0]->getClientOriginalName();

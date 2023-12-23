@@ -32,7 +32,7 @@
         .catch((error) => {
             console.log(error)
             loadingLoginButton.value = false
-            errorMssg.value = "auth/invalid-login-credentials"
+            errorMssg.value = "The password you’ve entered is incorrect. Forgot Password?"
         })
     }
 

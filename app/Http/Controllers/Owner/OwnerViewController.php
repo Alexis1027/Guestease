@@ -13,7 +13,8 @@ class OwnerViewController extends Controller
 {
     //
     public function dashboard() {
-
+        $total_earnigns = Reservation::where('status', 'approved')->orWhere('status', 'completed')->sum('total');
+        $total = $total_earnigns * 0.10;
         $total_listings = Listing::where('owner_id', auth()->user()->id)->count();
         $pending_listings = Listing::where('owner_id', auth()->user()->id)->where('status', 'For approval')->count();
         $approved_listings = Listing::where('owner_id', auth()->user()->id)->where('status', 'Available')->count();
@@ -37,7 +38,8 @@ class OwnerViewController extends Controller
             'pending_listings' => $pending_listings,
             'approved_listings' => $approved_listings,
             'total_reservations' => $total_reservations,
-            'pending_reservations' => $pending_reservations
+            'pending_reservations' => $pending_reservations,
+            'total_earnings' => $total_earnigns - $total
         ]);
     }
 

@@ -52,7 +52,10 @@
             <v-col cols="12" sm="12" md="12" lg="12" xl="4" xxl="4" id="info" class="bg-white">
                 <v-container class="text-center mt-6">
                     <p class="text-h4">Explore Now!</p>
-                    <p class="my-5">Lorem ipsum dolor sit amet, consectetur adipiscing elint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>
+                        Explore the beauty of Cordova, Cebu. This vibrant destination offers a unique blend of culture and natural wonders, making it an ideal place to create lasting memories.
+                        Cordova Cebu is a charming town located in the Philippines, known for its warm hospitality and picturesque landscapes. Whether you're interested in cultural experiences, delicious cuisine, or simply enjoying the scenic views, Cordova has something for everyone.
+                    </p>
                     <v-divider class="my-3"/>
                     <p class="text-h4">Cordova Cebu</p>
                     <Link href="/">

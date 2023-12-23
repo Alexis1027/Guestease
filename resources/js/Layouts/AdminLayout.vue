@@ -56,7 +56,10 @@
                     <v-list-item prepend-icon="mdi-account-hard-hat" title="Create admin account" value="createadmin"></v-list-item>
                 </Link>
                 <Link href="/admin/reported-guests">
-                    <v-list-item prepend-icon="mdi-account-alert" title="Reported guests" value="reports"></v-list-item>
+                    <v-list-item prepend-icon="mdi-flag" title="Reported guests" value="reports"></v-list-item>
+                </Link>
+                <Link href="/admin/contact-form-submissions">
+                    <v-list-item prepend-icon="mdi-email-open-multiple" title="Contact us submissions" value="contact"></v-list-item>
                 </Link>
             </v-list>
 

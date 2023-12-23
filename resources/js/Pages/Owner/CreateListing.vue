@@ -413,8 +413,7 @@
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 text-start">Now, set your {{form.type == 'Guest house' ? 'monthy' : 'daily'}} price</p>
                     <p class="text-h6 mb-6 text-grey-darken-2 text-start">You can change it anytime.</p>
-                    
-                    <input type="text" v-model="form.price" style="width: 300px;" class="text-h1 ms-6">
+                    <input type="text" v-model="form.price" style="width: 300px;" class="text-h1 ms-6 border">
                 </v-container>
             </v-window-item>
 
@@ -436,6 +435,18 @@
             </v-window-item>
 
             <v-window-item :value="14">
+                <v-container id="step1" class="placeoffers">
+                    <p class="text-h4 text-start">Commission Information</p>
+                    <p class="text-body-1"> Before you proceed with listing your property, please be aware of the commission rate associated with each successful booking. 
+                        This commission is the fee charged by the platform to cover operational costs and support services. </p>
+                        <div class="mt-4">
+                            <p class="text-h6">Admin Commission Rate:</p>
+                            <p class="text-body-1">The current commission rate is <strong>5%</strong> per successful booking.</p>
+                        </div>
+                </v-container>
+            </v-window-item>
+
+            <v-window-item :value="15">
                 <v-container id="step1">
                     <v-alert variant="outlined" type="error" prominent border="top" title="Alert title" v-if="form.hasErrors">
                         It seems that you may have not filled up the required fields.
@@ -464,14 +475,14 @@
   
       <div id="action">
         <v-divider></v-divider>
-      <v-progress-linear :model-value="(step/14)*100" color="blue-darken-3"></v-progress-linear>
+      <v-progress-linear :model-value="(step/15)*100" color="blue-darken-3"></v-progress-linear>
   
         <v-card-actions>
             <v-btn v-if="step > 1" variant="text" @click="step--">
                 Back
             </v-btn>
             <v-spacer></v-spacer>
-                <v-btn v-if="step <= 13" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
+                <v-btn v-if="step <= 14" color="blue-lighten-3" class="text-none" size="large" variant="flat" @click="step++">
                     Next
                 </v-btn>
                 <v-btn v-else type="submit" @click="submit" :disabled="form.processing" :loading="form.processing" color="blue-lighten-3" class="text-none" size="large" variant="flat">

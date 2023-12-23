@@ -1,6 +1,7 @@
 <script setup>
 
     import {router} from '@inertiajs/vue3'
+    import emailjs from '@emailjs/browser'
     const props = defineProps(['show', 'selectedReservation', 'selectedStatus'])
     const emit = defineEmits(['closeEditReservationStatusDialog', 'updateSuccessful'])
 
@@ -37,9 +38,45 @@
             listing_id: props.selectedReservation.listing_id
         }, {
             onSuccess: () => {
+                console.log(props.selectedReservation)
+                console.log(props.selectedStatus)
+                if(props.selectedStatus == 'approve') {
+                    sendNotification()
+                }
                 emit('updateSuccessful')
             }
         })
+    }
+
+    function sendNotification() {
+        emailjs.send('service_kfsphbh', 'template_xzp03ja', 
+        {
+            sendername: `john doe`,
+            to: props.selectedReservation.user.email,
+            subject: "Reminder: Your Reservation Is Starting Soon",
+            replyto: `guestease@team.com`,
+            message: `Dear ${props.selectedReservation.user.firstname},
+
+            This is a friendly reminder that your reservation is starting soon.
+
+            Reservation Details:
+            - Listing: ${props.selectedReservation.listing.title}
+            - Check-in Date: ${props.selectedReservation.checkin}
+            - Check-out Date: ${props.selectedReservation.checkout}
+
+            As your reservation is approaching its start date, please ensure that any necessary arrangements or extensions are made promptly if needed.
+
+            If you have any questions or require assistance, please feel free to contact us.
+
+            Best regards,
+            Admin`
+            }
+        , 'eEt-YCYeYc0LoTRxJ').then(() => {
+            alert('sent')
+        }).catch((error) => {
+            alert(error)
+        }) 
+        
     }
 
 </script>
