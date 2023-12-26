@@ -22,7 +22,7 @@
         title: '',
         description: '',
         bldg_permit: null,
-        price: 2500,
+        price: 500,
         images: null,
         type: null,
         rules: [],
@@ -411,7 +411,7 @@
 
             <v-window-item :value="11">
                 <v-container id="step1" class="placeoffers">
-                    <p class="text-h4 text-start">Now, set your {{form.type == 'Guest house' ? 'monthy' : 'daily'}} price</p>
+                    <p class="text-h4 text-start">Now, set your daily price</p>
                     <p class="text-h6 mb-6 text-grey-darken-2 text-start">You can change it anytime.</p>
                     <input type="text" v-model="form.price" style="width: 300px;" class="text-h1 ms-6 border">
                 </v-container>
@@ -441,7 +441,7 @@
                         This commission is the fee charged by the platform to cover operational costs and support services. </p>
                         <div class="mt-4">
                             <p class="text-h6">Admin Commission Rate:</p>
-                            <p class="text-body-1">The current commission rate is <strong>5%</strong> per successful booking.</p>
+                            <p class="text-body-1">The current commission rate is <strong>10%</strong> per successful booking.</p>
                         </div>
                 </v-container>
             </v-window-item>

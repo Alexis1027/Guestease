@@ -51,9 +51,9 @@
     function sendNotification() {
         emailjs.send('service_kfsphbh', 'template_xzp03ja', 
         {
-            sendername: `john doe`,
+            sendername: `Guestease`,
             to: props.selectedReservation.user.email,
-            subject: "Reminder: Your Reservation Is Starting Soon",
+            subject: "Reminder: Your Reservation is starting soon",
             replyto: `guestease@team.com`,
             message: `Dear ${props.selectedReservation.user.firstname},
 

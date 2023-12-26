@@ -107,6 +107,20 @@
                                     </v-list-item>
                                 </v-list>
                             <v-divider  class="mb-4"/>
+                            <v-alert
+                                variant="outlined"
+                                type="warning"
+                                prominent
+                                border="top"
+                                color="blue"
+                                title=""
+                            >
+                                <template v-slot:title> 
+                                    No refund policy <v-icon>mdi-alert</v-icon>
+                                </template>
+                                Please note that all transactions are final, and we operate under a strict no refund policy. Once a purchase is made, it cannot be reversed or refunded. We encourage you to review your selection carefully before completing the transaction.
+                            </v-alert>
+
                             <p class="text-h6 mt-4 font-weight-bold">Choose how to pay </p>
                             
                             <v-list>
