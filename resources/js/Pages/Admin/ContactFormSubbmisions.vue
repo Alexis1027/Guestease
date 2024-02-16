@@ -78,7 +78,7 @@ import { useForm } from '@inertiajs/vue3'
 </script>
 
 <template>
-    <Head title="Create admin" />
+    <Head title="Contact us submissions" />
     <v-container>
         <v-card title="Contact us submissions">
             <v-data-table :items="messages" :headers="headers">
@@ -89,8 +89,8 @@ import { useForm } from '@inertiajs/vue3'
                         <td>{{ item.email }}</td>
                         <td>{{ item.message }}</td>
                         <td>
-                            <v-btn icon="mdi-message-processing-outline" size="small" @click="showReplyDialog(item)"></v-btn>
-                            <v-btn icon="mdi-delete-empty-outline" size="small" @click="showDeleteMessageDialog(item)"></v-btn>
+                            <v-btn icon="mdi-message-processing-outline" variant="tonal" color="blue" class="me-2" size="small" @click="showReplyDialog(item)"></v-btn>
+                            <v-btn icon="mdi-delete-empty-outline" size="small" variant="tonal" color="red" @click="showDeleteMessageDialog(item)"></v-btn>
                         </td>
                     </tr>
                 </template>

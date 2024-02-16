@@ -103,7 +103,7 @@
                                     </v-list-item>
                                     <v-list-item prepend-icon="mdi-account-multiple">
                                         <p class="font-weight-bold">Guests</p>
-                                        <p>{{ prop.guests }} guests</p>
+                                        <p>{{ prop.guests }} {{ prop.guests <= 1 ? 'guest' : 'guests' }}</p>
                                     </v-list-item>
                                 </v-list>
                             <v-divider  class="mb-4"/>
@@ -144,7 +144,7 @@
                                 </v-list-item>
                             </v-list>
                             <v-divider class="my-4" />
-                            <v-alert variant="outlined" type="warning" prominent v-model="form.hasErrors">
+                            <v-alert variant="outlined" class="my-3" type="warning" prominent v-model="form.hasErrors">
                                 <p class="font-weight-bold">Let's try that again</p>
                                 <p>Please check your payment details.</p>
                             </v-alert>
@@ -214,8 +214,8 @@
                         ></v-img>
                     </v-card-text>
                     <v-card-text>
-                        Attach a screenshot
-                        <v-file-input label="Screenshot" v-model="form.payment_screenshot" :rules="screenshotRule"></v-file-input>
+                        Attach a screenshot {{ form }}
+                        <v-file-input :error-messages="form.errors.payment_screenshot" label="Screenshot" v-model="form.payment_screenshot" :rules="screenshotRule"></v-file-input>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer/>

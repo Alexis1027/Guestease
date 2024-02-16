@@ -43,7 +43,7 @@
 </script>
 
 <template>
-
+    <Head title="Reported guests"/>
     <v-container>
         
         <v-card width="69vw" style="margin: auto" title="Reported guests">

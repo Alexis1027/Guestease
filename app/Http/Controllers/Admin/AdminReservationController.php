@@ -16,7 +16,9 @@ class AdminReservationController extends Controller
         
         foreach($reservations as $rs) {
             $rs->user = User::find($rs->user_id);
-            $rs->listing = Listing::find($rs->listing_id);
+            $listing = Listing::find($rs->listing_id);
+            $rs->listing = $listing;
+            $rs->owner = User::find($listing->owner_id);
         }
    
         return Inertia::render('Admin/ManageReservation', ['reservations' => $reservations]);

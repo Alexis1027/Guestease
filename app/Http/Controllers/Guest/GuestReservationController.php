@@ -18,7 +18,6 @@ class GuestReservationController extends Controller
     }
 
     public function confirm_reservation(Listing $listing, Request $request) {
-
         $request->validate([
             'guests' => 'required',
             'checkin' => 'required',
@@ -47,8 +46,10 @@ class GuestReservationController extends Controller
 
     public function store(Listing $listing, Request $request) {
         $form = $request->validate([
-            'payment_process' => 'required'
+            'payment_process' => 'required',
+            'payment_screenshot' => 'required'
         ]);
+        dd($request);
         
         if($request->payment_process == 'Gcash') {
             $request->payment_screenshot[0]->move(public_path('/images/payment_screenshots'), $request->payment_screenshot[0]->getClientOriginalName());

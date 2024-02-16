@@ -235,7 +235,7 @@
                                     {{ `₱${(listing.price * reserveForm.days).toLocaleString()}`  }}
                                 </template>
                             </v-list-item>
-                            <v-list-item v-if="reserveForm.days >= 30">
+                            <v-list-item v-if="reserveForm.days >= 30 && listing.monthly_discount > 0">
                                 Monthly stay discount
                                 <template v-slot:append>
                                     <!-- DISPLAYS THE TOTAL - DISCOUNT PRICE -->

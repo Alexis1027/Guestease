@@ -31,7 +31,7 @@
                 <v-spacer></v-spacer>
                 <v-col cols="1" sm="1" md="1" lg="1" xl="1" xxl="1" id="home">
                     <Link href="/">
-                        <v-btn :class="[$page.component == 'Guest/Index' ? 'text-blue' : '', 'text-none', 'mt-2']">Home</v-btn>
+                        <v-btn :class="[$page.component == 'Guest/Index' ? 'text-blue' : '', 'text-none', 'mt-2 ms-6']">Home</v-btn>
                     </Link>
                 </v-col>
                 <v-col cols="1" sm="1" md="1" lg="1" xl="1" xxl="1" id="about">
