@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'PreventBackHistory' => \App\Http\Middleware\PreventBackHistory::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'owner' => \App\Http\Middleware\OwnerMiddleware::class,
-        'guest' => \App\Http\Middleware\GuestMiddleware::class
+        'guest' => \App\Http\Middleware\GuestMiddleware::class,
+        'guestaunthenticated' => \App\Http\Middleware\GuestUnauthenticatedMiddleware::class
     ];
 }

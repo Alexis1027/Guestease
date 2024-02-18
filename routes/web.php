@@ -85,6 +85,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/reservations', [GuestReservationController::class, 'index'])->name('reservations');
     });
 
+    //all authenticated user can access these routes
     Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
     Route::post('/account/update-profile_pic', [AccountController::class, 'update_profile_pic']);
     Route::put('/account/update', [AccountController::class, 'update']);
@@ -94,14 +95,12 @@ Route::middleware(['auth'])->group(function () {
 });
 
 //kung wala ni login ang user
-Route::get('/room/{listing}', [HomeController::class, 'show']);
-Route::get('/guidelines', [HomeController::class, 'guidelines']);
-Route::get('/rules', [HomeController::class, 'rules']);
+Route::get('/room/{listing}', [HomeController::class, 'show'])->middleware('guestaunthenticated');
 Route::get('/profile/{user}', [HomeController::class, 'profile']);
-Route::get('/',[HomeController::class, 'index']);
-Route::get('/contact-us', [HomeController::class, 'contact_us']);
-Route::get('/about', [HomeController::class, 'about']);
-Route::get('/map', [HomeController::class, 'map']);
+Route::get('/',[HomeController::class, 'index'])->middleware('guestaunthenticated');
+Route::get('/contact-us', [HomeController::class, 'contact_us'])->middleware('guestaunthenticated');
+Route::get('/about', [HomeController::class, 'about'])->middleware('guestaunthenticated');;
+Route::get('/map', [HomeController::class, 'map'])->middleware('guestaunthenticated');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/verify', [AuthController::class, 'verify']);
 Route::post('/login', [AuthController::class, 'authenticate']);

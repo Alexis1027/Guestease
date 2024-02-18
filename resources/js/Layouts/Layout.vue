@@ -7,16 +7,8 @@
     const {auth} = defineProps(['auth'])
 
     function logout() {
-        router.post('/logout', [], {
-            onSuccess: () => {
-                location.href = '/'
-                window.history.replaceState({}, document.title, '/')
-            }
-        })
+        router.post('/logout')
     }
-
-    console.log("FROM LAYOUT")
-    console.log(auth)
 
     const links = new Map([
         ['owner', '/owner/dashboard'],

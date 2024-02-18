@@ -6,15 +6,8 @@
     defineProps({ auth: Object })
     const sidebar = ref(true)
     const logo = '/images/logo/frlogo-transformed.png'
-
     const logout = () => {
-         router.post('/logout', {}, {
-            onSuccess: () => {
-                window.history.replaceState({}, document.title, '/')
-                window.location.replace('/')
-                sessionStorage.clear()
-            }
-        })
+         router.post('/logout')
     }
 
 </script>

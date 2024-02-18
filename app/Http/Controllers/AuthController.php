@@ -15,10 +15,7 @@ class AuthController extends Controller
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerate();
-        // return back()->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
-        // ->header('Cache-Control', 'post-check=0, pre-check=0')
-        // ->header('Pragma', 'no-cache');
-        return back()->header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+        return redirect('/');
     }
 
     public function login() {

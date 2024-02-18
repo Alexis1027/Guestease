@@ -4,16 +4,9 @@
 
     const logo = '/images/logo/frlogo-transformed.png'
     function logout() {
-        router.post('/logout', [], {
-            onSuccess: () => {
-                location.href = '/'
-                window.history.replaceState({}, document.title, '/')
-            }
-        })
+        router.post('/logout')
     }
-    defineProps({
-        auth: Object
-    })
+    defineProps({ auth: Object })
 </script>
 <template>
     
