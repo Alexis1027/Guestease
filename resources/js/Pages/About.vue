@@ -17,7 +17,7 @@
                 We offer a curated selection of accommodations tailored to your preferences. 
                 
                 Our goal is to ensure your comfort and satisfaction. With a focus on 
-                personalized service, we are here to make your travel experience exceptional.
+                personalized service, we're here to make your travel experience exceptional.
                 Welcome to <strong>Guestease</strong>, where your stay is our priority.
             </p>
         </v-card>
