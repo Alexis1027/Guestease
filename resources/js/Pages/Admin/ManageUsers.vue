@@ -71,10 +71,10 @@
                         <td>{{ item.phone_number }}</td>
                         <td class="text-capitalize">{{ item.role }}</td>
                         <td>
-                            <v-btn class="text-none" v-if="!item.is_banned" @click="showBanUserDialog(item)" color="green" size="small">
+                            <v-btn v-if="!item.is_banned" @click="showBanUserDialog(item)" color="green" size="small">
                                 Ban
                             </v-btn>
-                            <v-btn class="text-none" v-else @click="showUnbanUserDialog(item)" color="red" size="small">
+                            <v-btn v-else @click="showUnbanUserDialog(item)" color="red" size="small">
                                 Unban
                             </v-btn>
                         </td>
@@ -96,10 +96,10 @@
                             <strong class="text-h6">{{ selectedUser.user.firstname + ' ' + selectedUser.user.lastname }}</strong>
                         </p>
                         <div class="text-end">
-                            <v-btn class="text-none me-4" @click="banUserDialog = false" variant="text" width="90">
+                            <v-btn class=" me-4" @click="banUserDialog = false" variant="text" width="90">
                                 Cancel
                             </v-btn>
-                            <v-btn class="text-none" color="red" type="submit" :loading="selectedUser.processing" @click="banUser"  variant="flat" width="90">
+                            <v-btn class="" color="red" type="submit" :loading="selectedUser.processing" @click="banUser"  variant="flat" width="90">
                                 Ban
                             </v-btn>
                         </div>

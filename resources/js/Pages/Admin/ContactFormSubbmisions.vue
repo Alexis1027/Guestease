@@ -5,18 +5,18 @@
     import AdminLayout from '../../Layouts/AdminLayout.vue'
     import {reactive, ref} from 'vue'
     import emailjs from '@emailjs/browser'
-import { useForm } from '@inertiajs/vue3'
+    import { useForm } from '@inertiajs/vue3'
 
     const snackbar = ref(false)
     const message = ref('')
-    const reply = ref('')
     const replyDialog = ref(false)
     const deleteMessageDialog = ref(false)
-    const replyForm = reactive({
+    const replyForm = useForm({
         reply: null,
         subject: null,
         user_email: null,
-        user_name: null
+        user_name: null,
+        id: null
     })
 
     const deleteMessageForm = useForm({
@@ -27,6 +27,10 @@ import { useForm } from '@inertiajs/vue3'
         replyDialog.value = true
         replyForm.user_email = message.email
         replyForm.user_name = message.name
+        replyForm.reply = message.reply
+        replyForm.subject = message.subject
+        replyForm.admin_id = message.admin_id
+        replyForm.id = message.id
     }
     
     function showDeleteMessageDialog(message) {
@@ -36,31 +40,35 @@ import { useForm } from '@inertiajs/vue3'
         replyForm.user_name = message.name
     }
 
-    function sendNotification() {
-        emailjs.send('service_kfsphbh', 'template_xzp03ja', 
-        {
-            sendername: "Guestease team",
-            to: `${replyForm.user_email}`,
-            subject: `${replyForm.subject}`,
-            replyto: "guestease@team.com",
-            message: `Dear ${replyForm.user_name},
+    function reply() {
+        replyForm.put(`/admin/reply-contact-form/${replyForm.id}`, {
+            onSuccess: () => {
+                emailjs.send('service_kfsphbh', 'template_xzp03ja', 
+                {
+                    sendername: "Guestease team",
+                    to: `${replyForm.user_email}`,
+                    subject: `${replyForm.subject}`,
+                    replyto: "guestease@team.com",
+                    message: `Dear ${replyForm.user_name},
 
-                ${replyForm.reply}
+                        ${replyForm.reply}
 
-                Best regards,
-                Guestease Team`
+                        Best regards,
+                        Guestease Team`
+                    }
+                , 'eEt-YCYeYc0LoTRxJ').then(() => {
+                    replyDialog.value = false
+                    snackbar.value = true
+                    message.value = 'Reply sent successfully'
+                })
             }
-        , 'eEt-YCYeYc0LoTRxJ').then(() => {
-            replyDialog.value = false
-            snackbar.value = true
-            message.value = 'Reply sent successfully'
         })
     }
 
     function deleteMessage() {
         deleteMessageForm.delete(`/admin/delete-message/${deleteMessageForm.id}`, {
             onSuccess: () => {
-                message.value = 'MEssage deleted successfully'
+                message.value = 'Message deleted successfully'
                 snackbar.value = true
                 deleteMessageDialog.value = false
             }
@@ -89,8 +97,16 @@ import { useForm } from '@inertiajs/vue3'
                         <td>{{ item.email }}</td>
                         <td>{{ item.message }}</td>
                         <td>
-                            <v-btn icon="mdi-message-processing-outline" variant="tonal" color="blue" class="me-2" size="small" @click="showReplyDialog(item)"></v-btn>
-                            <v-btn icon="mdi-delete-empty-outline" size="small" variant="tonal" color="red" @click="showDeleteMessageDialog(item)"></v-btn>
+                            <v-tooltip text="Reply" location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-btn v-bind="props" icon="mdi-message-processing-outline" variant="tonal" :color="item.reply ? 'green' : 'blue'" class="me-2" size="small" @click="showReplyDialog(item)"></v-btn>
+                                </template>
+                            </v-tooltip>
+                            <v-tooltip text="Delete " location="top">
+                                <template v-slot:activator="{ props }">
+                                    <v-btn v-bind="props" icon="mdi-delete-empty-outline" size="small" variant="tonal" color="red" @click="showDeleteMessageDialog(item)"></v-btn>
+                                </template>
+                            </v-tooltip>
                         </td>
                     </tr>
                 </template>
@@ -101,13 +117,16 @@ import { useForm } from '@inertiajs/vue3'
     <v-dialog v-model="replyDialog">
         <v-card title="Admin feedback">
             <v-card-item>
-                {{ replyForm }}
-                <v-text-field label="Subject" v-model="replyForm.subject"></v-text-field>
-                <v-textarea v-model="replyForm.reply"></v-textarea>
+                <v-alert v-if="replyForm.admin_id" icon="mdi-alert-circle" color="green-lighten-4" elevation="2" class="mb-5 text-start">
+                    You have already replied to this form but you can still edit your reply.
+                </v-alert>
+                <v-text-field label="Subject" :error-messages="replyForm.errors.subject" v-model="replyForm.subject" color="blue"></v-text-field>
+                <v-textarea :error-messages="replyForm.errors.reply" v-model="replyForm.reply" label="Your reply" color="blue"></v-textarea>
             </v-card-item>
             <v-card-actions>
                 <v-spacer/>
-                <v-btn @click="sendNotification">Submit</v-btn>
+                <v-btn @click="replyDialog = false">Cancel</v-btn>
+                <v-btn @click="reply()" :loading="replyForm.processing" variant="flat" color="blue">Submit</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -126,7 +145,7 @@ import { useForm } from '@inertiajs/vue3'
             <v-card-actions>
                 <v-spacer/>
                 <v-btn @click="deleteMessageDialog = false">CLose</v-btn>
-                <v-btn @click="deleteMessage" :loading="deleteMessageForm.processing" color="red">Delete</v-btn>
+                <v-btn @click="deleteMessage" variant="flat" :loading="deleteMessageForm.processing" color="red">Delete</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>

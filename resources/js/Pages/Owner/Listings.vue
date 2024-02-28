@@ -248,8 +248,9 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer/>
+                {{  }}
                 <v-btn @click="updateStatusDialog = false" class="text-none">Close</v-btn>
-                <v-btn color="blue" variant="flat" class="text-none" @click="updateListing()" :loading="updateListingStatusForm.processing">Update status</v-btn>
+                <v-btn color="blue" variant="flat" :disabled="updateListingStatusForm.status == 'For approval' ? true : false" class="text-none" @click="updateListing()" :loading="updateListingStatusForm.processing">Update status</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>

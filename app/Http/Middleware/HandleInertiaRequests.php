@@ -2,6 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Contact;
+use App\Models\Listing;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
@@ -51,7 +54,13 @@ class HandleInertiaRequests extends Middleware
                     'profile_pic' => Auth::user()->profile_pic,
                     'role' => Auth::user()->role
                 ]
-            ] : null
+            ] : null,
+
+            'activity_summary' => [
+                'reported_guests' => Report::count(),
+                'listing_requests' => Listing::where('status', 'For approval')->count(),
+                'contact_us_subs' => Contact::count()
+            ]
         ]);
     }
 }

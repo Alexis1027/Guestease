@@ -343,7 +343,9 @@
                                 <v-container>
                                     <v-chip :prepend-icon="item.icon" v-for="item in propertyForm.amenities" :key="item.title" class="mx-2 my-1">{{ item.title }}</v-chip>
                                     <v-card  v-show="!showEditProperties" elevation="0" class="border mt-4">
-                                        <v-card-title>Add amenities</v-card-title>
+                                        <v-card-title>Add amenities
+                                            <p class="text-caption">Click icons to add</p>
+                                        </v-card-title>
                                         <v-card-item>
                                             <v-item-group multiple selected-class="bg-blue" >
                                                 <v-item v-for="item in placeOffers" :key="item.title" v-slot="{ selectedClass, toggle }">
@@ -356,6 +358,7 @@
                                     </v-card>
                                 </v-container>
                                 <v-card-actions class="justify-end d-flex">
+                                    <v-btn color="grey" variant="flat" class="text-none rounded-pill" type="submit" v-show="!showEditProperties" @click="showEditProperties = !showEditProperties" :loading="propertyForm.processing">Cancel</v-btn>
                                     <v-btn color="blue" variant="flat" class="text-none rounded-pill" type="submit" v-show="!showEditProperties" @click="submitPropertyForm" :loading="propertyForm.processing">Save</v-btn>
                                 </v-card-actions>
                         </v-list>

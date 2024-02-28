@@ -70,6 +70,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/reported-guests', [ReportController::class, 'index']);
         Route::delete('/admin/delete-report/{report}', [ReportController::class, 'destroy']);
         Route::get('/admin/contact-form-submissions', [ContactController::class, 'index']);
+        Route::put('/admin/reply-contact-form/{contact}', [ContactController::class, 'reply']);
         Route::delete('/admin/delete-message/{message}', [ContactController::class, 'destroy']);
     });
 

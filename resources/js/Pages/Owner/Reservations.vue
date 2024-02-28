@@ -279,7 +279,7 @@
                     Payment details <br>
                     <strong class="text-h6 text-capitalize">{{ selectedReservation.payment_process }}</strong>
                 </p>
-                <v-img v-if="selectedReservation.payment_process == 'Gcash'" :src="`/images/payment_screenshots/${selectedReservation.payment_screenshot}`" cover height="369" width="369" style="margin: auto"></v-img>
+                <v-img v-if="selectedReservation.payment_process == 'Gcash'" :src="`/images/payment_screenshots/${selectedReservation.payment_screenshot}`"  height="369" width="369" style="margin: auto"></v-img>
             <v-card-actions>
                 <v-spacer/>
                 <v-btn @click="reservationDetailsDialog = false">Close</v-btn>

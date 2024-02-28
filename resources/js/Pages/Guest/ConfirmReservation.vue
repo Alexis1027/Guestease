@@ -16,6 +16,7 @@
         listing_id: prop.listing.id,
         user_id: prop.auth.user.id,
         payment_process: '',
+        payment_screenshot: null,
         status: 'pending',
         checkin: format(new Date(prop.checkin), 'yyyy-MM-dd'),
         checkout: format(new Date(prop.checkout), 'yyyy-MM-dd'),
@@ -23,7 +24,6 @@
         total: parseInt(prop.listing.price) * parseInt(prop.days),
         days: prop.days,
         discount: prop.listing.monthly_discount,
-        payment_screenshot: null
     })
         
     const submit = () => {
@@ -90,7 +90,7 @@
             <v-row>
                 <v-col cols="12" md="7" sm="12" lg="7" xl="7" xxl="7">
                     <v-container>
-                        <v-form @submit.prevent>
+                        <v-form @submit.prevent >
                             <Link :href="`/room/${prop.listing.id}`">
                                 <v-btn rounded icon="mdi-keyboard-backspace" flat></v-btn>
                             </Link>
@@ -204,7 +204,7 @@
         </v-container>
 
         <v-dialog v-model="showQRCode" width="100%">
-            <v-form @submit.prevent fast-fail>
+            <v-form @submit.prevent>
                 <v-card title="Pay through GCash">
                     <v-card-text style="margin: auto">
                         <v-img

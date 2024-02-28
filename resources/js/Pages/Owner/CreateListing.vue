@@ -346,7 +346,7 @@
             </v-window-item>
 
             <v-window-item :value="9">
-                <v-container id="step1" class="placeoffers">
+                <v-container id="step1">
                     <div v-if="form.type == 'Guest house'">
                         <p class="text-h5 text-start">Add some photos of your guest house.</p>
                         <p class="text-h6 mb-6 text-grey-darken-1 ms-3">You'll need 5 photos to get started. You can add more or make changes later.</p>
@@ -419,8 +419,8 @@
 
             <v-window-item :value="12">
                 <v-container id="step1" class="placeoffers">
-                    <p class="text-h4 text-start">Attach your QR Code</p>
-                    <v-file-input v-model="form.qr_code"></v-file-input>
+                    <p class="text-h4 text-start">Attach your GCASH QR Code</p>
+                    <v-file-input v-model="form.qr_code" :error-messages="form.errors.qr_code" label="Input QR code"></v-file-input>
                 </v-container>
             </v-window-item>
 
@@ -439,10 +439,9 @@
                     <p class="text-h4 text-start">Commission Information</p>
                     <p class="text-body-1"> Before you proceed with listing your property, please be aware of the commission rate associated with each successful booking. 
                         This commission is the fee charged by the platform to cover operational costs and support services. </p>
-                        <div class="mt-4">
-                            <p class="text-h6">Admin Commission Rate:</p>
-                            <p class="text-body-1">The current commission rate is <strong>10%</strong> per successful booking.</p>
-                        </div>
+                        <v-alert class="mt-4" color="blue-lighten-4" icon="mdi-alert-circle" title="Admin Commission Rate">
+                            The current commission rate is <strong>10%</strong> per successful booking.
+                        </v-alert>
                 </v-container>
             </v-window-item>
 
