@@ -388,7 +388,7 @@
                                 </v-textarea>
                             </v-card-item>
                             <v-card-actions class="justify-end d-flex">
-                                <v-btn class="text-none" @click="submitRuleForm" type="submit" variant="flat" prepend-icon="mdi-plus" color="blue">Add</v-btn>
+                                <v-btn class="text-none" @click="submitRuleForm" type="submit" variant="flat" :loading="ruleForm.processing" prepend-icon="mdi-plus" color="blue">Add</v-btn>
                             </v-card-actions>
                     </v-card>
                     

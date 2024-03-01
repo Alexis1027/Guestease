@@ -190,7 +190,7 @@
                 Edit <strong>{{ updateListingStatusForm.title }}</strong>'s status
             </v-card-title>
             <v-card-text>
-                <v-select :items="['Not available', 'Available']" v-model="updateListingStatusForm.status" label="Status"></v-select>
+                <v-select color="blue" :items="['Not available', 'Available']" v-model="updateListingStatusForm.status" label="Status"></v-select>
             </v-card-text>
             <v-card-actions>
                 <v-spacer/>

@@ -59,14 +59,12 @@
                             </Link>
                         </td>
                         <td class="text-center">
-                            <Link :href="`/profile/${item.guest.id}`">
+                            <Link :href="`/profile/${item.owner.id}`">
                                 {{ item.owner.firstname + " " + item.owner.lastname }}
                             </Link>
                         </td>
                         <td class="text-center">
-                            <Link :href="`/profile/${item.guest.id}`">
                                 {{ format(new Date(item.created_at), 'PP') }}
-                            </Link>
                         </td>
                         <td class="justify-center d-flex">
                             <v-btn @click="showViewDetailsDialog(item)" color="blue" prepend-icon="mdi-text-box-search-outline" class="text-none mt-2" size="small">View details</v-btn>

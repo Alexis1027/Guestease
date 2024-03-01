@@ -30,6 +30,7 @@
                 .then((userCredential) => {
                     sendEmailVerification(auth.currentUser)
                     .then(() => {
+                        form.reset()
                         createSuccessful.value = true
                     });
                 })

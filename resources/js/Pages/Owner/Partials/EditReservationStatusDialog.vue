@@ -72,7 +72,7 @@
             Admin`
             }
         , 'eEt-YCYeYc0LoTRxJ').then(() => {
-            alert('sent')
+            alert('Reservation approved, An email has been sent to the guest.')
         }).catch((error) => {
             alert(error)
         }) 

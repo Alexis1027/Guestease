@@ -43,8 +43,8 @@
                 </Link>
             </v-app-bar-title>
             <template v-slot:append>
-                <v-btn @click="searchDialog = true" class="mt-2 text-none" icon="mdi-magnify" v-if="$vuetify.display.width <= 800"></v-btn>
-                <v-btn @click="searchDialog = true" class="mt-2 text-none" prepend-icon="mdi-magnify" v-else :variant="$page.component == 'Guest/Search' ? 'tonal' : ''" :class="[$page.component == 'Guest/Search' ? 'text-blue' : '', 'text-none', 'mt-2']">Search</v-btn>
+                <!-- <v-btn @click="searchDialog = true" class="mt-2 text-none" icon="mdi-magnify" v-if="$vuetify.display.width <= 800"></v-btn>
+                <v-btn @click="searchDialog = true" class="mt-2 text-none" prepend-icon="mdi-magnify" v-else :variant="$page.component == 'Guest/Search' ? 'tonal' : ''" :class="[$page.component == 'Guest/Search' ? 'text-blue' : '', 'text-none', 'mt-2']">Search</v-btn> -->
                 <Link href="/">
                     <v-btn  icon="mdi-home" color="blue" v-if="$vuetify.display.width <= 750" ></v-btn>
                     <v-btn prepend-icon="mdi-home" v-else :variant="$page.component == 'Guest/Index' ? 'tonal' : ''" :class="[$page.component == 'Guest/Index' ? 'text-blue' : '', 'text-none', 'mt-2']">Home</v-btn>

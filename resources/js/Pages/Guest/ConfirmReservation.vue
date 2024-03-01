@@ -61,7 +61,7 @@
                     to: prop.auth.user.email,
                     subject: "Your reservation has been approved.",
                     replyto: "guestease@team.com",
-                    message: "Hello, your reservation has been approved :)"
+                    message: "Hello, your reservation has been approved."
                 }
                 , 'eEt-YCYeYc0LoTRxJ').then(() => {
                     alert('Success')
@@ -214,7 +214,7 @@
                         ></v-img>
                     </v-card-text>
                     <v-card-text>
-                        Attach a screenshot {{ form }}
+                        Attach a screenshot
                         <v-file-input :error-messages="form.errors.payment_screenshot" label="Screenshot" v-model="form.payment_screenshot" :rules="screenshotRule"></v-file-input>
                     </v-card-text>
                     <v-card-actions>
