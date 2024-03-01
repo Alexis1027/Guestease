@@ -99,7 +99,7 @@
                 </v-card>
             </v-menu>
         </v-app-bar>
-        <v-main class="bg-grey-lighten-3" style="height: 100vh;">
+        <v-main class="bg-grey-lighten-3">
             <slot>
             </slot>
         </v-main>

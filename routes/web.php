@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
 
     //all authenticated user can access these routes
     Route::get('/account', [AccountController::class, 'index'])->middleware('auth');
+    Route::post('/report-user', [ReportController::class, 'store']);
     Route::post('/account/update-profile_pic', [AccountController::class, 'update_profile_pic']);
     Route::put('/account/update', [AccountController::class, 'update']);
     Route::put('/account/change-password/{user}', [AccountController::class, 'change_password']);
@@ -108,6 +109,7 @@ Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/forgot-password', [AuthController::class, 'forgot_password']);
 Route::get('/createGuest', [AuthController::class, 'create_guest']);
 Route::get('/createOwner', [AuthController::class, 'create_owner']);
+Route::get('/search', [HomeController::class, 'search']);
 Route::post('/validate/user', [AuthController::class, 'validate_credentials']); 
 Route::post('/create/user', [AuthController::class, 'store_user']);
 Route::post('/send-message', [ContactController::class, 'store']);

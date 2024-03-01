@@ -47,9 +47,9 @@ class OwnerListingController extends Controller
             'amenities' => 'required',
             'rooms' => 'required',
             'bathrooms' => 'required',
-            'type' => 'required'
+            'type' => 'required',
+            'qr_code' => 'required'
         ]);
-
         $request->qr_code[0]->move(public_path('/images/qrcode'), $request->qr_code[0]->getClientOriginalName());
         $form['status'] = "For approval";
         $form['rules'] = json_encode($request->rules);

@@ -74,10 +74,10 @@
                         <td>{{ item.type }}</td>
                         <td>{{ item.status }}</td>
                         <td>
-                            <v-btn prepend-icon="mdi-eye-outline" @click="showViewListingDialog(item)" size="small" color="green" class="text-none me-2">View</v-btn>
+                            <v-btn prepend-icon="mdi-eye-outline" @click="showViewListingDialog(item)" size="small" color="green" variant="tonal" class="text-none me-2">View</v-btn>
                             <v-tooltip text="Edit status" location="top">
                                 <template v-slot:activator="{ props }">
-                                    <v-btn class="text-none" v-bind="props" size="small" @click="showUpdateStatusDialog(item)" prepend-icon="mdi-square-edit-outline" color="blue">Edit status</v-btn>
+                                    <v-btn variant="tonal" class="text-none" v-bind="props" size="small" @click="showUpdateStatusDialog(item)" prepend-icon="mdi-square-edit-outline" color="blue">Edit status</v-btn>
                                 </template>
                             </v-tooltip>
                         </td>

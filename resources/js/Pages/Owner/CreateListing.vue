@@ -437,9 +437,10 @@
             <v-window-item :value="14">
                 <v-container id="step1" class="placeoffers">
                     <p class="text-h4 text-start">Commission Information</p>
+                    <v-divider class="my-2"></v-divider>
                     <p class="text-body-1"> Before you proceed with listing your property, please be aware of the commission rate associated with each successful booking. 
                         This commission is the fee charged by the platform to cover operational costs and support services. </p>
-                        <v-alert class="mt-4" color="blue-lighten-4" icon="mdi-alert-circle" title="Admin Commission Rate">
+                        <v-alert class="mt-4" color="blue-lighten-2" icon="mdi-alert-circle" title="Admin Commission Rate">
                             The current commission rate is <strong>10%</strong> per successful booking.
                         </v-alert>
                 </v-container>
@@ -447,8 +448,10 @@
 
             <v-window-item :value="15">
                 <v-container id="step1">
-                    <v-alert variant="outlined" type="error" prominent border="top" title="Alert title" v-if="form.hasErrors">
+                    <v-alert variant="outlined" type="error" prominent border="top" title="Oops, something went wrong..." v-if="form.hasErrors">
                         It seems that you may have not filled up the required fields.
+                        <br>
+                        <v-btn variant="outlined" class="mt-2" prepend-icon="mdi-chevron-left" @click="step--">Go back</v-btn>
                     </v-alert>
                     <v-row>
                         <v-col cols="12" sm="12" md="6" lg="6" xl="6" xxl="6" class="mt-6">

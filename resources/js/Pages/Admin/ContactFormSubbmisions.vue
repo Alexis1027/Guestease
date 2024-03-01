@@ -99,12 +99,16 @@
                         <td>
                             <v-tooltip text="Reply" location="top">
                                 <template v-slot:activator="{ props }">
-                                    <v-btn v-bind="props" icon="mdi-message-processing-outline" variant="tonal" :color="item.reply ? 'green' : 'blue'" class="me-2" size="small" @click="showReplyDialog(item)"></v-btn>
+                                    <v-btn v-bind="props" prepend-icon="mdi-message-processing-outline" variant="tonal" :color="item.reply ? 'green' : 'blue'" class="me-2 text-none" size="small" @click="showReplyDialog(item)">
+                                        Reply
+                                    </v-btn>
                                 </template>
                             </v-tooltip>
                             <v-tooltip text="Delete " location="top">
                                 <template v-slot:activator="{ props }">
-                                    <v-btn v-bind="props" icon="mdi-delete-empty-outline" size="small" variant="tonal" color="red" @click="showDeleteMessageDialog(item)"></v-btn>
+                                    <v-btn v-bind="props" class="text-none" prepend-icon="mdi-delete-empty-outline" size="small" variant="tonal" color="red" @click="showDeleteMessageDialog(item)">
+                                        Delete
+                                    </v-btn>
                                 </template>
                             </v-tooltip>
                         </td>

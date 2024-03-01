@@ -138,14 +138,13 @@
         <v-col cols="12" md="6" sm="12" lg="6" xl="6" xxl="6">
             <v-card title="Change password" width="100%" class="border mb-4">
                 <!-- {{ changePasswordForm }} -->
-                {{ user }}
                 <v-card-item>
                     <v-text-field variant="outlined" :error-messages="changePasswordForm.errors.currentPassword" v-model="changePasswordForm.currentPassword" clearable type="password" class="mt-2" label="Current password"></v-text-field>
                     <v-text-field variant="outlined" :error-messages="changePasswordForm.errors.new_password" name="new_password" v-model="changePasswordForm.new_password" clearable type="password" label="New password"></v-text-field>
                     <v-text-field variant="outlined" name="new_password_confirmation" v-model="changePasswordForm.new_password_confirmation" clearable type="password" label="Confirm password"></v-text-field>
                 </v-card-item>
                 <v-card-actions class="justify-end d-flex">
-                    <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submitChangePasswordForm" :loading="form.processing" :disabled="form.processing" color="blue">Save</v-btn>
+                    <v-btn rounded="pill" variant="flat" class="text-none" type="submit" @click="submitChangePasswordForm" :loading="changePasswordForm.processing" :disabled="changePasswordForm.processing" color="blue">Save</v-btn>
                 </v-card-actions>
             </v-card>
         </v-col>

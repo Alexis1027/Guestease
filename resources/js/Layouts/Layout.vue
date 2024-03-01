@@ -23,7 +23,7 @@
     <v-layout>
         <v-app-bar scroll-behavior="elevate" scroll-threshold="438">
             <v-toolbar-title>
-                <Link :href="links.get(auth.user.role)" class="font-weight-bold">
+                <Link :href="auth ? links.get(auth.user.role) : '/'" class="font-weight-bold">
                     <v-img :src="logo" height="55" width="260" cover></v-img>
                 </Link>
             </v-toolbar-title>

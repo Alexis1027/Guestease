@@ -90,8 +90,8 @@
                             </v-chip>
                         </td>
                         <td>
-                            <v-btn size="small" @click="showReservationDialog(item)" class="me-2 text-none" color="blue" variant="tonal">View</v-btn>
-                            <v-btn @click="sendNotification(item)" size="small" :disabled="item.status != 'approved'" class="text-red text-none" variant="tonal" prepend-icon="mdi-bell">Notify
+                            <v-btn size="small" @click="showReservationDialog(item)" class="me-2 text-none" prepend-icon="mdi-eye-outline" color="green" variant="tonal">View</v-btn>
+                            <v-btn @click="sendNotification(item)" size="small" :disabled="item.status != 'approved'" class="text-red text-none" variant="tonal" prepend-icon="mdi-bell-outline">Notify
                                 <v-tooltip activator="parent" location="top">
                                     Alert guest: reservation ending soon
                                 </v-tooltip>

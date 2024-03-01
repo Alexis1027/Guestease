@@ -30,6 +30,11 @@ class Listing extends Model
         'qr_code'
     ];
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
     // public function ratings() {
     //     return $this->hasMany(Rating::class);
     // }

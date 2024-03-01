@@ -71,10 +71,10 @@
                         <td>{{ item.phone_number }}</td>
                         <td class="text-capitalize">{{ item.role }}</td>
                         <td>
-                            <v-btn v-if="!item.is_banned" @click="showBanUserDialog(item)" color="green" size="small">
+                            <v-btn v-if="!item.is_banned" size="small" @click="showBanUserDialog(item)" variant="tonal" color="green">
                                 Ban
                             </v-btn>
-                            <v-btn v-else @click="showUnbanUserDialog(item)" color="red" size="small">
+                            <v-btn v-else @click="showUnbanUserDialog(item)" variant="tonal" color="red" size="small">
                                 Unban
                             </v-btn>
                         </td>

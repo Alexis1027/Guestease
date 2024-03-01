@@ -8,6 +8,7 @@ use App\Models\Rating;
 use App\Models\Wishlist;
 use App\Models\Listing;
 use App\Models\Reservation;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -50,6 +51,34 @@ class HomeController extends Controller
         return Inertia::render('Guest/Index', [
             'listings' => $listings
         ]);
+    }
+
+    public function search(Request $request) {
+
+        $request->validate([
+            'checkin_date' => 'required',
+            'checkout_date' => 'required',
+            'people' => 'required'
+        ]);
+
+        $checkin = $request->query('checkin_date');
+        $checkout = $request->query('checkout_date');
+        $people = $request->query('people');
+        $type = 'Guest house';
+        $type2 = ''; 
+        if($request->type !== 'Guest house') {
+            $type = 'Room';
+            $type2 = 'Multiple room';
+        }
+
+        $availableListings = Listing::whereDoesntHave('reservations', function ($query) use ($checkin, $checkout) {
+            $query->where(function ($q) use ($checkin, $checkout) {
+                $q->where('checkin', '<', $checkout)
+                  ->where('checkout', '>', $checkin);
+            });
+        })->where('guests', '>=', $people)->where('type', $type)->orWhere('type', $type2)->get();
+
+        return Inertia::render('Guest/Search', ['listings' => $availableListings]);
     }
 
     public function show(Listing $listing) {

@@ -49,7 +49,7 @@
                     </v-list-item>
                 </Link>
                 <Link href="/admin/reported-guests">
-                    <v-list-item prepend-icon="mdi-flag" title="Reported guests" value="reports">
+                    <v-list-item prepend-icon="mdi-flag" title="Reported users" value="reports">
                         <template v-slot:append>
                             <v-chip size="small">{{ activity_summary.reported_guests }}</v-chip>
                         </template>

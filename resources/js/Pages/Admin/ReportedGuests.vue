@@ -13,7 +13,9 @@
     const snackbar = ref(false)
     const headers = [
         { title: 'ID', align: 'start', key: 'id', value: "id" },
-        { title: 'Guest', align: 'center', key: 'title', value: "title" },
+        { title: 'Reported user', align: 'center', key: 'title', value: "user_id" },
+        { title: 'Reported by', align: 'center', key: 'title', value: "reporter_id" },
+        { title: 'Created at', align: 'center', key: 'title', value: "created_at" },
         { title: 'Actions', align: 'center', key: 'actions', value: "actions" },
     ]
 
@@ -43,10 +45,10 @@
 </script>
 
 <template>
-    <Head title="Reported guests"/>
+    <Head title="Reported users"/>
     <v-container>
         
-        <v-card width="69vw" style="margin: auto" title="Reported guests">
+        <v-card width="69vw" style="margin: auto" title="Reported users">
             <v-data-table :items="reports" :headers="headers" >
                 <template v-slot:item="{ item }">
                     <tr>
@@ -54,6 +56,16 @@
                         <td class="text-center">
                             <Link :href="`/profile/${item.guest.id}`">
                                 {{ item.guest.firstname + " " + item.guest.lastname }}
+                            </Link>
+                        </td>
+                        <td class="text-center">
+                            <Link :href="`/profile/${item.guest.id}`">
+                                {{ item.owner.firstname + " " + item.owner.lastname }}
+                            </Link>
+                        </td>
+                        <td class="text-center">
+                            <Link :href="`/profile/${item.guest.id}`">
+                                {{ format(new Date(item.created_at), 'PP') }}
                             </Link>
                         </td>
                         <td class="justify-center d-flex">
@@ -84,7 +96,7 @@
                         <v-list-item :prepend-avatar="`/images/profile/${selected.owner.profile_pic}`"
                             :title="selected.owner.firstname +' ' + selected.owner.lastname"
                             class="mb-2"
-                            :subtitle="format(new Date(selected.created_at), 'PPPP')">
+                            :subtitle="selected.owner.email">
                         </v-list-item>
                     </v-card-title>
                     <v-card-text>

@@ -244,7 +244,7 @@
             <v-window v-model="tab">
                 <v-window-item value="option-1">
                     
-                    <v-card flat border class="pa-2" width="100%">
+                    <v-card flat border class="pa-2" width="auto" min-width="50vw">
                         <v-form @submit.prevent enctype="multipart/form-data">
                             <span class="text-h6"> Photos </span> 
                                 <v-btn :append-icon="showEditPhotos ? 'mdi-pencil' : 'mdi-close'" variant="text" color="blue" class="text-none" @click="showEditPhotos = !showEditPhotos">
@@ -254,7 +254,7 @@
                                 <!-- <v-file-input ref="fileInputRef" label="Add new photos"  chips color="blue" multiple v-model="addPhoto" variant="outlined" v-if="!showEditPhotos && listing.type == 'Guest house'"></v-file-input> -->
                                 <!-- <v-file-input label="Add new photos" chips color="blue" v-model="addPhoto" variant="outlined" v-if="!showEditPhotos && (listing.type == 'Room' || listing.type == 'Multiple room')"></v-file-input> -->
                             <div >
-                                <v-slide-group v-model="model" class="pa-4" show-arrows >
+                                <v-slide-group v-model="model" class="pa-4" show-arrows style="width: 100%">
                                     <v-slide-group-item v-for="(item, i) in photosForm.images" :key="i">
                                         <v-card class="mx-4 " height="230" width="250" elevation="0">
                                             <v-img :src="`/images/uploads/${photosForm.images[i]}`" height="180" cover></v-img>
@@ -358,18 +358,18 @@
                                     </v-card>
                                 </v-container>
                                 <v-card-actions class="justify-end d-flex">
-                                    <v-btn color="grey" variant="flat" class="text-none rounded-pill" type="submit" v-show="!showEditProperties" @click="showEditProperties = !showEditProperties" :loading="propertyForm.processing">Cancel</v-btn>
+                                    <v-btn color="grey" variant="flat" class="text-none rounded-pill" type="submit" v-show="!showEditProperties" @click="showEditProperties = !showEditProperties">Cancel</v-btn>
                                     <v-btn color="blue" variant="flat" class="text-none rounded-pill" type="submit" v-show="!showEditProperties" @click="submitPropertyForm" :loading="propertyForm.processing">Save</v-btn>
                                 </v-card-actions>
                         </v-list>
                     </v-card>
                 </v-window-item>
                 <v-window-item value="option-2">
-                    <v-card flat>
+                    <v-card flat width="auto" min-width="50vw">
                         <v-card-item>
-                            <v-text-field type="number" color="blue" v-model="pricingForm.price" variant="outlined" label="Price" class="mt-2"></v-text-field>
-                            <v-text-field type="number" v-if="listing.type == 'Guest house'" color="blue" v-model="pricingForm.monthly_discount" variant="outlined" label="Add discount"></v-text-field>
-                            <v-select label="Availability" :disabled="pricingForm.status == 'For approval' || pricingForm.status == 'Rejected' ? true : false" color="blue" v-model="pricingForm.status" variant="outlined" :items="['Available', 'Not available']">
+                            <v-text-field type="number" color="blue" v-model="pricingForm.price" variant="outlined" label="Update the price for your listing." class="mt-2"></v-text-field>
+                            <v-text-field type="number" placeholder="eg 3, 5, 10" v-if="listing.type == 'Guest house'" color="blue" v-model="pricingForm.monthly_discount" variant="outlined" label="Enter the discount for your listing, if any."></v-text-field>
+                            <v-select label="Update the availability status of your listing." :disabled="pricingForm.status == 'For approval' || pricingForm.status == 'Rejected' ? true : false" color="blue" v-model="pricingForm.status" variant="outlined" :items="['Available', 'Not available']">
                             </v-select>
                         </v-card-item>
                         <v-card-actions class="d-flex justify-end">
@@ -378,7 +378,7 @@
                     </v-card>
                 </v-window-item>
                 <v-window-item value="option-3">
-                    <v-card width="69vw" height="100%">
+                    <v-card width="auto" min-width="50vw" height="100%">
                             <v-card-item>
                                 <p class="text-h6">Rules and policies</p>
                                 <p v-for="rule in JSON.parse(listing.rules)" :key="rule">

@@ -7,6 +7,7 @@
     import { getAuth, createUserWithEmailAndPassword, sendEmailVerification  } from "firebase/auth";
     const auth = getAuth()
 
+
     const createSuccessful = ref(false)
     const passwordVisible = ref(true)
     const signupButton = ref(false)
@@ -29,7 +30,7 @@
                 .then((userCredential) => {
                     sendEmailVerification(auth.currentUser)
                     .then(() => {
-                        alert('Email verification sent!')
+                        createSuccessful.value = true
                     });
                 })
                 .catch((error) => {
@@ -129,8 +130,8 @@
             </v-col>
         </v-row>
     </v-container>
-        <v-snackbar v-model="createSuccessful" color="blue-lighten-3" timeout="1500">
-            Created successfully
+        <v-snackbar v-model="createSuccessful" color="blue-lighten-3" timeout="5000">
+            Admin created successfully. Check email for email verification to activate account.
             <template v-slot:actions>
                 <v-btn variant="text" @click="createSuccessful = false" icon="mdi-close">
                 </v-btn>

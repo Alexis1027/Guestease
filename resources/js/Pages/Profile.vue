@@ -4,6 +4,33 @@
     defineProps({ auth: Object, user: Object, listings: Object })
     import Layout from '../Layouts/Layout.vue'
     import {format} from 'date-fns'
+    import { ref } from 'vue'
+    import { useForm } from '@inertiajs/vue3'
+
+    const snackbar = ref(false)
+    const reportUserDialog = ref(false)
+    const reportUserForm = useForm({
+        user_id: null,
+        reason: null,
+    })
+
+    function submitReportUserForm() {
+        reportUserForm.post('/report-user', {
+            onSuccess: () => {
+                snackbar.value = true
+                reportUserDialog.value = false
+                reportUserForm.reset()
+            },
+            onError: (error) => {
+                console.log(error)
+            }
+        })
+    }
+
+    function setUserId(user) {
+        reportUserForm.user_id = user.id
+        reportUserDialog.value = true
+    }
 
 </script>
 
@@ -42,6 +69,9 @@
                         <v-list-item prepend-icon="mdi-calendar-range" subtitle="Joined at">
                                 {{ format(new Date(user.created_at), 'MMMM dd, y') }}
                         </v-list-item>
+                        <v-list-item v-if="auth && auth.user.id != user.id">
+                            <v-btn prepend-icon="mdi-flag" @click="setUserId(user)" color="red">Report user</v-btn>
+                        </v-list-item>
                     </v-list>
                 </v-col>
             </v-row>
@@ -67,7 +97,34 @@
                 This user does not have a listing yet.
             </p>
             </div>
+            <v-dialog v-model="reportUserDialog" width="69%">
+                <v-card title="Report guest">
+                    <v-divider class="mt-2" />
+                    <v-card-text>
+                        <v-list-item :title="user.firstname + ' ' + user.lastname" :subtitle="user.email">
+                            <template v-slot:prepend>
+                                <v-avatar size="60">
+                                    <v-img cover :src="`/images/profile/${user.profile_pic}`"></v-img>
+                                </v-avatar>
+                            </template>
+                        </v-list-item>
+                        <v-textarea label="Reason" color="blue" v-model="reportUserForm.reason" :error-messages="reportUserForm.errors.reason" class="mt-2"></v-textarea>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn @click="reportUserDialog = false">Close</v-btn>
+                        <v-btn color="red" @click="submitReportUserForm" :loading="reportUserForm.processing">Submit</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </v-container>
+        <v-snackbar v-model="snackbar" color="blue-lighten-3" timeout="1500">
+            User reported successfully
+            <template v-slot:actions>
+                <v-btn variant="text" @click="snackbar = false" icon="mdi-close">
+                </v-btn>
+            </template>
+        </v-snackbar>
     </v-row>
 
 </template>
