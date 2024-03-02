@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Listing;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 
 class GuestReservationController extends Controller
@@ -38,6 +39,11 @@ class GuestReservationController extends Controller
         $reservations = Reservation::where('user_id', auth()->user()->id)->latest()->get();
         
         foreach ($reservations as $r) {
+            if ($r->checkout < Carbon::now()) {
+                $r->status = 'completed';
+                $r->save();
+            }
+            
             $listing = Listing::find($r->listing_id);
             $r->listing = $listing;
         }

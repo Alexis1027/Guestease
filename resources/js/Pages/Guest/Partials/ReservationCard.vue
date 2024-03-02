@@ -60,7 +60,7 @@
             </template>
          </v-list-item>
          <v-list-item v-if="reservation.discount > 0">
-            Monthly stay discount
+            Discount {{ reservation.listing.monthly_discount }}%
             <template v-slot:append>
                 ₱{{  (( reservation.listing.price * reservation.days) * (reservation.discount / 100)).toLocaleString()  }}
             </template>
